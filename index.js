@@ -21,9 +21,6 @@ app.use(bodyparser.json());
 
 
 
-
-
-
 //Import Routes
 
 const loginRoute = require('./routes/login');
