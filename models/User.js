@@ -1,21 +1,22 @@
-// TREAT THIS SCHEMA AS A USER INSTEAD OF A CUSTOMER,
-// THIS MEANS THAT BOTH ADMINS AND CUSTOMERS FALL WITHIN THIS MODEL
-
 const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
-    user_fullname: {
+    fullName: {
         type: String,
         required: true
     },
-    user_email: {
+    email: {
         type: String,
         required: true
     },
-    user_pass: {
+    password: {
         type: String,
         required: true
     },
-    user_role: {
+    department: {
+        type: String,
+        required: true
+    },
+    role: {
         type: String,
         required:true
     },
@@ -23,9 +24,6 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    url:{
-        type: String
-    }
     
 });
 
