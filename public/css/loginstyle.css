@@ -1,0 +1,65 @@
+body{
+    background: url("/img/login_pic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    visibility: hidden;
+}
+
+.wrap{
+    font-family: 'Poppins', sans-serif !important; 
+    font-size: 18px;
+    font-weight: 500;
+    max-width: 500px;
+    margin:auto;
+    background: rgba(12, 128, 57, 0.6);
+    box-sizing: border-box;
+    padding:40px;
+    color:#fff;
+    margin-top: 60px;
+}
+
+input[type='text']:not(.search-text), input[type=password], input[type=email]{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px 15px;
+    background: #fff;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid gray;
+    color: #000;
+    margin: 1px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+input[type=submit]:not(.search-button){
+    width:fit-content;
+    padding:10px 50px;
+    margin-top: 0px;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    outline: none;
+    border: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+input[type=submit]:hover{
+    background: rgba(0, 0, 0, 1);
+    transition: 0.25s;
+}
+
+#header {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 600;
+    color: #fff;
+}

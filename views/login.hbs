@@ -3,35 +3,24 @@
 <html>
     <head>
         <title>Log In</title>
-        
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/loginstyle.css">
-        <link rel="stylesheet" href="/css/navstyle.css">
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     </head>
-    
     <body>
+        <div id = "header">OULC Contract Management System</div>
         <div class="wrap">
-            <h2><img src="/img/freezindelightslogo2.png" style= "width: 300px; margin-top: -20px"></h2>
             <form class = "login" action = "/login/insert" method = "POST">
-                <div style="color:#000000; font-size: 18px; font-weight: bolder; font-family: 'Quicksand', sans-serif;">Email</a></b></div>
+                <div>Email</a></b></div>
                 <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter your email" required>
-                <div style="color:#000000; font-size: 18px; font-weight: bolder; font-family: 'Quicksand', sans-serif;">Password</a></b></div>
+                <div>Password</a></b></div>
                 <input type="password" id = "password" name = "password" class="pwdbox" placeholder="Password" required>
-                <input type="submit" class="loginbtn" value="Log In">
+                <input type="submit" class="loginbtn" value="Login">
             </form>
             <li><a href="/admin/adduser">Add User</a></li>
         </div>
-        
-        <script>
-            $(document).ready(function(){
-                $(".search-icon").click(function(){
-                    $(".search-box").toggle();
-                    $(".search-box input[type='text']").focus();
-                });  
-            });
-        </script>  
     </body>
 </html>

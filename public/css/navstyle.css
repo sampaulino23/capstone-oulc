@@ -4,7 +4,7 @@
     text-decoration: none;
     list-style: none;
     box-sizing: border-box;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 nav a:hover{
@@ -12,7 +12,7 @@ nav a:hover{
 }
 
 nav{
-    background: #FFC5D9;
+    background: #00713D;
     height: 80px;
     width: 100%;
     position: sticky;
@@ -39,7 +39,7 @@ nav ul li{
 nav ul li a{
     color: #000000;
     font-size: 15px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
     padding: 7px 13px;
     border-radius: 5px;
