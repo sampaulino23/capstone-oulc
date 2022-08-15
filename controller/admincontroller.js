@@ -31,6 +31,17 @@ const admincontroller = {
 		} catch(err) {
 			console.log(err);
 		}
+    },
+
+    getUserManagement: async (req, res) => {
+        try {
+			res.render('usermanagement', {
+                role: req.user.role
+            });
+
+		} catch(err) {
+			console.log(err);
+		}
     }
 }
 

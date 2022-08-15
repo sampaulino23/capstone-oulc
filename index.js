@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const exphbs = require('express-handlebars');
+const hbs = require('handlebars');
 
 const dotenv = require('dotenv');
 require('dotenv').config({ path: '.env' });
@@ -17,12 +18,51 @@ app.engine( 'hbs', exphbs.engine({
     defaultView: 'main', // this is the default value but you may change it to whatever you'd like
     layoutsDir: path.join(__dirname, '/views/layouts'), // Layouts folder
     partialsDir: path.join(__dirname, '/views/partials'), // Partials folder
-    
 }));
 
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(bodyparser.json());
+
+// helpers
+hbs.registerHelper('compare', function(lvalue, operator, rvalue, options) {
+
+    var operators, result;
+
+    if (arguments.length < 3) {
+        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+    }
+
+    if (options === undefined) {
+        options = rvalue;
+        rvalue = operator;
+        operator = "===";
+    }
+
+    operators = {
+        '==': function(l, r) { return l == r; },
+        '===': function(l, r) { return l === r; },
+        '!=': function(l, r) { return l != r; },
+        '!==': function(l, r) { return l !== r; },
+        '<': function(l, r) { return l < r; },
+        '>': function(l, r) { return l > r; },
+        '<=': function(l, r) { return l <= r; },
+        '>=': function(l, r) { return l >= r; },
+        'typeof': function(l, r) { return typeof l == r; }
+    };
+
+    if (!operators[operator]) {
+        throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+    }
+
+    result = operators[operator](lvalue, rvalue);
+
+    if (result) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+});
 
 //Import Routes
 
@@ -34,5 +74,10 @@ app.use('/login', loginRoute);
 const adminRoute = require('./routes/admin');
 app.use('/admin', adminRoute);
 
+app.get("/logout", function(req, res) {
+    req.session.destroy(function (err) {
+        res.redirect('/login');
+      });
+});
 
 app.listen(process.env.PORT || 3000);

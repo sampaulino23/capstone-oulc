@@ -72,6 +72,9 @@ router.get('/adduser', admincontroller.getAddUser);
 // post add user
 router.post('/adduser', admincontroller.postAddUser);
 
+// render user management page
+router.get('/usermanagement', admincontroller.getUserManagement);
+
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);

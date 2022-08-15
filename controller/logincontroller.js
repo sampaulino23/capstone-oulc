@@ -64,7 +64,7 @@ const logincontroller = {
                     return next(loginErr);
                 }
                 else {
-                    return res.redirect('/');
+                    return res.redirect('/admin/usermanagement');
                 }
 
             });
@@ -136,10 +136,10 @@ const logincontroller = {
         }
     },
     */
-    
 
-    
-    postInsert: function(req,res, next) {
+
+
+    postInsert: function (req, res, next) {
         var createUserID;
         var ObjectId = require('mongodb').ObjectID;
         var profileURL;
@@ -152,27 +152,26 @@ const logincontroller = {
             isActive: true,
             url: 'blank',
         });
-    
-       // hash the password
-       bcrypt.genSalt(10, (err, salt) =>
-       bcrypt.hash(user.password, salt, (err, hash) => {
-           if (err) throw err;
-           user.password = hash;
-           console.log(user.password);
+
+        // hash the password
+        bcrypt.genSalt(10, (err, salt) =>
+            bcrypt.hash(user.password, salt, (err, hash) => {
+                if (err) throw err;
+                user.password = hash;
+                console.log(user.password);
             })
         );
 
         MongoClient.connect(url, function (err, client) {
-        if (err) throw err;
-
-        var db = client.db('test');
-
-        db.collection('users').insertOne(user, function(err,result) {
             if (err) throw err;
-            client.close();
+            var db = client.db('test');
+
+            db.collection('users').insertOne(user, function (err, result) {
+                if (err) throw err;
+                client.close();
+                res.redirect('back');
+            });
         });
-        res.redirect('back');
-        }); 
 
 
         /*
@@ -206,10 +205,10 @@ const logincontroller = {
             
         });
         */
-        
-        
+
+
     }
-    
+
 
 }
 
