@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const exphbs = require('express-handlebars');
 
+const dotenv = require('dotenv');
+require('dotenv').config({ path: '.env' });
+
 const app = express();
 
 app.engine( 'hbs', exphbs.engine({
