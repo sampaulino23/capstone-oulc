@@ -31,7 +31,8 @@ router.use(session({
     secret: 'fsfdfghgfhdfgbfb',
     resave:true,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION
+    store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION,
+        ttl: 2 * 24 * 60 * 60
             })
 
     //cookie: {secure: true}
