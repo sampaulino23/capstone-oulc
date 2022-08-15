@@ -6,7 +6,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const url = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const logincontroller = require('../controller/logincontroller.js');
 
 //passport config
@@ -31,8 +31,7 @@ router.use(session({
     secret: 'fsfdfghgfhdfgbfb',
     resave:true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection,
-        ttl: 2 * 24 * 60 * 60
+    store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION
             })
 
     //cookie: {secure: true}
