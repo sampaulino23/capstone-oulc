@@ -4,7 +4,7 @@ const config = require('../config/database');
 const bcrypt = require('bcryptjs');
 
 //Load user Model
-const User = require('../models/Customer');
+const User = require('../models/User');
 
 
 module.exports = function(passport){
@@ -38,8 +38,8 @@ module.exports = function(passport){
       });
       
     passport.deserializeUser((id, done) =>{
-        User.findById(id, (err, Customer) => {
-            done(err, Customer);
+        User.findById(id, (err, User) => {
+            done(err, User);
         });
     });
 }

@@ -2,28 +2,24 @@
 // THIS MEANS THAT BOTH ADMINS AND CUSTOMERS FALL WITHIN THIS MODEL
 
 const mongoose = require('mongoose');
-const CustomerSchema = mongoose.Schema({
-    email: {
+const UserSchema = mongoose.Schema({
+    user_fullname: {
         type: String,
         required: true
     },
-    fullname: {
+    user_email: {
         type: String,
         required: true
     },
-    password: {
+    user_pass: {
         type: String,
         required: true
     },
-    address: {
+    user_role: {
         type: String,
         required:true
     },
-    contact_number: {
-        type: String,
-        required:true
-    },
-    isAdmin: {
+    isActive: {
         type: Boolean,
         default: false
     },
@@ -33,5 +29,5 @@ const CustomerSchema = mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('User', UserSchema);
 

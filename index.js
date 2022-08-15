@@ -2,6 +2,8 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const handlebars = require('handlebars');
 var urlencodedparser = bodyparser.urlencoded({extended:false});
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const path = require('path');
 const exphbs = require('express-handlebars');
 
@@ -19,15 +21,11 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(bodyparser.json());
 
-
-
-
-
-
 //Import Routes
 
 const loginRoute = require('./routes/login');
 app.use('/', loginRoute);
+app.use('/login', loginRoute);
 
 
 app.listen(process.env.PORT || 3000);

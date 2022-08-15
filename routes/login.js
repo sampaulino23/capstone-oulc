@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const url = 'mongodb+srv://test:test@cluster0.tcgdc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
 const MongoStore = require('connect-mongo')(session);
 const logincontroller = require('../controller/logincontroller.js');

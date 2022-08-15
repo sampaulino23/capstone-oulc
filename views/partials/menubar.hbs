@@ -3,6 +3,7 @@
     <label class="logo"><a href="/" class="logo"><img src="/img/tempologofinal.png" style= "width: 180px; margin-top: 5px; object-fit: cover"></a></label>
     <span id = 'page-name' style = 'display: none;'>{{pagename}}</span><span id = 'user' style = 'display: none;'>{{isAuthenticated}}</span><span id = 'admin' style = 'display: none;'>{{isAdmin}}</span>
     <ul>
+        <!--
         {{#if isAuthenticated}}
             {{#if isSales}}
             <li><a href="/" class = "" id = "salesorder">Orders</a></li> 
@@ -19,7 +20,7 @@
             {{else}}
             <li><a href="/freezindelights" class = "" id = "home">Home</a></li> 
             <li><a href="/" class = "" id = "shop">Shop</a></li> 
-            <li><a href="/cart" class = "" id = "cart">My Cart</a></li> <!-- ITISDEV: Changed -->
+            <li><a href="/cart" class = "" id = "cart">My Cart</a></li> 
             <li><a href="/trackorder" class = "" id = "trackorder">Track Order</a></li>
             <li><a href="{{{profileurl}}}" class = "" id = "prof">Profile</a></li>
             {{/if}}
@@ -31,6 +32,8 @@
             <li><a href="/login/register" class = "btn2" id = "signup">Sign Up</a></li>
             <li><a href="/login" class = "btn1" id = "login">Log In</a></li>
         {{/if}}
+
+        -->
     </ul>
 </nav>
 

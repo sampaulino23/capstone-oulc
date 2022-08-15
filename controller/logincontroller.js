@@ -1,9 +1,9 @@
-const Customer = require('../models/Customer');
+const User = require('../models/User');
 const assert = require('assert');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://test:test@cluster0.tcgdc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
@@ -11,11 +11,6 @@ const passport = require('passport');
 require('../config/passport')(passport);
 
 const db =require('../config/database').database;
-
-//User Model
-const User = require('../models/Customer');
-
-
 
 //connect to mongo
 mongoose.connect(url,{useNewUrlParser: true,useUnifiedTopology: true })
@@ -86,7 +81,7 @@ const logincontroller = {
             useUnifiedTopology: true
         }, function(err, db) {
             assert.equal(null, err);
-            db.collection('customers').findOne({email: email}, 'email', function (err,result) {
+            db.collection('users').findOne({email: email}, 'email', function (err,result) {
                 assert.equal(null, err);
                 res.send(result);
             });
@@ -102,17 +97,17 @@ const logincontroller = {
     },
 
     postInsert: function(req,res, next) {
-        var createCustomerID;
+        var createUserID;
         var ObjectId = require('mongodb').ObjectID;
         var profileURL;
 
-        var user = new Customer({
-            fullname: req.body.fullname,
-            email: req.body.email,
-            password:req.body.password,
-            contact_number:req.body.contact ,
-            address:req.body.address,
-            url : 'blank',
+        var user = new User({
+            user_fullname: "Samantha Paulino",
+            user_email: "admin@oulc.com",
+            user_pass: "pass1234",
+            user_role: "Administrator",
+            isActive: true,
+            url: 'blank',
         });
     
         // hash the password
@@ -122,6 +117,7 @@ const logincontroller = {
                 user.password = hash;
             })
         );
+        
     
         // connect to the db
         mongoose.connect(url, { 
@@ -129,20 +125,20 @@ const logincontroller = {
             useUnifiedTopology: true
         }, function(err, db) {
             assert.equal(null, err);
-            db.collection('customers').insertOne(user, function(err,result) {
+            db.collection('users').insertOne(user, function(err,result) {
                 assert.equal(null, err);
-                createCustomerID =  result.insertedId;
-                console.log('New profile created' + createCustomerID);
+                createUserID =  result.insertedId;
+                console.log('New profile created' + createUserID);
 
                 mongoose.connect(url, { 
                     useNewUrlParser: true,
                     useUnifiedTopology: true
                 },function(err, db){
-                    profileURL = '/profile/' +createCustomerID;
-                   var myquery = { '_id': ObjectId(createCustomerID)};
+                    profileURL = '/profile/' +createUserID;
+                   var myquery = { '_id': ObjectId(createUserID)};
                    var newvalues = { $set: {url: profileURL}};
 
-                    db.collection("customers").updateOne(myquery, newvalues, function(err, result){
+                    db.collection("users").updateOne(myquery, newvalues, function(err, result){
 
                     });
 
