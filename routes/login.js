@@ -1,48 +1,56 @@
+const assert = require('assert');
+const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const bcrypt = require('bcrypt');
+const MongoClient = require('mongodb').MongoClient;
+// passport config
+const db = require('../config/database').database;
+
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const passport = require('passport');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const url = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
-
+const mongoose = require("mongoose");
 const MongoStore = require('connect-mongo');
-const logincontroller = require('../controller/logincontroller.js');
+const User = require('../models/User');
 
-//passport config
+/* Requiring body-parser package  
+to fetch the data that is entered 
+by the user in the HTML form.*/
+
+const bodyParser = require("body-parser");
+
+// Telling our Node app to include all these modules
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 require('../config/passport')(passport);
 
-//DB Config
-const db =require('../config/database').database;
-
+const logincontroller = require('../controller/logincontroller.js');
 
 
 router.use(bodyParser.urlencoded({ extended: true }));
+
+
+router.use(session({
+    secret: "long secret key",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_CONNECTION,
+        ttl: 2 * 24 * 60 * 60
+    })
+}));
+
+// Initializing Passport
+router.use(passport.initialize());
+
+// Starting the session
+router.use(passport.session());
+
 
 //For dynamic Nav Bar
 router.use(function(req,res,next){
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
-
-//express session middleware as of Mar 23 based on Chris Courses set to false daw yung dalawa
-//eto yung gumagawa ng session
-router.use(session({
-    secret: 'fsfdfghgfhdfgbfb',
-    resave:true,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION,
-        ttl: 2 * 24 * 60 * 60
-            })
-
-    //cookie: {secure: true}
-}));
-
-// Passport Middleware
-router.use(passport.initialize());
-router.use(passport.session());
-
-
 
 // multer to accept images
 const multer = require('multer');
@@ -72,29 +80,11 @@ router.get('/', logincontroller.getLogin);
 // post login handle
 router.post('/logcheck', logincontroller.postLogCheck);
 
-// render register page
-router.get('/register', logincontroller.getRegister);
-
 router.get('/error', logincontroller.getError);
-
-router.get('/privacypolicy', logincontroller.getPrivacyPage);
 
 router.get('/getCheckEmail', logincontroller.getCheckEmail);
 
 // post/register new user to database
 router.post('/insert', upload.single('imageprof'), logincontroller.postInsert);
-
-
-
-
-passport.serializeUser((user_id, done) =>{
-    done(null, user_id);
-});
-passport.deserializeUser((user_id, done) =>{
-    done(null, user_id);
-});
-
-
-
 
 module.exports = router;

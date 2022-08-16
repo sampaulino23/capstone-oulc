@@ -1,33 +1,56 @@
-const User = require('../models/User');
 const assert = require('assert');
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
-const passport = require('passport');
 const MongoClient = require('mongodb').MongoClient;
-
 // passport config
-require('../config/passport')(passport);
-
 const db = require('../config/database').database;
 
-//connect to mongo
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Mongo DB connected!'))
-    .catch(err => console.log(err));
+const express = require('express');
+const router = express.Router();
+const mongoose = require("mongoose");
+const MongoStore = require('connect-mongo');
+const User = require('../models/User');
 
-const bodyParser = require('body-parser');
+/* Requiring body-parser package  
+to fetch the data that is entered 
+by the user in the HTML form.*/
+
+const bodyParser = require("body-parser");
+
+// Telling our Node app to include all these modules
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+require('../config/passport')(passport);
+
 router.use(bodyParser.urlencoded({ extended: true }));
 
+router.use(session({
+    secret: "long secret key",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_CONNECTION,
+        ttl: 2 * 24 * 60 * 60
+    })
+}));
 
+// Initializing Passport
 router.use(passport.initialize());
+
+// Starting the session
 router.use(passport.session());
 
+// Connecting mongoose to our database 
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Mongo DB connected!'))
+    .catch(err => console.log(err));
 
 
 const logincontroller = {
+
     getLogin: function (req, res) {
         res.render('login', {
             // profileurl: '/profile/' + req.session.uname,
@@ -42,102 +65,6 @@ const logincontroller = {
             title: 'Log In'
         });
     },
-
-    getPrivacyPage: function (req, res) {
-        res.render('privacy', {
-            title: 'Privacy Policy'
-        });
-    },
-
-    postLogCheck: function (req, res, next) {
-        passport.authenticate('local', function (err, user, info) {
-            if (err) {
-                return next(err); // will generate a 500 error
-            }
-            // Generate a JSON response reflecting authentication status
-            if (!user) {
-                return res.redirect('/login/error')
-            }
-
-            req.login(user, loginErr => {
-                if (loginErr) {
-                    return next(loginErr);
-                }
-                else {
-                    return res.redirect('/admin/usermanagement');
-                }
-
-            });
-        })(req, res, next);
-    },
-
-
-
-
-    getCheckEmail: function (req, res) {
-        var email = req.query.email;
-
-        mongoose.connect(url, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }, function (err, db) {
-            assert.equal(null, err);
-            db.collection('users').findOne({ email: email }, 'email', function (err, result) {
-                assert.equal(null, err);
-                res.send(result);
-            });
-        });
-    },
-
-    getRegister: function (req, res) {
-
-        res.render('signup', {
-            pagename: 'Sign Up',
-            title: 'Sign Up'
-        });
-    },
-
-    /*
-    postInsert: async (req, res) => {
-        try {
-            console.log("1");
-            let user = new User(
-                {
-
-                    fullName: "Samantha Paulino",
-                    email: "admin@oulc.com",
-                    password: "pass1234",
-                    role: "Administrator",
-                    isActive: true,
-                    url: 'blank',
-                });
-            console.log("2");
-
-            
-
-            try {
-                // hash the password
-                bcrypt.genSalt(10, (err, salt) =>
-                bcrypt.hash(user.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    user.password = hash;
-                    console.log(user.password);
-                })
-            );
-                console.log("4");
-                await user.save();
-                res.redirect('back');
-            } catch (err) {
-                console.log(err);
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
-    },
-    */
-
-
 
     postInsert: function (req, res, next) {
         var createUserID;
@@ -172,51 +99,71 @@ const logincontroller = {
             });
         });
 
+    },
 
-        /*
-        // connect to the db
-        mongoose.connect(url, { 
+    postLogCheck: function (req, res) {
+
+        console.log(req.body);
+
+        const userToBeChecked = new User({
+            email: req.body.email,
+            password: req.body.password
+        });
+        // Checking if user if correct or not
+
+        req.login(userToBeChecked, function (err) {
+            if (err) {
+                console.log(err);
+                res.redirect('/login/error');
+            }
+            else {
+                passport.authenticate("local")
+                    (req, res, function () {
+                        User.find({ email: req.user.email },
+                            function (err, docs) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else {
+
+                                    //login is successful
+                                    console.log("credentials are correct");
+                                    res.redirect('/admin/usermanagement')
+                                }
+                            });
+                    });
+            }
+        })
+    },
+
+    getCheckEmail: function (req, res) {
+        var email = req.query.email;
+
+        mongoose.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        }, function(err, db) {
+        }, function (err, db) {
             assert.equal(null, err);
-            db.collection('users').insertOne(user, function(err,result) {
+            db.collection('users').findOne({ email: email }, 'email', function (err, result) {
                 assert.equal(null, err);
-                createUserID =  result.insertedId;
-                console.log('New profile created' + createUserID);
-
-                mongoose.connect(url, { 
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true
-                },function(err, db){
-                    profileURL = '/profile/' +createUserID;
-                   var myquery = { '_id': ObjectId(createUserID)};
-                   var newvalues = { $set: {url: profileURL}};
-
-                    db.collection("users").updateOne(myquery, newvalues, function(err, result){
-
-                    });
-
-                });
-                res.redirect('/login');
-                
+                res.send(result);
             });
-            
         });
-        */
-
-
     }
-
 
 }
 
-passport.serializeUser((user_id, done) => {
-    done(null, user_id);
-});
-passport.deserializeUser((user_id, done) => {
-    done(null, user_id);
-});
-
-
 module.exports = logincontroller;
+
+
+
+
+
+
+
+
+
+
+
+
+
