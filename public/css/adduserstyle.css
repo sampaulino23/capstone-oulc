@@ -1,0 +1,12 @@
+.wrap{
+    font-family: 'Poppins', sans-serif; 
+    font-size: 18px;
+    font-weight: 500;
+    max-width: 500px;
+    margin:auto;
+    background: rgba(12, 128, 57, 0.9);
+    box-sizing: border-box;
+    padding:40px;
+    color:#fff;
+    margin-top: 60px;
+}

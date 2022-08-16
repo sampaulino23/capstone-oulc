@@ -17,7 +17,7 @@ nav {
     font-weight: 500;
     max-width: 500px;
     margin:auto;
-    background: rgba(12, 128, 57, 0.6);
+    background: rgba(12, 128, 57, 0.9);
     box-sizing: border-box;
     padding:40px;
     color:#fff;
@@ -40,9 +40,9 @@ input[type='text']:not(.search-text), input[type=password], input[type=email]{
 }
 
 input[type=submit]:not(.search-button){
-    width:fit-content;
+    width: 100%;
     padding:10px 50px;
-    margin-top: 0px;
+    margin: 0px;
     background: rgba(0, 0, 0, 0.6);
     font-size: 18px;
     outline: none;
@@ -59,7 +59,9 @@ input[type=submit]:hover{
 
 #header {
     text-align: center;
-    font-size: 48px;
-    font-weight: 600;
+    font-family: 'Sabon';
+    font-size: 20px;
+    font-weight: 400;
+    padding-bottom: 10px;
     color: #fff;
 }

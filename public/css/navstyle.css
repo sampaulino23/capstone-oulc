@@ -7,6 +7,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+a {
+    color:inherit;
+}
+
 nav a:hover{
     text-decoration: none;
 }
@@ -46,7 +50,7 @@ nav ul li a{
 }
 
 nav a.active, nav a:hover:not(.logo), nav a:hover:not(.btn2){
-    background: #7AC9ED;
+    background: none;
     transition: .25s;
     color: #000000;
 }
@@ -68,16 +72,15 @@ nav a.active, nav a:hover:not(.logo), nav a:hover:not(.btn2){
 
 .btn2{
     width:100%;
-    box-sizing: border-box;
+    box-sizing: none;
     padding:5px 15px;
     outline: none;
     border: none;
-    background: #0763AE;
     border-radius: 5px;
     font-size: 15px;
     font-weight: bold;
     color: white;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     cursor: pointer;
 }
 
@@ -132,4 +135,14 @@ nav a.active, nav a:hover:not(.logo), nav a:hover:not(.btn2){
 dl, ol, ul {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.navbar-logo {
+    left: 100px;
+    top: 10px;
+    position: absolute;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff !important;
 }

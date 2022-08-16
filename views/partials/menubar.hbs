@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="/css/navstyle.css">
 <nav>
-    <!-- <label class="logo"><a href="/" class="logo"><img src="/img/tempologofinal.png" style= "width: 180px; margin-top: 5px; object-fit: cover"></a></label> -->
+    <div class="navbar-logo">
+        <a href = "/admin/usermanagement"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
+    </div>
     <span id='page-name' style='display: none;'>{{pagename}}</span><span id='user'
         style='display: none;'>{{isAuthenticated}}</span><span id='admin' style='display: none;'>{{isAdmin}}</span>
     <ul>
@@ -9,7 +11,8 @@
 
         <!-- IF ADMIN USER -->
         {{#compare role '==' "Administrator"}}
-        <li><a href="/logout" class="btn2" id="logout">Logout</a></li>
+        <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
+        
         {{/compare}}
 
         <!-- IF OTHER USER -->
