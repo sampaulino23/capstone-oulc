@@ -103,8 +103,6 @@ const logincontroller = {
 
     postLogCheck: function (req, res) {
 
-        console.log(req.body);
-
         const userToBeChecked = new User({
             email: req.body.email,
             password: req.body.password
@@ -117,7 +115,7 @@ const logincontroller = {
                 res.redirect('/login/error');
             }
             else {
-                passport.authenticate("local")
+                passport.authenticate("local", { failureRedirect: '/login/error', failureMessage: true })
                     (req, res, function () {
                         User.find({ email: req.user.email },
                             function (err, docs) {
@@ -125,8 +123,6 @@ const logincontroller = {
                                     console.log(err);
                                 }
                                 else {
-
-                                    //login is successful
                                     console.log("credentials are correct");
                                     res.redirect('/admin/usermanagement')
                                 }
