@@ -49,8 +49,6 @@ const admincontroller = {
 
     getUserManagement: async (req, res) => {
         try {
-            // console.log("USERS");
-            var adminuser;
 
             try {
                 var newlyAddedUser = req.session.newlyAddedUser;
@@ -63,25 +61,9 @@ const admincontroller = {
             const users = await User.find({}).lean()
                                         .sort({})
                                         .exec();
-
-            // console.log (users.length);
-
             const newUser = await User.findById(newlyAddedUser).lean().exec();
 
-            // console.log(newUser)
-
-            for (i = 0; i < users.length; i++) {
-                // console.log ("for " + i);
-                if (users[i].role == "Administrator"){
-                    adminuser = users[i];
-                    // console.log (i);
-                    break;
-                }
-                
-            }
-
 			res.render('usermanagement', {
-                role: adminuser.role,
                 users: users,
                 newlyAddedUser: newUser
             });

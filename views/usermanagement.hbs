@@ -103,20 +103,26 @@
                             <!-- ALL USERS -->
                             {{#each users}}
                             {{#compare role '!=' "Administrator"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left" style="padding: 23px 20px;">{{fullName}}</td>
-                                <td class="text-left" style="padding: 23px 0px;">{{email}}</td>
-                                <td class="text-left" style="padding: 23px 0px;">{{department}}</td>
-                                <td class="text-left" style="padding: 23px 0px;">{{role}}</td>
-                                <td class="text-left" style="padding: 23px 0px;">
+                            <tr style="cursor: pointer;">
+                                <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    style="padding: 23px 20px;">{{fullName}}</td>
+                                <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    style="padding: 23px 0px;">{{email}}</td>
+                                <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    style="padding: 23px 0px;">{{department}}</td>
+                                <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    style="padding: 23px 0px;">{{role}}</td>
+                                <td class="text-left"
+                                    style="padding: 23px 0px;">
 
-                                    <!-- THIS IS THE DISABLE/ENABLE BUTTON FOR BACKEND PURPOSES, BUT THERE'S AN ISSUE UPON CLICKING
+
                                     {{#if isActive}}
-                                    <button type="submit" id="" class="edit-useraccess" data-toggle="modal" data-target="#modalDisableUser">Disable</button> <br>
+                                    <button type="submit" id="" class="edit-useraccess" data-toggle="modal"
+                                        data-target="#modalDisableUser">Disable</button> <br>
                                     {{else}}
-                                    <button type="submit" id="" class="edit-useraccess" data-toggle="modal" data-target="#modalEnableUser">Enable</button> <br>
+                                    <button type="submit" id="" class="edit-useraccess" data-toggle="modal"
+                                        data-target="#modalEnableUser">Enable</button> <br>
                                     {{/if}}
-                                    -->
 
                                     <!-- THIS IS TOGGLE FOR FRONTEND
                                     <div class="form-check form-switch" onclick="window.location.href='/inventory'">
@@ -125,17 +131,10 @@
                                         <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                     </div>
                                     -->
-
                                 </td>
-                                <td class="text-left" style="padding: 23px 20px;">{{isActive}}</td>
+                                <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    style="padding: 23px 20px;">{{isActive}}</td>
                             </tr>
-                            {{#if isActive}}
-                            <button type="submit" id="" class="edit-useraccess" data-toggle="modal"
-                                data-target="#modalDisableUser">Disable</button> <br>
-                            {{else}}
-                            <button type="submit" id="" class="edit-useraccess" data-toggle="modal"
-                                data-target="#modalEnableUser">Enable</button> <br>
-                            {{/if}}
                             {{/compare}}
                             {{/each}}
 
