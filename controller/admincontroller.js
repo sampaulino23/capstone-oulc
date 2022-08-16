@@ -36,13 +36,26 @@ const admincontroller = {
     getUserManagement: async (req, res) => {
         try {
             console.log("USERS");
+            var adminuser;
 
             const users = await User.find({}).lean()
                                         .sort({})
                                         .exec();
 
+                                        console.log (users.length);
+
+            for (i = 0; i < users.length; i++) {
+                console.log ("for " + i);
+                if (users[i].role == "Administrator"){
+                    adminuser = users[i];
+                    console.log (i);
+                    break;
+                }
+                
+            }
+
 			res.render('usermanagement', {
-                role: req.user.role,
+                role: adminuser.role,
                 users: users
             });
 
