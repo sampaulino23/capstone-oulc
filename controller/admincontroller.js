@@ -36,7 +36,9 @@ const admincontroller = {
             const hash = await bcrypt.hash(user.password, salt);
             user.password = hash;
 
-			res.send('User ' + user.fullName + ' has been added.');
+			req.session.newlyAddedUser = user._id;
+
+			res.redirect('/admin/usermanagement');
 
             await user.save();
 
@@ -50,11 +52,23 @@ const admincontroller = {
             console.log("USERS");
             var adminuser;
 
+            try {
+                var newlyAddedUser = req.session.newlyAddedUser;
+                console.log(newlyAddedUser);
+                req.session.newlyAddedUser = null;
+            } catch(err) {
+                console.log(err);
+            }
+
             const users = await User.find({}).lean()
                                         .sort({})
                                         .exec();
 
-                                        console.log (users.length);
+            console.log (users.length);
+
+            const newUser = await User.findById(newlyAddedUser).lean().exec();
+
+            console.log(newUser)
 
             for (i = 0; i < users.length; i++) {
                 console.log ("for " + i);
@@ -68,7 +82,8 @@ const admincontroller = {
 
 			res.render('usermanagement', {
                 role: adminuser.role,
-                users: users
+                users: users,
+                newlyAddedUser: newUser
             });
 
 		} catch(err) {
