@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const bcrypt = require('bcrypt');
 
 const User = require('../models/User.js');
 const { ObjectId } = require('mongoose');
@@ -17,16 +18,27 @@ const admincontroller = {
    
     postAddUser: async (req, res) => {
         try {
-            let user = new User({
+
+            //generate random 8 character password
+            var password = Math.random().toString(36).substr(2, 8);
+
+            var user = new User({
                 fullName: req.body.name,
                 email: req.body.email,
                 department: req.body.department,
                 role: req.body.role,
                 isActive: true,
-                password: '12345'
+                password: password
             });
 
-			res.send('User ' + user.fullName + ' has been added');
+            // hash the password
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(user.password, salt);
+            user.password = hash;
+
+			res.send('User ' + user.fullName + ' has been added.');
+
+            await user.save();
 
 		} catch(err) {
 			console.log(err);
