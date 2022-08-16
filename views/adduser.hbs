@@ -9,33 +9,40 @@
         <link rel="stylesheet" href="/css/adduserstyle.css">
     </head> 
     <body>
-        <div class = "wrap">
-            <form action="/admin/adduser" method="POST">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" id="name" required>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-sm" id="bg-img">
+                    
+                </div>
+                <div class = "col-sm">
+                    <form action="/admin/adduser" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">*Name</label>
+                            <input type="text" name="name" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">*Email</label>
+                            <input type="email" name="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <select name="department" id="department" class="form-select" required>
+                                <option>IT Department</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" id="role" class="form-select" required>
+                                <option>Requester</option>
+                                <option>Attorney</option>
+                                <option>Staff</option>
+                                <option>Third Party Representative</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="create-btn">Create New User</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="department" class="form-label">Department</label>
-                <select name="department" id="department" class="form-select" required>
-                    <option>IT Department</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="role" class="form-label">Role</label>
-                <select name="role" id="role" class="form-select" required>
-                    <option>Requester</option>
-                    <option>Attorney</option>
-                    <option>Staff</option>
-                    <option>Third Party Representative</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Create New User</button>
-        </form>
         </div>
     </body>
 </html>

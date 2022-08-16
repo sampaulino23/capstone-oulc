@@ -1,12 +1,44 @@
-.wrap{
+.container{
     font-family: 'Poppins', sans-serif; 
     font-size: 18px;
     font-weight: 500;
-    max-width: 500px;
+    max-width: 1260px;
     margin:auto;
-    background: rgba(12, 128, 57, 0.9);
+    background: rgba(217, 217, 217, 0.2);
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
     box-sizing: border-box;
     padding:40px;
     color:#fff;
     margin-top: 60px;
+}
+
+#bg-img {
+    background: url("/img/dlsu_facade_add_user.jpg");
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-right: 40px;
+}
+
+.row {
+    color: #000;
+    font-family: 'Poppins';
+    font-size: 18px;
+}
+
+.create-btn {
+    width: 100%;
+    padding:12px 87px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0px;
+    background: #0C8039;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    letter-spacing: 1px;
+    outline: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }

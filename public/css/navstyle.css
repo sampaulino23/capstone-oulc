@@ -138,11 +138,11 @@ dl, ol, ul {
 }
 
 .navbar-logo {
-    left: 100px;
+    left: 121px;
     top: 10px;
     position: absolute;
     font-family: 'Work Sans', sans-serif;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     color: #fff !important;
 }
