@@ -102,6 +102,7 @@
                         <tbody id="myTable">
                             <!-- ALL USERS -->
                             {{#each users}}
+                            {{#compare role '!=' "Administrator"}}
                             <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
                                 <td class="text-left" style="padding: 23px 20px;">{{fullName}}</td>
                                 <td class="text-left" style="padding: 23px 0px;">{{email}}</td>
@@ -135,6 +136,7 @@
                             <button type="submit" id="" class="edit-useraccess" data-toggle="modal"
                                 data-target="#modalEnableUser">Enable</button> <br>
                             {{/if}}
+                            {{/compare}}
                             {{/each}}
 
                         </tbody>
