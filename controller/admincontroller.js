@@ -35,8 +35,15 @@ const admincontroller = {
 
     getUserManagement: async (req, res) => {
         try {
+            console.log("USERS");
+
+            const users = await User.find({}).lean()
+                                        .sort({})
+                                        .exec();
+
 			res.render('usermanagement', {
-                role: req.user.role
+                role: req.user.role,
+                users: users
             });
 
 		} catch(err) {

@@ -39,172 +39,38 @@
     <div id="createpost" style ="min-height: 75vh;">
         <div class="tab-content">
             {{!-- <input class="form-control" id="myInput" style="font-size: 18px; width: 30%" type="text" placeholder="Search..." >   --}}
-            <div style="text-align: center;"><i id="featured">Products</i></div>
+            <div style="text-align: center;"><i id="featured">User Management</i></div>
             <br>
     
             <a href="/admin/adduser">Add User</a>
             
             <br><br>
-            <div id="mybookings" class="tab-pane active">
+            <div id="" class="tab-pane active">
                 <div class="w-100">
                 <table id="table" class="table table-hover" style="width: 100%; font-size: 18px; border-bottom: 1px solid #eee; background:white;">
                     <thead class="thead-light">
                         <tr>
-                            <th style="width: 20%; font-size: 20px;" class="text-left">Product Name</th>
-                            <th style="width: 20%; font-size: 20px; padding-right: 10%;" class="text-right">Price</th>
-                            <th style="width: 20%; font-size: 20px; padding-left: 5%;" class="text-left">Category</th>
-                            <th style="width: 20%; font-size: 20px; padding-left: 5%;" class="text-left">Size</th>
-                            <th style="width: 10%; font-size: 20px; padding-right: 10%;" class="text-right">Quantity</th>
-                            <th style="width: 10%; font-size: 20px;" class="text-center">Status</th>
+                            <th style="width: 20%; font-size: 20px;" class="text-left">Name</th>
+                            <th style="width: 20%; font-size: 20px; padding-right: 10%;" class="text-right">Email</th>
+                            <th style="width: 20%; font-size: 20px; padding-left: 5%;" class="text-left">Department</th>
+                            <th style="width: 20%; font-size: 20px; padding-left: 5%;" class="text-left">Role</th>
+                            <th style="width: 10%; font-size: 20px; padding-right: 10%;" class="text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
-            <!-- ACTIVE PRODUCTS -->
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Active"}}
-                            {{#compare productID.productcategory '==' "Classic"}}
+            <!-- ALL USERS -->
+                        {{#each users}}
                             <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
+                                <td class="text-left">{{fullName}}</td>
+                                <td class="text-right" style="padding-right: 10%;">{{email}}</td>
+                                <td class="text-left" style="padding-left: 5%;">{{department}}</td>
+                                <td class="text-left" style="padding-left: 5%;">{{role}}</td>
+                                <td class="text-right" style="padding-right: 2%;">{{isActive}}</td>
                             </tr>
-                            {{/compare}}
-                            {{/compare}}
                         {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Active"}}
-                            {{#compare productID.productcategory '==' "Special"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Active"}}
-                            {{#compare productID.productcategory '==' "Sugar Free"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Active"}}
-                            {{#compare productID.productcategory '==' "Sherbet"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Active"}}
-                            {{#compare productID.productcategory '==' "Deluxe"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-
-            <!-- INACTIVE PRODUCTS -->
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Inactive"}}
-                            {{#compare productID.productcategory '==' "Classic"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Inactive"}}
-                            {{#compare productID.productcategory '==' "Special"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Inactive"}}
-                            {{#compare productID.productcategory '==' "Sugar Free"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Inactive"}}
-                            {{#compare productID.productcategory '==' "Sherbet"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
-                        {{#each specificproduct}}
-                            {{#compare isactive '==' "Inactive"}}
-                            {{#compare productID.productcategory '==' "Deluxe"}}
-                            <tr onclick="window.location.href='/inventory/sproduct/{{_id}}'" style="cursor: pointer;">
-                                <td class="text-left">{{productID.productname}}</td>
-                                <td class="text-right" style="padding-right: 10%;">₱{{numberWithComma (decimal2 productsrp)}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productID.productcategory}}</td>
-                                <td class="text-left" style="padding-left: 5%;">{{productsize}}</td>
-                                <td class="text-right" style="padding-right: 2%;">{{productquantity}}</td>
-                                <td class="text-center">{{isactive}}</td>
-                            </tr>
-                            {{/compare}}
-                            {{/compare}}
-                        {{/each}}
+                      
                     </tbody>
                 </table>
-
                 </div> 
             </div>
         </div>
