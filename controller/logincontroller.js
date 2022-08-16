@@ -150,7 +150,6 @@ const logincontroller = {
             password: "pass1234",
             role: "Administrator",
             isActive: true,
-            url: 'blank',
         });
 
         // hash the password
