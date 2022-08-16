@@ -71,7 +71,30 @@ const admincontroller = {
 		} catch(err) {
 			console.log(err);
 		}
+    },
+
+    disableUser: async (req, res) => {
+        try {
+            console.log ("SAMPLE");
+            var userid = req.query.userid;      
+            await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: false } });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    enableUser: async (req, res) => {
+        try {
+            console.log ("SAMPLE");
+            var userid = req.query.userid;      
+            await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: true} });
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+
 }
 
 module.exports = admincontroller;
