@@ -15,16 +15,16 @@ $(document).ready(() => {
     });
 
 
+
     $('.disable-useraccess').click(function () {
-        var id = $(this).data('id');
-        alert("HI" + id);
-        //alert("Product details changed!");
+        //var id = $(this).data('id');
+        // alert(this.id);
 
         $.ajax({
             url: "/admin/disableuser",
             method: "GET",
             contentType: "application/json",
-            data: { details: details, productid: id },
+            data: { userid: this.id },
             success: function () {
                 console.log('SUCCESS');
             },
@@ -35,6 +35,8 @@ $(document).ready(() => {
         location.reload();
 
     });
+
+
 
 
 });

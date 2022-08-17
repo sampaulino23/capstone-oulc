@@ -13,7 +13,7 @@
     <!--CHECK -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--CHECK -->
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navstyle.css">
     <link rel="stylesheet" href="../css/usermanagement.css">
@@ -50,60 +50,32 @@
 
 <body>
 
-<!-- DISABLE MODAL
-    
-    <div class="modal fade" id="modalDisableUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">User Account Access</h5>
-                </div>
-                <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
-                    <div class="modal-body">
-                        Are you sure you want to disable this user account?
-                        // include name of user and disable/enable should depend on status 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="close-btn" id="enable-close" onclick="setRequired()"
-                            data-dismiss="modal">Cancel</button>
-                        <button type="button" class="confirm-btn disable-useraccess" data-toggle="modal"
-                            data-target="#modalChangeQtySuccess" data-dismiss=" modal">OK</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    -->
-
-
-
     <div id="createpost" style="min-height: 75vh;">
         <div class="tab-content">
             <div id="header">User Management</div>
             <br>
             <a href="/admin/adduser" class="add-user-btn">+ Add User</a>
 
-            <input class="form-control" id="myInput" style="font-size: 18px; width: 10%" type="text" placeholder="Search..."> 
+            <input class="form-control" id="myInput" style="font-size: 18px; width: 10%" type="text"
+                placeholder="Search...">
 
-            <label for="">Department:</label>                   
+            <label for="">Department:</label>
             <select id="departmentdropdown" oninput="filterUserDepartment();" onClick="">
-                <option selected disabled value="a">--  --</option>
+                <option selected disabled value="a">-- --</option>
                 <option>All</option>
                 <option>OULC</option>
                 <option>IT Department</option>
             </select>
 
-            <label for="">Role:</label>                   
+            <label for="">Role:</label>
             <select id="roledropdown" oninput="filterUserRole();" onClick="">
-                <option selected disabled value="a">--  --</option>
+                <option selected disabled value="a">-- --</option>
                 <option>All</option>
                 <option>Attorney</option>
                 <option>Office Staff</option>
                 <option>Requester</option>
             </select>
-            
+
             <br><br>
             <div id="user-table" class="tab-pane active">
                 <div class="w-100">
@@ -125,23 +97,24 @@
                             {{#compare role '!=' "Administrator"}}
                             <tr style="cursor: pointer;">
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
-                                    style="padding: 23px 20px;" id = "user-name" value="{{_id}}">{{fullName}}</td>
+                                    style="padding: 23px 20px;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
                                     style="padding: 23px 0px;">{{email}}</td>
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
                                     style="padding: 23px 0px;">{{department}}</td>
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
                                     style="padding: 23px 0px;">{{role}}</td>
-                                <td class="text-left"
-                                    style="padding: 23px 0px;">
+                                <td class="text-left" style="padding: 23px 0px;">
 
 
                                     {{#if isActive}}
                                     <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                        data-target="#modalDisableUser" onclick="disableUser(this.id)">Disable</button> <br>
+                                        data-target="#modalDisableUser{{@index}}" >Disable</button> <!-- onclick="disableUser(this.id)" -->
+                                    <br>
                                     {{else}}
                                     <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                        data-target="#modalEnableUser" onclick="enableUser(this.id)">Enable</button> <br>
+                                        data-target="#modalEnableUser">Enable</button> <!-- onclick="enableUser(this.id) -->
+                                    <br>
                                     {{/if}}
 
                                     <!-- THIS IS TOGGLE FOR FRONTEND
@@ -155,6 +128,33 @@
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
                                     style="padding: 23px 20px;">{{isActive}}</td>
                             </tr>
+
+                            <!--  DISABLE MODAL -->
+
+                            <div class="modal fade" id="modalDisableUser{{@index}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">User Account Access</h5>
+                                        </div>
+                                        <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
+                                            <div class="modal-body">
+                                                Are you sure you want to disable this user account?
+                                                {{fullName}}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="close-btn" id="enable-close"
+                                                    onclick="setRequired()" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="confirm-btn disable-useraccess"
+                                                    data-toggle="modal" data-target="#modalChangeQtySuccess"
+                                                    data-dismiss=" modal" id = "{{_id}}">OK</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             {{/compare}}
                             {{/each}}
 
