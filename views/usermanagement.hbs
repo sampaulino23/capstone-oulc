@@ -109,11 +109,11 @@
 
                                     {{#if isActive}}
                                     <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                        data-target="#modalDisableUser{{@index}}" >Disable</button> <!-- onclick="disableUser(this.id)" -->
+                                        data-target="#modalUserAccess{{@index}}">Disable</button>
                                     <br>
                                     {{else}}
                                     <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                        data-target="#modalEnableUser">Enable</button> <!-- onclick="enableUser(this.id) -->
+                                        data-target="#modalUserAccess{{@index}}">Enable</button>
                                     <br>
                                     {{/if}}
 
@@ -129,9 +129,9 @@
                                     style="padding: 23px 20px;">{{isActive}}</td>
                             </tr>
 
-                            <!--  DISABLE MODAL -->
+                            <!--  USER ACCESS MODAL -->
 
-                            <div class="modal fade" id="modalDisableUser{{@index}}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="modalUserAccess{{@index}}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                     <div class="modal-content">
@@ -139,21 +139,39 @@
                                             <h5 class="modal-title" id="exampleModalLongTitle">User Account Access</h5>
                                         </div>
                                         <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
+
+
                                             <div class="modal-body">
-                                                Are you sure you want to disable this user account?
+                                                {{#if isActive}}
+                                                Are you sure you want to disable this user account? <!-- DISABLE MODAL -->
+                                                {{else}}
+                                                Are you sure you want to enable this user account? <!-- ENABLE MODAL -->
+                                                {{/if}}
+                                                <br>
                                                 {{fullName}}
                                             </div>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="close-btn" id="enable-close"
                                                     onclick="setRequired()" data-dismiss="modal">Cancel</button>
+                                                {{#if isActive}} <!-- DISABLE FUNCTION -->
                                                 <button type="button" class="confirm-btn disable-useraccess"
-                                                    data-toggle="modal" data-target="#modalChangeQtySuccess"
-                                                    data-dismiss=" modal" id = "{{_id}}">OK</button>
+                                                    data-toggle="modal" data-target="#"
+                                                    data-dismiss=" modal" id="{{_id}}">OK</button>
+
+                                                {{else}} <!-- ENABLE FUNCTION -->
+                                                <button type="button" class="confirm-btn enable-useraccess"
+                                                    data-toggle="modal" data-target="#"
+                                                    data-dismiss=" modal" id="{{_id}}">OK</button>
+
+                                                {{/if}}
+
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                            <!--  END: USER ACCESS MODAL -->
 
                             {{/compare}}
                             {{/each}}

@@ -75,7 +75,7 @@ const admincontroller = {
 
     disableUser: async (req, res) => {
         try {
-            console.log ("SAMPLE");
+            console.log ("Inside Disable User");
             var userid = req.query.userid;      
             await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: false } });
 
@@ -86,7 +86,7 @@ const admincontroller = {
 
     enableUser: async (req, res) => {
         try {
-            console.log ("SAMPLE");
+            console.log ("Inside Enable User");
             var userid = req.query.userid;      
             await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: true} });
         } catch (err) {

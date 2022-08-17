@@ -36,48 +36,31 @@ $(document).ready(() => {
 
     });
 
+    $('.enable-useraccess').click(function () {
+        //var id = $(this).data('id');
+        // alert(this.id);
+
+        $.ajax({
+            url: "/admin/enableuser",
+            method: "GET",
+            contentType: "application/json",
+            data: { userid: this.id },
+            success: function () {
+                console.log('SUCCESS');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        location.reload();
+
+    });
+
+
 
 
 
 });
-
-function disableUser(id) {
-
-    $.ajax({
-        url: "/admin/disableuser",
-        method: "GET",
-        contentType: "application/json",
-        data: { userid: id },
-        success: function () {
-            console.log('SUCCESS');
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-    location.reload();
-}
-
-
-function enableUser(id) {
-
-    $.ajax({
-        url: "/admin/enableuser",
-        method: "GET",
-        contentType: "application/json",
-        data: { userid: id },
-        success: function () {
-            console.log('SUCCESS');
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-    location.reload();
-}
-
-
-
 
 
 
