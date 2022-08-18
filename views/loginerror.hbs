@@ -14,16 +14,20 @@
     
     <body>
         <div class="wrap">
+            <div id = "header">
+                <h2><img src="/img/dlsu_logo.png" style= "width: 80px; margin-top: -15px;"></h2>
+                Office of the University Legal Counsel<br>Contract Management System
+            </div>
             <form class = "login" action = "/login/logcheck" method = "POST">
-                <span class = "error-label mr-auto" style="font-style: italic; color: red; font-size: 14px;">
+                <span class = "error-label mr-auto" style="font-style: italic; color: rgb(255,0,0); font-size: 14px;">
                     <div class="row ml-1">Incorrect email or password.</div>
                     <div class="row ml-1" style = "margin-bottom: 10px;">No account yet? Click here to&nbsp;<b><a href="/login/register">sign up.</a></b></div>
                 </span>
-                <div style="color:#000000; font-size: 18px; font-weight: bolder; font-family: 'Quicksand', sans-serif;">Email</a></b></div>
+                <div>Email</a></b></div>
                 <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter your email" required>
-                <div style="color:#000000; font-size: 18px; font-weight: bolder; font-family: 'Quicksand', sans-serif;">Password</a></b></div>
+                <div>Password</a></b></div>
                 <input type="password" id = "password" name = "password" class="pwdbox" placeholder="Password" required>
-                <input type="submit" class="loginbtn" value="Log In">
+                <input type="submit" class="loginbtn" value="Login">
             </form>
         </div>
         

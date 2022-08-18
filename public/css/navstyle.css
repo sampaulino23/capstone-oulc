@@ -7,12 +7,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
-a {
-    color:inherit;
-}
-
-nav a:hover{
+a:hover, a:visited, a:link, a:active
+{
     text-decoration: none;
+    color: #fff;
 }
 
 nav{
@@ -144,5 +142,5 @@ dl, ol, ul {
     font-family: 'Work Sans', sans-serif;
     font-size: 15px;
     font-weight: 600;
-    color: #fff !important;
+    color: #fff;
 }

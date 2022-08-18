@@ -49,33 +49,34 @@
 </head>
 
 <body>
-
     <div id="createpost" style="min-height: 75vh;">
         <div class="tab-content">
             <div id="header">User Management</div>
             <br>
-            <a href="/admin/adduser" class="add-user-btn">+ Add User</a>
+            <div id="add-user-search">
+                <a href="/admin/adduser" class="add-user-btn">+ Add User</a>
+                <input class="form-control" id="myInput" type="text" placeholder="Search...">
+            </div>
 
-            <input class="form-control" id="myInput" style="font-size: 18px; width: 10%" type="text"
-                placeholder="Search...">
+            <div id = "dropdowns">
+                <label for="">Department:</label>
+                <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
+                    <option selected disabled value="a">Select Department </option>
+                    <option value="All">All</option>
+                    <option>OULC</option>
+                    <option>IT Department</option>
+                </select>
 
-            <label for="">Department:</label>
-            <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
-                <option selected disabled value="a">-- Select Department --</option>
-                <option value="All">All</option>
-                <option>OULC</option>
-                <option>IT Department</option>
-            </select>
-
-            <label for="">Role:</label>
-            <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
-                <option selected disabled value="a">-- Select Role --</option>
-                <option value="All">All</option>
-                <option>Attorney</option>
-                <option>Office Staff</option>
-                <option>Requester</option>
-            </select>
-
+                <label for="">Role:</label>
+                <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
+                    <option selected disabled value="a">Select Role </option>
+                    <option value="All">All</option>
+                    <option>Attorney</option>
+                    <option>Office Staff</option>
+                    <option>Requester</option>
+                </select>
+            </div>
+            
             <br><br>
             <div id="user-table" class="tab-pane active">
                 <div class="w-100">
