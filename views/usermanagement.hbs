@@ -60,17 +60,17 @@
                 placeholder="Search...">
 
             <label for="">Department:</label>
-            <select id="departmentdropdown" oninput="filterUserDepartment();" onClick="">
-                <option selected disabled value="a">-- --</option>
-                <option>All</option>
+            <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
+                <option selected disabled value="a">-- Select Department --</option>
+                <option value="All">All</option>
                 <option>OULC</option>
                 <option>IT Department</option>
             </select>
 
             <label for="">Role:</label>
-            <select id="roledropdown" oninput="filterUserRole();" onClick="">
-                <option selected disabled value="a">-- --</option>
-                <option>All</option>
+            <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
+                <option selected disabled value="a">-- Select Role --</option>
+                <option value="All">All</option>
                 <option>Attorney</option>
                 <option>Office Staff</option>
                 <option>Requester</option>
@@ -128,6 +128,39 @@
                                 <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
                                     style="padding: 23px 20px;">{{isActive}}</td>
                             </tr>
+
+                            <!--  USER VIEW MODAL -->
+
+                            <div class="modal fade" id="modalUserView{{@index}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">View User Account</h5>
+                                        </div>
+
+                                            <div class="modal-body">
+                                                Name
+                                                {{fullName}}
+                                                Email Address
+                                                {{email}}
+                                                Password
+                                                {{password}}
+                                                Department
+                                                {{department}}
+                                                Role
+                                                {{role}}
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="close-btn" id="enable-close"
+                                                    onclick="setRequired()" data-dismiss="modal">Close</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  END: USER VIEW MODAL -->
+
 
                             <!--  USER ACCESS MODAL -->
 

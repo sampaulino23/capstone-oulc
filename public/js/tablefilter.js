@@ -37,3 +37,20 @@ function filterUserRole(){ //for inventory (product category) and purchasing (pr
         }
     }
 }
+
+// Reset Dropdown Filter Values
+function resetDepartment(){ //for admin user management
+    document.getElementById("departmentdropdown").value='a';
+
+    if(document.getElementById("roledropdown").value === "All")    {
+        document.getElementById("departmentdropdown").value='All';
+    }
+}
+function resetRole(){ //for admin user management
+    document.getElementById("roledropdown").value='a';
+
+    if(document.getElementById("departmentdropdown").value === "All")    {
+        document.getElementById("roledropdown").value='All';
+    }
+}
+
