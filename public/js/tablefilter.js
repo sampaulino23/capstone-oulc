@@ -1,5 +1,22 @@
-//TABLE FILTER FOR ADMIN...
+//TABLE FILTER FOR ADMIN... //
 
+//Search Filter
+$(document).ready(function () {
+    $(".search-icon").click(function () {
+        $(".search-box").toggle();
+        $(".search-box input[type='text']").focus();
+    });
+
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+});
+
+//Dropdown Filter
 function filterUserDepartment(){ //for inventory (product category) and purchasing (product category)
     var dropdown = document.getElementById("departmentdropdown");
     var table = document.getElementById("table");

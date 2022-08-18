@@ -29,23 +29,6 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function () {
-            $(".search-icon").click(function () {
-                $(".search-box").toggle();
-                $(".search-box input[type='text']").focus();
-            });
-
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-
-        });
-
-    </script>
 </head>
 
 <body>
@@ -115,13 +98,13 @@
                                 {{#each users}}
                                 {{#compare role '!=' "Administrator"}}
                                 <tr style="cursor: pointer;">
-                                    <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
                                         style="padding: 23px 20px;" id="user-name" value="{{_id}}">{{fullName}}</td>
-                                    <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
                                         style="padding: 23px 0px;">{{email}}</td>
-                                    <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
                                         style="padding: 23px 0px;">{{department}}</td>
-                                    <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
                                         style="padding: 23px 0px;">{{role}}</td>
                                     <td class="text-left" style="padding: 23px 0px;">
 
@@ -144,7 +127,7 @@
                                     </div>
                                     -->
                                     </td>
-                                    <td onclick="window.location.href='/inventory/sproduct/{{_id}}'" class="text-left"
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
                                         style="padding: 23px 20px;">{{isActive}}</td>
                                 </tr>
 
@@ -160,15 +143,15 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                Name
-                                                {{fullName}}
-                                                Email Address
-                                                {{email}}
-                                                Password
-                                                {{password}}
-                                                Department
-                                                {{department}}
-                                                Role
+                                                Name:
+                                                {{fullName}} <br>
+                                                Email Address:
+                                                {{email}} <br>
+                                                Password: 
+                                                {{password}} <br>
+                                                Department: 
+                                                {{department}} <br>
+                                                Role:
                                                 {{role}}
                                             </div>
 
