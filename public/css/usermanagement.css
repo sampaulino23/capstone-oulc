@@ -2,10 +2,9 @@
     position: relative;
     margin-left: 121px;
     margin-top: 40px;
-
     font-family: 'Poppins';
     font-style: normal;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 30px;
     line-height: 54px;
     /* identical to box height */
@@ -94,14 +93,14 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
-    padding-right: 13px;
-    padding-left: 13px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 #departmentdropdown, #roledropdown {
     font-size: 16px;
     line-height: 24px;
-    padding-left: 20px;
+    padding-left: 10px;
     background: #FFFFFF;
     border-radius: 0px;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -112,17 +111,94 @@
 
 .nav-tabs {
     width: fit-content;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 30px;
     margin-left: 121px;
     padding: 0px;
     margin-right: 20px;
+    margin-bottom: 15px;
     border-style: none;
 }
 
 .nav-item {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 700;
     margin-right: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-bottom: 0px;
+    color:#ABABAB;
+}
+
+.nav-item:active, .nav-item:focus {
+    border-bottom: solid #0C8039 5px;
+    color: #000;
+    transition: 0.25s
+}
+
+.nav-item:hover {
+    color: #000;
+    transition: 0.25s
+}
+
+.dropdown-menu {
+    color: #000;
+    width: fit-content;
+    margin-right: 10px;
+}
+
+#actions {
+    display: inline-flex;
+}
+
+.modal-header {
+    background: #00713D;
+    justify-content: center;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 20px;
+    line-height: 48px;
+    color: #fff;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border-radius: none;
+}
+
+.modal-body {
+    justify-content: center;
+    text-align: center;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+.close-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 20px;
+    gap: 10px;
+    background: #8B8B8B;
+    color: #fff;
+    border: none;
+    outline: none;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.confirm-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 20px;
+    gap: 10px;
+    background: #00713D;
+    color: #fff;
+    border: none;
+    outline: none;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }

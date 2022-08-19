@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../css/usermanagement.css">
     <script src="/js/usermanagement.js" type="text/javascript"></script>
     <script src="/js/tablefilter.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     
     <!-- OLD -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -43,16 +44,16 @@
             <div id="header">User Management</div>
 
             <ul class="nav-tabs" id="myTab" role="tablist">
-                <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
+                <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
                     All Users
                 </button>
-                <button autofocus class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
+                <button class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
                     aria-controls="activeusers">
-                    Active
+                    Active Users
                 </button>
                 <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
                     aria-controls="inactiveusers">
-                    Inactive
+                    Inactive Users
                 </button>
             </ul>
 
@@ -81,7 +82,6 @@
                 </select>
             </div>
 
-            <br><br>
             <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                 <div id="user-table" class="tab-pane active">
                     <div class="w-100">
@@ -89,12 +89,12 @@
                             style="width: 100%; font-size: 16px; background:#D9D9D9;">
                             <thead class="table-headers">
                                 <tr>
-                                    <th style="width: 20%; padding: 23px 20px;" class="text-left">Name</th>
-                                    <th style="width: 15%; padding: 23px 20px;" class="text-left">Email</th>
-                                    <th style="width: 25%; padding: 23px 20px;" class="text-left">Department</th>
-                                    <th style="width: 20%; padding: 23px 20px;" class="text-left">Role</th>
-                                    <th style="width: 10%; padding: 23px 20px;" class="text-left">Actions</th>
-                                    <th style="width: 10%; padding: 23px 20px;" class="text-left">User Status</th>
+                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Name</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Email</th>
+                                    <th style="width: 25%; padding: 15px; 15px; text-align: left;">Department</th>
+                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Role</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Actions</th>
+                                    <th style="width: 10%; padding: 15px; 15px; text-align: left;">User Status</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -103,15 +103,16 @@
                                 {{#compare role '!=' "Administrator"}}
                                 <tr style="cursor: pointer;">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;" id="user-name" value="{{_id}}">{{fullName}}</td>
+                                        style="padding: 15px 15px;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
-                                        style="padding: 23px 20px;">{{email}}</td>
+                                        style="padding: 15px 15px;">{{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;">{{department}}</td>
+                                        style="padding: 15px 15px;">{{department}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;">{{role}}</td>
-                                    <td class="text-left" style="padding: 23px 20px;">
-
+                                        style="padding: 15px 15px;">{{role}}</td>
+                                    <td class="text-left" style="padding: 15px 15px;">
+                                    
+                                    <div id = "actions">
                                         <div class="dropdown">
                                             <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                             <ul class="dropdown-menu">
@@ -131,15 +132,17 @@
                                         {{/if}}
 
                                         <!-- THIS IS TOGGLE FOR FRONTEND
-                                    <div class="form-check form-switch" onclick="window.location.href='/inventory'">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            id="flexSwitchCheckDefault" />
-                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                        <div class="form-check form-switch" onclick="window.location.href='/inventory'">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheckDefault" />
+                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                        </div>
+                                        -->
                                     </div>
-                                    -->
+                                    
                                     </td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;">{{isActive}}</td>
+                                        style="padding: 15px 15px;">{{isActive}}</td>
                                 </tr>
 
                                 <!--  USER VIEW MODAL -->
@@ -180,15 +183,14 @@
 
                                 <div class="modal fade" id="modalUserAccess{{@index}}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style = "width:35%;">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">User Account Access
                                                 </h5>
                                             </div>
                                             <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
-
-
+                                                
                                                 <div class="modal-body">
                                                     {{#if isActive}}
                                                     Are you sure you want to disable this user account?
@@ -198,7 +200,7 @@
                                                     <!-- ENABLE MODAL -->
                                                     {{/if}}
                                                     <br>
-                                                    {{fullName}}
+                                                    ({{fullName}})
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -215,9 +217,7 @@
                                                     <button type="button" class="confirm-btn enable-useraccess"
                                                         data-toggle="modal" data-target="#" data-dismiss=" modal"
                                                         id="{{_id}}">OK</button>
-
                                                     {{/if}}
-
                                                 </div>
                                             </form>
                                         </div>
