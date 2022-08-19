@@ -28,13 +28,14 @@ const admincontroller = {
                 department: req.body.department,
                 role: req.body.role,
                 isActive: true,
-                password: password
+                password: password,
+                isDefaultPass: true
             });
 
-            // hash the password
-            const salt = await bcrypt.genSalt(10);
+            // hash the password not needed for adding new user. Remove when finalized
+            /*const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(user.password, salt);
-            user.password = hash;
+            user.password = hash;*/
 
 			req.session.newlyAddedUser = user._id;
 
