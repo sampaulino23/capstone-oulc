@@ -23,6 +23,10 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isDefaultPass: {
+        type: Boolean,
+        default: true
+    },
     
 });
 

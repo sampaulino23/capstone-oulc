@@ -68,7 +68,7 @@
                     <option selected disabled value="a">Select Department </option>
                     <option value="All">All</option>
                     <option>OULC</option>
-                    <option>IT Department</option>
+                    <option>Information Technology</option>
                 </select>
 
                 <label for="" class = "dept-and-role" style="margin-left: 20px;">Role</label>
@@ -78,6 +78,7 @@
                     <option>Attorney</option>
                     <option>Office Staff</option>
                     <option>Requester</option>
+                    <option>Third Party Representative</option>
                 </select>
             </div>
 
@@ -88,11 +89,11 @@
                             style="width: 100%; font-size: 16px; background:#D9D9D9;">
                             <thead class="table-headers">
                                 <tr>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white;">Name</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-left:1px solid white; border-bottom: 1px solid white;">Email</th>
-                                    <th style="width: 25%; padding: 15px; 15px; text-align: left; border-left:1px solid white; border-bottom: 1px solid white;">Department</th>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-left:1px solid white; border-bottom: 1px solid white;">Role</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-left:1px solid white; border-bottom: 1px solid white;">Actions</th>
+                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Name</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Email</th>
+                                    <th style="width: 25%; padding: 15px; 15px; text-align: left;">Department</th>
+                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Role</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Actions</th>
                                     <!-- <th style="width: 10%; padding: 15px; 15px; text-align: left;">User Status</th> -->
                                 </tr>
                             </thead>
@@ -102,14 +103,14 @@
                                 {{#compare role '!=' "Administrator"}}
                                 <tr style="cursor: pointer;" id="{{_id}}">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name" value="{{_id}}">{{fullName}}</td>
+                                        style="padding: 15px 15px;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
-                                        style="padding: 15px 15px; border-left:1px solid white; border-bottom: 1px solid white;">{{email}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}} border-bottom: 1px solid white;" class="text-left"
-                                        style="padding: 15px 15px; border-left:1px solid white; border-bottom: 1px solid white;">{{department}}</td>
+                                        style="padding: 15px 15px;">{{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-left:1px solid white; border-bottom: 1px solid white;">{{role}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-left: 1px solid white; border-bottom: 1px solid white;">
+                                        style="padding: 15px 15px;">{{department}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
+                                        style="padding: 15px 15px;">{{role}}</td>
+                                    <td class="text-left" style="padding: 15px 15px;">
                                     <div id = "actions">
                                         <div class="dropstart">
                                             <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
@@ -129,12 +130,13 @@
                                         <br>
                                         {{/if}}
 
+                                    <!-- THIS IS TOGGLE FOR FRONTEND
                                         <div class="form-check form-switch" onclick="window.location.href='/inventory'">
                                             <input class="form-check-input" type="checkbox" role="switch"
                                                 id="flexSwitchCheckDefault" />
                                             <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
-                                    
+                                    -->
                                     </div>
 
                                         <!-- EDIT USER DETAILS MODAL -->
@@ -143,29 +145,30 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Edit User Account</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <form action="/editUserDetails" method="POST">
-                                                        <div class="modal-body" style = "text-align: left;">
+                                                        <div class="modal-body">
                                                             <input type="hidden" class="form-control" id="{{_id}}" name="edituserdetailsid">
-                                                            <div class="mb-3" style = "margin-left:auto; margin-right: auto;">
+                                                            <div class="mb-3">
                                                                 <label for="fullname" class="form-label">Full Name</label>
                                                                 <input type="text" class="form-control" id="editFullName" name="editFullName"
-                                                                    placeholder="Enter full name" style="width: 60%;" value="{{fullName}}" required>
+                                                                    placeholder="Enter full name" value="{{fullName}}" required>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="fulladdress" class="form-label">Email Address</label>
                                                                 <input type="text" class="form-control" id="editEmailAddress" name="editEmailAddress"
-                                                                    placeholder="Enter full address"  style="width: 60%;" value="{{email}}" required>
+                                                                    placeholder="Enter full address" value="{{email}}" required>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="department" class="form-label">Department</label>
-                                                                <select name="department" id="editDepartment" name="editDepartment" style="width: 60%;" class="form-select" required>
+                                                                <select name="department" id="editDepartment" name="editDepartment" class="form-select" required>
                                                                     <option>IT Department</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="role" class="form-label">Role</label>
-                                                                <select name="role" id="editRole" name="editRole" style="width: 60%;" class="form-select" required>
+                                                                <select name="role" id="editRole" name="editRole" class="form-select" required>
                                                                     <option>Requester</option>
                                                                     <option>Attorney</option>
                                                                     <option>Staff</option>
@@ -174,8 +177,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="close-btn" data-bs-dismiss="modal">CLOSE</button>
-                                                            <button type="button" class="confirm-btn">SAVE</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save Changes</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -189,13 +192,14 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Reset User Account Password</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Are you sure you want to reset the user password?<br>({{fullName}})
+                                                        Are you sure you want to reset the user password? ({{fullName}})
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="close-btn" data-bs-dismiss="modal">CLOSE</button>
-                                                        <button type="button" class="confirm-btn">SAVE</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Yes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,12 +227,15 @@
                                                 {{fullName}} <br><br>
                                                 <b>Email Address</b><br>
                                                 {{email}} <br><br>
-                                                <b>Password</b><br>
-                                                {{password}} <br><br>
-                                                <b>Department</b><br>
+                                                <b>Department:</b><br>
                                                 {{department}} <br><br>
-                                                <b>Role</b><br>
-                                                {{role}}
+                                                <b>Role:</b><br>
+                                                {{role}} <br><br>
+                                                {{#if isDefaultPass}}
+                                                <b>Default Password:</b><br>
+                                                {{password}} <br><br>
+                                                {{else}}
+                                                {{/if}}
                                             </div>
 
                                             <div class="modal-footer">
@@ -253,6 +260,7 @@
                                             </div>
                                             <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
 
+
                                                 <div class="modal-body">
                                                     {{#if isActive}}
                                                     Are you sure you want to disable this user account?
@@ -262,12 +270,12 @@
                                                     <!-- ENABLE MODAL -->
                                                     {{/if}}
                                                     <br>
-                                                    ({{fullName}})
+                                                    {{fullName}}
                                                 </div>
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="close-btn" id="enable-close"
-                                                        onclick="setRequired()" data-dismiss="modal">CANCEL</button>
+                                                        onclick="setRequired()" data-dismiss="modal">Cancel</button>
                                                     {{#if isActive}}
                                                     <!-- DISABLE FUNCTION -->
                                                     <button type="button" class="confirm-btn disable-useraccess"
