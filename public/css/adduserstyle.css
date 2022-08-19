@@ -43,6 +43,11 @@
     cursor: pointer;
 }
 
+.create-btn:hover, .create-btn:active {
+    color: #000;
+    transition: .25s;
+}
+
 .form-control, .form-select {
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0px;
