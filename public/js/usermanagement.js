@@ -56,4 +56,23 @@ $(document).ready(() => {
 });
 
 
+function viewAllUsers(){
+    alert ("VIEW ALL");
+}
+
+function viewActiveUsers(){
+    alert ("VIEW ACTIVE");
+   // $("#nav-viewUsers-start").("{{#compare isActive '==' true}}");
+   // $("#nav-viewUsers-end").append("{{/compare}}");
+   // document.getElementById("nav-viewUsers-start").innerHTML = "{{#compare isActive '==' true}}";
+   // document.getElementById("nav-viewUsers-end").innerHTML = "/{{/compare}}";
+}
+
+
+
+function viewInactiveUsers(){
+    alert ("VIEW Inactive");
+}
+
+
 

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../css/usermanagement.css">
     <script src="/js/usermanagement.js" type="text/javascript"></script>
     <script src="/js/tablefilter.js" type="text/javascript"></script>
-    
+
     <!-- OLD -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -32,7 +32,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--CHECK -->
 
-    
+
 </head>
 
 <body>
@@ -43,15 +43,16 @@
             <div id="header">User Management</div>
 
             <ul class="nav-tabs" id="myTab" role="tablist">
-                <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
+                <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                    aria-controls="all" onclick="viewAllUsers()">
                     All Users
                 </button>
                 <button class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
-                    aria-controls="activeusers">
+                    aria-controls="activeusers" onclick="viewActiveUsers()">
                     Active Users
                 </button>
                 <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
-                    aria-controls="inactiveusers">
+                    aria-controls="inactiveusers" onclick="viewInactiveUsers()">
                     Inactive Users
                 </button>
             </ul>
@@ -63,7 +64,7 @@
             </div>
 
             <div id="dropdowns">
-                <label for="" class = "dept-and-role">Department</label>
+                <label for="" class="dept-and-role">Department</label>
                 <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
                     <option selected disabled value="a">Select Department </option>
                     <option value="All">All</option>
@@ -71,7 +72,7 @@
                     <option>Information Technology</option>
                 </select>
 
-                <label for="" class = "dept-and-role" style="margin-left: 20px;">Role</label>
+                <label for="" class="dept-and-role" style="margin-left: 20px;">Role</label>
                 <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
                     <option selected disabled value="a">Select Role </option>
                     <option value="All">All</option>
@@ -89,11 +90,21 @@
                             style="width: 100%; font-size: 16px; background:#D9D9D9;">
                             <thead class="table-headers">
                                 <tr>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white;">Name</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Email</th>
-                                    <th style="width: 25%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Role</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
+                                    <th
+                                        style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white;">
+                                        Name</th>
+                                    <th
+                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        Email</th>
+                                    <th
+                                        style="width: 25%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        Department</th>
+                                    <th
+                                        style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        Role</th>
+                                    <th
+                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        Actions</th>
                                     <!-- <th style="width: 10%; padding: 15px; 15px; text-align: left;">User Status</th> -->
                                 </tr>
                             </thead>
@@ -101,72 +112,94 @@
                                 <!-- ALL USERS -->
                                 {{#each users}}
                                 {{#compare role '!=' "Administrator"}}
+                                
+                                {{!-- <div id = "nav-viewUsers-start"> {{#compare isActive '==' true}}  </div>    --}}
+
                                 <tr style="cursor: pointer;" id="{{_id}}">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name" value="{{_id}}">{{fullName}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{email}}</td>
+                                        style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name"
+                                        value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{department}}</td>
+                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        {{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{role}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                    <div id = "actions">
-                                        <div class="dropstart">
-                                            <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                            <ul class="dropdown-menu">
-                                                <li><button class="dropdown-item get-edit-user" type="button" data-bs-toggle="modal" data-bs-target="#modalEditUserDetails{{@index}}">Edit</button></li>
-                                                <li><button class="dropdown-item get-reset-password" type="button" data-bs-toggle="modal" data-bs-target="#modalResetPassword{{@index}}">Reset Password</button></li>
-                                            </ul>
+                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        {{department}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
+                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        {{role}}</td>
+                                    <td class="text-left"
+                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        <div id="actions">
+                                            <div class="dropstart">
+                                                <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li><button class="dropdown-item get-edit-user" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEditUserDetails{{@index}}">Edit</button>
+                                                    </li>
+                                                    <li><button class="dropdown-item get-reset-password" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalResetPassword{{@index}}">Reset
+                                                            Password</button></li>
+                                                </ul>
+                                            </div>
+
+                                            {{#if isActive}}
+                                            <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
+                                                data-target="#modalUserAccess{{@index}}">Disable</button>
+                                            <br>
+                                            {{else}}
+                                            <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
+                                                data-target="#modalUserAccess{{@index}}">Enable</button>
+                                            <br>
+                                            {{/if}}
+
                                         </div>
-                                        
-                                        {{#if isActive}}
-                                        <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                            data-target="#modalUserAccess{{@index}}">Disable</button>
-                                        <br>
-                                        {{else}}
-                                        <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                            data-target="#modalUserAccess{{@index}}">Enable</button>
-                                        <br>
-                                        {{/if}}
-                                    <!-- FRONT END TOGGLE SWITCH
-                                        <div class="form-check form-switch" onclick="window.location.href='/inventory'">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                id="flexSwitchCheckDefault" />
-                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                        </div>
-                                    !-->
-                                    </div>
 
                                         <!-- EDIT USER DETAILS MODAL -->
-                                        <div class="modal fade" id="modalEditUserDetails{{@index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="modalEditUserDetails{{@index}}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit User Account</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit User Account
+                                                        </h5>
                                                     </div>
                                                     <form action="/editUserDetails" method="POST">
                                                         <div class="modal-body-view-user-details">
-                                                            <input type="hidden" class="form-control" id="{{_id}}" name="edituserdetailsid">
+                                                            <input type="hidden" class="form-control" id="{{_id}}"
+                                                                name="edituserdetailsid">
                                                             <div class="mb-3">
-                                                                <label for="fullname"  class="form-label">Full Name</label>
-                                                                <input type="text" class="form-control" id="editFullName" name="editFullName"
-                                                                    placeholder="Enter full name" style = "width: 60%;" value="{{fullName}}" required>
+                                                                <label for="fullname" class="form-label">Full
+                                                                    Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="editFullName" name="editFullName"
+                                                                    placeholder="Enter full name" style="width: 60%;"
+                                                                    value="{{fullName}}" required>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="fulladdress" class="form-label">Email Address</label>
-                                                                <input type="text" class="form-control" id="editEmailAddress" name="editEmailAddress"
-                                                                    placeholder="Enter full address" style = "width: 60%;" value="{{email}}" required>
+                                                                <label for="fulladdress" class="form-label">Email
+                                                                    Address</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="editEmailAddress" name="editEmailAddress"
+                                                                    placeholder="Enter full address" style="width: 60%;"
+                                                                    value="{{email}}" required>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="department" class="form-label">Department</label>
-                                                                <select name="department" id="editDepartment" name="editDepartment" style = "width: 60%;" class="form-select" required>
+                                                                <label for="department"
+                                                                    class="form-label">Department</label>
+                                                                <select name="department" id="editDepartment"
+                                                                    name="editDepartment" style="width: 60%;"
+                                                                    class="form-select" required>
                                                                     <option>IT Department</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="role" class="form-label">Role</label>
-                                                                <select name="role" id="editRole" name="editRole" style = "width: 60%;" class="form-select" required>
+                                                                <select name="role" id="editRole" name="editRole"
+                                                                    style="width: 60%;" class="form-select" required>
                                                                     <option>Requester</option>
                                                                     <option>Attorney</option>
                                                                     <option>Staff</option>
@@ -175,7 +208,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="close-btn" data-bs-dismiss="modal">CLOSE</button>
+                                                            <button type="button" class="close-btn"
+                                                                data-bs-dismiss="modal">CLOSE</button>
                                                             <button type="button" class="confirm-btn">SAVE</button>
                                                         </div>
                                                     </form>
@@ -185,17 +219,21 @@
                                         <!-- END: EDIT USER DETAILS MODAL -->
 
                                         <!-- RESET PASSWORD MODAL -->
-                                        <div class="modal fade" id="modalResetPassword{{@index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="modalResetPassword{{@index}}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Reset User Account Password</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Reset User
+                                                            Account Password</h5>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Are you sure you want to reset the user password?<br>({{fullName}})
+                                                        Are you sure you want to reset the user
+                                                        password?<br>({{fullName}})
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="close-btn" data-bs-dismiss="modal">CLOSE</button>
+                                                        <button type="button" class="close-btn"
+                                                            data-bs-dismiss="modal">CLOSE</button>
                                                         <button type="button" class="confirm-btn">YES</button>
                                                     </div>
                                                 </div>
@@ -212,7 +250,8 @@
 
                                 <div class="modal fade" id="modalUserView{{@index}}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 30%">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                                        style="width: 30%">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">View User Account
@@ -249,7 +288,8 @@
 
                                 <div class="modal fade" id="modalUserAccess{{@index}}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 35%;">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                                        style="width: 35%;">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">User Account Access
@@ -293,7 +333,9 @@
                                     </div>
                                 </div>
                                 <!--  END: USER ACCESS MODAL -->
-
+                                
+                                {{!-- <div id = "nav-viewUsers-end">{{/compare}}</div> --}}
+                                
                                 {{/compare}}
                                 {{/each}}
 
@@ -304,6 +346,7 @@
             </div>
 
             <div class="tab-pane fade" id="activeusers" role="tabpanel" aria-labelledby="activeusers-tab">
+
                 active users
 
             </div>
@@ -314,7 +357,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- NEWLY ADDED USER TOAST -->
     <div class="toast-container" style="position: absolute; top: 10px; right: 10px;">
         <div class="toast" id="add-user-toast">
