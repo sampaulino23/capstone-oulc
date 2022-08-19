@@ -79,9 +79,50 @@
     float: right;
     margin-right: 121px;
     width: fit-content;
+    color: #000;
 }
 
 #add-search-dropdowns {
     display: inline-flex;
     align-items: baseline;
+}
+
+.dept-and-role {
+    color: #000;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding-right: 13px;
+    padding-left: 13px;
+}
+
+#departmentdropdown, #roledropdown {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 20px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 213px;
+    height: 49px;
+    align-content: center;
+}
+
+.nav-tabs {
+    width: fit-content;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 30px;
+    margin-left: 121px;
+    padding: 0px;
+    margin-right: 20px;
+    border-style: none;
+}
+
+.nav-item {
+    margin-right: 10px;
 }

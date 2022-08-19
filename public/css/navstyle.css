@@ -139,8 +139,9 @@ dl, ol, ul {
     left: 121px;
     top: 10px;
     position: absolute;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 15px;
+    font-family: 'Work Sans';
+    font-style: normal;
     font-weight: 600;
-    color: #fff;
+    font-size: 15px;
+    line-height: 28px;
 }

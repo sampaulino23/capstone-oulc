@@ -40,7 +40,7 @@
 
             <ul class="nav-tabs" id="myTab" role="tablist">
                 <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
-                    All
+                    All Users
                 </button>
                 <button autofocus class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
                     aria-controls="activeusers">
@@ -59,7 +59,7 @@
             </div>
 
             <div id="dropdowns">
-                <label for="">Department:</label>
+                <label for="" class = "dept-and-role">Department</label>
                 <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
                     <option selected disabled value="a">Select Department </option>
                     <option value="All">All</option>
@@ -67,7 +67,7 @@
                     <option>IT Department</option>
                 </select>
 
-                <label for="">Role:</label>
+                <label for="" class = "dept-and-role" style="margin-left: 20px;">Role</label>
                 <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
                     <option selected disabled value="a">Select Role </option>
                     <option value="All">All</option>
@@ -86,9 +86,9 @@
                             <thead class="table-headers">
                                 <tr>
                                     <th style="width: 20%; padding: 23px 20px;" class="text-left">Name</th>
-                                    <th style="width: 20%; padding: 23px 0px;" class="text-left">Email</th>
-                                    <th style="width: 20%; padding: 23px 0px;" class="text-left">Department</th>
-                                    <th style="width: 20%; padding: 23px 0px;" class="text-left">Role</th>
+                                    <th style="width: 15%; padding: 23px 20px;" class="text-left">Email</th>
+                                    <th style="width: 25%; padding: 23px 20px;" class="text-left">Department</th>
+                                    <th style="width: 20%; padding: 23px 20px;" class="text-left">Role</th>
                                     <th style="width: 10%; padding: 23px 20px;" class="text-left">Actions</th>
                                     <th style="width: 10%; padding: 23px 20px;" class="text-left">User Status</th>
                                 </tr>
@@ -101,12 +101,12 @@
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
                                         style="padding: 23px 20px;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
-                                        style="padding: 23px 0px;">{{email}}</td>
+                                        style="padding: 23px 20px;">{{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 0px;">{{department}}</td>
+                                        style="padding: 23px 20px;">{{department}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 0px;">{{role}}</td>
-                                    <td class="text-left" style="padding: 23px 0px;">
+                                        style="padding: 23px 20px;">{{role}}</td>
+                                    <td class="text-left" style="padding: 23px 20px;">
 
 
                                         {{#if isActive}}
