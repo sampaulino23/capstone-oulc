@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="../css/usermanagement.css">
     <script src="/js/usermanagement.js" type="text/javascript"></script>
     <script src="/js/tablefilter.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     
     <!-- OLD -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -44,16 +43,16 @@
             <div id="header">User Management</div>
 
             <ul class="nav-tabs" id="myTab" role="tablist">
-                <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
+                <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all">
                     All Users
                 </button>
-                <button class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
+                <button autofocus class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
                     aria-controls="activeusers">
-                    Active Users
+                    Active
                 </button>
                 <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
                     aria-controls="inactiveusers">
-                    Inactive Users
+                    Inactive
                 </button>
             </ul>
 
@@ -82,6 +81,7 @@
                 </select>
             </div>
 
+            <br><br>
             <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                 <div id="user-table" class="tab-pane active">
                     <div class="w-100">
@@ -89,37 +89,103 @@
                             style="width: 100%; font-size: 16px; background:#D9D9D9;">
                             <thead class="table-headers">
                                 <tr>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Name</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Email</th>
-                                    <th style="width: 25%; padding: 15px; 15px; text-align: left;">Department</th>
-                                    <th style="width: 20%; padding: 15px; 15px; text-align: left;">Role</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left;">Actions</th>
-                                    <th style="width: 10%; padding: 15px; 15px; text-align: left;">User Status</th>
+                                    <th style="width: 20%; padding: 23px 20px;" class="text-left">Name</th>
+                                    <th style="width: 15%; padding: 23px 20px;" class="text-left">Email</th>
+                                    <th style="width: 25%; padding: 23px 20px;" class="text-left">Department</th>
+                                    <th style="width: 20%; padding: 23px 20px;" class="text-left">Role</th>
+                                    <th style="width: 10%; padding: 23px 20px;" class="text-left">Actions</th>
+                                    <th style="width: 10%; padding: 23px 20px;" class="text-left">User Status</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
                                 <!-- ALL USERS -->
                                 {{#each users}}
                                 {{#compare role '!=' "Administrator"}}
-                                <tr style="cursor: pointer;">
+                                <tr style="cursor: pointer;" id="{{_id}}">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px;" id="user-name" value="{{_id}}">{{fullName}}</td>
+                                        style="padding: 23px 20px;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}"class="text-left"
-                                        style="padding: 15px 15px;">{{email}}</td>
+                                        style="padding: 23px 20px;">{{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px;">{{department}}</td>
+                                        style="padding: 23px 20px;">{{department}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px;">{{role}}</td>
-                                    <td class="text-left" style="padding: 15px 15px;">
-                                    
-                                    <div id = "actions">
-                                        <div class="dropdown">
+                                        style="padding: 23px 20px;">{{role}}</td>
+                                    <td class="text-left" style="padding: 23px 20px;">
+
+                                        <div class="dropstart">
                                             <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Reset Password</a></li>
+                                                <li><button class="dropdown-item get-edit-user" type="button" data-bs-toggle="modal" data-bs-target="#modalEditUserDetails{{@index}}">Edit</button></li>
+                                                <li><button class="dropdown-item get-reset-password" type="button" data-bs-toggle="modal" data-bs-target="#modalResetPassword{{@index}}">Reset Password</button></li>
                                             </ul>
                                         </div>
+
+                                        <!-- EDIT USER DETAILS MODAL -->
+                                        <div class="modal fade" id="modalEditUserDetails{{@index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit User Account</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="/editUserDetails" method="POST">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" class="form-control" id="{{_id}}" name="edituserdetailsid">
+                                                            <div class="mb-3">
+                                                                <label for="fullname" class="form-label">Full Name</label>
+                                                                <input type="text" class="form-control" id="editFullName" name="editFullName"
+                                                                    placeholder="Enter full name" value="{{fullName}}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="fulladdress" class="form-label">Email Address</label>
+                                                                <input type="text" class="form-control" id="editEmailAddress" name="editEmailAddress"
+                                                                    placeholder="Enter full address" value="{{email}}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="department" class="form-label">Department</label>
+                                                                <select name="department" id="editDepartment" name="editDepartment" class="form-select" required>
+                                                                    <option>IT Department</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="role" class="form-label">Role</label>
+                                                                <select name="role" id="editRole" name="editRole" class="form-select" required>
+                                                                    <option>Requester</option>
+                                                                    <option>Attorney</option>
+                                                                    <option>Staff</option>
+                                                                    <option>Third Party Representative</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save Changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END: EDIT USER DETAILS MODAL -->
+
+                                        <!-- RESET PASSWORD MODAL -->
+                                        <div class="modal fade" id="modalResetPassword{{@index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Reset User Account Password</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to reset the user password? ({{fullName}})
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Yes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  END: RESET PASSWORD MODAL -->
 
                                         {{#if isActive}}
                                         <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
@@ -132,17 +198,15 @@
                                         {{/if}}
 
                                         <!-- THIS IS TOGGLE FOR FRONTEND
-                                        <div class="form-check form-switch" onclick="window.location.href='/inventory'">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                id="flexSwitchCheckDefault" />
-                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                        </div>
-                                        -->
+                                    <div class="form-check form-switch" onclick="window.location.href='/inventory'">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="flexSwitchCheckDefault" />
+                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                     </div>
-                                    
+                                    -->
                                     </td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px;">{{isActive}}</td>
+                                        style="padding: 23px 20px;">{{isActive}}</td>
                                 </tr>
 
                                 <!--  USER VIEW MODAL -->
@@ -183,14 +247,15 @@
 
                                 <div class="modal fade" id="modalUserAccess{{@index}}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style = "width:35%;">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">User Account Access
                                                 </h5>
                                             </div>
                                             <form id="limitform" class="limitform" action="/setqtylimit" method="POST">
-                                                
+
+
                                                 <div class="modal-body">
                                                     {{#if isActive}}
                                                     Are you sure you want to disable this user account?
@@ -200,7 +265,7 @@
                                                     <!-- ENABLE MODAL -->
                                                     {{/if}}
                                                     <br>
-                                                    ({{fullName}})
+                                                    {{fullName}}
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -217,7 +282,9 @@
                                                     <button type="button" class="confirm-btn enable-useraccess"
                                                         data-toggle="modal" data-target="#" data-dismiss=" modal"
                                                         id="{{_id}}">OK</button>
+
                                                     {{/if}}
+
                                                 </div>
                                             </form>
                                         </div>
@@ -245,6 +312,7 @@
             </div>
         </div>
     </div>
+    
     <!-- NEWLY ADDED USER TOAST -->
     <div class="toast-container" style="position: absolute; top: 10px; right: 10px;">
         <div class="toast" id="add-user-toast">
