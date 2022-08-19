@@ -14,8 +14,6 @@ $(document).ready(() => {
         }
     });
 
-
-
     $('.disable-useraccess').click(function () {
         //var id = $(this).data('id');
         // alert(this.id);
@@ -55,11 +53,6 @@ $(document).ready(() => {
         location.reload();
 
     });
-
-
-
-
-
 });
 
 
