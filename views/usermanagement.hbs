@@ -103,22 +103,11 @@
                             style="width: 100%; font-size: 16px; background:#D9D9D9;">
                             <thead class="table-headers">
                                 <tr>
-                                    <th
-                                        style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white;">
-                                        Name</th>
-                                    <th
-                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        Email</th>
-                                    <th
-                                        style="width: 25%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        Department</th>
-                                    <th
-                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        Role</th>
-                                    <th class="sorttable_nosort"
-                                        style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;
-                                        cursor: default;">
-                                        Actions</th>
+                                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white;">Name</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Email</th>
+                                    <th style="width: 25%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
+                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Role</th>
+                                    <th class="sorttable_nosort" style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; cursor: default;">Actions</th>
 
                                         <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                     <th class="sorttable_nosort" style="width: 15%; padding: 15px; 15px; text-align: left; cursor: default; display:none;">Status</th>
@@ -133,18 +122,10 @@
                                 {{!-- <div id = "nav-viewUsers-start"> {{#compare isActive '==' true}}  </div>    --}}
 
                                 <tr style="cursor: pointer;" id="{{_id}}">
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name"
-                                        value="{{_id}}">{{fullName}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        {{email}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        {{department}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                                        {{role}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name" value="{{_id}}">{{fullName}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{email}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{department}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{role}}</td>
                                     <td class="text-left"
                                         style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
                                         <div id="actions">
