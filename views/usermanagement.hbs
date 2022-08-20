@@ -263,15 +263,16 @@
                                                         <h5 class="modal-title" id="exampleModalLabel">Reset User
                                                             Account Password</h5>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        Are you sure you want to reset the user
-                                                        password?<br>({{fullName}})
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="close-btn"
-                                                            data-bs-dismiss="modal">CLOSE</button>
-                                                        <button type="button" class="confirm-btn">YES</button>
-                                                    </div>
+                                                    <form action="/admin/resetpassword" method="POST">
+                                                        <input type="hidden" class="form-control" id="resetPasswordUserId" name="userid" value="{{_id}}">
+                                                        <div class="modal-body">
+                                                            Are you sure you want to reset the user password? ({{fullName}})
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="confirm-btn">Yes</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

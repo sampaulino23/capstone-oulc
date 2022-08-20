@@ -85,6 +85,8 @@ router.get('/disableuser', admincontroller.disableUser);
 
 router.get('/enableuser', admincontroller.enableUser);
 
+router.post('/resetpassword', admincontroller.resetPassword);
+
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);

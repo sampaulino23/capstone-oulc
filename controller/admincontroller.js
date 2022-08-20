@@ -121,9 +121,27 @@ const admincontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    resetPassword: async (req, res) => {
+        try {
+            console.log ("Reset Password");
+
+            //generate random 8 character password
+            var password = Math.random().toString(36).substr(2, 8);
+            var userid = req.body.userid;
+
+            console.log('userid: ' + userid);
+
+            await User.findByIdAndUpdate(userid, { $set: { password: password } });
+
+            console.log('new password: ' + password);
+
+            res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
     }
-
-
 }
 
 module.exports = admincontroller;
