@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const UserSchema = mongoose.Schema({
     fullName: {
         type: String,
@@ -13,10 +14,12 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     department: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
     },
     role: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role',
         required:true
     },
     isActive: {
