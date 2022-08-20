@@ -133,7 +133,7 @@ const admincontroller = {
 
             console.log('userid: ' + userid);
 
-            await User.findByIdAndUpdate(userid, { $set: { password: password } });
+            await User.findByIdAndUpdate(userid, { $set: { password: password, isDefaultPass: true } });
 
             console.log('new password: ' + password);
 
