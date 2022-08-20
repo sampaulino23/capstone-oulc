@@ -36,14 +36,15 @@ $(document).ready(() => {
             method: "GET",
             contentType: "application/json",
             data: { userid: this.id },
-            success: function () {
+            success: setTimeout (function () {
                 console.log('SUCCESS');
-            },
+                location.reload();
+            }, 300),
             error: function (err) {
                 console.log(err);
             }
         });
-        location.reload();
+        
 
     });
 
@@ -56,14 +57,15 @@ $(document).ready(() => {
             method: "GET",
             contentType: "application/json",
             data: { userid: this.id },
-            success: function () {
+            success: setTimeout (function () {
                 console.log('SUCCESS');
-            },
+                location.reload();
+            }, 300),
             error: function (err) {
                 console.log(err);
             }
         });
-        location.reload();
+        
         
     });
 
