@@ -71,3 +71,50 @@ function resetRole(){ //for admin user management
     }
 }
 
+// Tab Filters (Active & Inactive)
+function viewAll(){ //for inventory (product category) and purchasing (product category)
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        row.style.display = ""; // shows this row
+    }
+}
+
+function viewActive(){ //for inventory (product category) and purchasing (product category)
+    var button = document.getElementById("activeusers-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        isActive = cells[5] || null; // gets the 3rd `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !isActive || (filter === isActive.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+}
+
+function viewInactive(){ //for inventory (product category) and purchasing (product category)
+    var button = document.getElementById("inactiveusers-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        isActive = cells[5] || null; // gets the 3rd `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !isActive || (filter === isActive.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+}

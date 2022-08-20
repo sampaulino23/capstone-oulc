@@ -44,33 +44,31 @@
 
             <div id="header">User Management</div>
 
-            <!--
+            
 
             <ul class="nav-tabs" id="myTab" role="tablist">
                 <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                    aria-controls="all" onclick="viewAllUsers()">
+                    aria-controls="all" value="" onclick="viewAll()">
                     All Users
                 </button>
                 <button class="nav-item" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
-                    aria-controls="activeusers" onclick="viewActiveUsers()">
+                    aria-controls="activeusers" value="true" onclick="viewActive()">
                     Active Users
                 </button>
                 <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
-                    aria-controls="inactiveusers" onclick="viewInactiveUsers()">
+                    aria-controls="inactiveusers" value="false" onclick="viewInactive()">
                     Inactive Users
                 </button>
             </ul>
 
-            -->
 
+            <!--
             <ul id = "" >
                 <li ><a href="/admin/usermanagement" class = "" id = "active" style="color: black;">All</a></li>
                 <li ><a href="/admin/active" class = "" id = "active" style="color: black;">Active</a></li>
                 <li><a href="/admin/inactive" class = "" id = "inactive" style="color: black;">Inactive</a></li>
-            </ul>
+            </ul>-->
             
-
-
             <div id="add-user-search">
                 <a href="/admin/adduser" class="add-user-btn">+ Add User</a>
                 <input class="form-control" id="myInput" type="text" placeholder="Search...">
@@ -123,7 +121,7 @@
                                         Actions</th>
 
                                         <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
-                                    <th class="sorttable_nosort" style="width: 15%; padding: 15px; 15px; text-align: left; cursor: default;">Status</th>
+                                    <th class="sorttable_nosort" style="width: 15%; padding: 15px; 15px; text-align: left; cursor: default; display:none;">Status</th>
                                         <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                 </tr>
                             </thead>
@@ -281,7 +279,7 @@
                                     </td>
                                     <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;">{{isActive}}</td>
+                                        style="padding: 23px 20px; display:none;">{{isActive}}</td>
                                     <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                 </tr>
 
