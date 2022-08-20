@@ -14,6 +14,19 @@ $(document).ready(() => {
         }
     });
 
+    if ($("#flexSwitchCheckChecked").prop('checked', true)) {
+        $('.cancel-useraccess').click(function () {
+            $("#flexSwitchCheckChecked").prop('checked', true); 
+        });
+    }
+
+    if ($("#flexSwitchCheckDefault").prop('checked', false)){
+        $('.cancel-useraccess').click(function () {
+            $("#flexSwitchCheckDefault").prop('checked', false); 
+        });
+    }
+
+
     $('.disable-useraccess').click(function () {
         //var id = $(this).data('id');
         // alert(this.id);
@@ -51,7 +64,7 @@ $(document).ready(() => {
             }
         });
         location.reload();
-
+        
     });
 });
 

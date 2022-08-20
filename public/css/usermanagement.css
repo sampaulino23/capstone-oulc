@@ -187,6 +187,8 @@
     padding-top: 40px;
     padding-bottom: 20px;
     cursor: default;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-footer {
@@ -239,11 +241,20 @@
     font-size: 24px;
 }
 
-.sorttable_sorted {
+.sorttable_sorted, .sorttable_sorted_reverse {
     border-top: solid #0C8039 4px;
 }
 
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
     content: " \25B4\25BE";
     font-size: 24px;
+}
+
+.form-check-input:checked {
+    background-color: #00713D;
+    border-color: #000;
+}
+
+.form-check-input {
+    border-color: #000;
 }

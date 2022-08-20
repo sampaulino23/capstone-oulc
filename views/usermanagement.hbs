@@ -102,13 +102,16 @@
                                         style="width: 25%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
                                         Department</th>
                                     <th
-                                        style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">
                                         Role</th>
                                     <th class="sorttable_nosort"
-                                        style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;
+                                        style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;
                                         cursor: default;">
                                         Actions</th>
-                                    <!-- <th style="width: 10%; padding: 15px; 15px; text-align: left;">User Status</th> -->
+
+                                        <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
+                                    <th class="sorttable_nosort" style="width: 15%; padding: 15px; 15px; text-align: left; cursor: default;">Status</th>
+                                        <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -150,15 +153,32 @@
                                             </div>
 
                                             {{#if isActive}}
+                                            <!--
                                             <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
                                                 data-target="#modalUserAccess{{@index}}">Disable</button>
                                             <br>
+                                            -->
+                                            
+                                            
+                                            <!-- Default switch -->
+                                            <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
+                                            </div>
+
                                             {{else}}
+                                            <!--
                                             <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
                                                 data-target="#modalUserAccess{{@index}}">Enable</button>
                                             <br>
-                                            {{/if}}
+                                            -->
+                                            
 
+                                            <!-- Default switch -->
+                                            <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                            </div>
+
+                                            {{/if}}
                                         </div>
 
                                         <!-- EDIT USER DETAILS MODAL -->
@@ -245,8 +265,10 @@
                                         <!--  END: RESET PASSWORD MODAL -->
 
                                     </td>
-                                    <!-- <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
-                                        style="padding: 23px 20px;">{{isActive}}</td> -->
+                                    <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left"
+                                        style="padding: 23px 20px;">{{isActive}}</td>
+                                    <!-- COMMENT THIS OUT IF YOU'RE DONE CHECKING USER STATUS !-->
                                 </tr>
 
                                 <!--  USER VIEW MODAL -->
@@ -314,7 +336,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="close-btn" id="enable-close"
+                                                    <button type="button" class="close-btn cancel-useraccess" id="enable-close"
                                                         onclick="setRequired()" data-dismiss="modal">CANCEL</button>
                                                     {{#if isActive}}
                                                     <!-- DISABLE FUNCTION -->
@@ -366,8 +388,8 @@
         <div class="toast" id="add-user-toast">
             <div class="toast-header">
                 <p id="newly-added-user-id" hidden>{{newlyAddedUser._id}}</p>
-                <strong class="me-auto"><i class="bi-gift-fill"></i> New User</strong>
-                <small>just now</small>
+                <strong class="me-auto"><i class="bell-fill"></i> New User</strong>
+                <small>Just now</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
             </div>
             <div class="toast-body">
