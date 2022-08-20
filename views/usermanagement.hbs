@@ -44,6 +44,8 @@
 
             <div id="header">User Management</div>
 
+            <!--
+
             <ul class="nav-tabs" id="myTab" role="tablist">
                 <button autofocus class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
                     aria-controls="all" onclick="viewAllUsers()">
@@ -59,11 +61,22 @@
                 </button>
             </ul>
 
+            -->
+
+            <ul id = "" >
+                <li ><a href="/admin/usermanagement" class = "" id = "active" style="color: black;">All</a></li>
+                <li ><a href="/admin/active" class = "" id = "active" style="color: black;">Active</a></li>
+                <li><a href="/admin/inactive" class = "" id = "inactive" style="color: black;">Inactive</a></li>
+            </ul>
+            
+
 
             <div id="add-user-search">
                 <a href="/admin/adduser" class="add-user-btn">+ Add User</a>
                 <input class="form-control" id="myInput" type="text" placeholder="Search...">
             </div>
+
+            
 
             <div id="dropdowns">
                 <label for="" class="dept-and-role">Department</label>
@@ -370,6 +383,7 @@
                 </div>
             </div>
 
+            <!--
             <div class="tab-pane fade" id="activeusers" role="tabpanel" aria-labelledby="activeusers-tab">
 
                 active users
@@ -380,6 +394,7 @@
                 inactive users
 
             </div>
+            -->
         </div>
     </div>
 

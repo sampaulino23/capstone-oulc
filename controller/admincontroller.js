@@ -5,17 +5,41 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User.js');
 const { ObjectId } = require('mongoose');
 
+
+async function getUserAccess (path, req, res) {
+    var userAccess;
+
+    if (path == '/active')
+        userAccess = true;
+    else if (path == '/inactive')
+        userAccess = false;
+
+
+    try {
+        const users = await User.find({ isActive: userAccess }).lean()
+            .sort({})
+            .exec();
+
+        res.render('usermanagement', {
+            users: users
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const admincontroller = {
 
     getAddUser: async (req, res) => {
         try {
-			res.render('adduser');
+            res.render('adduser');
 
-		} catch(err) {
-			console.log(err);
-		}
+        } catch (err) {
+            console.log(err);
+        }
     },
-   
+
     postAddUser: async (req, res) => {
         try {
 
@@ -37,15 +61,15 @@ const admincontroller = {
             const hash = await bcrypt.hash(user.password, salt);
             user.password = hash;*/
 
-			req.session.newlyAddedUser = user._id;
+            req.session.newlyAddedUser = user._id;
 
-			res.redirect('/admin/usermanagement');
+            res.redirect('/admin/usermanagement');
 
             await user.save();
 
-		} catch(err) {
-			console.log(err);
-		}
+        } catch (err) {
+            console.log(err);
+        }
     },
 
     getUserManagement: async (req, res) => {
@@ -55,29 +79,33 @@ const admincontroller = {
                 var newlyAddedUser = req.session.newlyAddedUser;
                 // console.log('newlyAddedUser: ' + newlyAddedUser);
                 req.session.newlyAddedUser = null;
-            } catch(err) {
+            } catch (err) {
                 console.log(err);
             }
 
             const users = await User.find({}).lean()
-                                        .sort({})
-                                        .exec();
+                .sort({})
+                .exec();
             const newUser = await User.findById(newlyAddedUser).lean().exec();
 
-			res.render('usermanagement', {
+            res.render('usermanagement', {
                 users: users,
                 newlyAddedUser: newUser
             });
 
-		} catch(err) {
-			console.log(err);
-		}
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getUserManagementAccess: function (req, res) {
+        getUserAccess(req.path, req, res);
     },
 
     disableUser: async (req, res) => {
         try {
-            console.log ("Inside Disable User");
-            var userid = req.query.userid;      
+            console.log("Inside Disable User");
+            var userid = req.query.userid;
             await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: false } });
 
         } catch (err) {
@@ -87,9 +115,9 @@ const admincontroller = {
 
     enableUser: async (req, res) => {
         try {
-            console.log ("Inside Enable User");
-            var userid = req.query.userid;      
-            await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: true} });
+            console.log("Inside Enable User");
+            var userid = req.query.userid;
+            await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: true } });
         } catch (err) {
             console.log(err);
         }

@@ -75,6 +75,12 @@ router.post('/adduser', admincontroller.postAddUser);
 // render user management page
 router.get('/usermanagement', admincontroller.getUserManagement);
 
+// render user management page active
+router.get('/active', admincontroller.getUserManagementAccess);
+
+// render user management page inactive
+router.get('/inactive', admincontroller.getUserManagementAccess);
+
 router.get('/disableuser', admincontroller.disableUser);
 
 router.get('/enableuser', admincontroller.enableUser);
