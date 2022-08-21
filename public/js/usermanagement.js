@@ -73,8 +73,6 @@ $(document).ready(() => {
 
         var userid = $(this).id;
 
-        alert(this.id);
-
         console.log(userid);
 
         $.ajax({

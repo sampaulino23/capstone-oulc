@@ -205,7 +205,11 @@
                                                                     name="editDepartment" style="width: 60%;"
                                                                     class="form-select" required>
                                                                     {{#each ../departments}}
-                                                                    <option value="{{abbrev}}">{{abbrev}}</option>
+                                                                    {{#compare abbrev "==" ../department.abbrev}}
+                                                                        <option value="{{abbrev}}" selected>{{abbrev}}</option>
+                                                                    {{else}}
+                                                                        <option value="{{abbrev}}">{{abbrev}}</option>
+                                                                    {{/compare}}
                                                                     {{/each}}
                                                                 </select>
                                                             </div>
@@ -214,7 +218,11 @@
                                                                 <select name="role" id="editRole" name="editRole"
                                                                     style="width: 60%;" class="form-select" required>
                                                                     {{#each ../roles}}
-                                                                    <option value="{{name}}">{{name}}</option>
+                                                                    {{#compare name "==" ../role.name}}
+                                                                        <option value="{{name}}" selected>{{name}}</option>
+                                                                    {{else}}
+                                                                        <option value="{{name}}">{{name}}</option>
+                                                                    {{/compare}}
                                                                     {{/each}}
                                                                 </select>
                                                             </div>
