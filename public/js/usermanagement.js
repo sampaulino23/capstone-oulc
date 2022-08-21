@@ -39,7 +39,7 @@ $(document).ready(() => {
             success: setTimeout (function () {
                 console.log('SUCCESS');
                 location.reload();
-            }, 300),
+            }, 350),
             error: function (err) {
                 console.log(err);
             }
@@ -59,7 +59,7 @@ $(document).ready(() => {
             success: setTimeout (function () {
                 console.log('SUCCESS');
                 location.reload();
-            }, 300),
+            }, 350),
             error: function (err) {
                 console.log(err);
             }
