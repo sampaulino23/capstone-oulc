@@ -4,6 +4,9 @@ const DepartmentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    abbrev: {
+        type: String,
+    }
     
 });
 
