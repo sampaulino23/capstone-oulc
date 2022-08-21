@@ -3,6 +3,8 @@ const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites
 const bcrypt = require('bcrypt');
 
 const User = require('../models/User.js');
+const Role = require('../models/Role.js');
+const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 
 
@@ -33,7 +35,14 @@ const admincontroller = {
 
     getAddUser: async (req, res) => {
         try {
-            res.render('adduser');
+
+            const departments = await Department.find({}).lean().exec();
+            const roles = await Role.find({ name: { $not: { $eq: "Administrator" } } }).lean().exec();
+
+            res.render('adduser', {
+                departments: departments,
+                roles: roles
+            });
 
         } catch (err) {
             console.log(err);
@@ -46,11 +55,17 @@ const admincontroller = {
             //generate random 8 character password
             var password = Math.random().toString(36).substr(2, 8);
 
+            var roleName = req.body.role;
+            var departmentAbbrev = req.body.department;
+
+            const role = await Role.findOne({name: roleName}).exec();
+            const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
+
             var user = new User({
                 fullName: req.body.name,
                 email: req.body.email,
-                department: req.body.department,
-                role: req.body.role,
+                department: department._id,
+                role: role._id,
                 isActive: true,
                 password: password,
                 isDefaultPass: true
@@ -83,9 +98,20 @@ const admincontroller = {
                 console.log(err);
             }
 
-            const users = await User.find({}).lean()
+            const adminRole = await Role.find({name: 'Administrator'}).exec();
+
+            const users = await User.find({role:  { $not: { $eq: adminRole._id } }}).lean()
+                .populate({
+                    path: 'department'
+                })
+                .populate({
+                    path: 'role'
+                })
                 .sort({})
                 .exec();
+
+            console.log(users);
+
             const newUser = await User.findById(newlyAddedUser).lean().exec();
 
             res.render('usermanagement', {

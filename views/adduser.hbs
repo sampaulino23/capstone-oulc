@@ -25,17 +25,19 @@
                             <input type="email" name="email" class="form-control" id="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="department" class="form-label">Department</label>
+                            <label for="department" class="form-label">*Department</label>
                             <select name="department" id="department" class="form-select" required>
-                                <option>IT Department</option>
+                                {{#each departments}}
+                                    <option>{{abbrev}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
+                            <label for="role" class="form-label">*Role</label>
                             <select name="role" id="role" class="form-select" required>
-                                <option>Requester</option>
-                                <option>Attorney</option>
-                                <option>Staff</option>
+                                {{#each roles}}
+                                    <option>{{name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <button type="submit" class="create-btn">Create New User</button>

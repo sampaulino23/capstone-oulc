@@ -124,8 +124,8 @@
                                 <tr style="cursor: pointer;" id="{{_id}}">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{email}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{department}}</td>
-                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{role}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{department.abbrev}}</td>
+                                    <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{role.name}}</td>
                                     <td class="text-left"
                                         style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
                                         <div id="actions">

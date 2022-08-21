@@ -14,6 +14,9 @@ async function seedRoles() {
 
     const roles = [
         {
+            name: 'Administrator', 
+        },
+        {
             name: 'Requester', 
         },
         {
