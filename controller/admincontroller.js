@@ -110,12 +110,15 @@ const admincontroller = {
                 .sort({})
                 .exec();
 
-            console.log(users);
+            const roles = await Role.find({name:  { $not: { $eq: "Administrator"} }}).lean().exec();
+            const departments = await Department.find({}).lean().exec();
 
             const newUser = await User.findById(newlyAddedUser).lean().exec();
 
             res.render('usermanagement', {
                 users: users,
+                departments: departments,
+                roles: roles,
                 newlyAddedUser: newUser
             });
 
@@ -144,6 +147,17 @@ const admincontroller = {
             console.log("Inside Enable User");
             var userid = req.query.userid;
             await User.findOneAndUpdate({ _id: userid }, { $set: { isActive: true } });
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getEditUserDetails: async (req, res) => {
+        try {
+            console.log ("Get Edit User Details");
+
+            //generate random 8 character password
+            
         } catch (err) {
             console.log(err);
         }

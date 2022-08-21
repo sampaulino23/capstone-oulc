@@ -4,7 +4,7 @@
     <!-- NEWLY ADDED -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
@@ -27,11 +27,8 @@
     <!-- OLD -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--CHECK -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--CHECK -->
 
 
@@ -81,18 +78,18 @@
                 <select id="departmentdropdown" oninput="filterUserDepartment();" onChange="resetRole();">
                     <option selected disabled value="a">Select Department </option>
                     <option value="All">All</option>
-                    <option>OULC</option>
-                    <option>Information Technology</option>
+                    {{#each departments}}
+                    <option value="{{abbrev}}">{{abbrev}}</option>
+                    {{/each}}
                 </select>
 
                 <label for="" class="dept-and-role" style="margin-left: 20px;">Role</label>
                 <select id="roledropdown" oninput="filterUserRole();" onChange="resetDepartment();">
                     <option selected disabled value="a">Select Role </option>
                     <option value="All">All</option>
-                    <option>Attorney</option>
-                    <option>Office Staff</option>
-                    <option>Requester</option>
-                    <option>Third Party Representative</option>
+                    {{#each roles}}
+                    <option value="{{name}}">{{name}}</option>
+                    {{/each}}
                 </select>
             </div>
 
@@ -117,7 +114,6 @@
                             <tbody id="myTable">
                                 <!-- ALL USERS -->
                                 {{#each users}}
-                                {{#compare role '!=' "Administrator"}}
                                 
                                 {{!-- <div id = "nav-viewUsers-start"> {{#compare isActive '==' true}}  </div>    --}}
 
@@ -133,7 +129,7 @@
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><button class="dropdown-item get-edit-user" type="button"
+                                                    <li><button class="dropdown-item get-edit-user" id="{{_id}}" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEditUserDetails{{@index}}">Edit</button>
                                                     </li>
@@ -208,17 +204,18 @@
                                                                 <select name="department" id="editDepartment"
                                                                     name="editDepartment" style="width: 60%;"
                                                                     class="form-select" required>
-                                                                    <option>IT Department</option>
+                                                                    {{#each ../departments}}
+                                                                    <option value="{{abbrev}}">{{abbrev}}</option>
+                                                                    {{/each}}
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="role" class="form-label">Role</label>
                                                                 <select name="role" id="editRole" name="editRole"
                                                                     style="width: 60%;" class="form-select" required>
-                                                                    <option>Requester</option>
-                                                                    <option>Attorney</option>
-                                                                    <option>Staff</option>
-                                                                    <option>Third Party Representative</option>
+                                                                    {{#each ../roles}}
+                                                                    <option value="{{name}}">{{name}}</option>
+                                                                    {{/each}}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -282,9 +279,9 @@
                                                 <b>Email Address</b><br>
                                                 {{email}} <br><br>
                                                 <b>Department</b><br>
-                                                {{department}} <br><br>
+                                                {{department.name}} ({{department.abbrev}}) <br><br>
                                                 <b>Role</b><br>
-                                                {{role}} <br><br>
+                                                {{role.name}} <br><br>
                                                 {{#if isDefaultPass}}
                                                 <b>Default Password</b><br>
                                                 {{password}}
@@ -354,7 +351,6 @@
                                 
                                 {{!-- <div id = "nav-viewUsers-end">{{/compare}}</div> --}}
                                 
-                                {{/compare}}
                                 {{/each}}
 
                             </tbody>

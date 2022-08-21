@@ -85,6 +85,8 @@ router.get('/disableuser', admincontroller.disableUser);
 
 router.get('/enableuser', admincontroller.enableUser);
 
+router.get('/edituser', admincontroller.getEditUserDetails);
+
 router.post('/resetpassword', admincontroller.resetPassword);
 
 

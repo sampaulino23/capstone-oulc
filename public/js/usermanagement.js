@@ -69,6 +69,28 @@ $(document).ready(() => {
         
     });
 
+    $('.get-edit-user').click( () => {
+
+        var userid = $(this).id;
+
+        alert(this.id);
+
+        console.log(userid);
+
+        $.ajax({
+            url: "/admin/edituser",
+            method: "GET",
+            contentType: "application/json",
+            data: {  },
+            success: function() {
+                console.log('SUCCESS');
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    })
+
 });
 
 
