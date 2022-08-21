@@ -28,6 +28,14 @@ async function seedRoles() {
         {
             name: 'Software Technology',
             abbrev: 'ST'
+        },
+        {
+            name: 'Office of the University Legal Counsel',
+            abbrev: 'OULC'
+        },
+        {
+            name: 'none',
+            abbrev: 'none'
         }
     ];
 
