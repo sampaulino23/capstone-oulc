@@ -49,8 +49,7 @@ $(document).ready(() => {
     });
 
     $('.enable-useraccess').click(function () {
-        //var id = $(this).data('id');
-        // alert(this.id);
+        console.log(this);
 
         $.ajax({
             url: "/admin/enableuser",
@@ -65,21 +64,19 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
-        
-        
+         
     });
 
-    $('.get-edit-user').click( () => {
+    $('.get-edit-user').click( function() {
 
-        var userid = $(this).id;
-
-        console.log(userid);
+        var userid = $(this).parents('tr').attr('id');
+        console.log('userid: ' + userid);
 
         $.ajax({
             url: "/admin/edituser",
             method: "GET",
             contentType: "application/json",
-            data: {  },
+            data: { userid: userid },
             success: function() {
                 console.log('SUCCESS');
             },
@@ -87,7 +84,7 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
-    })
+    });
 
 });
 

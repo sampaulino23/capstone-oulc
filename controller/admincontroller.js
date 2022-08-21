@@ -156,7 +156,21 @@ const admincontroller = {
         try {
             console.log ("Get Edit User Details");
 
-            //generate random 8 character password
+            // select role and department depending on db
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postEditUserDetails: async (req, res) => {
+        try {
+            console.log ("Post Edit User Details");
+
+            var userid = req.body.edituserdetailsid;
+            
+            // console.log(userid);
+
+            res.redirect('back');
             
         } catch (err) {
             console.log(err);

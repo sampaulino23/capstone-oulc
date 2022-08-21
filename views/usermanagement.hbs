@@ -117,7 +117,7 @@
                                 
                                 {{!-- <div id = "nav-viewUsers-start"> {{#compare isActive '==' true}}  </div>    --}}
 
-                                <tr style="cursor: pointer;" id="{{_id}}">
+                                <tr style="cursor: pointer;"  id="{{_id}}">
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white;" id="user-name" value="{{_id}}">{{fullName}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{email}}</td>
                                     <td data-toggle="modal" data-target="#modalUserView{{@index}}" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{department.abbrev}}</td>
@@ -129,7 +129,7 @@
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><button class="dropdown-item get-edit-user" id="{{_id}}" type="button"
+                                                    <li><button class="dropdown-item get-edit-user" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEditUserDetails{{@index}}">Edit</button>
                                                     </li>
@@ -178,9 +178,9 @@
                                                         <h5 class="modal-title" id="exampleModalLabel">Edit User Account
                                                         </h5>
                                                     </div>
-                                                    <form action="/editUserDetails" method="POST">
+                                                    <form action="/admin/edituser" method="POST">
                                                         <div class="modal-body-view-user-details">
-                                                            <input type="hidden" class="form-control" id="{{_id}}"
+                                                            <input type="hidden" class="form-control" value="{{_id}}"
                                                                 name="edituserdetailsid">
                                                             <div class="mb-3">
                                                                 <label for="fullname" class="form-label">Full
@@ -230,7 +230,7 @@
                                                         <div class="modal-footer">
                                                             <button type="button" class="close-btn"
                                                                 data-bs-dismiss="modal">CLOSE</button>
-                                                            <button type="button" class="confirm-btn">SAVE</button>
+                                                            <button type="submit" class="confirm-btn">SAVE</button>
                                                         </div>
                                                     </form>
                                                 </div>
