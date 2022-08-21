@@ -196,12 +196,12 @@
                                                                 <input type="text" class="form-control"
                                                                     id="editEmailAddress" name="editEmailAddress"
                                                                     placeholder="Enter full address" style="width: 60%;"
-                                                                    value="{{email}}" required>
+                                                                    value="{{email}}" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="department"
                                                                     class="form-label">Department</label>
-                                                                <select name="department" id="editDepartment"
+                                                                <select id="editDepartment"
                                                                     name="editDepartment" style="width: 60%;"
                                                                     class="form-select" required>
                                                                     {{#each ../departments}}
@@ -215,7 +215,7 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="role" class="form-label">Role</label>
-                                                                <select name="role" id="editRole" name="editRole"
+                                                                <select id="editRole" name="editRole"
                                                                     style="width: 60%;" class="form-select" required>
                                                                     {{#each ../roles}}
                                                                     {{#compare name "==" ../role.name}}

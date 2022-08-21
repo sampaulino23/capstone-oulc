@@ -167,9 +167,15 @@ const admincontroller = {
             console.log ("Post Edit User Details");
 
             var userid = req.body.edituserdetailsid;
-            
-            // console.log(userid);
+            var fullName = req.body.editFullName;
+            var departmentAbbrev = req.body.editDepartment;
+            var roleName = req.body.editRole;
 
+            const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
+            const role = await Role.findOne({name: roleName}).exec();
+
+            await User.findByIdAndUpdate(userid, { $set: { fullName: fullName, department: department._id, role: role._id } })
+            
             res.redirect('back');
             
         } catch (err) {
