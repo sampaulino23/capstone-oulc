@@ -1,20 +1,29 @@
 //TABLE FILTER FOR ADMIN... //
 
-//Search Filter
-$(document).ready(function () {
-    $(".search-icon").click(function () {
-        $(".search-box").toggle();
-        $(".search-box input[type='text']").focus();
-    });
-
-    $("#myInput").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-});
+//Search Filter 
+function searchTable() {
+    var input, filter, table, tr, td, td2, td3, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // for column one
+        td1 = tr[i].getElementsByTagName("td")[1]; // for column two
+        td2 = tr[i].getElementsByTagName("td")[2]; 
+        td3 = tr[i].getElementsByTagName("td")[3]; 
+    /* ADD columns here that you want you to filter to be used on */
+        if (td) {
+          if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) 
+          || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1))  {            
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+} 
 
 //Dropdown Filter
 function filterUserDepartment(){ //for inventory (product category) and purchasing (product category)
