@@ -183,7 +183,6 @@
 .modal-body-view-user-details {
     background: #D9D9D9;
     text-align: left;
-    padding-left: 40px;
     padding-top: 40px;
     padding-bottom: 20px;
     cursor: default;
@@ -257,4 +256,8 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 
 .form-check-input {
     border-color: #000;
+}
+
+.mb-3 {
+    padding: 0px 40px;
 }

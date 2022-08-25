@@ -14,6 +14,10 @@ $(document).ready(() => {
         }
     });
 
+    $("th.default").each(function(){
+        sorttable.innerSortFunction.apply(this, []);
+      })
+
     if ($("#flexSwitchCheckChecked").prop('checked', true)) {
         $('.cancel-useraccess').click(function () {
             $("#flexSwitchCheckChecked").prop('checked', true); 
