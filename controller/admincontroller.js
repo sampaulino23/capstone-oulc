@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const User = require('../models/User.js');
 const Role = require('../models/Role.js');
@@ -31,7 +32,39 @@ async function getUserAccess (path, req, res) {
     }
 }
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "capstone.samantha@gmail.com",
+        pass: "uapnxnyyyqqsfkax"
+    }
+});
+
+const options = {
+    from: "capstone.samantha@gmail.com",
+    to: "samantha.capstone@gmail.com",
+    subject: "SENDING EMAIL WITH NODE",
+    text: "wow! so simple"
+}
+
+ 
+
+
 const admincontroller = {
+
+    sendEmail: function (req, res) { // function for send mail
+
+        transporter.sendMail (options, function (err, info) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log("Sent: " + info.response);
+        })       
+        
+    },
+
+
 
     getAddUser: async (req, res) => {
         try {
