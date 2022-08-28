@@ -112,7 +112,8 @@ const admincontroller = {
                     pass: "uapnxnyyyqqsfkax"
                 }
             });
-            
+
+            // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "capstone.samantha@gmail.com",
                 to: "capstone.zelong@gmail.com",
