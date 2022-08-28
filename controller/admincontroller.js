@@ -32,37 +32,37 @@ async function getUserAccess (path, req, res) {
     }
 }
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: "capstone.samantha@gmail.com",
-        pass: "uapnxnyyyqqsfkax"
-    }
-});
+// const transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//         user: "capstone.samantha@gmail.com",
+//         pass: "uapnxnyyyqqsfkax"
+//     }
+// });
 
-const options = {
-    from: "capstone.samantha@gmail.com",
-    to: "samantha.capstone@gmail.com",
-    subject: "SENDING EMAIL WITH NODE",
-    text: "wow! so simple"
-}
+// const options = {
+//     from: "capstone.samantha@gmail.com",
+//     to: "samantha.capstone@gmail.com",
+//     subject: "SENDING EMAIL WITH NODE",
+//     text: "wow! so simple"
+// }
 
  
 
 
 const admincontroller = {
 
-    sendEmail: function (req, res) { // function for send mail
+    // sendEmail: function (req, res) { // function for send mail
 
-        transporter.sendMail (options, function (err, info) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            console.log("Sent: " + info.response);
-        })       
+    //     transporter.sendMail (options, function (err, info) {
+    //         if (err) {
+    //             console.log(err);
+    //             return;
+    //         }
+    //         console.log("Sent: " + info.response);
+    //     })       
         
-    },
+    // },
 
 
 
@@ -104,10 +104,34 @@ const admincontroller = {
                 isDefaultPass: true
             });
 
-            // hash the password not needed for adding new user. Remove when finalized
-            /*const salt = await bcrypt.genSalt(10);
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "capstone.samantha@gmail.com",
+                    pass: "uapnxnyyyqqsfkax"
+                }
+            });
+            
+            const options = {
+                from: "capstone.samantha@gmail.com",
+                to: "capstone.zelong@gmail.com",
+                subject: "New account password",
+                text: "Welcome to the OULC's Contract Management System, " + user.fullName + ". To log in to our system, please use this as your password: " + user.password
+            }
+
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: " + info.response);
+            })       
+
+            // hash the password
+            const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(user.password, salt);
-            user.password = hash;*/
+            user.password = hash;
 
             req.session.newlyAddedUser = user._id;
 
