@@ -66,6 +66,13 @@ const logincontroller = {
         });
     },
 
+    getForgotPassword: function (req, res) {
+        res.render('forgotpassword', {
+            pagename: 'Forgot Password',
+            title: 'Forgot Password'
+        });
+    },
+
     postInsert: function (req, res, next) {
         var createUserID;
         var ObjectId = require('mongodb').ObjectID;

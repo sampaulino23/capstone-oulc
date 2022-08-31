@@ -92,4 +92,7 @@ router.post('/insert', upload.single('imageprof'), logincontroller.postInsert);
 router.get('/resetpassword/:id', resetpasswordcontroller.getResetPassword);
 router.post('/changepassword', resetpasswordcontroller.resetPassword);
 
+// render forgotpassword page
+router.get('/forgotpassword', logincontroller.getForgotPassword);
+
 module.exports = router;
