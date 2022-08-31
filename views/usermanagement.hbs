@@ -144,14 +144,14 @@
                                       
                                             <!-- Default switch -->
                                             <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
+                                                <input class="form-check-input toggle-switch{{@index}}" type="checkbox" role="switch" id="flexSwitchCheckChecked{{@index}}" checked />
                                             </div>
 
                                             {{else}}
             
                                             <!-- Default switch -->
                                             <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                                <input class="form-check-input toggle-switch{{@index}}" type="checkbox" role="switch" id="flexSwitchCheckDefault{{@index}}"/>
                                             </div>
 
                                             {{/if}}
@@ -324,7 +324,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="close-btn cancel-useraccess" id="enable-close"
+                                                    <button type="button" class="close-btn cancel-useraccess" id="enable-close{{@index}}"
                                                         onclick="setRequired()" data-dismiss="modal">CANCEL</button>
                                                     {{#if isActive}}
                                                     <!-- DISABLE FUNCTION -->

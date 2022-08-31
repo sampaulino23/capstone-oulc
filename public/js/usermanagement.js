@@ -18,17 +18,21 @@ $(document).ready(() => {
         sorttable.innerSortFunction.apply(this, []);
       })
     
-    if ($("#flexSwitchCheckChecked").prop('checked', true)) {
+    // if ($("#flexSwitchCheckChecked").prop('checked', true)) {
         $('.cancel-useraccess').click(function () {
-            $("#flexSwitchCheckChecked").prop('checked', true); 
-        });
-    }
+            var index = this.id.split("enable-close")[1];
+            var toggleid = "toggle-switch" + index;
+            
 
-    if ($("#flexSwitchCheckDefault").prop('checked', false)){
-        $('.cancel-useraccess').click(function () {
-            $("#flexSwitchCheckDefault").prop('checked', false); 
+            if ($(".toggle-switch" + index).prop('checked')) {
+                $(".toggle-switch" + index).prop('checked', false);
+            }
+            else {
+                $(".toggle-switch" + index).prop('checked', true);
+
+            }
+            
         });
-    }
 
 
     $('.disable-useraccess').click(function () {
