@@ -44,6 +44,8 @@ router.use(passport.session());
 
 
 
+
+
 // multer to accept images
 const multer = require('multer');
 
@@ -62,6 +64,17 @@ const upload = multer({
         fileSize: 1024*1024*5
     }
 });
+
+// TO BE USED FOR CHECKING IF ADMINISTRATOR USER
+// function checkAdmin(req,res,next){
+    // if(req.user.email == "admin@oulc.com"){
+
+        // console.log(req.user);
+        // next();
+    // } else{
+        // res.send("Unauthorized Access");
+    // }
+// }
 
 
 router.use(require('connect-flash')());
