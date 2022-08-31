@@ -33,6 +33,12 @@ const resetpasswordcontroller = {
 
             //await User.findOneAndUpdate({_id: userid}, { $set: { password: password, isDefaultPass: false } }).exec();
             //const user = await User.findOne({_id : userid}).exec();
+
+            // hash the password
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(password, salt);
+            password = hash;
+
             await User.findByIdAndUpdate(userid, {$set: {password: password, isDefaultPass: false}}).exec();
 
             //console.log('user: ' + user);
