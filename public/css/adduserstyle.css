@@ -11,13 +11,29 @@
     color: #000000;
 }
 
+.add-user-href:visited, .add-user-href:link, .add-user-href:active
+{
+    text-decoration: none;
+    color: #ABABAB;
+}
+
+.add-user-href:hover {
+    color: #000;
+    transition: 0.25s;
+}
+
+.divider {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 #subheader {
     position: relative;
     margin-left: 121px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 54px;
     /* identical to box height */
     color: #ABABAB;
