@@ -11,11 +11,11 @@ const resetpasswordcontroller = {
     getResetPassword: async (req, res) => {
 		try {
             var userid = req.params.id;
-            console.log("PROFILE1");
+
+            console.log ("Reset Password Page");
+            console.log('userid: ' + userid);
 
 			const user = await User.find({_id : userid}).lean().exec();
-            console.log('userid: ' + userid);
-            console.log('user: ' + user);
 
 			res.render('resetpassword', {user: user, pagename: 'Reset Password', title: 'Reset Password'});
 		} catch(err) {
@@ -28,11 +28,8 @@ const resetpasswordcontroller = {
             var userid = req.body.userid;
             var password = req.body.password;
 
-            console.log ("Reset Password");
+            console.log ("Post Reset Password");
             console.log('userid: ' + userid);
-
-            //await User.findOneAndUpdate({_id: userid}, { $set: { password: password, isDefaultPass: false } }).exec();
-            //const user = await User.findOne({_id : userid}).exec();
 
             // hash the password
             const salt = await bcrypt.genSalt(10);
@@ -41,7 +38,6 @@ const resetpasswordcontroller = {
 
             await User.findByIdAndUpdate(userid, {$set: {password: password, isDefaultPass: false}}).exec();
 
-            //console.log('user: ' + user);
             console.log('new password: ' + password);
 
             res.redirect('/');
