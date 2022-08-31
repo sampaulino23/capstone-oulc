@@ -10,6 +10,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const MongoStore = require('connect-mongo');
 const User = require('../models/User');
+const Role = require('../models/Role.js');
 
 /* Requiring body-parser package  
 to fetch the data that is entered 
@@ -73,16 +74,19 @@ const logincontroller = {
         });
     },
 
-    postInsert: function (req, res, next) {
+    postInsert: async (req, res, next) => {
         var createUserID;
         var ObjectId = require('mongodb').ObjectID;
         var profileURL;
+
+        const role = await Role.findOne({name: "Administrator"}).exec();
+        console.log(role._id);
 
         var user = new User({
             fullName: "Samantha Paulino",
             email: "admin@oulc.com",
             password: "pass1234",
-            role: "Administrator",
+            role: role._id,
             isActive: true,
         });
 

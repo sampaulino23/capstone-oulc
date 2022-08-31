@@ -32,6 +32,15 @@ async function getUserAccess (path, req, res) {
     }
 }
 
+function checkAdmin(req,res,next){
+    if(req.user.isAdmin){
+        //req.isAuthenticated() will return true if user is logged in
+        next();
+    } else{
+        res.redirect("/unavailable");
+    }
+}
+
 // const transporter = nodemailer.createTransport({
 //     service: "gmail",
 //     auth: {
