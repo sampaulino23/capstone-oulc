@@ -21,7 +21,6 @@ nav {
     box-sizing: border-box;
     padding:40px;
     color:#fff;
-    margin-top: 60px;
 }
 
 input[type='text']:not(.search-text), input[type=password], input[type=email]{
