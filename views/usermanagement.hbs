@@ -141,26 +141,14 @@
                                             </div>
 
                                             {{#if isActive}}
-                                            <!--
-                                            <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                                data-target="#modalUserAccess{{@index}}">Disable</button>
-                                            <br>
-                                            -->
-                                            
-                                            
+                                      
                                             <!-- Default switch -->
                                             <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
                                                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
                                             </div>
 
                                             {{else}}
-                                            <!--
-                                            <button type="submit" id="{{_id}}" class="useraccess" data-toggle="modal"
-                                                data-target="#modalUserAccess{{@index}}">Enable</button>
-                                            <br>
-                                            -->
-                                            
-
+            
                                             <!-- Default switch -->
                                             <div class="form-check form-switch" data-toggle="modal" id="{{_id}}" data-target="#modalUserAccess{{@index}}">
                                                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
@@ -359,7 +347,6 @@
                                 </div>
                                 <!--  END: USER ACCESS MODAL -->
                                 
-                                {{!-- <div id = "nav-viewUsers-end">{{/compare}}</div> --}}
                                 
                                 {{/each}}
 
@@ -368,19 +355,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--
-            <div class="tab-pane fade" id="activeusers" role="tabpanel" aria-labelledby="activeusers-tab">
-
-                active users
-
-            </div>
-
-            <div class="tab-pane fade" id="inactiveusers" role="tabpanel" aria-labelledby="inactiveusers-tab">
-                inactive users
-
-            </div>
-            -->
         </div>
     </div>
 
