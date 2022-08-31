@@ -115,7 +115,7 @@ const admincontroller = {
 
             // change "to" field to your dummy email so you can see the password
             const options = {
-                from: "Administrator <capstone.samantha@gmail.com>",
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "maria_samantha_paulino@dlsu.edu.ph", //change to user.email when done testing
                 subject: "New account password",
                 text: "Welcome to the OULC's Contract Management System, " + user.fullName + ". To log in to our system, please use this as your password: " + user.password +
