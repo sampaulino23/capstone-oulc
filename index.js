@@ -70,7 +70,6 @@ const loginRoute = require('./routes/login');
 app.use('/', loginRoute);
 app.use('/login', loginRoute);
 
-
 const adminRoute = require('./routes/admin');
 app.use('/admin', adminRoute);
 

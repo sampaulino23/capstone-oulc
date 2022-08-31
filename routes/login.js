@@ -24,6 +24,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 require('../config/passport')(passport);
 
 const logincontroller = require('../controller/logincontroller.js');
+const resetpasswordcontroller = require('../controller/resetpasswordcontroller.js');
 
 
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -86,5 +87,9 @@ router.get('/getCheckEmail', logincontroller.getCheckEmail);
 
 // post/register new user to database
 router.post('/insert', upload.single('imageprof'), logincontroller.postInsert);
+
+// render reset password page
+router.get('/resetpassword/:id', resetpasswordcontroller.getResetPassword);
+router.post('/changepassword', resetpasswordcontroller.resetPassword);
 
 module.exports = router;

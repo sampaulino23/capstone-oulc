@@ -89,7 +89,7 @@ router.get('/edituser', admincontroller.getEditUserDetails);
 
 router.post('/edituser', admincontroller.postEditUserDetails);
 
-router.post('/resetpassword', admincontroller.resetPassword);
+//router.post('/resetpassword', admincontroller.resetPassword);
 
 
 passport.serializeUser((user_id, done) =>{
