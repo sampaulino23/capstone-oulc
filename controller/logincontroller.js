@@ -133,9 +133,12 @@ const logincontroller = {
                                 if (err) {
                                     console.log(err);
                                 }
+                                else if (!req.user.isActive){
+                                    res.redirect('/login/error');
+                                }
                                 else {
                                     console.log("credentials are correct");
-                                    res.redirect('/admin/usermanagement')
+                                    res.redirect('/admin/usermanagement');
                                 }
                             });
                     });
