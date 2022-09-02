@@ -95,4 +95,7 @@ router.post('/changepassword', resetpasswordcontroller.resetPassword);
 // render forgotpassword page
 router.get('/forgotpassword', logincontroller.getForgotPassword);
 
+// render sendresetpassword page
+router.post('/forgotpasswordconfirmation', logincontroller.postForgotPassword);
+
 module.exports = router;

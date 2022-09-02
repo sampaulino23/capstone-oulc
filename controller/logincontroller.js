@@ -70,8 +70,33 @@ const logincontroller = {
     getForgotPassword: function (req, res) {
         res.render('forgotpassword', {
             pagename: 'Forgot Password',
-            title: 'Forgot Password'
+            title: 'Forgot Password',
+            emailInput: "unknown"
         });
+    },
+
+    postForgotPassword: async (req, res) => {
+
+        try {
+            var emailInput = req.body.email;
+
+            const email = await User.findOne({email: emailInput}).exec();
+
+            console.log(email);
+
+            if (email) {
+                res.render('forgotpasswordsuccess');
+            }
+            else {
+                res.render('forgotpassword', {
+                    emailInput: "unregistered"
+                });
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+        
     },
 
     postInsert: async (req, res, next) => {
