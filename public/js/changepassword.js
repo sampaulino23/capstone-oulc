@@ -12,8 +12,8 @@ $("#submitbtn").click(function(){
 
     if (checkpassword(password,cpwd) == false)
     {
-        $("#password").css("backgroundColor","red");
-        $("#cpwd").css("backgroundColor","red");
+        $("#password").css("backgroundColor","#E95C4B");
+        $("#cpwd").css("backgroundColor","#E95C4B");
         return false;
     }
     else
