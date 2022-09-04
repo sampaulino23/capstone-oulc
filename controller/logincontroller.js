@@ -1,6 +1,7 @@
 const assert = require('assert');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const MongoClient = require('mongodb').MongoClient;
 // passport config
 const db = require('../config/database').database;
@@ -80,11 +81,35 @@ const logincontroller = {
         try {
             var emailInput = req.body.email;
 
-            const email = await User.findOne({email: emailInput}).exec();
+            const user = await User.findOne({email: emailInput}).exec();
 
-            console.log(email);
+            if (user) {
+                // code section below is for sending the password to the account's email address
+                const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: "capstone.samantha@gmail.com",
+                        pass: "uapnxnyyyqqsfkax"
+                    }
+                });
 
-            if (email) {
+                // change "to" field to your dummy email so you can see the password
+                const options = {
+                    from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                    to: "capstone.zelong@gmail.com", //change to user.email when done testing
+                    subject: "Reset password",
+                    text: "Hi " + user.fullName + ". Forgot your password? We received a request to reset the password for your account. To reset your password, click on the link below: " + 
+                    " http://localhost:3000/resetpassword/" + user._id 
+                }
+
+                transporter.sendMail (options, function (err, info) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    console.log("Sent: " + info.response);
+                })
+
                 res.render('forgotpasswordsuccess');
             }
             else {
