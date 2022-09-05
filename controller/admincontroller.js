@@ -8,30 +8,6 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 
-
-async function getUserAccess (path, req, res) {
-    var userAccess;
-
-    if (path == '/active')
-        userAccess = true;
-    else if (path == '/inactive')
-        userAccess = false;
-
-
-    try {
-        const users = await User.find({ isActive: userAccess }).lean()
-            .sort({})
-            .exec();
-
-        res.render('usermanagement', {
-            users: users
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
 function checkAdmin(req,res,next){
     if(req.user.isAdmin){
         //req.isAuthenticated() will return true if user is logged in
@@ -193,10 +169,6 @@ const admincontroller = {
         } catch (err) {
             console.log(err);
         }
-    },
-
-    getUserManagementAccess: function (req, res) {
-        getUserAccess(req.path, req, res);
     },
 
     disableUser: async (req, res) => {
