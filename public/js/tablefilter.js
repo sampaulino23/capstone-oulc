@@ -23,6 +23,9 @@ function searchTable() {
           }
         }
       }
+      document.getElementById("all-tab").classList.add("selected");
+      document.getElementById("activeusers-tab").classList.remove("selected");
+      document.getElementById("inactiveusers-tab").classList.remove("selected");
 } 
 
 //Dropdown Filter
@@ -43,6 +46,10 @@ function filterUserDepartment(){ //for inventory (product category) and purchasi
             row.style.display = "none"; // hides this row
         }
     }
+
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("activeusers-tab").classList.remove("selected");
+    document.getElementById("inactiveusers-tab").classList.remove("selected");
 }
 
 function filterUserRole(){ //for inventory (product category) and purchasing (product category)
@@ -62,6 +69,10 @@ function filterUserRole(){ //for inventory (product category) and purchasing (pr
             row.style.display = "none"; // hides this row
         }
     }
+
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("activeusers-tab").classList.remove("selected");
+    document.getElementById("inactiveusers-tab").classList.remove("selected");
 }
 
 // Reset Dropdown Filter Values
