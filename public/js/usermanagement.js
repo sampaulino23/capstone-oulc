@@ -12,6 +12,8 @@ $(document).ready(() => {
             // Show toast  
             $("#add-user-toast").toast("show");
         }
+
+        viewActive();
     });
 
     $("th.default").each(function(){
