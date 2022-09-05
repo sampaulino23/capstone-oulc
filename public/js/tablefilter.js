@@ -88,6 +88,9 @@ function viewAll(){ //for inventory (product category) and purchasing (product c
     for (let row of rows) { // `for...of` loops through the NodeList
         row.style.display = ""; // shows this row
     }
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("activeusers-tab").classList.remove("selected");
+    document.getElementById("inactiveusers-tab").classList.remove("selected");
 }
 
 function viewActive(){ //for inventory (product category) and purchasing (product category)
@@ -107,6 +110,10 @@ function viewActive(){ //for inventory (product category) and purchasing (produc
             row.style.display = "none"; // hides this row
         }
     }
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("activeusers-tab").classList.add("selected");
+    document.getElementById("inactiveusers-tab").classList.remove("selected");
 }
 
 function viewInactive(){ //for inventory (product category) and purchasing (product category)
@@ -126,4 +133,8 @@ function viewInactive(){ //for inventory (product category) and purchasing (prod
             row.style.display = "none"; // hides this row
         }
     }
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("activeusers-tab").classList.remove("selected");
+    document.getElementById("inactiveusers-tab").classList.add("selected");
 }

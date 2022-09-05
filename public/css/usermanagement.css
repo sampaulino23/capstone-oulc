@@ -134,7 +134,7 @@
     color:#ABABAB;
 }
 
-.nav-item:active, .nav-item:focus {
+.nav-item:active, .nav-item:focus, .selected {
     border-bottom: solid #0C8039 5px;
     color: #000;
     transition: 0.25s
