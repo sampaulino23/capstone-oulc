@@ -288,7 +288,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="button" class="close-btn" id="enable-close"
-                                                    onclick="setRequired()" data-dismiss="modal">CLOSE</button>
+                                                     data-dismiss="modal">CLOSE</button>
                                             </div>
                                         </div>
                                     </div>
@@ -298,7 +298,7 @@
 
                                 <!--  USER ACCESS MODAL -->
 
-                                <div class="modal fade" id="modalUserAccess{{@index}}" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="modalUserAccess{{@index}}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
                                         style="width: 35%;">
@@ -324,7 +324,7 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="close-btn cancel-useraccess" id="enable-close{{@index}}"
-                                                        onclick="setRequired()" data-dismiss="modal">CANCEL</button>
+                                                         data-dismiss="modal">CANCEL</button>
                                                     {{#if isActive}}
                                                     <!-- DISABLE FUNCTION -->
                                                     <button type="button" class="confirm-btn disable-useraccess"
