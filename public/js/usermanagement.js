@@ -18,8 +18,8 @@ $(document).ready(() => {
 
     $("th.default").each(function(){
         sorttable.innerSortFunction.apply(this, []);
-      })
-    
+    });
+
     // if ($("#flexSwitchCheckChecked").prop('checked', true)) {
         $('.cancel-useraccess').click(function () {
             var index = this.id.split("enable-close")[1];
