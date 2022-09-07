@@ -32,7 +32,7 @@ const ContractRequestSchema = mongoose.Schema({
         required: true
     },
     statusCounter: {
-        type: Int32,
+        type: Number,
         required: true
     },
     contactNum: {
@@ -40,12 +40,13 @@ const ContractRequestSchema = mongoose.Schema({
         required: true
     },
     reviewType: {
-        type: Enum['Express', 'Regular'],
+        type: String,
+        enum: ['Express', 'Regular'],
         default: 'Regular',
         required: true
     },
     signatoryLevel: {
-        type: Int32,
+        type: Number,
         required: true
     },
     signatoryName: {
@@ -53,11 +54,8 @@ const ContractRequestSchema = mongoose.Schema({
         required: true
     },
     templateUsed: {
-        type: Enum[
-            'DLSU Template', 
-            'DLSU Template with changes in section/paragraph',
-            'Other (e.g.: From other party, own templates'
-        ],
+        type: String,
+        enum: ['DLSU Template', 'DLSU Template with changes in section/paragraph', 'Other (e.g.: From other party, own templates'],
         required: true
     },
     sectionChangeNotes: {
@@ -77,11 +75,6 @@ const ContractRequestSchema = mongoose.Schema({
     },
     amountInvolved: {
         type: Number,
-    },
-    asssignedStaff: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
     },
     asssignedAttorney: {
         type: mongoose.Schema.Types.ObjectId,
