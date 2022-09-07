@@ -23,6 +23,10 @@ const ContractRequestSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    requestTitle: {
+        type: String,
+        required: true
+    },
     effectivityStartDate: {
         type: Date,
         required: true
