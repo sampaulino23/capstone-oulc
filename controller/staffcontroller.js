@@ -20,8 +20,43 @@ const staffcontroller = {
                 path: 'role'
             }).exec();
     
-            console.log(userlogged);
-            res.render('dashboardstaff', {
+            // console.log(userlogged);
+            res.render('dashboardoulc', {
+                user:userlogged
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getRequests: async (req, res) => {
+        try {
+
+            const userlogged = await User.findOne({ email: req.user.email }).lean()
+            .populate({
+                path: 'role'
+            }).exec();
+    
+            // console.log(userlogged);
+            res.render('requestsoulc', {
+                user:userlogged
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    getTemplates: async (req, res) => {
+        try {
+
+            const userlogged = await User.findOne({ email: req.user.email }).lean()
+            .populate({
+                path: 'role'
+            }).exec();
+    
+            // console.log(userlogged);
+            res.render('templatesoulc', {
                 user:userlogged
             });
 

@@ -65,8 +65,9 @@ const upload = multer({
 
 router.use(require('connect-flash')());
 
-// get syntax
 router.get('/', staffcontroller.getStaffDashboard);
+router.get('/contractrequests', staffcontroller.getRequests);
+router.get('/templates', staffcontroller.getTemplates);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
