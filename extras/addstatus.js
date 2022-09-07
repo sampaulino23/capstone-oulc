@@ -12,7 +12,7 @@ const Status = require('../models/Status');
 async function seedStatus() {
     console.log('Seeding status...');
 
-    const status = [
+    const statuses = [
         {
             //  Pending (New submission)
             counter: 1,
@@ -49,30 +49,23 @@ async function seedStatus() {
             statusRequester: 'For Revision'
         },
         {
-            //  Revised / To Review during legal review (This means narevise na ni requesting unit during legal review)
+            //  Revised / To Review during legal review / Rerouted (This means narevise na ni requesting unit during legal review or nag reroute)
             counter: 6,
             statusStaff: 'For Legal Review',
             statusAttorney: 'To Review',
             statusRequester: 'Revised'
         },
         {
-            //  Rerouted
-            counter: 7,
-            statusStaff: 'For Legal Review',
-            statusAttorney: 'Rerouted',
-            statusRequester: 'Revised'
-        },
-        {
             //  Cleared
-            counter: 8,
+            counter: 7,
             statusStaff: 'Cleared',
             statusAttorney: 'Cleared',
             statusRequester: 'Cleared'
         },
     ];
 
-    for (status of status) {
-        var newStatus = new Status(status);
+    for (eachStatus of statuses) {
+        var newStatus = new Status(eachStatus);
         await newStatus.save();
     }
 
