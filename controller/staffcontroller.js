@@ -15,8 +15,14 @@ const staffcontroller = {
     getStaffDashboard: async (req, res) => {
         try {
 
+            const userlogged = await User.findOne({ email: req.user.email }).lean()
+            .populate({
+                path: 'role'
+            }).exec();
+    
+            console.log(userlogged);
             res.render('dashboardstaff', {
-
+                user:userlogged
             });
 
         } catch (err) {
