@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const hbs = require('handlebars');
+const moment = require('moment');
 
 const dotenv = require('dotenv');
 require('dotenv').config({ path: '.env' });
@@ -25,6 +26,12 @@ app.use(express.static('public'));
 app.use(bodyparser.json());
 
 // helpers
+
+hbs.registerHelper('formatdate', function(text){ 
+    var date = moment(new Date((text)));
+    return date.format("MM/DD/YYYY");   
+});
+
 hbs.registerHelper('compare', function(lvalue, operator, rvalue, options) {
 
     var operators, result;
