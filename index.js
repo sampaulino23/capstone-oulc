@@ -73,6 +73,9 @@ app.use('/login', loginRoute);
 const adminRoute = require('./routes/admin');
 app.use('/admin', adminRoute);
 
+const staffRoute = require('./routes/staff');
+app.use('/staff', staffRoute);
+
 app.get("/logout", function(req, res) {
     req.session.destroy(function (err) {
         res.redirect('/login');

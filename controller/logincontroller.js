@@ -96,7 +96,7 @@ const logincontroller = {
                 // change "to" field to your dummy email so you can see the password
                 const options = {
                     from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                    to: "capstone.zelong@gmail.com", //change to user.email when done testing
+                    to: "maria_samantha_paulino@dlsu.edu.ph", //change to user.email when done testing
                     subject: "Reset password",
                     text: "Hi " + user.fullName + ". Forgot your password? We received a request to reset the password for your account. To reset your password, click on the link below: " + 
                     " http://localhost:3000/resetpassword/" + user._id 
@@ -177,21 +177,32 @@ const logincontroller = {
             }
             else {
                 passport.authenticate("local", { failureRedirect: '/login/error', failureMessage: true })
-                    (req, res, function () {
-                        User.find({ email: req.user.email },
-                            function (err, docs) {
+                    (req, res, async function () {
+                        const userlogged = await User.findOne({ email: req.user.email }).lean()
+                            .populate({
+                                path: 'role'
+                            }).exec();
+                       
                                 if (err) {
                                     console.log(err);
                                 }
                                 else if (!req.user.isActive){
                                     res.redirect('/login/error');
                                 }
-                                else {
+                                else{
                                     console.log("credentials are correct");
-                                    res.redirect('/admin/usermanagement');
+                                    console.log (userlogged.role.name);
+                                    if (userlogged.role.name == "Staff"){
+                                        res.redirect('/staff/');
+                                    }
+                                    else {
+                                        res.redirect('/admin/usermanagement');
+                                    }
                                 }
-                            });
+                            
                     });
+
+                    
             }
         })
     },
