@@ -2,11 +2,6 @@ const { Int32, Double } = require('mongodb');
 const mongoose = require('mongoose');
 
 const ContractRequestSchema = mongoose.Schema({
-    contract: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Contract',
-        required: true
-    },
     requester: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -21,6 +16,10 @@ const ContractRequestSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    subjectMatter: {
+        type: String,
+        required: true
+    },
     requestDate: {
         type: Date,
         required: true
@@ -30,14 +29,6 @@ const ContractRequestSchema = mongoose.Schema({
         required: true
     },
     effectivityEndDate: {
-        type: Date,
-        required: true
-    },
-    initialReviewDate: {
-        type: Date,
-        require: true
-    },
-    finalReviewDate: {
         type: Date,
         required: true
     },
@@ -70,6 +61,9 @@ const ContractRequestSchema = mongoose.Schema({
         ],
         required: true
     },
+    sectionChangeNotes: {
+        type: String,
+    },
     thirdPartyRepresentativeName: {
         type: String,
         required: true
@@ -84,7 +78,6 @@ const ContractRequestSchema = mongoose.Schema({
     },
     amountInvolved: {
         type: Double,
-        required: true
     }
     
 });
