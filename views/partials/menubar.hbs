@@ -9,7 +9,7 @@
 
         {{#if isAuthenticated}}
 
-        {{#compare user.role.name "==" "Staff"}}
+        {{#compare user_role "==" "Staff"}}
         <li><a href="/staff" class="btn2" id="logout">Dashboard</a></li>
         <li><a href="/staff/contractrequests" class="btn2" id="contractrequest-staff">Approval Requests</a></li>
         <li><a href="/staff/templates" class="btn2" id="logout">Templates</a></li>

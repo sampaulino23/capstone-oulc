@@ -15,14 +15,14 @@ const staffcontroller = {
     getStaffDashboard: async (req, res) => {
         try {
 
-            const userlogged = await User.findOne({ email: req.user.email }).lean()
-            .populate({
-                path: 'role'
-            }).exec();
+            // const userlogged = await User.findOne({ email: req.user.email }).lean()
+            // .populate({
+                // path: 'role'
+            // }).exec();
     
             // console.log(userlogged);
             res.render('dashboardoulc', {
-                user:userlogged
+                user_role:req.session.role
             });
 
         } catch (err) {
@@ -33,14 +33,18 @@ const staffcontroller = {
     getRequests: async (req, res) => {
         try {
 
-            const userlogged = await User.findOne({ email: req.user.email }).lean()
-            .populate({
-                path: 'role'
-            }).exec();
+            // const userlogged = await User.findOne({ email: req.user.email }).lean()
+            // .populate({
+            //     path: 'role'
+            // }).exec();
+
+            // userlogged = req.user;
+
+            console.log("REQ" + req.user);
     
             // console.log(userlogged);
             res.render('requestsoulc', {
-                user:userlogged
+                user_role:req.session.role
             });
 
         } catch (err) {
@@ -50,14 +54,14 @@ const staffcontroller = {
     getTemplates: async (req, res) => {
         try {
 
-            const userlogged = await User.findOne({ email: req.user.email }).lean()
-            .populate({
-                path: 'role'
-            }).exec();
+            // const userlogged = await User.findOne({ email: req.user.email }).lean()
+            // .populate({
+            //     path: 'role'
+            // }).exec();
     
             // console.log(userlogged);
             res.render('templatesoulc', {
-                user:userlogged
+                user_role:req.session.role
             });
 
         } catch (err) {

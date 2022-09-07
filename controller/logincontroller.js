@@ -193,6 +193,7 @@ const logincontroller = {
                                     console.log("credentials are correct");
                                     console.log (userlogged.role.name);
                                     if (userlogged.role.name == "Staff"){
+                                        req.session.role = userlogged.role.name;
                                         res.redirect('/staff/');
                                     }
                                     else {
