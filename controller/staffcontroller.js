@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
 const User = require('../models/User.js');
+const ContractRequest = require('../models/ContractRequest.js');
+const ContractType = require('../models/ContractType.js');
+const Status = require('../models/Status.js');
 const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
@@ -33,18 +36,25 @@ const staffcontroller = {
     getRequests: async (req, res) => {
         try {
 
-            // const userlogged = await User.findOne({ email: req.user.email }).lean()
-            // .populate({
-            //     path: 'role'
-            // }).exec();
+            const contractrequests = await ContractRequest.find({}).lean()
+                .populate({
+                    path: 'requester'
+                })
+                .populate({
+                    path: 'contractType'
+                })
+                .populate({
+                    path: 'asssignedAttorney'
+                })
+                .sort({requestDate: 1})
+                .exec();
 
-            // userlogged = req.user;
-
-            console.log("REQ" + req.user);
+            //  console.log("CONTRACT" + JSON.stringify(contractrequests));
     
             // console.log(userlogged);
             res.render('requestsoulc', {
-                user_role:req.session.role
+                user_role:req.session.role,
+                contractrequests: contractrequests
             });
 
         } catch (err) {
