@@ -1,4 +1,3 @@
-const { Int32 } = require('mongodb');
 const mongoose = require('mongoose');
 
 const ContractVersionSchema = mongoose.Schema({
@@ -8,7 +7,7 @@ const ContractVersionSchema = mongoose.Schema({
         required: true
     },
     number: {
-        type: Int32,
+        type: Number,
         required: true
     },
     uploadDate: {

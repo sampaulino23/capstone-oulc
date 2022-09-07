@@ -1,4 +1,3 @@
-const { Int32, Double } = require('mongodb');
 const mongoose = require('mongoose');
 
 const ContractRequestSchema = mongoose.Schema({
@@ -77,8 +76,18 @@ const ContractRequestSchema = mongoose.Schema({
         required: true
     },
     amountInvolved: {
-        type: Double,
-    }
+        type: Number,
+    },
+    asssignedStaff: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    asssignedAttorney: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     
 });
 
