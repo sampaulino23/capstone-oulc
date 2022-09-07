@@ -20,6 +20,7 @@ async function seedContractRequest() {
             trackingNumber: "142012",
             subjectMatter: "Student MOA for internship/OJT effective September 5, 2022.",
             requestDate: new Date(),
+            requestTitle: "Accenture MOA",
             effectivityStartDate: new Date("2022-08-20T16:00:00Z"),
             effectivityEndDate: new Date("2023-08-20T16:00:00Z"),
             statusCounter: 1,
