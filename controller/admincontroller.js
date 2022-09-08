@@ -8,6 +8,13 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 
+// Connecting mongoose to our database 
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Mongo DB connected!'))
+    .catch(err => console.log(err));
+
 function checkAdmin(req,res,next){
     if(req.user.isAdmin){
         //req.isAuthenticated() will return true if user is logged in

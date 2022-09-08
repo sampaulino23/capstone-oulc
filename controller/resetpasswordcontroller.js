@@ -1,10 +1,17 @@
-//const mongoose = require('mongoose');
-//const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const mongoose = require('mongoose');
+const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
 const User = require('../models/User.js');
 const { ObjectId } = require('mongoose');
+
+// Connecting mongoose to our database 
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Mongo DB connected!'))
+    .catch(err => console.log(err));
 
 const resetpasswordcontroller = {
 
