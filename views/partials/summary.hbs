@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/css/navstyle.css">
+
+<div>
+    {{#each contractrequest}}
+    Document Number: {{trackingNumber}}
+    <br>
+    Request Date: {{formatdate requestDate}}
+    <br>
+    Department/Unit: {{requester.department.name}}
+    <br>
+    Effectivity Date
+    <br>
+    From: {{formatdate effectivityStartDate}}
+    <br>
+    To: {{formatdate effectivityEndDate}}
+    <br>
+    Duration:
+    <br>
+    Name of Signatory: {{signatoryName}}
+    <br>
+    Signatory Level: {{signatoryLevel}}
+    <br>
+    Contact Person: {{requester.fullName}}
+    <br>
+    Contact Local No.: {{contactNum}}
+    <br>
+    Template Used: {{templateUsed}}
+    <br>
+    Changes in Sections/Paragraphcs: {{sectionChangeNotes}}
+    <br>
+    Third Party Name: {{thirdPartyRepresentativeName}}
+    <br>
+    Third Party Email: {{thirdPartyRepresentativeEmail}}
+    <br>
+    Name of Other Contracting Party: {{contractingParty}}
+    <br>
+    Amount Involved: {{numberWithComma amountInvolved}}
+    <br>
+    Type of Review: {{reviewType}}
+    <br>
+    Document Title: {{requestTitle}}
+    <br>
+    Document Type: {{contractType.name}}
+    <br>
+    Subject Matter: {{subjectMatter}}
+    <br>
+    {{/each}}
+</div>
+
+
+<script>
+  
+</script>

@@ -18,9 +18,32 @@ const specificrequestcontroller = {
     getStaffSpecificRequest: async (req, res) => {
         try {
 
+            var path = req.path.split('/')[2];
+
+            console.log(path);
+
+            const contractrequest = await ContractRequest.find({_id : path}).lean()
+                .populate({
+                    path: 'requester',
+                    populate: {
+                        path: 'department'
+                      } 
+                })
+                .populate({
+                    path: 'contractType'
+                })
+                .populate({
+                    path: 'asssignedAttorney'
+                })
+                .sort({requestDate: 1})
+                .exec();
+
+                console.log(contractrequest);
+
           
             res.render('specificrequest', {
-                user_role:req.session.role
+                user_role:req.session.role,
+                contractrequest: contractrequest
             });
 
         } catch (err) {

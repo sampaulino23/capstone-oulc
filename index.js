@@ -71,6 +71,13 @@ hbs.registerHelper('compare', function(lvalue, operator, rvalue, options) {
     }
 });
 
+hbs.registerHelper('numberWithComma', function(x){ 
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+     
+});
+
 //Import Routes
 
 const loginRoute = require('./routes/login');
@@ -91,5 +98,7 @@ app.get("/logout", function(req, res) {
         res.redirect('/login');
       });
 });
+
+
 
 app.listen(process.env.PORT || 3000);
