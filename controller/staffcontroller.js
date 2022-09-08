@@ -68,9 +68,12 @@ const staffcontroller = {
                     // To set number of days gap in contract request
                     contractrequests[i].daysGap = Difference_In_Days;
                 }
+
+            const contracttypes = await ContractType.find({}).lean().exec();
     
             res.render('requestsoulc', {
                 user_role:req.session.role,
+                contracttypes: contracttypes,
                 contractrequests: contractrequests
             });
 
