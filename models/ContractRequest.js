@@ -37,7 +37,8 @@ const ContractRequestSchema = mongoose.Schema({
     },
     statusCounter: {
         type: Number,
-        required: true
+        required: true,
+        default: 1
     },
     contactNum: {
         type: String,

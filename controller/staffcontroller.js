@@ -53,8 +53,8 @@ const staffcontroller = {
                 .exec();
 
                 for (i = 0; i < contractrequests.length; i++) {
-                    contractrequests[i].status = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
-                    contractrequests[i].status = contractrequests[i].status.statusStaff;
+                    const statusList = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
+                    contractrequests[i].status = statusList.statusStaff;
 
                     // var date1 = contractrequests[i].requestDate;
                     // var date2 = contractrequests[i].effectivityStartDate;
