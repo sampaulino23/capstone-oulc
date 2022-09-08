@@ -55,10 +55,20 @@ const staffcontroller = {
                 for (i = 0; i < contractrequests.length; i++) {
                     contractrequests[i].status = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
                     contractrequests[i].status = contractrequests[i].status.statusStaff;
-                    // console.log (contractrequests[i].status);
+
+                    // var date1 = contractrequests[i].requestDate;
+                    // var date2 = contractrequests[i].effectivityStartDate;
+                      
+                    // To calculate the time difference of two dates
+                    var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                      
+                    // To calculate the no. of days between two dates
+                    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                    // To set number of days gap in contract request
+                    contractrequests[i].daysGap = Difference_In_Days;
                 }
-            //   console.log("CONTRACT" + JSON.stringify(contractrequests));
-            // console.log(userlogged);
+    
             res.render('requestsoulc', {
                 user_role:req.session.role,
                 contractrequests: contractrequests
