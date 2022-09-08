@@ -38,7 +38,10 @@ const staffcontroller = {
 
             const contractrequests = await ContractRequest.find({}).lean()
                 .populate({
-                    path: 'requester'
+                    path: 'requester',
+                    populate: {
+                        path: 'department'
+                      } 
                 })
                 .populate({
                     path: 'contractType'
@@ -49,8 +52,12 @@ const staffcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            //  console.log("CONTRACT" + JSON.stringify(contractrequests));
-    
+                for (i = 0; i < contractrequests.length; i++) {
+                    contractrequests[i].status = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
+                    contractrequests[i].status = contractrequests[i].status.statusStaff;
+                    // console.log (contractrequests[i].status);
+                }
+            //   console.log("CONTRACT" + JSON.stringify(contractrequests));
             // console.log(userlogged);
             res.render('requestsoulc', {
                 user_role:req.session.role,
