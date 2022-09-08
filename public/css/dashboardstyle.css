@@ -1,0 +1,65 @@
+#header {
+    position: relative;
+    margin-left: 121px;
+    margin-top: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 54px;
+    /* identical to box height */
+    color: #000000;
+}
+
+.nav-tabs {
+    width: fit-content;
+    margin-left: 121px;
+    padding: 0px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    border-style: none;
+}
+
+.nav-item {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 700;
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-bottom: 0px;
+    color:#ABABAB;
+}
+
+.nav-item:active, .nav-item:focus, .selected {
+    border-bottom: solid #0C8039 5px;
+    color: #000;
+    transition: 0.25s
+}
+
+.nav-item:hover {
+    color: #000;
+    transition: 0.25s
+}
+
+/* Style the counter cards */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 16px;
+    margin: 2px 121px 0px 121px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2px 16px;
+  }
