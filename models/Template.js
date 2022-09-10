@@ -5,6 +5,11 @@ const TemplateSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ContractType',
+        required: true
+    },
     uploadDate: {
         type: Date,
         required: true

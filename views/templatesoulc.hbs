@@ -10,5 +10,46 @@
     </head>
     <body>
         <div id="header">Staff Templates</div>
+        <div class="container-fluid">
+            <div class="row"> 
+                <!-- LEFT SIDE -->
+                <div class="col-6"> 
+                    <button class="btn btn-primary" type="submit">+ Upload New Template</button>
+                    <div id="template-search">
+                        <input class="form-control" id="template-search-input" onkeyup="searchTable()" type="text" placeholder="Search...">
+                    </div>
+                    <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                        <div id="user-table" class="tab-pane active">
+                            <div class="w-100">
+                                <table id="table" class="sortable table table-hover"
+                                    style="width: 100%; font-size: 16px; background:#D9D9D9;">
+                                    <thead class="table-headers">
+                                        <tr>
+                                            <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
+                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
+                                            <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                                            <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+                                        {{#each templates}}
+                                        <tr style="cursor: pointer;"  id="{{_id}}" onclick="">
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{name}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{type}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{uploadDate}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="col-6">TEMPLATE PREVIEW</div> 
+            </div>
+        </div>
     </body>
 </html>
