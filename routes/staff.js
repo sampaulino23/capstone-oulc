@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const mongoURI = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
 const MongoStore = require('connect-mongo');
 const staffcontroller = require('../controller/staffcontroller.js');
@@ -44,7 +44,8 @@ router.use(passport.session());
 
 
 
-// multer to accept images
+// multer to accept files
+const path = require('path');
 const crypto = require('crypto');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
@@ -80,22 +81,6 @@ const storage = new GridFsStorage({
   }
 });
 const upload = multer({ storage });
-
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, './public/img/');
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, filename = Date.now() + file.originalname);
-//     }
-// });
-
-// const upload = multer({
-//     storage: storage, 
-//     limits: {
-//         fileSize: 1024*1024*5
-//     }
-// });
 
 router.use(require('connect-flash')());
 
