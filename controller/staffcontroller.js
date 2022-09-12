@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const multer = require('multer');
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
@@ -12,12 +16,42 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 
 // Connecting mongoose to our database 
-mongoose.connect(url, {
+/*const promise =*/ mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('Mongo DB connected!'))
     .catch(err => console.log(err));
 
+// const conn = mongoose.connection;
+// let gfs;
+
+// conn.once('open',() => {
+//     gfs = Grid(conn, mongoose.mongo);
+//     gfs.collection('uploads');
+// });
+
+// //create storage object
+// const storage = new GridFsStorage({
+//     db: promise,
+//     file: (req, file) => {
+//       return new Promise((resolve, reject) => {
+//         crypto.randomBytes(16, (err, buf) => {
+//           if (err) {
+//             return reject(err);
+//           }
+//           const filename = buf.toString('hex') + path.extname(file.originalname);
+//           const fileInfo = {
+//             filename: filename,
+//             bucketName: 'uploads'
+//           };
+//           resolve(fileInfo);
+//         });
+//       });
+//     }
+// });
+
+// // Set multer storage engine to the newly created object
+// const upload = multer({ storage });
 
 const staffcontroller = {
 
@@ -91,19 +125,26 @@ const staffcontroller = {
     getTemplates: async (req, res) => {
         try {
 
-            // const userlogged = await User.findOne({ email: req.user.email }).lean()
-            // .populate({
-            //     path: 'role'
-            // }).exec();
+            const contracttypes = await ContractType.find({}).lean().exec();
     
-            // console.log(userlogged);
             res.render('templatesoulc', {
-                user_role:req.session.role
+                user_role: req.session.role,
+                contracttypes: contracttypes
             });
 
         } catch (err) {
             console.log(err);
         }
+    },
+
+    uploadTemplate: async (req, res) => {
+        try {
+
+            res.json({ file: req.file});
+            
+        } catch (err) {
+            console.log(err);
+        } 
     }
 }
 
