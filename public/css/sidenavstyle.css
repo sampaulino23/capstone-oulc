@@ -2,37 +2,39 @@
 .sidenav {
     float:left;
     height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
+    width: 23%; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 100; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black*/
+    background-color: #fff;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    transition: 0.25s; /* 0.5 second transition effect to slide in the sidenav */
 }
   
 /* The navigation menu links */
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 15px 30px 15px 30px;
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #000;
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: #00713D !important; 
 }
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 15px;
     font-size: 36px;
     margin-left: 50px;
 }
@@ -55,4 +57,13 @@
     color: #fff;
     font-size:30px;
     cursor:pointer
+}
+
+#burger-menu:hover {
+    color: #000;
+    transition: .25s;
+}
+
+.nav-header {
+    display: inline-block;
 }

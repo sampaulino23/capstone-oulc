@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/css/sidenavstyle.css">
+
+<span id = "burger-menu" onclick="openNav()">&#9776;</span>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#"><img src="/img/dashboard_logo.png" style="width:45px; padding:0px; margin-right: 10px;"/>Dashboard</a>
+    <a href="#"><img src="/img/approval_requests_logo.png" style="width:45px; padding:0px; margin-right: 10px;"/>Approval Requests</a>
+    <a href="#"><img src="/img/contract_templates_logo.png" style="width:45px; padding:0px; margin-right: 10px;"/>Contract Templates</a>
+    <a href="#"><img src="/img/docu_repository_logo.jpg" style="width:45px; padding:0px; margin-right: 10px;"/>Document Repository</a>
+</div>
+
+<script>
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "23%";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
