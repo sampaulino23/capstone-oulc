@@ -13,11 +13,6 @@
         {{#if isAuthenticated}}
 
         <ul>
-        {{#compare user_role "==" "Staff"}}
-        <li><a href="/staff" class="btn2">Dashboard</a></li>
-        <li><a href="/staff/contractrequests" class="btn2" id="contractrequest-staff">Approval Requests</a></li>
-        <li><a href="/staff/templates" class="btn2">Templates</a></li>
-        {{/compare}}
 
         <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
         
