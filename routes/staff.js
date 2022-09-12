@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const mongoURI = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
 const MongoStore = require('connect-mongo');
 const staffcontroller = require('../controller/staffcontroller.js');
@@ -45,64 +45,29 @@ router.use(passport.session());
 
 
 // multer to accept images
-const crypto = require('crypto');
-const {GridFsStorage} = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
 const multer = require('multer');
 
-const promise = mongoose.connect(mongoURI, { useNewUrlParser: true });
-
-const conn = mongoose.connection;
-let gfs;
-
-conn.once('open',() => {
-  gfs = Grid(conn, mongoose.mongo);
-  gfs.collection('uploads');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/img/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, filename = Date.now() + file.originalname);
+    }
 });
 
-//create storage object
-const storage = new GridFsStorage({
-  db: promise,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
+const upload = multer({
+    storage: storage, 
+    limits: {
+        fileSize: 1024*1024*5
+    }
 });
-const upload = multer({ storage });
-
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, './public/img/');
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, filename = Date.now() + file.originalname);
-//     }
-// });
-
-// const upload = multer({
-//     storage: storage, 
-//     limits: {
-//         fileSize: 1024*1024*5
-//     }
-// });
 
 router.use(require('connect-flash')());
 
 router.get('/', staffcontroller.getStaffDashboard);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
-router.post('/uploadtemplate', upload.single('file'), staffcontroller.uploadTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
