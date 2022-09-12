@@ -1,0 +1,120 @@
+#header {
+    position: relative;
+    margin-left: 121px;
+    margin-top: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 54px;
+    /* identical to box height */
+    color: #000000;
+}
+
+.nav-tabs {
+    width: fit-content;
+    margin-left: 121px;
+    padding: 0px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    border-style: none;
+}
+
+.nav-item {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 700;
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-bottom: 0px;
+    color:#ABABAB;
+}
+
+.nav-item:active, .nav-item:focus, .selected {
+    border-bottom: solid #0C8039 5px;
+    color: #000;
+    transition: 0.25s
+}
+
+.nav-item:hover {
+    color: #000;
+    transition: 0.25s
+}
+
+#user-table {
+    margin-top: 10px;
+    margin-left: 121px;
+    margin-right: 121px;
+}
+
+.table-headers {
+    background: rgba(12, 128, 57, 0.6);
+    color: #000;
+    font-weight: bolder;
+    line-height: 24px;
+    text-align:center;
+    cursor: pointer;
+}
+
+#myTable {
+    font-size: 16px;
+}
+
+#myInput {
+    margin-left: 121px;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 20px;
+    width: 258px;
+    height: 49px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#query-search {
+    display: inline-flex;
+    align-items: baseline;
+    width: fit-content;
+}
+
+#dropdowns {
+    font-size: 16px;
+    float: right;
+    margin-right: 121px;
+    width: fit-content;
+    color: #000;
+}
+
+#add-search-dropdowns {
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.dept-and-role {
+    color: #000;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#contracttypedropdown, #requesttypedropdown {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 10px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 213px;
+    height: 49px;
+    align-content: center;
+}
