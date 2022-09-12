@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/css/navstyle.css">
+<link rel="stylesheet" href="/css/sidenavstyle.css">
 <nav>
+    <span id = "burger-menu" onclick="openNav()">&#9776;</span>
     <div class="navbar-logo">
         <a href="/admin/usermanagement"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
     </div>
@@ -57,7 +59,25 @@
     </ul>
 </nav>
 
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
 <script>
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    
     var pagename = document.getElementById('page-name').textContent;
     if (pagename == "Shop") {
         document.getElementById('shop').setAttribute("class", "active");
