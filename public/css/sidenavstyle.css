@@ -18,7 +18,7 @@
     padding: 15px 30px 15px 30px;
     text-decoration: none;
     font-family: 'Work Sans', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bolder;
     color: #000;
     display: block;
@@ -36,6 +36,8 @@
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
+    position: absolute;
+    right: 10px;
     padding-top: 18px;
     font-size: 30px;
     color: #fff;
@@ -67,17 +69,19 @@
 }
 
 #side-nav-header {
+    width: 100%;
     color: #fff;
     display:inline-flex;
     padding-left: 30px;
     background: #00713D;
+    align-items: center;
 }
 
 #side-nav-logo {
     padding-top:18px;
     padding-bottom: 18px;
     font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
+    font-size: 34px;
     font-weight: bolder;
 }
 
