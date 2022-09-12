@@ -2,14 +2,14 @@
 .sidenav {
     float:left;
     height: 100%; /* 100% Full-height */
-    width: 23%; /* 0 width - change this with JavaScript */
+    width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 100; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #fff;
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 0px; /* Place content 60px from the top */
     transition: 0.25s; /* 0.5 second transition effect to slide in the sidenav */
 }
   
@@ -27,16 +27,18 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #00713D !important; 
+    color: #00713D !important;
+}
+
+.sidenav .closebtn:hover {
+    color: #000 !important; 
 }
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 15px;
-    font-size: 36px;
-    margin-left: 50px;
+    padding-top: 18px;
+    font-size: 30px;
+    color: #fff;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -64,6 +66,17 @@
     transition: .25s;
 }
 
-.nav-header {
-    display: inline-block;
+#side-nav-header {
+    color: #fff;
+    display:inline-flex;
+    padding-left: 30px;
+    background: #00713D;
+}
+
+#side-nav-logo {
+    padding-top:18px;
+    padding-bottom: 18px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bolder;
 }

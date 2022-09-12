@@ -1,18 +1,22 @@
 <link rel="stylesheet" href="/css/navstyle.css">
 <nav>
-        {{#if isAuthenticated}}
-
         {{#compare user_role "==" "Staff"}}
         {{> sidenav}}
         <div class="navbar-logo">
-            <a href="/admin/usermanagement"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
+            <a href="/staff"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
         </div>
-        <span id='page-name' style='display: none;'>{{pagename}}</span><span id='user'
-            style='display: none;'>{{isAuthenticated}}</span><span id='admin' style='display: none;'>{{isAdmin}}</span>
+        <span id='page-name' style='display: none;'>{{pagename}}</span>
+        <span id='user' style='display: none;'>{{isAuthenticated}}</span>
+        <span id='admin' style='display: none;'>{{isAdmin}}</span>
+        {{/compare}}
+        
+        {{#if isAuthenticated}}
+
         <ul>
-        <li><a href="/staff" class="btn2" id="logout">Dashboard</a></li>
+        {{#compare user_role "==" "Staff"}}
+        <li><a href="/staff" class="btn2">Dashboard</a></li>
         <li><a href="/staff/contractrequests" class="btn2" id="contractrequest-staff">Approval Requests</a></li>
-        <li><a href="/staff/templates" class="btn2" id="logout">Templates</a></li>
+        <li><a href="/staff/templates" class="btn2">Templates</a></li>
         {{/compare}}
 
         <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
