@@ -14,7 +14,7 @@
             <div class="row"> 
                 <!-- LEFT SIDE -->
                 <div class="col-6"> 
-                    <button class="btn btn-primary" type="submit">+ Upload New Template</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadTemplateModal">+ Upload New Template</button>
                     <div id="template-search">
                         <input class="form-control" id="template-search-input" onkeyup="searchTable()" type="text" placeholder="Search...">
                     </div>
@@ -52,4 +52,34 @@
             </div>
         </div>
     </body>
+
+    <!-- Upload Template Modal -->
+    <div class="modal fade modal-dialog modal-dialog-centered" id="uploadTemplateModal" tabindex="-1" aria-labelledby="uploadTemplateModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Template</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/staff/uploadtemplate" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file mb-3">
+                            <label for="file" class="custom-file-label">Choose File</label>
+                            <input type="file" name="file" id="file" class="custom-file-input">
+                            <label for="contractType">Type</label>
+                            <select name="contractType" id="contractType" class="form-select" required>
+                            {{#each contracttypes}}
+                                <option>{{name}}</option>
+                            {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </html>
