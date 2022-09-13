@@ -15,8 +15,7 @@ const TemplateSchema = mongoose.Schema({
         required: true
     },
     file: {
-        type: String,   // implement changes when finalized
-        required: true
+        type: mongoose.Schema.Types.ObjectId,   // implement changes when finalized
     }
     
 });

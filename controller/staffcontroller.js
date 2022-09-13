@@ -7,9 +7,11 @@ const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
+const Template = require('../models/Template.js');
 const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
+const { template } = require('handlebars');
 
 // Connecting mongoose to our database 
 mongoose.connect(url, {
@@ -17,37 +19,6 @@ mongoose.connect(url, {
     useUnifiedTopology: true
 }).then(() => console.log('Mongo DB connected!'))
     .catch(err => console.log(err));
-
-// const conn = mongoose.connection;
-// let gfs;
-
-// conn.once('open',() => {
-//     gfs = Grid(conn, mongoose.mongo);
-//     gfs.collection('uploads');
-// });
-
-// //create storage object
-// const storage = new GridFsStorage({
-//     db: promise,
-//     file: (req, file) => {
-//       return new Promise((resolve, reject) => {
-//         crypto.randomBytes(16, (err, buf) => {
-//           if (err) {
-//             return reject(err);
-//           }
-//           const filename = buf.toString('hex') + path.extname(file.originalname);
-//           const fileInfo = {
-//             filename: filename,
-//             bucketName: 'uploads'
-//           };
-//           resolve(fileInfo);
-//         });
-//       });
-//     }
-// });
-
-// // Set multer storage engine to the newly created object
-// const upload = multer({ storage });
 
 const staffcontroller = {
 
@@ -122,10 +93,12 @@ const staffcontroller = {
         try {
 
             const contracttypes = await ContractType.find({}).lean().exec();
+            const templates = await Template.find({}).lean().exec();
     
             res.render('templatesoulc', {
                 user_role: req.session.role,
-                contracttypes: contracttypes
+                contracttypes: contracttypes,
+                templates: templates
             });
 
         } catch (err) {
@@ -136,7 +109,28 @@ const staffcontroller = {
     uploadTemplate: async (req, res) => {
         try {
 
-            res.json({ file: req.file});
+            const contractTypeInput = req.body.contractType;
+
+            const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
+
+            const filename = req.file.filename;
+            const file_id = mongoose.Types.ObjectId(req.file._id);
+            const fileuploaddate = req.file.uploadDate;
+
+            console.log(file_id);
+
+            const newTemplate = new Template({
+                name: filename,
+                type: mongoose.Types.ObjectId(contractType._id),
+                uploadDate: fileuploaddate,
+                file: file_id
+            });
+
+            console.log(newTemplate);
+
+            await newTemplate.save();
+
+            res.redirect('back');
             
         } catch (err) {
             console.log(err);
