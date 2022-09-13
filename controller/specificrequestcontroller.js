@@ -49,6 +49,15 @@ const specificrequestcontroller = {
             for (i = 0; i < contractrequest.length; i++) {
                 const statusList = await Status.findOne({counter: contractrequest[i].statusCounter}).exec();
                 contractrequest[i].status = statusList.statusStaff;
+
+                // To calculate the time difference of two dates
+                var Difference_In_Time = contractrequest[i].effectivityEndDate.getTime() - contractrequest[i].effectivityStartDate.getTime();
+                      
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                // To set number of days gap in contract request
+                contractrequest[i].daysDuration = Difference_In_Days;
             }
 
             const feedback = await Feedback.find({contractRequest : path}).lean()
