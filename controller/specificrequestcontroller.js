@@ -45,6 +45,11 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
+                for (i = 0; i < contractrequest.length; i++) {
+                    const statusList = await Status.findOne({counter: contractrequest[i].statusCounter}).exec();
+                    contractrequest[i].status = statusList.statusStaff;
+                }
+
                 console.log(contractrequest);
 
           
