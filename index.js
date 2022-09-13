@@ -32,6 +32,11 @@ hbs.registerHelper('formatdate', function(text){
     return date.format("MM/DD/YYYY");   
 });
 
+hbs.registerHelper('formatfeedbackdate', function(text){ 
+    var date = moment(new Date((text)));
+    return date.format("MMM D, YYYY h:mmA");   
+});
+
 hbs.registerHelper('compare', function(lvalue, operator, rvalue, options) {
 
     var operators, result;
