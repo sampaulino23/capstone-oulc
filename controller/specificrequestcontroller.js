@@ -77,8 +77,8 @@ const specificrequestcontroller = {
         try {
             console.log("Inside For Revision Office Staff");
             var feedback = req.body.addStaffFeedback;
-
-            console.log("FEEDBACK: " + feedback);
+            var id = req.body.addStaffFeedbackID;
+            
             res.redirect('back');
         } catch (err) {
             console.log(err);
