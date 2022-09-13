@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
+const Feedback = require('../models/Feedback.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
 const Role = require('../models/Role.js');
@@ -75,10 +76,23 @@ const specificrequestcontroller = {
     },
     postForRevisionStaff: async (req, res) => {
         try {
+
+            var contractRequestId = req.body.addStaffFeedbackID;
+
+            var feedback = new Feedback({
+                contractRequest: req.body.addStaffFeedbackID,
+                user_id: req.session._id,
+                content: req.body.addStaffFeedback
+            });
+
             console.log("Inside For Revision Office Staff");
-            var feedback = req.body.addStaffFeedback;
-            var id = req.body.addStaffFeedbackID;
-            
+            console.log(feedback);
+
+            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
+            await feedback.save();
+            // var feedback = req.body.addStaffFeedback;
+            // var id = req.body.addStaffFeedbackID;
+
             res.redirect('back');
         } catch (err) {
             console.log(err);
