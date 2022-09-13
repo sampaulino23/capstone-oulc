@@ -67,6 +67,10 @@ router.use(require('connect-flash')());
 
 router.get('/staff/:id', specificrequestcontroller.getStaffSpecificRequest);
 
+router.get('/forlegalreview', specificrequestcontroller.forLegalReview);
+
+router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff);
+
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
 

@@ -50,7 +50,7 @@ const specificrequestcontroller = {
                     contractrequest[i].status = statusList.statusStaff;
                 }
 
-                console.log(contractrequest);
+                // console.log(contractrequest);
 
           
             res.render('specificrequest', {
@@ -58,6 +58,28 @@ const specificrequestcontroller = {
                 contractrequest: contractrequest
             });
 
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    forLegalReview: async (req, res) => {
+        try {
+            console.log("Inside For Legal Review");
+            var userid = req.query.userid;
+            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 4} });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    postForRevisionStaff: async (req, res) => {
+        try {
+            console.log("Inside For Revision Office Staff");
+            var feedback = req.body.addStaffFeedback;
+
+            console.log("FEEDBACK: " + feedback);
+            res.redirect('back');
         } catch (err) {
             console.log(err);
         }
