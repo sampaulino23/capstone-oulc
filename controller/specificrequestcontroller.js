@@ -28,7 +28,7 @@ const specificrequestcontroller = {
 
             var path = req.path.split('/')[2];
 
-            console.log(path);
+            // console.log(path);
 
             const contractrequest = await ContractRequest.find({_id : path}).lean()
                 .populate({
@@ -46,17 +46,27 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-                for (i = 0; i < contractrequest.length; i++) {
-                    const statusList = await Status.findOne({counter: contractrequest[i].statusCounter}).exec();
-                    contractrequest[i].status = statusList.statusStaff;
-                }
+            for (i = 0; i < contractrequest.length; i++) {
+                const statusList = await Status.findOne({counter: contractrequest[i].statusCounter}).exec();
+                contractrequest[i].status = statusList.statusStaff;
+            }
+
+            const feedback = await Feedback.find({contractRequest : path}).lean()
+                .populate({
+                    path: 'user_id'
+                })
+                .sort({date: -1})
+                .exec();
+                
 
                 // console.log(contractrequest);
+                // console.log(feedback);
 
           
             res.render('specificrequest', {
                 user_role:req.session.role,
-                contractrequest: contractrequest
+                contractrequest: contractrequest,
+                feedback: feedback
             });
 
         } catch (err) {
@@ -81,12 +91,11 @@ const specificrequestcontroller = {
 
             var feedback = new Feedback({
                 contractRequest: req.body.addStaffFeedbackID,
-                user_id: req.session._id,
+                user_id: req.user._id,
                 content: req.body.addStaffFeedback
             });
 
             console.log("Inside For Revision Office Staff");
-            console.log(feedback);
 
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
             await feedback.save();
