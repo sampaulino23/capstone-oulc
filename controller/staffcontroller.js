@@ -93,7 +93,10 @@ const staffcontroller = {
         try {
 
             const contracttypes = await ContractType.find({}).lean().exec();
-            const templates = await Template.find({}).lean().exec();
+            const templates = await Template.find({}).lean()
+                .populate({
+                    path: 'type'
+                }).exec();
     
             res.render('templatesoulc', {
                 user_role: req.session.role,

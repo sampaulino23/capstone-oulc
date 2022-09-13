@@ -35,8 +35,8 @@
                                         {{#each templates}}
                                         <tr style="cursor: pointer;"  id="{{_id}}" onclick="">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{name}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{type}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{uploadDate}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{type.name}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</td>
                                         </tr>
                                         {{/each}}
