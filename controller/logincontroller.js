@@ -197,6 +197,7 @@ const logincontroller = {
                                         res.redirect('/staff/');
                                     }
                                     else {
+                                        req.session.role = userlogged.role.name;
                                         res.redirect('/admin/usermanagement');
                                     }
                                 }

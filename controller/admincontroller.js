@@ -66,7 +66,8 @@ const admincontroller = {
 
             res.render('adduser', {
                 departments: departments,
-                roles: roles
+                roles: roles,
+                user_role: req.session.role
             });
 
         } catch (err) {
@@ -170,7 +171,8 @@ const admincontroller = {
                 users: users,
                 departments: departments,
                 roles: roles,
-                newlyAddedUser: newUser
+                newlyAddedUser: newUser,
+                user_role: req.session.role
             });
 
         } catch (err) {
