@@ -8,6 +8,7 @@ const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryW
 
 const MongoStore = require('connect-mongo');
 const staffcontroller = require('../controller/staffcontroller.js');
+const oulccontroller = require('../controller/oulccontroller.js');
 
 //passport config
 require('../config/passport')(passport);
@@ -61,25 +62,6 @@ conn.once('open',() => {
   gfs.collection('uploads');
 });
 
-//create storage object
-// const storage = new GridFsStorage({
-//   db: promise,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       crypto.randomBytes(16, (err, buf) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         const filename = buf.toString('hex') + path.extname(file.originalname);
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: 'uploads'
-//         };
-//         resolve(fileInfo);
-//       });
-//     });
-//   }
-// });
 const storage = new GridFsStorage({
   db: promise,
   file: (req, file) => {
@@ -101,6 +83,7 @@ router.get('/', staffcontroller.getStaffDashboard);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
 router.post('/uploadtemplate', upload.single('file'), staffcontroller.uploadTemplate);
+router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
