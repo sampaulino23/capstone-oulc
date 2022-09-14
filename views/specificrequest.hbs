@@ -6,18 +6,28 @@
     <title>Contract Approval Request</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/adduserstyle.css">
+    <link rel="stylesheet" href="/css/specificrequeststyle.css">
 </head>
 
 <body>
-    <div id="header">Contract Approval Request Details</div>
-    <div> Status: {{#each contractrequest}} {{status}} {{/each}}</div>
-    <div class="container-fluid">
+    <div id="header">
+        Contract Approval Request Details
+        <div id = "status">
+            <div class = "status-text">Status:</div>
+            <div class = "status-text actual">{{#each contractrequest}} {{status}} {{/each}}</div>
+        </div>
+    </div>
+    <div id="subheader">
+        <a href="/staff/contractrequests" class = "approval-request-href">Pending Requests</a>
+        <p class = "divider" style = "display: inline;"> > </p>
+        <a href = "/" id = "selected" class = "approval-request-href">Approval Request Details</a>
+    </div>
 
+    <div class="container">
         <div class="row">
 
             <!-- LEFT SIDE -->
@@ -28,26 +38,25 @@
             <div class="col-6">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" aria-selected="true">Summary</button>
+                    <li>
+                        <button class="nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" aria-selected="false">Files</button>
+                    <li>
+                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
-                            type="button" role="tab" aria-controls="version" aria-selected="false">Version</button>
+                    <li>
+                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
+                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
-                            type="button" role="tab" aria-controls="discussion"
-                            aria-selected="false">Discussion</button>
+                    <li>
+                        <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
+                            type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" aria-selected="false">Feedback</button>
+                    <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
 
@@ -134,3 +143,23 @@
 </div>
 
 </html>
+
+<script>
+    function selectSummary() {
+        document.getElementById("summary-tab").classList.add("selected");
+        document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("version-tab").classList.remove("selected");
+        document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.remove("selected");
+    }
+    
+    function selectFiles() {
+        document.getElementById("summary-tab").classList.remove("selected");
+        document.getElementById("files-tab").classList.add("selected");
+        document.getElementById("version-tab").classList.remove("selected");
+        document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.remove("selected");
+    }
+</script>
+
+    

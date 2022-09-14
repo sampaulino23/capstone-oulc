@@ -1,0 +1,118 @@
+#header {
+    position: relative;
+    margin-left: 121px;
+    margin-top: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 54px;
+    /* identical to box height */
+    color: #000000;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.divider {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#subheader {
+    position: relative;
+    margin-left: 121px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 54px;
+    /* identical to box height */
+    color: #ABABAB;
+}
+
+.container{
+    font-family: 'Poppins', sans-serif; 
+    font-size: 18px;
+    font-weight: 500;
+    max-width: 1290px;
+    margin:20px auto 60px;
+    background: rgba(217, 217, 217, 0.2);
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    box-sizing: border-box;
+    padding:40px;
+    color:#fff;
+}
+
+#selected {
+    border-bottom: solid #0C8039 5px;
+    color: #000;
+    transition: 0.25s
+}
+
+.approval-request-href, .approval-request-href:visited, .approval-request-href:link, .approval-request-href:active
+{
+    text-decoration: none;
+    color: #ABABAB;
+}
+
+
+.approval-request-href:hover {
+    color: #000;
+    transition: 0.25s;
+}
+
+#status {
+    float: right;
+    margin-right: 121px;
+    display: inline-flex;
+}
+
+.status-text {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    margin-right: 8px;
+}
+
+.actual {
+    font-weight: 400;
+}
+
+.nav {
+    justify-content:space-between;
+}
+
+.nav-tabs {
+    padding: 0px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    border-style: none;
+}
+
+.nav-item {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 700;
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-bottom: 0px;
+    color:#ABABAB;
+}
+
+.nav-item:active, .nav-item:focus, .selected {
+    border-bottom: solid #0C8039 5px;
+    color: #000;
+    transition: 0.25s
+}
+
+.nav-item:hover {
+    color: #000;
+    transition: 0.25s
+}
