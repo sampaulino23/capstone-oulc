@@ -36,12 +36,12 @@
     font-size: 18px;
     font-weight: 500;
     max-width: 1290px;
-    margin:20px auto 60px;
-    background: rgba(217, 217, 217, 0.2);
-    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    margin:0px auto 60px;
+    background: none;
+    box-shadow: none;
     box-sizing: border-box;
-    padding:40px;
-    color:#fff;
+    padding:20px 7px;
+    color:#000;
 }
 
 #selected {
@@ -115,4 +115,41 @@
 .nav-item:hover {
     color: #000;
     transition: 0.25s
+}
+
+#summary-table {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 30px 40px;
+    line-height: 30px;
+    color: #000;
+    background: rgba(217, 217, 217, 0.2);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#upload-file-div {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 25px;
+}
+
+.mark-btn {
+    width: 100%;
+    padding:12px 87px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0px 0px 15px;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    letter-spacing: 1px;
+    outline: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
