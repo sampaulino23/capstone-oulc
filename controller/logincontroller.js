@@ -53,12 +53,40 @@ mongoose.connect(url, {
 
 const logincontroller = {
 
-    getLogin: function (req, res) {
-        res.render('login', {
-            // profileurl: '/profile/' + req.session.uname,
-            pagename: 'Log In',
-            title: 'Log In'
-        });
+    getLogin: async function (req, res) {
+        
+        if (!req.user) {
+            res.render('login', {
+                // profileurl: '/profile/' + req.session.uname,
+                pagename: 'Log In',
+                title: 'Log In'
+            });
+        }
+        else {
+
+            const userlogged = await User.findOne({ email: req.user.email }).lean()
+                            .populate({
+                                path: 'role'
+                            }).exec();
+            req.session.role = userlogged.role.name;
+
+            if (req.session.role == "Staff"){
+                
+                res.redirect('/staff/');
+            }
+            else if (req.session.role == "Administrator") {
+                res.redirect('/admin/usermanagement');
+            }
+            else {
+                res.render('login', {
+                    // profileurl: '/profile/' + req.session.uname,
+                    pagename: 'Log In',
+                    title: 'Log In'
+                });
+            }
+        }
+       
+        
     },
 
     getError: function (req, res) {
