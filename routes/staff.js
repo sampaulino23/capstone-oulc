@@ -85,12 +85,10 @@ router.get('/templates', staffcontroller.getTemplates);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.get('/template/:filename', oulccontroller.viewTemplate);
-router.post('/replacetemplate', oulccontroller.replaceTemplate);
+router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
-
-
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);

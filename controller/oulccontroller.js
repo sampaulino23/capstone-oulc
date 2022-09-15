@@ -38,13 +38,10 @@ const oulccontroller = {
 
     postDeleteTemplate: async (req, res) => {
         try {
-            console.log("Inside Delete Template");
-            
+
             const templateid = req.body.deleteTemplate;
 
             const template = await Template.findByIdAndDelete(templateid).exec();
-
-            console.log(template);
 
             if (template) {
                 gridfsBucket.delete(mongoose.Types.ObjectId(template.file));
@@ -95,16 +92,12 @@ const oulccontroller = {
             const file_id = mongoose.Types.ObjectId(req.file.id);
             const fileuploaddate = req.file.uploadDate;
 
-            console.log(file_id);
-
             const newTemplate = new Template({
                 name: filename,
                 type: mongoose.Types.ObjectId(contractType._id),
                 uploadDate: fileuploaddate,
                 file: file_id
             });
-
-            console.log(newTemplate);
 
             await newTemplate.save();
 
@@ -115,29 +108,30 @@ const oulccontroller = {
         } 
     },
 
-    replaceTemplate: async (req, res) => {
+    postReplaceTemplate: async (req, res) => {
         try {
 
-            // const contractTypeInput = req.body.contractType;
+            const originalTemplateId = req.body.replaceTemplate;
 
-            // const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
+            const filename = req.file.filename;
+            const file_id = mongoose.Types.ObjectId(req.file.id);
 
-            // const filename = req.file.filename;
-            // const file_id = mongoose.Types.ObjectId(req.file._id);
-            // const fileuploaddate = req.file.uploadDate;
+            console.log(filename);
+            console.log(originalTemplateId);
+            console.log(file_id);
 
-            // console.log(file_id);
+            const template = await Template.findById(originalTemplateId).exec()
 
-            // const newTemplate = new Template({
-            //     name: filename,
-            //     type: mongoose.Types.ObjectId(contractType._id),
-            //     uploadDate: fileuploaddate,
-            //     file: file_id
-            // });
+            const originalTemplateFileId = template.file;
 
-            // console.log(newTemplate);
+            const newTemplate = await Template.findByIdAndUpdate(originalTemplateId, {
+                name: filename,
+                file: file_id
+            });
 
-            // await newTemplate.save();
+            if (newTemplate) {
+                gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateFileId));
+            }
 
             res.redirect('back');
             

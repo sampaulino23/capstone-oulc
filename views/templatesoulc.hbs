@@ -71,14 +71,14 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="custom-file mb-3">
-                                                            <form action="/staff/replacetemplate" method="POST">
+                                                            <form action="/staff/replacetemplate" method="POST" enctype="multipart/form-data">
                                                             <div class="mb-3">
                                                                 <input type="hidden" class="form-control" value="{{_id}}" name="replaceTemplate">
                                                                 <p>Are you sure you want to replace this file?</p>
                                                                 <p>(File: {{name}})</p>
                                                                 <p>(Type: {{type.name}}</p>
                                                                 <label for="file" class="custom-file-label">Choose File</label>
-                                                                <input type="file" name="repalceFile" id="replaceFile" class="custom-file-input">
+                                                                <input type="file" name="file" id="replaceFile" class="custom-file-input">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
