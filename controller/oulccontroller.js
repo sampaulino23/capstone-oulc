@@ -23,7 +23,7 @@ mongoose.connect(url, {
 // Create mongo connection
 const conn = mongoose.createConnection(url);
 
-// Init gfs
+// Init gridfsBucket
 let gridfsBucket;
 
 conn.once('open', () => {
@@ -36,14 +36,19 @@ const oulccontroller = {
 
     // add others that have the same implementation for both office staff and attorney (e.g. templates and repository)
 
-
     postDeleteTemplate: async (req, res) => {
         try {
             console.log("Inside Delete Template");
             
-            var templateid = req.body.deleteTemplate;
-            await Template.findOneAndDelete({_id: templateid})
-            .exec();
+            const templateid = req.body.deleteTemplate;
+
+            const template = await Template.findByIdAndDelete(templateid).exec();
+
+            console.log(template);
+
+            if (template) {
+                gridfsBucket.delete(mongoose.Types.ObjectId(template.file));
+            }
 
             res.redirect('back');
 
@@ -113,26 +118,26 @@ const oulccontroller = {
     replaceTemplate: async (req, res) => {
         try {
 
-            const contractTypeInput = req.body.contractType;
+            // const contractTypeInput = req.body.contractType;
 
-            const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
+            // const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
 
-            const filename = req.file.filename;
-            const file_id = mongoose.Types.ObjectId(req.file._id);
-            const fileuploaddate = req.file.uploadDate;
+            // const filename = req.file.filename;
+            // const file_id = mongoose.Types.ObjectId(req.file._id);
+            // const fileuploaddate = req.file.uploadDate;
 
-            console.log(file_id);
+            // console.log(file_id);
 
-            const newTemplate = new Template({
-                name: filename,
-                type: mongoose.Types.ObjectId(contractType._id),
-                uploadDate: fileuploaddate,
-                file: file_id
-            });
+            // const newTemplate = new Template({
+            //     name: filename,
+            //     type: mongoose.Types.ObjectId(contractType._id),
+            //     uploadDate: fileuploaddate,
+            //     file: file_id
+            // });
 
-            console.log(newTemplate);
+            // console.log(newTemplate);
 
-            await newTemplate.save();
+            // await newTemplate.save();
 
             res.redirect('back');
             
