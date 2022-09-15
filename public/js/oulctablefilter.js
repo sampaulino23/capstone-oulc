@@ -1,11 +1,13 @@
-//TABLE FILTER FOR REQUEST TABLE... //
+//TABLE FILTER FOR OULC... //
+
+/* REQUESTS TABLE */
 
 //Search Filter 
-function searchTable() {
+function searchRequestTable() {
     var input, filter, table, tr, td, td2, td3,td4, td5, td6, td7, i;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
+      table = document.getElementById("myRequestTable");
       tr = table.getElementsByTagName("tr");
       
       for (i = 0; i < tr.length; i++) {
@@ -215,3 +217,26 @@ function viewForLegalReview(){
     document.getElementById("forlegalreview-tab").classList.add("selected");
 }
 
+/* TEMPLATES TABLE */
+function searchTemplateTable() {
+    var input, filter, table, tr, td, td2, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTemplateTable");
+      tr = table.getElementsByTagName("tr");
+      
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // for column one
+        td1 = tr[i].getElementsByTagName("td")[1]; // for column two
+        td2 = tr[i].getElementsByTagName("td")[2]; 
+    /* ADD columns here that you want you to filter to be used on */
+        if (td) {
+          if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) 
+          || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+} 
