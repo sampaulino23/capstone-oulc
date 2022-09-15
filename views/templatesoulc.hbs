@@ -8,8 +8,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/adduserstyle.css">
-
-         <script src="/js/oulctablefilter.js" type="text/javascript"></script>
+        <script src="/js/templatesoulc.js" type="text/javascript"></script>
+        <script src="/js/oulctablefilter.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="header">Staff Templates</div>
@@ -51,9 +51,7 @@
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#replaceTemplateModal{{@index}}">Replace</button>
                                                             </li>
-                                                            <li><button class="dropdown-item get-reset-password" type="button"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#downloadTemplateModal{{@index}}">Download</button>
+                                                            <li><button class="dropdown-item download-template" type="button">Download</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -129,7 +127,7 @@
 
                 <!-- RIGHT SIDE -->
                 <div class="col-6">
-                    <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http%3A%2F%2Fstatsclass.org%2Fworkshops%2FDataScience%2FHandout8%2FHandout8.docx' width='100%' height="1000px" frameborder='0'></iframe>
+                    {{!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http%3A%2F%2Fstatsclass.org%2Fworkshops%2FDataScience%2FHandout8%2FHandout8.docx' width='100%' height="1000px" frameborder='0'></iframe> --}}
                 </div> 
             </div>
         </div>

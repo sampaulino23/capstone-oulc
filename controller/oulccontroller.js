@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
@@ -138,10 +139,44 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         } 
-    }
+    },
 
-    
+    downloadTemplate: async (req, res) => {
+        try {
 
+            const templateid = req.query.templateid;
+
+            const template = await Template.findById(templateid).exec();
+
+            console.log(template);
+
+            const templateFileId = template.name;
+
+            console.log(templateFileId);
+
+            // gridfsBucket.find({_id: templateFileId}).toArray((err, file) => {
+                
+            //     if (!file || file.length == 0) {
+            //         return res.status(404);
+            //     } else {
+            //         var downloadStream = gridfsBucket.openDownloadStream(file[0]._id);
+            //         downloadStream.pipe(res);
+            //     }
+
+            // });
+
+            // var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
+            // downStream.pipe(res);
+
+            var downStream = gridfsBucket.openDownloadStreamByName(templateFileId);
+            downStream.pipe(res);
+
+            console.log('helfjskldj');
+            
+        } catch (err) {
+            console.log(err);
+        } 
+    },
 }
 
 module.exports = oulccontroller;

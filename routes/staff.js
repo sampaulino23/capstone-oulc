@@ -51,6 +51,7 @@ const crypto = require('crypto');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const multer = require('multer');
+const { join } = require('path');
 
 const promise = mongoose.connect(mongoURI, { useNewUrlParser: true });
 
@@ -86,6 +87,7 @@ router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTempl
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.get('/template/:filename', oulccontroller.viewTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
+router.get('/downloadtemplate', oulccontroller.downloadTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
