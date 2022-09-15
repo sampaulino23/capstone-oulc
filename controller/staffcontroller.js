@@ -117,7 +117,7 @@ const staffcontroller = {
             const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
 
             const filename = req.file.filename;
-            const file_id = mongoose.Types.ObjectId(req.file._id);
+            const file_id = mongoose.Types.ObjectId(req.file.id);
             const fileuploaddate = req.file.uploadDate;
 
             console.log(file_id);
