@@ -2,48 +2,88 @@
 
 <div id = "summary-table">
     {{#each contractrequest}}
-    Document Number: {{trackingNumber}}
+    Document Number<br>
+    <input type="text" class = "text-input" value="{{trackingNumber}}" readonly>
     <br>
-    Request Date: {{formatdate requestDate}}
+    <div class="row">
+        <div class="col-6">
+            Request Date<br>
+            <input type="text" class = "text-input half" value="{{formatdate requestDate}}" readonly>
+        </div>
+        <div class="col-6">
+            Department/Unit<br>
+            <input type="text" class = "text-input half" value="{{requester.department.name}}" readonly>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            Effectivity Date<br>
+        </div>
+        <div class="row">
+            <div class="col">
+                From: <input type="text" class = "text-input" value="{{formatdate effectivityStartDate}}" readonly>
+            </div>
+            <div class="col">
+                To: <input type="text" class = "text-input" value="{{formatdate effectivityEndDate}}" readonly>
+            </div>
+            <div class="col">
+                Duration: <input type="text" class = "text-input" value="{{daysDuration}} days" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            Name of Signatory<br>
+            <input type="text" class = "text-input half" value="{{signatoryName}}" readonly>
+        </div>
+        <div class="col-6">
+            Signatory Level<br>
+            <input type="text" class = "text-input half" value="{{signatoryLevel}}" readonly>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            Contact Person<br>
+            <input type="text" class = "text-input half" value="{{requester.fullName}}" readonly>
+        </div>
+        <div class="col-6">
+            Contact Local No.<br>
+            <input type="text" class = "text-input half" value="{{contactNum}}" readonly>
+        </div>
+    </div>
+    Template Used
+    <input type="text" class = "text-input half" value="{{templateUsed}}" readonly>
     <br>
-    Department/Unit: {{requester.department.name}}
-    <br>
-    Effectivity Date
-    <br>
-    From: {{formatdate effectivityStartDate}}
-    <br>
-    To: {{formatdate effectivityEndDate}}
-    <br>
-    Duration: {{daysDuration}}
-    <br>
-    Name of Signatory: {{signatoryName}}
-    <br>
-    Signatory Level: {{signatoryLevel}}
-    <br>
-    Contact Person: {{requester.fullName}}
-    <br>
-    Contact Local No.: {{contactNum}}
-    <br>
-    Template Used: {{templateUsed}}
-    <br>
-    Changes in Sections/Paragraphcs: {{sectionChangeNotes}}
-    <br>
-    Third Party Name: {{thirdPartyRepresentativeName}}
-    <br>
-    Third Party Email: {{thirdPartyRepresentativeEmail}}
-    <br>
-    Name of Other Contracting Party: {{contractingParty}}
-    <br>
-    Amount Involved: {{numberWithComma amountInvolved}}
-    <br>
-    Type of Review: {{reviewType}}
-    <br>
-    Document Title: {{requestTitle}}
-    <br>
-    Document Type: {{contractType.name}}
-    <br>
-    Subject Matter: {{subjectMatter}}
-    <br>
+    Changes in Sections/Paragraphs
+    <input type="text" class = "text-input half" value="{{sectionChangeNotes}}" readonly>
+    <div class="row">
+        <div class="col-6">
+            Third Party Name<br>
+            <input type="text" class = "text-input half" value="{{thirdPartyRepresentativeName}}" readonly>
+        </div>
+        <div class="col-6">
+            Third Party Email<br>
+            <input type="text" class = "text-input half" value="{{thirdPartyRepresentativeEmail}}" readonly>
+        </div>
+    </div>
+    Name of Other Contracting Party
+    <input type="text" class = "text-input half" value="{{contractingParty}}" readonly>
+    <div class="row">
+        <div class="col-6">
+            Amount Involved (If Any)<br>
+            <input type="text" class = "text-input half" value="{{numberWithComma amountInvolved}}" readonly>
+        </div>
+        <div class="col-6">
+            Type of Review<br>
+            <input type="text" class = "text-input half" value="{{reviewType}}" readonly>
+        </div>
+    </div>
+    Document Title
+    <input type="text" class = "text-input half" value="{{requestTitle}}" readonly>
+    Document Type
+    <input type="text" class = "text-input half" value="{{contractType.name}}" readonly>
+    Subject Matter
+    <input type="text" class = "text-input half" value="{{subjectMatter}}" readonly>
     {{/each}}
 </div>
 
