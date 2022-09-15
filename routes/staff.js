@@ -82,8 +82,10 @@ router.use(require('connect-flash')());
 router.get('/', staffcontroller.getStaffDashboard);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
-router.post('/uploadtemplate', upload.single('file'), staffcontroller.uploadTemplate);
+router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
+router.get('/template/:filename', oulccontroller.viewTemplate);
+router.post('/replacetemplate', oulccontroller.replaceTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
