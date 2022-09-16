@@ -22,25 +22,6 @@ mongoose.connect(url, {
 
 const staffcontroller = {
 
-
-    getStaffDashboard: async (req, res) => {
-        try {
-
-            // const userlogged = await User.findOne({ email: req.user.email }).lean()
-            // .populate({
-                // path: 'role'
-            // }).exec();
-    
-            // console.log(userlogged);
-            res.render('dashboardoulc', {
-                user_role:req.session.role
-            });
-
-        } catch (err) {
-            console.log(err);
-        }
-    },
-
     getRequests: async (req, res) => {
         try {
 
@@ -72,6 +53,13 @@ const staffcontroller = {
                       
                     // To calculate the no. of days between two dates
                     var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                    if (Difference_In_Days < 0){
+                        Difference_In_Days = Math.floor(Difference_In_Days);
+                    }
+                    else {
+                        Difference_In_Days = Math.ceil(Difference_In_Days);
+                    }
 
                     // To set number of days gap in contract request
                     contractrequests[i].daysGap = Difference_In_Days;
