@@ -40,7 +40,7 @@
 
 
             <!-- RIGHT SIDE -->
-            <div class="col-6">
+            <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
@@ -150,13 +150,6 @@
 </html>
 
 <script>
-
-    selectedButton 
-
-    window.onload = function() {
-        document.getElementById('summary-tab').classList.add("selected");
-    };
-
     function selectSummary() {
         document.getElementById("summary-tab").classList.add("selected");
         document.getElementById("files-tab").classList.remove("selected");
