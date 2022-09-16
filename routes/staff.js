@@ -88,6 +88,7 @@ router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.get('/template/:filename', oulccontroller.viewTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
 router.get('/downloadtemplate', oulccontroller.downloadTemplate);
+router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

@@ -148,9 +148,7 @@ const oulccontroller = {
 
             const template = await Template.findById(templateid).exec();
 
-            console.log(template);
-
-            const templateFileId = template.name;
+            const templateFileId = template.file.toString();
 
             console.log(templateFileId);
 
@@ -168,15 +166,58 @@ const oulccontroller = {
             // var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
             // downStream.pipe(res);
 
-            var downStream = gridfsBucket.openDownloadStreamByName(templateFileId);
+            var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
             downStream.pipe(res);
 
-            console.log('helfjskldj');
+            console.log('DONE DOWNLOADING');
             
         } catch (err) {
             console.log(err);
         } 
     },
+
+    getDownloadTemplate: async (req, res) => {
+        try {
+
+            const templateFileId = req.params.fileid;
+
+            console.log(templateFileId);
+
+            // gridfsBucket.find({_id: templateFileId}).toArray((err, file) => {
+                
+            //     if (!file || file.length == 0) {
+            //         return res.status(404);
+            //     } else {
+            //         var downloadStream = gridfsBucket.openDownloadStream(file[0]._id);
+            //         downloadStream.pipe(res);
+            //     }
+
+            // });
+
+            // var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
+            // downStream.pipe(res);
+
+            var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
+            // downStream.pipe(res);
+
+            downStream.on('data', (chunk) => {
+                res.write(chunk);
+            });
+        
+            downStream.on('error', () => {
+                res.sendStatus(404);
+            });
+        
+            downStream.on('end', () => {
+                res.end();
+            });
+
+            console.log('DONE DOWNLOADING');
+            
+        } catch (err) {
+            console.log(err);
+        } 
+    }
 }
 
 module.exports = oulccontroller;

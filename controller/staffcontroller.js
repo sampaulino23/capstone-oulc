@@ -109,36 +109,7 @@ const staffcontroller = {
         }
     },
 
-    uploadTemplate: async (req, res) => {
-        try {
-
-            const contractTypeInput = req.body.contractType;
-
-            const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
-
-            const filename = req.file.filename;
-            const file_id = mongoose.Types.ObjectId(req.file.id);
-            const fileuploaddate = req.file.uploadDate;
-
-            console.log(file_id);
-
-            const newTemplate = new Template({
-                name: filename,
-                type: mongoose.Types.ObjectId(contractType._id),
-                uploadDate: fileuploaddate,
-                file: file_id
-            });
-
-            console.log(newTemplate);
-
-            await newTemplate.save();
-
-            res.redirect('back');
-            
-        } catch (err) {
-            console.log(err);
-        } 
-    }
+    
 }
 
 module.exports = staffcontroller;
