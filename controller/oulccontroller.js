@@ -33,9 +33,82 @@ conn.once('open', () => {
     });
 });
 
+function getStaffWaiting (month, day, year, contractrequests, waiting) {
+    //get number of waiting requests (staff)
+    for (i=0; i<contractrequests.length; i++) {
+        if (contractrequests[i].statusCounter == "2"){
+            waiting.all++
+            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                waiting.today++
+            }
+        }
+    }
+}
+
 const oulccontroller = {
 
     // add others that have the same implementation for both office staff and attorney (e.g. templates and repository)
+
+    getDashboard: async (req, res) => {
+        try {
+
+            const contractrequests = await ContractRequest.find({}).lean()
+                .populate({
+                    path: 'requester',
+                    populate: {
+                        path: 'department'
+                      } 
+                })
+                .populate({
+                    path: 'contractType'
+                })
+                .populate({
+                    path: 'asssignedAttorney'
+                })
+                .sort()
+                .exec();
+   
+            var dateToday = new Date();
+            var month = dateToday.getMonth(); //this starts with 0
+            var day = dateToday.getDate(); //actual date is utc but it applies the local time
+            var year = dateToday.getFullYear();
+            console.log(dateToday);
+            console.log(month + " " + day + " " + year);
+
+            let pending = {all:0, today:0};
+            let waiting = {all:0, today:0};
+
+            //get number of pending requests
+            for (i=0; i<contractrequests.length; i++) {
+                if (contractrequests[i].statusCounter == "1"){
+                    pending.all++;
+                    if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                        pending.today++;
+                    }
+                }
+            }
+
+            //get number of waiting request for staff
+            if (req.session.role == "Staff"){
+                //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
+                getStaffWaiting(month, day, year, contractrequests, waiting); 
+            }
+            
+            console.log("PENDING = " + pending.all);
+            console.log("PENDING TODAY = " + pending.today);
+            console.log("WAITING = " + waiting.all);
+            console.log("WAITING TODAY = " + waiting.today);
+    
+            res.render('dashboardoulc', {
+                user_role:req.session.role,
+                pending: pending,
+                waiting: waiting
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
 
     postDeleteTemplate: async (req, res) => {
         try {
