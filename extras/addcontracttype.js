@@ -15,7 +15,7 @@ async function seedContractType() {
     //commented out those that are not included in our scope so we have priority.
     const contracttypes = [
         {
-            name: 'MOA/TOR/Contracts for purchases, services, venue, and other peice of work', 
+            name: 'MOA/TOR/Contracts for purchases, services, venue, and other piece of work', 
         },
         {
             name: 'OJT/Internship Agreements', 
