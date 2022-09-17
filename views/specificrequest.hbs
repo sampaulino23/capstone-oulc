@@ -74,7 +74,9 @@
                         {{>files}}
                     </div>
                     <div class="tab-pane" id="version" role="tabpanel" aria-labelledby="version-tab">...</div>
-                    <div class="tab-pane" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">....</div>
+                    <div class="tab-pane" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">
+                        {{>discussion}}
+                    </div>
                     <div class="tab-pane" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
                         {{>feedback}}
                     </div>
@@ -163,6 +165,13 @@
         document.getElementById("files-tab").classList.add("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.remove("selected");
+    }
+    function selectDiscussion() {
+        document.getElementById("summary-tab").classList.remove("selected");
+        document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("version-tab").classList.remove("selected");
+        document.getElementById("discussion-tab").classList.selected("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
     }
 </script>

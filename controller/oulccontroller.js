@@ -1,5 +1,3 @@
-
-
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
