@@ -46,7 +46,7 @@
                     <h5 class="card-title">Cleared Documents</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                     <p class="card-text"> {{cleared.percentage}}%</p>
-                    <p class="card-text"> {{cleared.count}}/{{cleared.requests}} Documents Cleared</p>
+                    <p class="card-text"> {{cleared.count}}/{{requestCount}} Documents Cleared</p>
                 </div>
                 </div>
             </div>
@@ -55,6 +55,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Status of Contracts</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"> Pending = {{pending.percentage}}%</p>
+                    <p class="card-text"> Initial Review = {{initialReview.percentage}}%</p>
+                    <p class="card-text"> Legal Review = {{legalReview.percentage}}%</p>
+                    <p class="card-text"> Cleared = {{cleared.percentage}}%</p>
                 </div>
                 </div>
             </div>

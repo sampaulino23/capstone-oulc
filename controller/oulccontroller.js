@@ -109,12 +109,14 @@ const oulccontroller = {
             var day = dateToday.getDate(); //actual date is utc but it applies the local time
             var year = dateToday.getFullYear();
             console.log(dateToday);
-            console.log(month + " " + day + " " + year);
+            // console.log(month + " " + day + " " + year);
 
-            let pending = {all:0, today:0};
+            let pending = {all:0, today:0, percentage: 0};
             let waiting = {all:0, today:0};
             let toreview = {all:0, today:0};
-            let clearedCard = {count: 0, requests: contractrequests.length, percentage: 0};
+            let clearedCard = {count: 0, percentage: 0};
+            let initialReview = {count: 0, percentage: 0};
+            let legalReview = {count: 0, percentage: 0};
 
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
@@ -124,14 +126,23 @@ const oulccontroller = {
                         pending.today++;
                     }
                 }
+                else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
+                    initialReview.count++;
+                }
+                else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
+                    legalReview.count++;
+                }
                 else if (contractrequests[i].statusCounter == "7"){
                     clearedCard.count++;
                 }
             }
 
-            
-            clearedCard.percentage = ((clearedCard.count/clearedCard.requests) * 100).toFixed(2);
-            
+            // compute percentage per status
+            clearedCard.percentage = ((clearedCard.count/contractrequests.length) * 100).toFixed(2);
+            pending.percentage = ((pending.all/contractrequests.length) * 100).toFixed(2);
+            initialReview.percentage = ((initialReview.count/contractrequests.length) * 100).toFixed(2);
+            legalReview.percentage = ((legalReview.count/contractrequests.length) * 100).toFixed(2);
+
             if (req.session.role == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
@@ -144,16 +155,22 @@ const oulccontroller = {
             // console.log("WAITING TODAY = " + waiting.today);
             // console.log("TO REVIEW = " + toreview.all);
             // console.log("TO REVIEW TODAY = " + toreview.today);
-            console.log ("Cleared = " + clearedCard.count);
-            console.log ("Requests = " + clearedCard.requests);
-            console.log ("Cleared Percentage = " + clearedCard.percentage);
+            // console.log ("Cleared = " + clearedCard.count);
+            // console.log ("Requests = " + contractrequests.length);
+            // console.log ("Cleared Percentage = " + clearedCard.percentage);
+            // console.log ("Pending Percentage = " + pending.percentage);
+            // console.log ("Initial Review Percentage = " + initialReview.percentage);
+            // console.log ("Legal Review Percentage = " + legalReview.percentage);
     
             res.render('dashboardoulc', {
                 user_role:req.session.role,
                 pending: pending,
                 waiting: waiting,
                 toreview: toreview,
-                cleared: clearedCard
+                cleared: clearedCard,
+                initialReview: initialReview,
+                legalReview: legalReview,
+                requestCount: contractrequests.length
             });
 
         } catch (err) {
