@@ -199,45 +199,48 @@ const oulccontroller = {
                 } else if (doc.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || doc.contentType === 'application/msword') {
                     console.log(doc);
                     console.log('word');
+                    const writableStream = fs.createWriteStream('./word_file.docx');
 
                     const downStream = gridfsBucket.openDownloadStream(doc._id);
-                    downStream.pipe(fs.createWriteStream('./word_file.docx'));
+                    downStream.pipe(writableStream);
                         // .pipe(gridfsBucket.openUploadStream('outputFile.docx')));
 
-                    // const formData = new FormData()
-                    // formData.append('instructions', JSON.stringify({
-                    //     parts: [
-                    //         {
-                    //         file: "document"
-                    //         }
-                    //     ]
-                    // }));
-                    // formData.append('document', fs.createReadStream('word_file.docx'))
-                    
-                    // ;(async () => {
-                    // try {
-                    //     const response = await axios.post('https://api.pspdfkit.com/build', formData, {
-                    //     headers: formData.getHeaders({
-                    //         'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
-                    //     }),
-                    //     responseType: "stream"
-                    //     })
-
-                    //     response.data.pipe(fs.createWriteStream("result.pdf"))
-                    // } catch (e) {
-                    //     const errorString = await streamToString(e.response.data)
-                    //     console.log(errorString)
-                    // }
-                    // })()
-
-                    // function streamToString(stream) {
-                    // const chunks = []
-                    // return new Promise((resolve, reject) => {
-                    //     stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)))
-                    //     stream.on("error", (err) => reject(err))
-                    //     stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")))
-                    // })
-                    // }
+                        writableStream.on('close', function(){
+                            const formData = new FormData()
+                        formData.append('instructions', JSON.stringify({
+                          parts: [
+                            {
+                              file: "document"
+                            }
+                          ]
+                        }))
+                        formData.append('document', fs.createReadStream('word_file.docx'))
+                        
+                        ;(async () => {
+                          try {
+                            const response = await axios.post('https://api.pspdfkit.com/build', formData, {
+                              headers: formData.getHeaders({
+                                  'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
+                              }),
+                              responseType: "stream"
+                            })
+                        
+                            response.data.pipe(fs.createWriteStream("result.pdf"))
+                          } catch (e) {
+                            const errorString = await streamToString(e.response.data)
+                            console.log(errorString)
+                          }
+                        })()
+                        
+                        function streamToString(stream) {
+                          const chunks = []
+                          return new Promise((resolve, reject) => {
+                            stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)))
+                            stream.on("error", (err) => reject(err))
+                            stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")))
+                          })
+                        }
+                          });
 
                     const newTemplate = new Template({
                         name: filename,
