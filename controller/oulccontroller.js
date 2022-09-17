@@ -69,6 +69,18 @@ function getStaffWaiting (month, day, year, contractrequests, waiting) {
     }
 }
 
+function getStaffToReview (month, day, year, contractrequests, toreview) {
+    //get number of waiting requests (staff)
+    for (i=0; i<contractrequests.length; i++) {
+        if (contractrequests[i].statusCounter == "3"){
+            toreview.all++
+            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                toreview.today++
+            }
+        }
+    }
+}
+
 const oulccontroller = {
 
     // add others that have the same implementation for both office staff and attorney (e.g. templates and repository)
@@ -101,6 +113,7 @@ const oulccontroller = {
 
             let pending = {all:0, today:0};
             let waiting = {all:0, today:0};
+            let toreview = {all:0, today:0};
 
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
@@ -112,21 +125,25 @@ const oulccontroller = {
                 }
             }
 
-            //get number of waiting request for staff
+            
             if (req.session.role == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
-                getStaffWaiting(month, day, year, contractrequests, waiting); 
+                getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
+                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
             
             console.log("PENDING = " + pending.all);
             console.log("PENDING TODAY = " + pending.today);
             console.log("WAITING = " + waiting.all);
             console.log("WAITING TODAY = " + waiting.today);
+            console.log("TO REVIEW = " + toreview.all);
+            console.log("TO REVIEW TODAY = " + toreview.today);
     
             res.render('dashboardoulc', {
                 user_role:req.session.role,
                 pending: pending,
-                waiting: waiting
+                waiting: waiting,
+                toreview: toreview
             });
 
         } catch (err) {
