@@ -20,6 +20,7 @@
   "dependencies": {
     "ajax": "0.0.4",
     "assert": "^2.0.0",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
@@ -29,6 +30,7 @@
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
+    "gotenberg-js-client": "^0.7.3",
     "gridfs-stream": "^1.1.1",
     "handlebars": "^4.7.7",
     "moment": "^2.29.4",

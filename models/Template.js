@@ -14,8 +14,11 @@ const TemplateSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    file: {
-        type: mongoose.Schema.Types.ObjectId,   // implement changes when finalized
+    wordFileName: {
+        type: String,
+    },
+    pdfFileName: {
+        type: String,
     }
     
 });

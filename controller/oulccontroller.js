@@ -1,8 +1,34 @@
+
+
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const path = require('path');
+const axios = require('axios');
+const FormData = require('form-data');
 const fs = require('fs');
+
+// const {
+//     pipe,
+//     gotenberg,
+//     convert,
+//     office,
+//     to,
+//     landscape,
+//     set,
+//     filename,
+//     please,
+// } = require('gotenberg-js-client');
+
+// const toPDF = pipe(
+//     gotenberg('http://localhost:3000'),
+//     convert,
+//     office,
+//     to(landscape),
+//     set(filename('result.pdf')),
+//     please
+// );
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
@@ -166,14 +192,78 @@ const oulccontroller = {
             const file_id = mongoose.Types.ObjectId(req.file.id);
             const fileuploaddate = req.file.uploadDate;
 
-            const newTemplate = new Template({
-                name: filename,
-                type: mongoose.Types.ObjectId(contractType._id),
-                uploadDate: fileuploaddate,
-                file: file_id
-            });
+            const cursor = gridfsBucket.find({_id: file_id});
+            cursor.forEach(async (doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || doc.contentType === 'application/msword') {
+                    console.log(doc);
+                    console.log('word');
 
-            await newTemplate.save();
+                    const downStream = gridfsBucket.openDownloadStream(doc._id);
+                    downStream.pipe(fs.createWriteStream('./word_file.docx'));
+                        // .pipe(gridfsBucket.openUploadStream('outputFile.docx')));
+
+                    // const formData = new FormData()
+                    // formData.append('instructions', JSON.stringify({
+                    //     parts: [
+                    //         {
+                    //         file: "document"
+                    //         }
+                    //     ]
+                    // }));
+                    // formData.append('document', fs.createReadStream('word_file.docx'))
+                    
+                    // ;(async () => {
+                    // try {
+                    //     const response = await axios.post('https://api.pspdfkit.com/build', formData, {
+                    //     headers: formData.getHeaders({
+                    //         'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
+                    //     }),
+                    //     responseType: "stream"
+                    //     })
+
+                    //     response.data.pipe(fs.createWriteStream("result.pdf"))
+                    // } catch (e) {
+                    //     const errorString = await streamToString(e.response.data)
+                    //     console.log(errorString)
+                    // }
+                    // })()
+
+                    // function streamToString(stream) {
+                    // const chunks = []
+                    // return new Promise((resolve, reject) => {
+                    //     stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)))
+                    //     stream.on("error", (err) => reject(err))
+                    //     stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")))
+                    // })
+                    // }
+
+                    const newTemplate = new Template({
+                        name: filename,
+                        type: mongoose.Types.ObjectId(contractType._id),
+                        uploadDate: fileuploaddate,
+                        wordFileName: filename,
+                        pdfFileName: filename
+                    });
+
+                    newTemplate.save();
+
+                } else if (doc.contentType === 'application/pdf') {
+                    console.log(doc);
+                    console.log('pdf');
+
+                    const newTemplate = new Template({
+                        name: filename,
+                        type: mongoose.Types.ObjectId(contractType._id),
+                        uploadDate: fileuploaddate,
+                        wordFileName: filename,
+                        pdfFileName: filename
+                    });
+
+                    newTemplate.save();
+                }
+            });
 
             res.redirect('back');
             
@@ -214,79 +304,24 @@ const oulccontroller = {
         } 
     },
 
-    downloadTemplate: async (req, res) => {
-        try {
-
-            const templateid = req.query.templateid;
-
-            const template = await Template.findById(templateid).exec();
-
-            const templateFileId = template.file.toString();
-
-            console.log(templateFileId);
-
-            // gridfsBucket.find({_id: templateFileId}).toArray((err, file) => {
-                
-            //     if (!file || file.length == 0) {
-            //         return res.status(404);
-            //     } else {
-            //         var downloadStream = gridfsBucket.openDownloadStream(file[0]._id);
-            //         downloadStream.pipe(res);
-            //     }
-
-            // });
-
-            // var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
-            // downStream.pipe(res);
-
-            var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
-            downStream.pipe(res);
-
-            console.log('DONE DOWNLOADING');
-            
-        } catch (err) {
-            console.log(err);
-        } 
-    },
-
     getDownloadTemplate: async (req, res) => {
         try {
 
-            const templateFileId = req.params.fileid;
+            const filename = req.params.filename;
 
-            console.log(templateFileId);
+            console.log(filename);
 
-            // gridfsBucket.find({_id: templateFileId}).toArray((err, file) => {
-                
-            //     if (!file || file.length == 0) {
-            //         return res.status(404);
-            //     } else {
-            //         var downloadStream = gridfsBucket.openDownloadStream(file[0]._id);
-            //         downloadStream.pipe(res);
-            //     }
+            const cursor = gridfsBucket.find({filename: filename});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(doc);
 
-            // });
-
-            // var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
-            // downStream.pipe(res);
-
-            var downStream = gridfsBucket.openDownloadStream(mongoose.Types.ObjectId(templateFileId));
-            // downStream.pipe(res);
-
-            downStream.on('data', (chunk) => {
-                res.write(chunk);
-            });
-        
-            downStream.on('error', () => {
-                res.sendStatus(404);
-            });
-        
-            downStream.on('end', () => {
-                res.end();
+                const downStream = gridfsBucket.openDownloadStreamByName(doc.filename);
+                downStream.pipe(res);
             });
 
-            console.log('DONE DOWNLOADING');
-            
         } catch (err) {
             console.log(err);
         } 

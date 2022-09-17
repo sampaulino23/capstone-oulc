@@ -67,12 +67,17 @@ const storage = new GridFsStorage({
   db: promise,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
-        const filename = file.originalname;
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
           bucketName: 'uploads'
         };
         resolve(fileInfo);
+      });
     });
   }
 });
@@ -87,8 +92,7 @@ router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTempl
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.get('/template/:filename', oulccontroller.viewTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
-router.get('/downloadtemplate', oulccontroller.downloadTemplate);
-router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
+router.get('/downloadtemplate/:filename', oulccontroller.getDownloadTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
