@@ -144,7 +144,16 @@ const oulccontroller = {
             const template = await Template.findByIdAndDelete(templateid).exec();
 
             if (template) {
-                gridfsBucket.delete(mongoose.Types.ObjectId(template.file));
+
+                const cursor = await gridfsBucket.find({filename: template.wordFileName}, {limit: 1});
+                cursor.forEach((doc, err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(doc);
+                        gridfsBucket.delete(doc._id);
+                    }
+                });
             }
 
             res.redirect('back');
