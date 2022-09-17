@@ -114,6 +114,7 @@ const oulccontroller = {
             let pending = {all:0, today:0};
             let waiting = {all:0, today:0};
             let toreview = {all:0, today:0};
+            let clearedCard = {count: 0, requests: contractrequests.length, percentage: 0};
 
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
@@ -123,8 +124,13 @@ const oulccontroller = {
                         pending.today++;
                     }
                 }
+                else if (contractrequests[i].statusCounter == "7"){
+                    clearedCard.count++;
+                }
             }
 
+            
+            clearedCard.percentage = ((clearedCard.count/clearedCard.requests) * 100).toFixed(2);
             
             if (req.session.role == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
@@ -132,18 +138,22 @@ const oulccontroller = {
                 getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
             
-            console.log("PENDING = " + pending.all);
-            console.log("PENDING TODAY = " + pending.today);
-            console.log("WAITING = " + waiting.all);
-            console.log("WAITING TODAY = " + waiting.today);
-            console.log("TO REVIEW = " + toreview.all);
-            console.log("TO REVIEW TODAY = " + toreview.today);
+            // console.log("PENDING = " + pending.all);
+            // console.log("PENDING TODAY = " + pending.today);
+            // console.log("WAITING = " + waiting.all);
+            // console.log("WAITING TODAY = " + waiting.today);
+            // console.log("TO REVIEW = " + toreview.all);
+            // console.log("TO REVIEW TODAY = " + toreview.today);
+            console.log ("Cleared = " + clearedCard.count);
+            console.log ("Requests = " + clearedCard.requests);
+            console.log ("Cleared Percentage = " + clearedCard.percentage);
     
             res.render('dashboardoulc', {
                 user_role:req.session.role,
                 pending: pending,
                 waiting: waiting,
-                toreview: toreview
+                toreview: toreview,
+                cleared: clearedCard
             });
 
         } catch (err) {
