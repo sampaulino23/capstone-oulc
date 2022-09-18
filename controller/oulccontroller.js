@@ -312,7 +312,10 @@ const oulccontroller = {
                             console.log('0');
         
                             // insert template object to db
-                            newTemplate.save();
+                            newTemplate.save(function(){
+                                console.log('3');
+                                res.redirect('back');
+                            });
 
                           } catch (e) {
                             const errorString = await streamToString(e.response.data)
@@ -349,13 +352,12 @@ const oulccontroller = {
                         pdfFileName: filename
                     });
 
-                    newTemplate.save();
+                    newTemplate.save(function(){
+                        console.log('3');
+                        res.redirect('back');
+                    });
                 }
             });
-
-            console.log('3');
-
-            res.redirect('back');
             
         } catch (err) {
             console.log(err);
