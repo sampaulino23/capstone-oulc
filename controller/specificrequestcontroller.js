@@ -11,6 +11,7 @@ const Status = require('../models/Status.js');
 const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
+const Repository = require('../models/Repository.js');
 
 // Connecting mongoose to our database 
 mongoose.connect(url, {
@@ -20,10 +21,20 @@ mongoose.connect(url, {
     .catch(err => console.log(err));
 
 
+    const conn = mongoose.createConnection(url);
+
+// Init gridfsBucket
+let gridfsBucket;
+
+conn.once('open', () => {
+    gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'repository'
+    });
+});
+
 const specificrequestcontroller = {
 
-
-    getStaffSpecificRequest: async (req, res) => {
+    getStaffSpecificRequest: async (req, res) => { //staff
         try {
 
             var path = req.path.split('/')[2];
@@ -83,7 +94,7 @@ const specificrequestcontroller = {
         }
     },
 
-    forLegalReview: async (req, res) => {
+    forLegalReview: async (req, res) => { //staff
         try {
             console.log("Inside For Legal Review");
             var userid = req.query.userid;
@@ -93,7 +104,8 @@ const specificrequestcontroller = {
             console.log(err);
         }
     },
-    postForRevisionStaff: async (req, res) => {
+
+    postForRevisionStaff: async (req, res) => { //staff
         try {
 
             var contractRequestId = req.body.addStaffFeedbackID;
@@ -110,6 +122,33 @@ const specificrequestcontroller = {
             await feedback.save();
             // var feedback = req.body.addStaffFeedback;
             // var id = req.body.addStaffFeedbackID;
+
+            res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUploadRepositoryFile: async (req, res) => { // requesting office
+        try {
+
+            console.log(req.file);
+            const filename = req.file.filename;
+            const file_id = mongoose.Types.ObjectId(req.file.id);
+            const fileuploaddate = req.file.uploadDate;
+            const requestid = req.body.uploadRepositoryFileID;
+
+            const newRepositoryFile = new Repository({
+                name: filename,
+                requestid: mongoose.Types.ObjectId(requestid),
+                uploadDate: fileuploaddate,
+                file: file_id
+            });
+
+            newRepositoryFile.save();
+
+            console.log ("INSIDE UPLOAD SIGNED CONTRACT");
+            console.log (newRepositoryFile);
 
             res.redirect('back');
         } catch (err) {

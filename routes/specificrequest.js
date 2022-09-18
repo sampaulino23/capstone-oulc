@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const url = 'mongodb+srv://admin:admin>@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
 const MongoStore = require('connect-mongo');
 const specificrequestcontroller = require('../controller/specificrequestcontroller.js');
@@ -42,38 +42,58 @@ router.use(session({
 router.use(passport.initialize());
 router.use(passport.session());
 
-
-
-// multer to accept images
+// multer to accept files
+const path = require('path');
+const crypto = require('crypto');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 const multer = require('multer');
+const { join } = require('path');
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './public/img/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, filename = Date.now() + file.originalname);
-    }
+const promise = mongoose.connect(mongoURI, { useNewUrlParser: true });
+
+const conn = mongoose.connection;
+let gfs;
+
+conn.once('open',() => {
+  gfs = Grid(conn, mongoose.mongo);
+  gfs.collection('repository');
 });
 
-const upload = multer({
-    storage: storage, 
-    limits: {
-        fileSize: 1024*1024*5
-    }
+const storage = new GridFsStorage({
+  db: promise,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = file.originalname;
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'repository'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
 });
+const upload = multer({ storage });
 
 router.use(require('connect-flash')());
 
+// staff start
 router.get('/staff/:id', specificrequestcontroller.getStaffSpecificRequest);
 
 router.get('/forlegalreview', specificrequestcontroller.forLegalReview);
 
 router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff);
+// staff end
 
-// post syntax
-// router.post('/adduser', staffcontroller.postAddUser);
 
+// requesting office start
+router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
+// requesting office end
 
 
 passport.serializeUser((user_id, done) =>{
