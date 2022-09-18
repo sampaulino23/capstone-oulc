@@ -94,6 +94,7 @@ router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplac
 router.get('/downloadtemplate/:filename', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:filename', oulccontroller.viewTemplate);
+router.get('/repository', oulccontroller.getRepository);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

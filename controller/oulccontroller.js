@@ -17,6 +17,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
+const Repository = require('../models/Repository.js');
 
 // Connecting mongoose to our database 
 mongoose.connect(url, {
@@ -417,6 +418,30 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         } 
+    },
+
+    getRepository: async (req, res) => {
+        try {
+
+            const repository = await Repository.find({}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'contractType'
+                    } 
+            })
+            .sort({uploadDate: 1})
+            .exec();
+    
+            res.render('repository', {
+                user_role: req.session.role,
+                repository: repository
+
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

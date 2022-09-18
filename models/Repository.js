@@ -7,7 +7,8 @@ const RepositorySchema = mongoose.Schema({
     },
     requestid: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'ContractRequest'
     },
     file: {
         type: mongoose.Schema.Types.ObjectId,
