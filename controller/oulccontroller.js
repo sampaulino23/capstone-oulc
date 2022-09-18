@@ -117,15 +117,8 @@ const oulccontroller = {
             let clearedCard = {count: 0, percentage: 0};
             let initialReview = {count: 0, percentage: 0};
             let legalReview = {count: 0, percentage: 0};
-            let typea = 0;
-            let typeb = 0;
-            //let typec = 0;
-            let typed = 0;
-            //let typee = 0;
-            //let typef = 0;
-            //let typeg = 0;
-            let typeh = 0;
-            //let typei = 0;
+            let contracttype = {a: 0, b:0, c:0, d: 0, e:0, f:0, g:0, h:0, i:0};
+          
 
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
@@ -146,16 +139,16 @@ const oulccontroller = {
                 }
 
                 if(contractrequests[i].contractType.name == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work"){
-                    typea++;
+                    contracttype.a++;
                 }
                 else if(contractrequests[i].contractType.name == "OJT/Internship Agreements"){
-                    typeb++;
+                    contracttype.b++;
                 }
                 else if(contractrequests[i].contractType.name == "MOA/Contracts for Workshops or Trainings"){
-                    typed++;
+                    contracttype.d++;
                 }
                 else if(contractrequests[i].contractType.name == "Licensing or Subscription Agreements"){
-                    typeh++;
+                    contracttype.h++;
                 }
 
 
@@ -195,10 +188,7 @@ const oulccontroller = {
                 initialReview: initialReview,
                 legalReview: legalReview,
                 requestCount: contractrequests.length,
-                typea: typea,
-                typeb: typeb,
-                typed: typed,
-                typeh: typeh
+                contracttype
             });
 
         } catch (err) {
