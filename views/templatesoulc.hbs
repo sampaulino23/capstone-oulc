@@ -41,16 +41,16 @@
                                     </thead>
                                     <tbody id="myTemplateTable">
                                         {{#each templates}}
-                                        <tr style="cursor: pointer;"  id="{{_id}}" onclick="">
+                                        <tr style="cursor: pointer;" id="{{_id}}" onclick="">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{type.name}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">
+                                            <td id = "" class="action-cell text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; cursor: default;">
                                                 <div id="actions">
                                                     <div class="dropstart">
                                                         <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
-                                                        aria-expanded="false"></i>
-                                                        <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteTemplateModal{{@index}}"></i>
+                                                        aria-expanded="false" style ="cursor: pointer;"></i>
+                                                        <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteTemplateModal{{@index}}" style ="cursor: pointer;"></i>
                                                         <ul class="dropdown-menu">
                                                             <li><button class="dropdown-item get-edit-user" type="button"
                                                                     data-bs-toggle="modal"
@@ -58,9 +58,9 @@
                                                             </li>
                                                             <li>
                                                                 {{#if isWordFile}}
-                                                                <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="dropdown-item download-template text-body">Download docx</a>
+                                                                <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="dropdown-item download-template text-body">Download .DOC File</a>
                                                                 {{else}}
-                                                                <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="dropdown-item download-template text-body">Download pdf</a>
+                                                                <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="dropdown-item download-template text-body">Download .PDF File</a>
                                                                 {{/if}}
                                                             </li>
                                                         </ul>

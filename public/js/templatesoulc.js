@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     $('tr').click(function () {
         
-        var templateid = $(this).closest('tr').attr('id');
+        var templateid = $(this).attr('id');
 
         console.log(templateid);
 
@@ -32,6 +32,10 @@ $(document).ready(() => {
             }
         });
 
+    });
+
+    $('.action-cell').click(function(event){
+        event.stopPropagation();
     });
 
 });

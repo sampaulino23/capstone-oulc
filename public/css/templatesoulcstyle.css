@@ -84,7 +84,7 @@
     font-weight: bolder;
     line-height: 24px;
     text-align:center;
-    cursor: pointer;
+    cursor: default;
 }
 
 .modal-header {
