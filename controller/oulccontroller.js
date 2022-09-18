@@ -436,6 +436,50 @@ const oulccontroller = {
             res.render('repository', {
                 user_role: req.session.role,
                 repository: repository
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getSpecificRepositoryFile: async (req, res) => {
+        try {
+
+            var path = req.path.split('/')[2];
+
+            const repository = await Repository.find({_id : path}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'contractType'
+                    } 
+            })
+            .sort({uploadDate: 1})
+            .exec();
+
+            for (i = 0; i < repository.length; i++) {
+
+                // To calculate the time difference of two dates
+                var Difference_In_Time = repository[i].requestid.effectivityEndDate.getTime() - repository[i].requestid.effectivityStartDate.getTime();
+                      
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                if (Difference_In_Days < 0){
+                    Difference_In_Days = Math.floor(Difference_In_Days);
+                }
+                else {
+                    Difference_In_Days = Math.ceil(Difference_In_Days);
+                }
+
+                // To set number of days gap in contract request
+                repository[i].daysDuration = Difference_In_Days;
+            }
+    
+            res.render('specificrepositoryfile', {
+                user_role: req.session.role,
+                repository: repository
 
             });
 

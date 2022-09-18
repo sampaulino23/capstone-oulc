@@ -95,6 +95,7 @@ router.get('/downloadtemplate/:filename', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:filename', oulccontroller.viewTemplate);
 router.get('/repository', oulccontroller.getRepository);
+router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
