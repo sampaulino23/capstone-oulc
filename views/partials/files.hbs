@@ -1,7 +1,38 @@
 <div>
+    <div class="container">
+        <h5>Documents Attached: </h5>
+        <table id="table" class="sortable table table-hover"
+            style="width: 100%; font-size: 16px; background:#D9D9D9;">
+            <thead class="table-headers">
+                <tr>
+                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
+                    <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Date Modified</th>
+                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Reviewed</th>
+                </tr>
+            </thead>
+            <tbody id="myRequestTable">
+                {{#each contractrequests}}
+                <tr style="cursor: pointer;"  id="{{_id}}" onclick="window.location.href='/request/staff}'">
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate requestDate}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
     {{>requestbuttons}}
 
     <button class="" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
+    <div class="container">
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadContractModal">Upload Contract (Temporary Feature)</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadReferenceDocumentModal">Upload Reference Document (Temporary Feature)</button>
+        </div>
+    </div>
+
+    
 </div>
 <script>
 

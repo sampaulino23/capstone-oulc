@@ -77,16 +77,11 @@ const specificrequestcontroller = {
                 })
                 .sort({date: -1})
                 .exec();
-                
 
-                // console.log(contractrequest);
-                // console.log(feedback);
-
-          
             res.render('specificrequest', {
                 user_role:req.session.role,
                 contractrequest: contractrequest,
-                feedback: feedback
+                feedback: feedback,
             });
 
         } catch (err) {
@@ -154,7 +149,20 @@ const specificrequestcontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    postUploadContract: async (req, res) => {
+
+        console.log('UPLOAD CONTRACT');
+
+    },
+
+    postUploadRefDoc: async (req, res) => {
+
+        console.log('UPLOAD REFERENCE DOCUMENT');
+
+    },
+
 }
 
 module.exports = specificrequestcontroller;

@@ -96,6 +96,12 @@ router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontr
 // requesting office end
 
 
+// upload contract
+router.post('/uploadcontract', upload.single('file'), specificrequestcontroller.postUploadContract);
+// upload reference document
+router.post('/uploadrefdoc', upload.single('file'), specificrequestcontroller.postUploadRefDoc);
+
+
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
 });

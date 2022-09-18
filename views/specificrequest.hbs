@@ -182,6 +182,28 @@
     </div>
 </div>
 
+    <!-- Upload Contract Modal -->
+    <div class="modal fade" id="uploadContractModal" tabindex="-1" aria-labelledby="uploadContractModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Contract</h5>
+                </div>
+                <form action="/staff/tempuploadcontract" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file mb-3">
+                            <label for="file" class="modal-text custom-file-label">File Upload</label><br>
+                            <input type="file" name="file" id="file" class="custom-file-input"><br><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="upload-btn">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </html>
 
 <script>
