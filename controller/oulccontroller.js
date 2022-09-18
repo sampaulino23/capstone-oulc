@@ -117,6 +117,15 @@ const oulccontroller = {
             let clearedCard = {count: 0, percentage: 0};
             let initialReview = {count: 0, percentage: 0};
             let legalReview = {count: 0, percentage: 0};
+            let typea = 0;
+            let typeb = 0;
+            //let typec = 0;
+            let typed = 0;
+            //let typee = 0;
+            //let typef = 0;
+            //let typeg = 0;
+            let typeh = 0;
+            //let typei = 0;
 
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
@@ -135,6 +144,21 @@ const oulccontroller = {
                 else if (contractrequests[i].statusCounter == "7"){
                     clearedCard.count++;
                 }
+
+                if(contractrequests[i].contractType.name == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work"){
+                    typea++;
+                }
+                else if(contractrequests[i].contractType.name == "OJT/Internship Agreements"){
+                    typeb++;
+                }
+                else if(contractrequests[i].contractType.name == "MOA/Contracts for Workshops or Trainings"){
+                    typed++;
+                }
+                else if(contractrequests[i].contractType.name == "Licensing or Subscription Agreements"){
+                    typeh++;
+                }
+
+
             }
 
             // compute percentage per status
@@ -170,7 +194,11 @@ const oulccontroller = {
                 cleared: clearedCard,
                 initialReview: initialReview,
                 legalReview: legalReview,
-                requestCount: contractrequests.length
+                requestCount: contractrequests.length,
+                typea: typea,
+                typeb: typeb,
+                typed: typed,
+                typeh: typeh
             });
 
         } catch (err) {
