@@ -16,7 +16,7 @@ const RepositorySchema = mongoose.Schema({
     uploadDate: {
         type: Date,
         required: true
-    },
+    }
 });
 
 module.exports = mongoose.model('Repository', RepositorySchema);
