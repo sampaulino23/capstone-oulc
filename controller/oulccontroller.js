@@ -6,27 +6,7 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
-
-// const {
-//     pipe,
-//     gotenberg,
-//     convert,
-//     office,
-//     to,
-//     landscape,
-//     set,
-//     filename,
-//     please,
-// } = require('gotenberg-js-client');
-
-// const toPDF = pipe(
-//     gotenberg('http://localhost:3000'),
-//     convert,
-//     office,
-//     to(landscape),
-//     set(filename('result.pdf')),
-//     please
-// );
+const crypto = require('crypto');
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
@@ -223,6 +203,22 @@ const oulccontroller = {
         }
     },
 
+    viewTemplateOnClick: async (req, res) => {
+
+        console.log('View template on click');
+
+        const templateid = req.query.templateid;
+
+        const template = await Template.findById(templateid).exec();
+
+        console.log(template.pdfFileName);
+
+        res.send({
+            pdfFileName: template.pdfFileName
+        })
+
+    },
+
     viewTemplate: async (req, res) => {
         try {
 
@@ -234,13 +230,13 @@ const oulccontroller = {
                     });
                 }
                 // Check if document
-                if (file[0].contentType === 'application/msword' || file[0].contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                if (file[0].contentType === 'application/pdf') {
                     // Read output to browser
                     const readstream = gridfsBucket.openDownloadStream(file[0]._id);
                     readstream.pipe(res);
                 } else {
                     res.status(404).json({
-                        err: 'Not a document'
+                        err: 'Not a pdf document'
                     });
                 }
             });
@@ -253,6 +249,7 @@ const oulccontroller = {
     uploadTemplate: async (req, res) => {
         try {
 
+            const templateTitle = req.body.title;
             const contractTypeInput = req.body.contractType;
 
             const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
@@ -262,7 +259,7 @@ const oulccontroller = {
             const fileuploaddate = req.file.uploadDate;
 
             const cursor = gridfsBucket.find({_id: file_id});
-            cursor.forEach(async (doc, err) => {
+            cursor.forEach((doc, err) => {
                 if (err) {
                     console.log(err);
                 } else if (doc.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || doc.contentType === 'application/msword') {
@@ -272,10 +269,9 @@ const oulccontroller = {
 
                     const downStream = gridfsBucket.openDownloadStream(doc._id);
                     downStream.pipe(writableStream);
-                        // .pipe(gridfsBucket.openUploadStream('outputFile.docx')));
 
-                        writableStream.on('close', function(){
-                            const formData = new FormData()
+                    writableStream.on('close', function(){
+                        const formData = new FormData()
                         formData.append('instructions', JSON.stringify({
                           parts: [
                             {
@@ -294,12 +290,40 @@ const oulccontroller = {
                               responseType: "stream"
                             })
                         
-                            response.data.pipe(fs.createWriteStream("result.pdf"))
+                            // response.data.pipe(fs.createWriteStream("result.pdf"))
+
+                            // generate pdf filename using crypto module
+                            const buf = crypto.randomBytes(16);
+                            var pdfFilename = buf.toString('hex') + '.pdf';
+
+                            // upload pdf file to gridfsbucket
+                            response.data.pipe(gridfsBucket.openUploadStream(pdfFilename, {contentType: 'application/pdf'}));
+
+                            // create template object
+                            const newTemplate = new Template({
+                                name: templateTitle,
+                                type: mongoose.Types.ObjectId(contractType._id),
+                                uploadDate: fileuploaddate,
+                                isWordFile: true,
+                                wordFileName: filename,
+                                pdfFileName: pdfFilename
+                            });
+
+                            console.log('0');
+        
+                            // insert template object to db
+                            newTemplate.save();
+
                           } catch (e) {
                             const errorString = await streamToString(e.response.data)
                             console.log(errorString)
                           }
                         })()
+
+                        // fs.createReadStream('result.pdf').
+                        //   pipe(gridfsBucket.openUploadStream('myfile'));
+
+                        console.log('1');
                         
                         function streamToString(stream) {
                           const chunks = []
@@ -309,33 +333,27 @@ const oulccontroller = {
                             stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")))
                           })
                         }
-                          });
-
-                    const newTemplate = new Template({
-                        name: filename,
-                        type: mongoose.Types.ObjectId(contractType._id),
-                        uploadDate: fileuploaddate,
-                        wordFileName: filename,
-                        pdfFileName: filename
                     });
 
-                    newTemplate.save();
+                    console.log('2');
 
                 } else if (doc.contentType === 'application/pdf') {
                     console.log(doc);
                     console.log('pdf');
 
                     const newTemplate = new Template({
-                        name: filename,
+                        name: templateTitle,
                         type: mongoose.Types.ObjectId(contractType._id),
                         uploadDate: fileuploaddate,
-                        wordFileName: filename,
+                        isWordFile: false,
                         pdfFileName: filename
                     });
 
                     newTemplate.save();
                 }
             });
+
+            console.log('3');
 
             res.redirect('back');
             

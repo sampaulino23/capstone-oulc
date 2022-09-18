@@ -14,6 +14,10 @@ const TemplateSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    isWordFile: {
+        type: Boolean,
+        required: true
+    },
     wordFileName: {
         type: String,
     },

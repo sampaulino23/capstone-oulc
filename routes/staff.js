@@ -90,9 +90,10 @@ router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
-router.get('/template/:filename', oulccontroller.viewTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
 router.get('/downloadtemplate/:filename', oulccontroller.getDownloadTemplate);
+router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
+router.get('/template/:filename', oulccontroller.viewTemplate);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

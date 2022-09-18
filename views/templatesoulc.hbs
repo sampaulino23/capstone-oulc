@@ -57,9 +57,11 @@
                                                                     data-bs-target="#replaceTemplateModal{{@index}}">Replace</button>
                                                             </li>
                                                             <li>
-                                                                {{!-- <form method="GET" action="/staff/downloadtemplate/{{file}}"> --}}
-                                                                <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="dropdown-item download-template text-body">Download</a>
-                                                                {{!-- </form> --}}
+                                                                {{#if isWordFile}}
+                                                                <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="dropdown-item download-template text-body">Download docx</a>
+                                                                {{else}}
+                                                                <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="dropdown-item download-template text-body">Download pdf</a>
+                                                                {{/if}}
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -134,9 +136,8 @@
                 </div>
 
                 <!-- RIGHT SIDE -->
-                <div class="col-6">
-                    {{!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http%3A%2F%2Fstatsclass.org%2Fworkshops%2FDataScience%2FHandout8%2FHandout8.docx' width='100%' height="600px" frameborder='0'></iframe> --}}
-                </div> 
+                <div class="col-6" id="templateView">
+                </div>
             </div>
         </div>
     </body>
@@ -151,8 +152,10 @@
                 <form action="/staff/uploadtemplate" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file mb-3">
+                            <label for="text" class="modal-text form-label">Title</label><br>
+                            <input type="text" name="title" id="title" class="form-control" required><br><br>
                             <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                            <input type="file" name="file" id="file" class="custom-file-input"><br><br>
+                            <input type="file" name="file" id="file" class="custom-file-input" required><br><br>
                             <label for="contractType" class = "modal-text">Type</label><br>
                             <select name="contractType" id="contractType" class="dropdown" required>
                             {{#each contracttypes}}

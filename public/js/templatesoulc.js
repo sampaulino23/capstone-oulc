@@ -1,24 +1,37 @@
 $(document).ready(() => {
 
-    // $('.download-template').click(function () {
+    $('tr').click(function () {
         
-    //     var templateid = $(this).closest('tr').attr('id');
+        var templateid = $(this).closest('tr').attr('id');
 
-    //     console.log(templateid);
+        console.log(templateid);
 
-    //     $.ajax({
-    //         url: "/staff/downloadtemplate",
-    //         method: "GET",
-    //         contentType: "application/json",
-    //         data: { templateid: templateid },
-    //         success: setTimeout(function () {
-    //             console.log('SUCCESS');
-    //         }, 350),
-    //         error: function(err) {
-    //             console.log(err);
-    //         }
-    //     });
+        $.ajax({
+            url: "/staff/viewtemplate",
+            method: "GET",
+            contentType: "application/json",
+            data: { templateid: templateid },
+            success: function (res) {
+                console.log(res.pdfFileName);
 
-    // });
+                const templateView = $('#templateView');
+
+                templateView.empty();
+
+                const embedPDFView = document.createElement('embed');
+                embedPDFView.setAttribute('src', `/staff/template/${res.pdfFileName}`);
+                embedPDFView.setAttribute('width', '100%');
+                embedPDFView.setAttribute('height', '600px');
+
+                templateView.append(embedPDFView);
+
+                console.log('SUCCESS');
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+    });
 
 });
