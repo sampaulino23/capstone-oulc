@@ -23,9 +23,9 @@
     color:#fff;
 }
 
-.upload-btn {
+.full-size-btn, .upload-btn {
     width: auto;
-    padding:12px 20px;
+    padding:12px 12px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -39,7 +39,27 @@
     color: white;
 }
 
-.upload-btn:hover, .upload-btn:active {
+.full-size-btn {
+    display:none;
+    margin-right: 0px;
+}
+
+.upload-btn-modal {
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 20px;
+    padding: 12px 20px;
+    background: #0C8039;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    color: #fff;
+    border: none;
+    outline: none;
+}
+
+
+.upload-btn:hover, .upload-btn:active, .full-size-btn:hover, .full-size-btn:active, .upload-btn-modal:hover, .upload-btn-modal:active {
     background: #00713D;
     transition: .25s;
 }
@@ -76,6 +96,8 @@
 
 #template-bar {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .table-headers {
@@ -137,4 +159,13 @@
 
 .modal-text {
     padding-bottom: 5px;
+}
+
+.tab-pane {
+    overflow-y:auto;
+    max-height: 532px;
+}
+
+.border-div {
+    border-bottom: solid #000 1px;
 }
