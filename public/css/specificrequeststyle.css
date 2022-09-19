@@ -116,7 +116,7 @@
     transition: 0.25s
 }
 
-#summary-table {
+#summary-table, #feedback-history {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -180,4 +180,64 @@
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border: none;
     cursor: default;
+}
+
+.feedback-header {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.feedback-container {
+    background: rgba(12, 128, 57, 0.6);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
+}
+
+.feedback-author {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.feedback-date {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.profile-pic {
+    display: inline-block;
+    background-color: #5388D8;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.pic-inner {
+    color: #000;
+    display: table-cell;
+    vertical-align: middle; 
+    text-align: center;
+    text-decoration: none;
+    height: 45px;
+    width: 45px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+#feedback-details-div {
+    display: inline-flex;
+    align-items: center;
+}
+
+#author-date-div {
+    display: block;
+}
+
+.content {
+    margin-left: 65px;
 }

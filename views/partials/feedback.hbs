@@ -1,14 +1,34 @@
-<div>
-    Feedback History
-
-    <div>
-        <br>
+<div id = "feedback-history">
+    <div class = "feedback-header">
+        Feedback History
+    </div>
+    <br>
+    <div class = "feedback-container">
         {{#each feedback}}
-        {{user_id.fullName}} <br>
-        {{formatfeedbackdate date}} <br>
-        {{content}} <br>
-        <br>
+        <div id ="feedback-details-div">
+            <div class = "profile-pic">
+                <div id = "pic-inner" class = "pic-inner"></div>
+            </div>
+            <div id = "author-date-div">
+                <div class = "feedback-author">
+                    {{user_id.fullName}}
+                </div>
+                <div class = "feedback-date">
+                    {{formatfeedbackdate date}}
+                </div>
+            </div>
+        </div>
+        <div class = "content">
+            {{content}}
+        </div>
         {{/each}}
     </div>
-    
 </div>
+
+<script>
+    // get the initials of the feedback provider for the inner picture
+    var feedbackAuthor = $('.feedback-author').text();
+    var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
+    var acronym = matches.join(''); // output will be JSON
+    document.getElementById("pic-inner").innerHTML = acronym;
+</script>

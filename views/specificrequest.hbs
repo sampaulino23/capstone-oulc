@@ -44,7 +44,7 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
-                        <button class="nav-item" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                        <button class="nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
                             type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
                     </li>
                     <li>
@@ -222,13 +222,28 @@
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
     }
+    function selectVersion() {
+        document.getElementById("summary-tab").classList.remove("selected");
+        document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("version-tab").classList.add("selected");
+        document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.remove("selected");
+    }
     function selectDiscussion() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.selected("selected");
+        document.getElementById("discussion-tab").classList.add("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
     }
+    function selectFeedback() {
+        document.getElementById("summary-tab").classList.remove("selected");
+        document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("version-tab").classList.remove("selected");
+        document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.add("selected");
+    }
+
 </script>
 
     
