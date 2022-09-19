@@ -279,5 +279,20 @@ function searchTemplateTable() {
 } 
 
 $(document).ready(function() {
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        var daysGap = cells[1] // gets the 2nd `td` or nothing
+        parsedDaysGap = parseInt(daysGap, 10)
+        // alert(daysGap);
+
+        if (parsedDaysGap < 0) {
+            row.style.color = "red" // make the whole row text color red
+        }
+    }
+
     viewPending();
+
 });
