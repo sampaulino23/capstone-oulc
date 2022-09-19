@@ -195,6 +195,16 @@ const oulccontroller = {
                         gridfsBucket.delete(doc._id);
                     }
                 });
+
+                const cursor2 = await gridfsBucket.find({filename: template.pdfFileName}, {limit: 1});
+                cursor2.forEach((doc, err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(doc);
+                        gridfsBucket.delete(doc._id);
+                    }
+                });
             }
 
             res.redirect('back');

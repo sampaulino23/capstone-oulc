@@ -6,7 +6,7 @@ const ContractVersionSchema = mongoose.Schema({
         ref: 'Contract',
         required: true
     },
-    number: {
+    version: {
         type: Number,
         required: true
     },
@@ -15,10 +15,12 @@ const ContractVersionSchema = mongoose.Schema({
         required: true
     },
     file: {
-        type: String,   // implement changes when finalized
+        type: mongoose.Schema.Types.ObjectId,   // implement changes when finalized
         required: true
+    },
+    filename: {
+        type: String,
     }
-    
 });
 
 module.exports = mongoose.model('ContractVersion', ContractVersionSchema);
