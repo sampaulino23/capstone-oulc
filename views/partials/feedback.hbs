@@ -7,10 +7,10 @@
         {{#each feedback}}
         <div id ="feedback-details-div">
             <div class = "profile-pic">
-                <div id = "pic-inner" class = "pic-inner"></div>
+                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
             </div>
             <div id = "author-date-div">
-                <div class = "feedback-author">
+                <div class = "feedback-author" id = "feedback-author{{@index}}">
                     {{user_id.fullName}}
                 </div>
                 <div class = "feedback-date">
@@ -27,8 +27,19 @@
 
 <script>
     // get the initials of the feedback provider for the inner picture
-    var feedbackAuthor = $('.feedback-author').text();
-    var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
-    var acronym = matches.join(''); // output will be JSON
-    document.getElementById("pic-inner").innerHTML = acronym;
+    var index = 0;
+    var feedbackCount = document.getElementsByClassName("pic-inner").length;
+    
+    for (i = 0; i < feedbackCount; i++) {
+        var feedbackAuthorID = "#feedback-author" + i;
+        var elementid = "pic-inner" + i;
+
+        var feedbackAuthor = $(feedbackAuthorID).text();
+        var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
+        var acronym = matches.join(''); // output will be JSON
+    
+        document.getElementById(elementid).innerHTML = acronym;
+
+    }
+    
 </script>
