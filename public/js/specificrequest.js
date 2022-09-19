@@ -35,5 +35,18 @@ $(document).ready(() => {
     //     });
 
     // });
+    
+    var sectionChanges = $(".changes-section");
+    var sectionChangesText = $("#changes-section-text");
+    var changesField = sectionChanges.val();
+
+    if (changesField === "") {
+        sectionChanges.css("display", "none");
+        sectionChangesText.css("display", "none");
+    }
+    else {
+        sectionChanges.css("display", "block");
+        sectionChangesText.css("display", "block");
+    }
 
 });

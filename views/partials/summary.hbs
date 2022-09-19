@@ -54,8 +54,8 @@
     Template Used
     <input type="text" class = "text-input half" value="{{templateUsed}}" readonly>
     <br>
-    Changes in Sections/Paragraphs
-    <input type="text" class = "text-input half" value="{{sectionChangeNotes}}" readonly>
+    <div id ="changes-section-text">Changes in Sections/Paragraphs</div>
+    <input type="text" class = "changes-section text-input half" value="{{sectionChangeNotes}}" readonly>
     <div class="row">
         <div class="col-6">
             Third Party Name<br>
@@ -82,8 +82,9 @@
     <input type="text" class = "text-input half" value="{{requestTitle}}" readonly>
     Document Type
     <input type="text" class = "text-input half" value="{{contractType.name}}" readonly>
-    Subject Matter
-    <input type="text" class = "text-input half" value="{{subjectMatter}}" readonly>
+    Subject Matter<br>
+    <!-- <input type="text" class = "subject-matter text-input" value="{{subjectMatter}}" readonly> !-->
+    <textarea name="textarea" class = "subject-matter" readonly>{{subjectMatter}}</textarea>
     {{/each}}
 </div>
 
