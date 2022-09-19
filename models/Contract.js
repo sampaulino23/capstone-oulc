@@ -10,14 +10,8 @@ const ContractSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Template',
     },
-    contractType: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ContractType',
-        required: true
-    },
     title: {
         type: String,
-        required: true
     }
     
 });
