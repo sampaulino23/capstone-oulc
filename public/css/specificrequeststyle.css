@@ -116,7 +116,7 @@
     transition: 0.25s
 }
 
-#summary-table, #feedback-history {
+#summary-table, #feedback-history, #discussion-div, .files-div {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -126,6 +126,11 @@
     color: #000;
     background: rgba(217, 217, 217, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#discussion-div {
+    min-height: 600px;
+    position: relative;
 }
 
 #upload-file-div {
@@ -151,6 +156,12 @@
     border: none;
     color: white;
     cursor: pointer;
+}
+
+.mark-btn:hover {
+    background: #9F9F9F;
+    color: #000;
+    transition: 0.25s;
 }
 
 .text-input {
@@ -182,7 +193,7 @@
     cursor: default;
 }
 
-.feedback-header {
+.feedback-header, .discussion-header, .files-header {
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -192,6 +203,17 @@
     background: rgba(12, 128, 57, 0.6);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+#messages {
+    float: right;
+    width: 80%;
+    min-height: 100px;
+    background: rgba(12, 128, 57, 0.6);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
+    margin-bottom: 20px;
 }
 
 .feedback-author {
@@ -240,4 +262,16 @@
 
 .content {
     margin-left: 65px;
+}
+
+.table-headers  {
+    background: rgba(12, 128, 57, 0.6);
+    color: #000;
+    font-weight:lighter;
+    line-height: 24px;
+    cursor: default;
+}
+
+#request-btns {
+    margin-top: 50px;
 }

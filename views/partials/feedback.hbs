@@ -1,10 +1,11 @@
 <div id = "feedback-history">
     <div class = "feedback-header">
-        Feedback History
+        Feedback History:
     </div>
     <br>
+    {{#each feedback}}
     <div class = "feedback-container">
-        {{#each feedback}}
+        
         <div id ="feedback-details-div">
             <div class = "profile-pic">
                 <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
@@ -21,8 +22,8 @@
         <div class = "content">
             {{content}}
         </div>
-        {{/each}}
     </div>
+    {{/each}}
 </div>
 
 <script>

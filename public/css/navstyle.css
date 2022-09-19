@@ -54,35 +54,6 @@ nav a.active, nav a:hover:not(.logo), nav a:hover:not(.btn2){
     color: #000000;
 }
 
-.btn1{
-    width:100%;
-    box-sizing: border-box;
-    padding:5px 15px;
-    outline: none;
-    border: none;
-    background: #7AC9ED;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    color: white;
-    font-family: 'Work Sans', sans-serif;
-    cursor: pointer;
-}
-
-.btn2{
-    width:100%;
-    box-sizing: none;
-    padding:5px 15px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    color: white;
-    font-family: 'Work Sans', sans-serif;
-    cursor: pointer;
-}
-
 #check{
     display: none;
 }
