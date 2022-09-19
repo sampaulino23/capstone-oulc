@@ -12,6 +12,8 @@ const moment = require('moment');
 const dotenv = require('dotenv');
 require('dotenv').config({ path: '.env' });
 
+const socket = require("socket.io");
+
 const app = express();
 
 app.engine( 'hbs', exphbs.engine({
@@ -106,4 +108,9 @@ app.get("/logout", function(req, res) {
 
 
 
-app.listen(process.env.PORT || 3000);
+const server = app.listen(process.env.PORT || 3000);
+
+const io = socket(server);
+io.on("connection", function (socket) {
+    console.log("User made socket connection");
+});
