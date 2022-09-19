@@ -240,3 +240,7 @@ function searchTemplateTable() {
         }
       }
 } 
+
+$(document).ready(function() {
+    viewPending();
+});

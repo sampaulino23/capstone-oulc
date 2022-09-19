@@ -13,91 +13,91 @@
     <body>
         <div id="header">Contract Approval Requests</div>
 
-         <ul class="nav-tabs" id="myTab" role="tablist">
-                <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                    aria-controls="all" value="" onclick="viewAll()">
-                    All
-                </button>
-                <button class="nav-item selected" id="pending-tab" data-toggle="tab" href="" role="tab"
-                    aria-controls="activeusers" value="Pending" onclick="viewPending()">
-                    Pending
-                </button>
-                <button class="nav-item" id="toreview-tab" data-toggle="tab" href="" role="tab"
-                    aria-controls="activeusers" value="To Review" onclick="viewToReview()">
-                    To Review
-                </button>
-                <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
-                    aria-controls="inactiveusers" value="Waiting" onclick="viewWaiting()">
-                    Waiting
-                </button>
-                <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
-                    aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
-                    For Legal Review
-                </button>
-            </ul>
+        <ul class="nav-tabs" id="myTab" role="tablist">
+            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                aria-controls="all" value="" onclick="viewAll()">
+                All
+            </button>
+            <button class="nav-item selected" id="pending-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="activeusers" value="Pending" onclick="viewPending()">
+                Pending
+            </button>
+            <button class="nav-item" id="toreview-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="activeusers" value="To Review" onclick="viewToReview()">
+                To Review
+            </button>
+            <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Waiting" onclick="viewWaiting()">
+                Waiting
+            </button>
+            <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
+                For Legal Review
+            </button>
+        </ul>
 
-            <div id="query-search">
-                <input class="form-control" id="myInput" onkeyup="searchRequestTable()" type="text" placeholder="Search...">
-            </div>
+        <div id="query-search">
+            <input class="form-control" id="myInput" onkeyup="searchRequestTable()" type="text" placeholder="Search...">
+        </div>
 
-            <div id="dropdowns">
-                <label for="" class="dept-and-role">Contract Type</label>
-                <select id="contracttypedropdown" oninput="filterContractType();" onChange="resetRequestType();">
-                    <option selected disabled value="a">Select Request Type </option>
-                    <option value="All">All</option>
-                    {{#each contracttypes}}
-                    <option value="{{name}}">{{name}}</option>
-                    {{/each}}
-                </select>
+        <div id="dropdowns">
+            <label for="" class="dept-and-role">Contract Type</label>
+            <select id="contracttypedropdown" oninput="filterContractType();" onChange="resetRequestType();">
+                <option selected disabled value="a">Select Request Type </option>
+                <option value="All">All</option>
+                {{#each contracttypes}}
+                <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
 
-                <label for="" class="dept-and-role" style="margin-left: 20px;">Request Type</label>
-                <select id="requesttypedropdown" oninput="filterRequestType();" onChange="resetContractType();">
-                    <option selected disabled value="a">Select Request Type </option>
-                    <option value="All">All</option>
-                    <option value="Regular">Regular</option>
-                    <option value="Express">Express</option>
-                </select>
-            </div>
+            <label for="" class="dept-and-role" style="margin-left: 20px;">Request Type</label>
+            <select id="requesttypedropdown" oninput="filterRequestType();" onChange="resetContractType();">
+                <option selected disabled value="a">Select Request Type </option>
+                <option value="All">All</option>
+                <option value="Regular">Regular</option>
+                <option value="Express">Express</option>
+            </select>
+        </div>
 
-        <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                <div id="user-table" class="tab-pane active">
-                    <div class="w-100">
-                        <table id="table" class="sortable table table-hover"
-                            style="width: 100%; font-size: 16px; background:#D9D9D9;">
-                            <thead class="table-headers">
-                                <tr>
-                                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Request Date</th>
-                                    <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Days Gap</th>
-                                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Effectivity Date</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Contract Type</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Document Title</th>
-                                    <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
-                                    <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
-                                    <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="myRequestTable">
+        <div class="tab-pane active" id="pending-tab" role="tabpanel" aria-labelledby="pending-tab">
+            <div id="user-table" class="tab-pane active">
+                <div class="w-100">
+                    <table id="table" class="sortable table table-hover"
+                        style="width: 100%; font-size: 16px; background:#D9D9D9;">
+                        <thead class="table-headers">
+                            <tr>
+                                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Request Date</th>
+                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Days Gap</th>
+                                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Effectivity Date</th>
+                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Contract Type</th>
+                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Document Title</th>
+                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
+                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
+                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myRequestTable">
 
-                                {{#each contractrequests}}
+                            {{#each contractrequests}}
 
-                                <tr style="cursor: pointer;"  id="{{_id}}" onclick="window.location.href='/request/staff/{{_id}}'">
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;" id = "" value = "">{{formatdate requestDate}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{daysGap}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requestTitle}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
-                                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
-                                </tr>
+                            <tr style="cursor: pointer;"  id="{{_id}}" onclick="window.location.href='/request/staff/{{_id}}'">
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;" id = "" value = "">{{formatdate requestDate}}</td>
+                                <td class="days-gap text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{daysGap}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requestTitle}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
+                            </tr>
 
-                            
-                                {{/each}}
+                        
+                            {{/each}}
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
     </body>
 </html>
