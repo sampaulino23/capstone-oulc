@@ -284,12 +284,12 @@ $(document).ready(function() {
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        var daysGap = cells[1] // gets the 2nd `td` or nothing
-        parsedDaysGap = parseInt(daysGap, 10)
-        // alert(daysGap);
-
-        if (parsedDaysGap < 0) {
+        var daysGap = cells[1] || null; // gets the 2nd `td` or nothing
+        if ( !daysGap || daysGap.textContent < 0) {
             row.style.color = "red" // make the whole row text color red
+        }
+        else {
+            row.style.color = "none"; // hides this row
         }
     }
 
