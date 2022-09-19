@@ -279,17 +279,17 @@ function searchTemplateTable() {
 } 
 
 $(document).ready(function() {
-    var table = document.getElementById("table");
+    var table = document.getElementById("myRequestTable");
     var rows = table.getElementsByTagName("tr");
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         var daysGap = cells[1] || null; // gets the 2nd `td` or nothing
         if ( !daysGap || daysGap.textContent < 0) {
-            row.style.color = "red" // make the whole row text color red
+            cells[1].style.background = "#F66969" // make the whole row text color red
         }
-        else {
-            row.style.color = "none"; // hides this row
+        else if (!daysGap || daysGap.textContent >= 0 && !daysGap || daysGap.textContent <= 6) {
+            cells[1].style.background = "#FFDB5B"
         }
     }
 
