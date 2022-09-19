@@ -34,6 +34,10 @@
                 aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
                 For Legal Review
             </button>
+            <button class="nav-item" id="cleared-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cleared" onclick="viewCleared()">
+                Cleared
+            </button>
         </ul>
 
         <div id="query-search">
@@ -91,7 +95,6 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
                             </tr>
 
-                        
                             {{/each}}
 
                         </tbody>

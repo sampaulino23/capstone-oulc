@@ -33,8 +33,10 @@ function searchRequestTable() {
       }
     document.getElementById("all-tab").classList.add("selected");
     document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 } 
 
 //Dropdown Filter
@@ -58,8 +60,10 @@ function filterContractType(){ //for inventory (product category) and purchasing
 
     document.getElementById("all-tab").classList.add("selected");
     document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 function filterRequestType(){ //for inventory (product category) and purchasing (product category)
@@ -82,8 +86,10 @@ function filterRequestType(){ //for inventory (product category) and purchasing 
 
     document.getElementById("all-tab").classList.add("selected");
     document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 // Reset Dropdown Filter Values
@@ -115,6 +121,7 @@ function viewAll(){
     document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 function viewPending(){ 
@@ -140,6 +147,7 @@ function viewPending(){
     document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 function viewToReview(){ 
@@ -165,6 +173,7 @@ function viewToReview(){
     document.getElementById("toreview-tab").classList.add("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 function viewWaiting(){ 
@@ -190,6 +199,7 @@ function viewWaiting(){
     document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.add("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
 }
 
 function viewForLegalReview(){ 
@@ -215,6 +225,33 @@ function viewForLegalReview(){
     document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.add("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
+}
+
+function viewCleared(){ 
+    var button = document.getElementById("cleared-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter === requeststatus.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
+    document.getElementById("waiting-tab").classList.remove("selected");
+    document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.add("selected");
 }
 
 /* TEMPLATES TABLE */
