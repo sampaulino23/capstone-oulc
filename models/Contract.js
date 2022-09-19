@@ -12,6 +12,9 @@ const ContractSchema = mongoose.Schema({
     },
     title: {
         type: String,
+    },
+    latestversion: {
+        type: Number
     }
     
 });

@@ -18,6 +18,9 @@ const ContractVersionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,   // implement changes when finalized
         required: true
     },
+    filename: {
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('ContractVersion', ContractVersionSchema);

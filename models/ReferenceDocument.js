@@ -8,15 +8,17 @@ const ReferenceDocumentSchema = mongoose.Schema({
     },
     title: {
         type: String,
-        required: true
     },
     uploadDate: {
         type: Date,
         required: true
     },
     file: {
-        type: String,   // implement changes when finalized
+        type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    filename: {
+        type: String,
     }
     
 });
