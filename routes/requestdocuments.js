@@ -57,51 +57,11 @@ let gfs;
 
 conn.once('open',() => {
   gfs = Grid(conn, mongoose.mongo);
-  gfs.collection('repository');
-});
-
-const storage = new GridFsStorage({
-  db: promise,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = file.originalname;
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'repository'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
-
-router.use(require('connect-flash')());
-
-// staff start
-router.get('/staff/:id', specificrequestcontroller.getStaffSpecificRequest);
-
-router.get('/forlegalreview', specificrequestcontroller.forLegalReview);
-
-router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff);
-// staff end
-
-
-// requesting office start
-router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
-// requesting office end
-
-conn.once('open',() => {
-  gfs = Grid(conn, mongoose.mongo);
   gfs.collection('requestdocuments');
 });
 
-const storageRequestDocs = new GridFsStorage({
-  db: promise,
+const storage = new GridFsStorage({
+    db: promise,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
         const filename = file.originalname;
@@ -114,10 +74,10 @@ const storageRequestDocs = new GridFsStorage({
   }
 });
 
-const uploadRequestDocs = multer( {storageRequestDocs} );
+const upload = multer( {storage} );
 
 // upload request documents
-router.post('/uploadrequestdocs', uploadRequestDocs.fields([
+router.post('/uploadrequestdocs', upload.fields([
   { name: 'contractFiles'},
   { name: 'refDocFiles' }
 ]), specificrequestcontroller.postUploadRequestDocuments);
@@ -134,8 +94,5 @@ passport.serializeUser((user_id, done) =>{
 passport.deserializeUser((user_id, done) =>{
     done(null, user_id);
 });
-
-
-
 
 module.exports = router;

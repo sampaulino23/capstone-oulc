@@ -100,6 +100,9 @@ app.use('/staff', staffRoute);
 const specificRequestRoute = require('./routes/specificrequest');
 app.use('/request', specificRequestRoute);
 
+const requestDocumentsRoute = require('./routes/requestdocuments');
+app.use('/requestdocuments', requestDocumentsRoute);
+
 app.get("/logout", function(req, res) {
     req.session.destroy(function (err) {
         res.redirect('/login');

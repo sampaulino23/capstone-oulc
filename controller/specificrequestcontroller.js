@@ -158,6 +158,37 @@ const specificrequestcontroller = {
         }
     },
 
+    postUploadRequestDocuments: async (req, res) => {
+
+        try {
+            console.log('UPLOAD REQUEST DOCUMENTS');
+
+            const files = req.files;
+
+            console.log(files.contractFiles.length);
+
+            console.log(files.refDocFiles.length);
+
+            for (contractFile of files.contractFiles) {
+                console.log(contractFile);
+                console.log(contractFile.id);
+
+            }
+
+            for (refDocFile of files.refDocFiles) {
+                console.log(refDocFile);
+                console.log(contractFile.id);
+
+            }
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+
     postUploadContract: async (req, res) => {
 
         console.log('UPLOAD CONTRACT');

@@ -28,7 +28,33 @@
     <div class="container">
         <div class="d-grid gap-2">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadContractModal">Upload Contract (Temporary Feature)</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadReferenceDocumentModal">Upload Reference Document (Temporary Feature)</button>
+        </div>
+    </div>
+
+    <!-- Upload Contract Modal -->
+    <div class="modal fade" id="uploadContractModal" tabindex="-1" aria-labelledby="uploadContractModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Contract Temporary</h5>
+                </div>
+                <form action="/requestdocuments/uploadrequestdocs" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="contractFiles" class="modal-text form-label">Contract Files Upload</label><br>
+                            <input type="file" name="contractFiles" id="contractFiles" class="form-control" multiple required><br><br>
+                        </div>
+                        <div class="mb-3">
+                            <label for="refDocFiles" class="modal-text form-label">Reference Documents Files Upload</label><br>
+                            <input type="file" name="refDocFiles" id="refDocFiles" class="form-control" multiple><br><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="upload-btn">Upload</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
