@@ -65,14 +65,68 @@
           background: #efefef;
       }
 
+      #message-box {
+        float: right;
+        width: 80%;
+        min-height: 100px;
+        background: rgba(12, 128, 57, 0.6);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        padding: 10px 15px;
+        margin-bottom: 20px;
+      }
+
 </style>
 
 <div id = "discussion-div">
     <div class = "discussion-header">Discussion Thread:</div>
     <br>
-    <ul id="messages">Sample Message</ul>
+    <ul id="messages">Sample</ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" placeholder = "Reply here..." /><button class = "send-btn">Send</button>
+      <input id="input" autocomplete="off" placeholder = "Type message here..." /><button class = "send-btn">Send</button>
     </form>
 
 </div>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
+<script src = "/socket.io/socket.io.js"></script>
+<script> 
+    const socket = io(); 
+
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    var messages = document.getElementById("discussion-div");
+
+    //form.addEventListener('submit', function(e) {
+    //    e.preventDefault();
+
+    //    if (input.value) {
+    //    socket.emit('message', input.value);
+    //    input.value = '';
+    //    }
+    //});-->
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        //addMessage(input.value);
+
+        socket.emit("chat-message", {
+            message: input.value
+        });
+
+        input.value = "";
+        return false;
+    }, false);
+
+    socket.on("chat-message", function(data) {
+        addMessage(data.message);
+    });
+
+    function addMessage(message) {
+        var ul = document.createElement("ul");
+        ul.id = 'message-box'
+        ul.innerHTML = message;
+        messages.appendChild(ul);
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
