@@ -105,7 +105,6 @@ const oulccontroller = {
             //set violation count per department as 0 initially
             for (y=0; y<departments.length; y++) {
                 departments[y].violationCount = 0;
-                console.log(departments[y].violationCount);
             }
           
             //get number of pending requests
@@ -157,10 +156,12 @@ const oulccontroller = {
                     Difference_In_Days = Math.ceil(Difference_In_Days);
                 }
 
-                for (j=0; j<departments.length; j++) {
-                    if (contractrequests[i].requester.department.abbrev == departments[j].abbrev && Difference_In_Days < 7) {
-                        departments[j].violationCount++;
-                    }   
+                if (Difference_In_Days < 7) {
+                    for (j=0; j<departments.length; j++) {
+                        if (contractrequests[i].requester.department.abbrev == departments[j].abbrev) {
+                            departments[j].violationCount++;
+                        }   
+                    }
                 }
                 // END OF VIOLATION COUNT PER DEPARTMENT
             }
