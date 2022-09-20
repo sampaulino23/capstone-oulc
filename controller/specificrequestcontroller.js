@@ -254,17 +254,50 @@ const specificrequestcontroller = {
 
     },
 
-    postUploadContract: async (req, res) => {
+    setReviewedDocuments: async (req, res) => {
+        try {
+            const documentsattached = req.query.documentsattached;
 
-        console.log('UPLOAD CONTRACT');
+            for (document of documentsattached) {
 
-    },
+                if (document.documenttype == 'contract') {
 
-    postUploadRefDoc: async (req, res) => {
+                    if (document.isreviewed == 'true') {
+                        await ContractVersion.findByIdAndUpdate(document.documentid, { $set: 
+                            { 
+                                isreviewed: true
+                            }
+                        }).exec();
+                    } else if (document.isreviewed == 'false') {
+                        await ContractVersion.findByIdAndUpdate(document.documentid, { $set: 
+                            { 
+                                isreviewed: false
+                            }
+                        }).exec();
+                    }
 
-        console.log('UPLOAD REFERENCE DOCUMENT');
+                } else if (document.documenttype == 'refdoc') {
 
-    },
+                    if (document.isreviewed == 'true') {
+                        await ReferenceDocument.findByIdAndUpdate(document.documentid, { $set: 
+                            { 
+                                isreviewed: true
+                            }
+                        }).exec();
+                    } else if (document.isreviewed == 'false') {
+                        await ReferenceDocument.findByIdAndUpdate(document.documentid, { $set: 
+                            { 
+                                isreviewed: false
+                            }
+                        }).exec();
+                    }
+                }
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 }
 

@@ -26,7 +26,6 @@ require('../config/passport')(passport);
 const logincontroller = require('../controller/logincontroller.js');
 const resetpasswordcontroller = require('../controller/resetpasswordcontroller.js');
 
-
 router.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -55,6 +54,7 @@ router.use(function(req,res,next){
 
 // multer to accept images
 const multer = require('multer');
+const specificrequestcontroller = require('../controller/specificrequestcontroller');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -97,5 +97,8 @@ router.get('/forgotpassword', logincontroller.getForgotPassword);
 
 // render sendresetpassword page
 router.post('/forgotpasswordconfirmation', logincontroller.postForgotPassword);
+
+// set reviewed documents for a specific contract request
+router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocuments);
 
 module.exports = router;
