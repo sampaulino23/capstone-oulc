@@ -113,4 +113,10 @@ const server = app.listen(process.env.PORT || 3000);
 const io = socket(server);
 io.on("connection", function (socket) {
     console.log("User made socket connection");
+
+    socket.on('chat-message', function(data){
+        //Send message to everyone
+        io.sockets.emit('chat-message', data);
+        console.log(data);
+     })
 });

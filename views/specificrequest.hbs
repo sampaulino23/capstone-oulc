@@ -87,9 +87,48 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
     <script src = "/socket.io/socket.io.js"></script>
-    <script> const socket = io(); </script>
+    <script> 
+        const socket = io(); 
+
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+        var messages = document.getElementById("messages");
+
+        //form.addEventListener('submit', function(e) {
+        //    e.preventDefault();
+
+        //    if (input.value) {
+        //    socket.emit('message', input.value);
+        //    input.value = '';
+        //    }
+        //});-->
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            //addMessage(input.value);
+
+            socket.emit("chat-message", {
+                message: input.value
+            });
+
+            input.value = "";
+            return false;
+        }, false);
+
+        socket.on("chat-message", function(data) {
+            addMessage(data.message);
+        });
+
+        function addMessage(message) {
+            var ul = document.createElement("ul");
+            ul.innerHTML = message;
+            messages.appendChild(ul);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
 
 </body>
 
