@@ -71,8 +71,10 @@ const logincontroller = {
             req.session.role = userlogged.role.name;
 
             if (req.session.role == "Staff"){
-                
                 res.redirect('/staff/');
+            }
+            else if (req.session.role == "Attorney") {
+                res.redirect('/attorney');
             }
             else if (req.session.role == "Administrator") {
                 res.redirect('/admin/usermanagement');
@@ -223,6 +225,10 @@ const logincontroller = {
                                     if (userlogged.role.name == "Staff"){
                                         req.session.role = userlogged.role.name;
                                         res.redirect('/staff/');
+                                    }
+                                    else if (userlogged.role.name == "Attorney"){
+                                        req.session.role = userlogged.role.name;
+                                        res.redirect('/attorney');
                                     }
                                     else {
                                         req.session.role = userlogged.role.name;
