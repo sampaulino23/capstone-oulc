@@ -94,7 +94,11 @@
 
     var form = document.getElementById('form');
     var input = document.getElementById('input');
-    var messages = document.getElementById("discussion-div");
+    var messages = document.getElementById('discussion-div');
+    var username = document.getElementById('username').value;
+
+    //console.log("THE USER IS: " + username);
+
 
     //form.addEventListener('submit', function(e) {
     //    e.preventDefault();
@@ -119,7 +123,11 @@
     }, false);
 
     socket.on("chat-message", function(data) {
-        addMessage(data.message);
+        addMessage(username + ": " + data.message);
+    });
+
+    socket.on("user_join", function(data) {
+        addMessage(data + " just joined the chat!");
     });
 
     function addMessage(message) {

@@ -42,6 +42,9 @@ const specificrequestcontroller = {
 
             var path = req.path.split('/')[2];
 
+            var userid = req.user._id;
+            const user = await User.find({_id : userid}).lean().exec();
+
             // console.log(path);
 
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -144,7 +147,8 @@ const specificrequestcontroller = {
                 feedback: feedback,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
-                contractversions: contractversions
+                contractversions: contractversions,
+                user: user
             });
 
         } catch (err) {

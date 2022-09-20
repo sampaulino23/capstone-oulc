@@ -17,7 +17,10 @@
 <body>
     <div id="header">
         Contract Approval Request Details
-        
+        {{#each user}}
+        <input type="" id="username" value="{{fullName}}">
+        {{/each}}
+
         <div id = "status">
             <div class = "status-text">Status:</div>
             <div class = "status-text actual">{{contractrequest.status}}</div>
