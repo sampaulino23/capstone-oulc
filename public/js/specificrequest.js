@@ -1,5 +1,33 @@
 $(document).ready(() => {
 
+    $(window).on('load', function() {
+
+        var fileidSelected = $('#fileSelected').find(":selected").val();
+
+        console.log(fileidSelected);
+        
+        const embedPDFView = document.createElement('embed');
+        embedPDFView.setAttribute('src', `/request/viewfile/${fileidSelected}`);
+        embedPDFView.setAttribute('width', '100%');
+        embedPDFView.setAttribute('height', '600px');
+
+        fileView.append(embedPDFView);
+    });
+    $('#fileSelected').change(function () {
+        
+        var fileid = $(this).val();
+        console.log(fileid);
+
+        const fileView = $('#fileView');
+        fileView.empty();
+
+        const embedPDFView = document.createElement('embed');
+        embedPDFView.setAttribute('src', `/request/viewfile/${fileid}`);
+        embedPDFView.setAttribute('width', '100%');
+        embedPDFView.setAttribute('height', '600px');
+
+        fileView.append(embedPDFView);
+    });
     $('.forlegalreview').click(function () {
         // alert(this.id);
         $.ajax({

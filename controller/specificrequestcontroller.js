@@ -33,6 +33,9 @@ conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'repository'
     });
+    gridfsBucketRequestDocuments = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'requestdocuments'
+    });
 });
 
 const specificrequestcontroller = {
@@ -136,8 +139,6 @@ const specificrequestcontroller = {
                     contractversions.push(eachcontractversion);
                 }
             }
-
-            console.log(contractversions);
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
@@ -322,7 +323,37 @@ const specificrequestcontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    viewFile: async (req, res) => {
+        try {
+
+            console.log(req.params.fileid);
+
+            const cursor = gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(req.params.fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    // Read output to browser
+                    console.log('filename: ' + doc.filename);
+
+                    const readstream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+                    readstream.pipe(res);
+                } else {
+                    res.send({
+                        isPDF: false
+                    });
+
+                    console.log('filename: ');
+                }
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
 
 }
 

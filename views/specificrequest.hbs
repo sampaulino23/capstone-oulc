@@ -36,22 +36,19 @@
         <div class="row">
             <!-- LEFT SIDE -->
             <div class="col-6">
-                <div class="row">
-                    <div class="col" id="upload-file-div">
-                        File Selected:
-                    </div>
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            {{#each latestversioncontracts}}
-                                <option value="{{file}}">{{filename}}</option>
-                            {{/each}}
-                            {{#each referencedocuments}}
-                                <option value="{{file}}">{{filename}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">File Selected:</span>  
+                    <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
+                        {{#each latestversioncontracts}}
+                            <option value="{{file}}">{{filename}}</option>
+                        {{/each}}
+                        {{#each referencedocuments}}
+                            <option value="{{file}}">{{filename}}</option>
+                        {{/each}}
+                    </select>
                 </div>
-                <embed id ="pdf-viewer" src="/files/AA-Template.pdf" type="application/pdf" width="100%" height="600px" />
+                <div id="fileView">
+                </div>
             </div>
 
 
