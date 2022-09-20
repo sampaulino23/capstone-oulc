@@ -111,15 +111,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Contract Request Per Type</h5>
                     <p class="" style="font-size: 10px;"> 
-                        MOA/TOR/Contracts for purchases, services, venue, and other piece of work: {{contracttype.a}} <br><br>
-                        OJT/Internship Agreements: {{contracttype.b}} <br><br>
-                        Employment / Labor Contracts: {{contracttype.c}} <br><br>
-                        MOA/Contracts for Workshops or Trainings: {{contracttype.d}} <br><br>
-                        MOU / MOA for industry linkages: {{contracttype.e}} <br><br>
-                        Donations / Sponsorships / Grants: {{contracttype.f}} <br><br>
-                        Student / Faculty Exchange or Research Agreements: {{contracttype.g}} <br><br>
-                        Licensing or Subscription Agreements: {{contracttype.h}} <br><br>
-                        Other MOA / Contracts / MOU: {{contracttype.i}} <br><br>
+                        {{#each contractTypes}}
+                        {{name}} = {{requestCount}} <br><br>
+                        {{/each}}
                     </p>
                     <!-- This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. -->
                 </div>

@@ -64,8 +64,6 @@ function getStaffToReview (month, day, year, contractrequests, toreview) {
 
 const oulccontroller = {
 
-    // add others that have the same implementation for both office staff and attorney (e.g. templates and repository)
-
     getDashboard: async (req, res) => {
         try {
 
@@ -101,7 +99,6 @@ const oulccontroller = {
             let clearedCard = {count: 0, percentage: 0};
             let initialReview = {count: 0, percentage: 0};
             let legalReview = {count: 0, percentage: 0};
-            let contracttype = {a: 0, b:0, c:0, d: 0, e:0, f:0, g:0, h:0, i:0};
 
             //set violation count per department as 0 initially
             for (y=0; y<departments.length; y++) {
@@ -109,9 +106,9 @@ const oulccontroller = {
             }
             for (z=0; z<contractTypes.length; z++) {
                 contractTypes[z].violationCount = 0;
+                contractTypes[z].requestCount = 0;
             }
         
-            //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
 
                 // START OF REQUEST COUNT PER STATUS
@@ -133,21 +130,14 @@ const oulccontroller = {
                 // END OF REQUEST COUNT PER STATUS
 
                 // START OF REQUEST COUNT PER TYPE
-                if(contractrequests[i].contractType.name == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work"){
-                    contracttype.a++;
-                }
-                else if(contractrequests[i].contractType.name == "OJT/Internship Agreements"){
-                    contracttype.b++;
-                }
-                else if(contractrequests[i].contractType.name == "MOA/Contracts for Workshops or Trainings"){
-                    contracttype.d++;
-                }
-                else if(contractrequests[i].contractType.name == "Licensing or Subscription Agreements"){
-                    contracttype.h++;
+                for (k=0; k<contractTypes.length; k++) {
+                    if (contractrequests[i].contractType.name == contractTypes[k].name) {
+                        contractTypes[k].requestCount++;
+                    }   
                 }
                 // END OF REQUEST COUNT PER TYPE
 
-                // START OF VIOLATION COUNT PER DEPARTMENT
+                // START OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
                 // To calculate the time difference of two dates
                 var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
                 // To calculate the no. of days between two dates
@@ -172,7 +162,7 @@ const oulccontroller = {
                         }   
                     }
                 }
-                // END OF VIOLATION COUNT PER DEPARTMENT
+                // END OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
             }
 
             // compute percentage per status
@@ -186,19 +176,6 @@ const oulccontroller = {
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
                 getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
-            
-            // console.log("PENDING = " + pending.all);
-            // console.log("PENDING TODAY = " + pending.today);
-            // console.log("WAITING = " + waiting.all);
-            // console.log("WAITING TODAY = " + waiting.today);
-            // console.log("TO REVIEW = " + toreview.all);
-            // console.log("TO REVIEW TODAY = " + toreview.today);
-            // console.log ("Cleared = " + clearedCard.count);
-            // console.log ("Requests = " + contractrequests.length);
-            // console.log ("Cleared Percentage = " + clearedCard.percentage);
-            // console.log ("Pending Percentage = " + pending.percentage);
-            // console.log ("Initial Review Percentage = " + initialReview.percentage);
-            // console.log ("Legal Review Percentage = " + legalReview.percentage);
     
             res.render('dashboardoulc', {
                 user_role:req.session.role,
@@ -209,7 +186,6 @@ const oulccontroller = {
                 initialReview: initialReview,
                 legalReview: legalReview,
                 requestCount: contractrequests.length,
-                contracttype: contracttype,
                 departments: departments,
                 contractTypes: contractTypes
             });
