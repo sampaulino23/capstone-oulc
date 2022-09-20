@@ -5,6 +5,9 @@ const nodemailer = require('nodemailer');
 
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
+const Contract = require('../models/Contract.js');
+const ContractVersion = require('../models/ContractVersion.js');
+const ReferenceDocument = require('../models/ReferenceDocument.js');
 const Feedback = require('../models/Feedback.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
@@ -41,7 +44,7 @@ const specificrequestcontroller = {
 
             // console.log(path);
 
-            const contractrequest = await ContractRequest.find({_id : path}).lean()
+            const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
                     path: 'requester',
                     populate: {
@@ -57,26 +60,45 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            for (i = 0; i < contractrequest.length; i++) {
-                const statusList = await Status.findOne({counter: contractrequest[i].statusCounter}).exec();
-                contractrequest[i].status = statusList.statusStaff;
+            // for (i = 0; i < contractrequest.length; i++) {
+            //     const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
+            //     contractrequest[i].status = statusList.statusStaff;
 
-                // To calculate the time difference of two dates
-                var Difference_In_Time = contractrequest[i].effectivityEndDate.getTime() - contractrequest[i].effectivityStartDate.getTime();
+            //     // To calculate the time difference of two dates
+            //     var Difference_In_Time = contractrequest[i].effectivityEndDate.getTime() - contractrequest[i].effectivityStartDate.getTime();
                       
-                // To calculate the no. of days between two dates
-                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+            //     // To calculate the no. of days between two dates
+            //     var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-                if (Difference_In_Days < 0){
-                    Difference_In_Days = Math.floor(Difference_In_Days);
-                }
-                else {
-                    Difference_In_Days = Math.ceil(Difference_In_Days);
-                }
+            //     if (Difference_In_Days < 0){
+            //         Difference_In_Days = Math.floor(Difference_In_Days);
+            //     }
+            //     else {
+            //         Difference_In_Days = Math.ceil(Difference_In_Days);
+            //     }
 
-                // To set number of days gap in contract request
-                contractrequest[i].daysDuration = Difference_In_Days;
+            //     // To set number of days gap in contract request
+            //     contractrequest[i].daysDuration = Difference_In_Days;
+            // }
+
+            const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
+            contractrequest.status = statusList.statusStaff;
+
+            // To calculate the time difference of two dates
+            var Difference_In_Time = contractrequest.effectivityEndDate.getTime() - contractrequest.effectivityStartDate.getTime();
+                    
+            // To calculate the no. of days between two dates
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+            if (Difference_In_Days < 0){
+                Difference_In_Days = Math.floor(Difference_In_Days);
             }
+            else {
+                Difference_In_Days = Math.ceil(Difference_In_Days);
+            }
+
+            // To set number of days gap in contract request
+            contractrequest.daysDuration = Difference_In_Days;
 
             const feedback = await Feedback.find({contractRequest : path}).lean()
                 .populate({
@@ -85,10 +107,23 @@ const specificrequestcontroller = {
                 .sort({date: -1})
                 .exec();
 
+            const contracts = await Contract.find({contractRequest: path}).lean().exec();
+
+            var latestversioncontracts = [];
+
+            for (contract of contracts) {
+                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).lean().exec();
+                latestversioncontracts.push(latestversioncontract);
+            }
+
+            const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
+
             res.render('specificrequest', {
                 user_role:req.session.role,
                 contractrequest: contractrequest,
                 feedback: feedback,
+                latestversioncontracts: latestversioncontracts,
+                referencedocuments: referencedocuments
             });
 
         } catch (err) {
@@ -164,21 +199,51 @@ const specificrequestcontroller = {
             console.log('UPLOAD REQUEST DOCUMENTS');
 
             const files = req.files;
+            const contractrequestid = req.body.contractRequestId;
 
-            console.log(files.contractFiles.length);
+            console.log(contractrequestid);
 
-            console.log(files.refDocFiles.length);
+            if (files.contractFiles != null) {
+                for (contractFile of files.contractFiles) {
+                    console.log(contractFile);
+                    console.log(contractFile.id);
 
-            for (contractFile of files.contractFiles) {
-                console.log(contractFile);
-                console.log(contractFile.id);
+                    // insert contract object to db
+                    var newContract = new Contract({
+                        contractRequest: contractrequestid,
+                        latestversion: 1
+                    });
 
+                    var contract = await newContract.save();
+                    
+                    // insert contract version object to db
+                    var newContractVersion = new ContractVersion({
+                        contract: contract._id,
+                        version: 1,
+                        uploadDate: contractFile.uploadDate,
+                        file: contractFile.id,
+                        filename: contractFile.filename
+                    })
+
+                    await newContractVersion.save();
+                }
             }
 
-            for (refDocFile of files.refDocFiles) {
-                console.log(refDocFile);
-                console.log(contractFile.id);
+            if (files.refDocFiles != null) {
+                for (refDocFile of files.refDocFiles) {
+                    console.log(refDocFile);
+                    console.log(refDocFile.id);
 
+                    // insert reference document object to db
+                    var newReferenceDocument = new ReferenceDocument({
+                        contractRequest: contractrequestid,
+                        uploadDate: refDocFile.uploadDate,
+                        file: refDocFile.id,
+                        filename: refDocFile.filename
+                    });
+
+                    await newReferenceDocument.save();
+                }
             }
 
             res.redirect('back');

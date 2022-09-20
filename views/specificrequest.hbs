@@ -18,14 +18,16 @@
         Contract Approval Request Details
         <div id = "status">
             <div class = "status-text">Status:</div>
-            <div class = "status-text actual">{{#each contractrequest}} {{status}} {{/each}}</div>
+            <div class = "status-text actual">{{contractrequest.status}}</div>
         </div>
     </div>
     <div id="subheader">
         <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
         <p class = "divider" style = "display: inline;"> > </p>
-        <a href = "/{{_id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+        <a href = "/" id = "selected" class = "approval-request-href">Approval Request Details</a>
     </div>
+
+    <input type="hidden" id="contractRequestId" value="{{contractrequest._id}}">
 
     <div class="container">
         <div class="row">
@@ -87,49 +89,6 @@
 
     </div>
 
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
-    <script src = "/socket.io/socket.io.js"></script>
-    <script> 
-        const socket = io(); 
-
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-        var messages = document.getElementById("messages");
-
-        //form.addEventListener('submit', function(e) {
-        //    e.preventDefault();
-
-        //    if (input.value) {
-        //    socket.emit('message', input.value);
-        //    input.value = '';
-        //    }
-        //});-->
-
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            //addMessage(input.value);
-
-            socket.emit("chat-message", {
-                message: input.value
-            });
-
-            input.value = "";
-            return false;
-        }, false);
-
-        socket.on("chat-message", function(data) {
-            addMessage(data.message);
-        });
-
-        function addMessage(message) {
-            var ul = document.createElement("ul");
-            ul.innerHTML = message;
-            messages.appendChild(ul);
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    </script>
-
 </body>
 
 <!-- For Legal Review Modal -->
@@ -146,12 +105,10 @@
                     Are you sure you want to mark the request as for legal review?
                 </div>
             </div>
-            {{#each contractrequest}}
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary forlegalreview" id="{{_id}}" value={{statusCounter}}>Yes</button>
+                <button type="submit" class="btn btn-primary forlegalreview" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Yes</button>
             </div>
-            {{/each}}
 
         </div>
     </div>
@@ -165,13 +122,12 @@
                 <h5 class="modal-title" id="exampleModalLabel">Revision Feedback Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {{#each contractrequest}}
 
             <div class="modal-body">
                 <div class="custom-file mb-3">
 
                     <form action="/request/forrevision/staff" method="POST">
-                    <input type="hidden" class="form-control" value="{{_id}}" name="addStaffFeedbackID">
+                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addStaffFeedbackID">
                         <div class="mb-3">
                             <label for="fullname" class="form-label">Enter Comments/Feedback:</label>
                             <input type="text" class="form-control" id="addStaffFeedback" name="addStaffFeedback" required>
@@ -179,14 +135,13 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary forrevision" id="{{_id}}" value={{statusCounter}}>Yes</button>
+                            <button type="submit" class="btn btn-primary forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Yes</button>
                         </div>
                     </form>
                 </div>
             </div>
 
             
-            {{/each}}
 
         </div>
     </div>
@@ -200,12 +155,11 @@
                 <h5 class="modal-title" id="exampleModalLabel">Upload Signed Contract</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {{#each contractrequest}}
             <div class="modal-body">
                 <div class="custom-file mb-3">
 
                     <form action="/request/uploadRepositoryFile" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" value="{{_id}}" name="uploadRepositoryFileID">
+                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="uploadRepositoryFileID">
 
                         <div class="mb-3">
                             <label for="file" class="modal-text custom-file-label">File Upload</label><br>
@@ -214,39 +168,17 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="{{_id}}">Upload</button>
+                            <button type="submit" class="btn btn-primary" id="{{contractrequest._id}}">Upload</button>
                         </div>
                     </form>
                 </div>
             </div>            
-            {{/each}}
 
         </div>
     </div>
 </div>
 
-    <!-- Upload Contract Modal -->
-    <div class="modal fade" id="uploadContractModal" tabindex="-1" aria-labelledby="uploadContractModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload Contract</h5>
-                </div>
-                <form action="/staff/tempuploadcontract" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="custom-file mb-3">
-                            <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                            <input type="file" name="file" id="file" class="custom-file-input"><br><br>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="upload-btn">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 </html>
 
 <script>

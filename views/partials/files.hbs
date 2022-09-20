@@ -11,11 +11,18 @@
                 </tr>
             </thead>
             <tbody id="myRequestTable">
-                {{#each contractrequests}}
+                {{#each latestversioncontracts}}
                 <tr style="cursor: pointer;"  id="{{_id}}" onclick="window.location.href='/request/staff}'">
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate requestDate}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{filename}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">Hello</td>
+                </tr>
+                {{/each}}
+                {{#each referencedocuments}}
+                <tr style="cursor: pointer;"  id="{{_id}}" onclick="window.location.href='/request/staff}'">
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{filename}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">Wold</td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -39,6 +46,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Upload Contract Temporary</h5>
                 </div>
                 <form action="/requestdocuments/uploadrequestdocs" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="contractRequestId" value="{{contractrequest._id}}">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="contractFiles" class="modal-text form-label">Contract Files Upload</label><br>
