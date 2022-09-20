@@ -19,6 +19,11 @@ const ReferenceDocumentSchema = mongoose.Schema({
     },
     filename: {
         type: String,
+    },
+    isreviewed: {
+        type: Boolean,
+        required: true,
+        default: false
     }
     
 });

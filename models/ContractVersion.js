@@ -15,11 +15,16 @@ const ContractVersionSchema = mongoose.Schema({
         required: true
     },
     file: {
-        type: mongoose.Schema.Types.ObjectId,   // implement changes when finalized
+        type: mongoose.Schema.Types.ObjectId, 
         required: true
     },
     filename: {
         type: String,
+    },
+    isreviewed: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 });
 
