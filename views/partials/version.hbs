@@ -11,13 +11,14 @@
                     <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
                 </tr>
             </thead>
-            <tbody id="documentsAttachedTable">
+            <tbody id="contractVersionsTable">
                 {{#each contractversions}}
-                <tr id="{{_id}}" class="latest-version-contract-row">
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{filename}}</td>
+                <tr id="{{_id}}" class="contract-version-row">
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{version}}.0</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                        <input type="checkbox" class="is-reviewed form-check-input" value="{{isreviewed}}" {{#if isreviewed}}checked="checked"{{/if}}>
+                        <i class="bi bi-download" style="cursor: pointer;"></i>
                     </td>
                 </tr>
                 {{/each}}

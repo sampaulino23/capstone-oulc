@@ -110,11 +110,31 @@ const specificrequestcontroller = {
             const contracts = await Contract.find({contractRequest: path}).lean().exec();
 
             var latestversioncontracts = [];
+            var contractversions = [];
 
             for (contract of contracts) {
                 const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).lean().exec();
                 latestversioncontracts.push(latestversioncontract);
+
+                const contractversion = await ContractVersion.find({contract: contract._id})
+                    .lean()
+                    .populate({
+                        path: 'contract',
+                        populate: {
+                            path: 'contractRequest',
+                            populate: {
+                                path: 'requester',
+                            }
+                        }
+                    })
+                    .exec();
+
+                for (eachcontractversion of contractversion) {
+                    contractversions.push(eachcontractversion);
+                }
             }
+
+            console.log(contractversions);
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
@@ -123,7 +143,8 @@ const specificrequestcontroller = {
                 contractrequest: contractrequest,
                 feedback: feedback,
                 latestversioncontracts: latestversioncontracts,
-                referencedocuments: referencedocuments
+                referencedocuments: referencedocuments,
+                contractversions: contractversions
             });
 
         } catch (err) {
