@@ -86,6 +86,7 @@ const oulccontroller = {
                 .exec();
 
             const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
+            const contractTypes = await ContractType.find({}).lean().exec();
                 
             var dateToday = new Date();
             var month = dateToday.getMonth(); //this starts with 0
@@ -106,7 +107,10 @@ const oulccontroller = {
             for (y=0; y<departments.length; y++) {
                 departments[y].violationCount = 0;
             }
-          
+            for (z=0; z<contractTypes.length; z++) {
+                contractTypes[z].violationCount = 0;
+            }
+        
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
 
@@ -162,6 +166,11 @@ const oulccontroller = {
                             departments[j].violationCount++;
                         }   
                     }
+                    for (k=0; k<contractTypes.length; k++) {
+                        if (contractrequests[i].contractType.name == contractTypes[k].name) {
+                            contractTypes[k].violationCount++;
+                        }   
+                    }
                 }
                 // END OF VIOLATION COUNT PER DEPARTMENT
             }
@@ -201,7 +210,8 @@ const oulccontroller = {
                 legalReview: legalReview,
                 requestCount: contractrequests.length,
                 contracttype: contracttype,
-                departments: departments
+                departments: departments,
+                contractTypes: contractTypes
             });
 
         } catch (err) {

@@ -107,6 +107,18 @@
             <div class="col mb-4">
                 <div class="card">
                 <div class="card-body">
+                    <h5 class="card-title">Violation Per Type</h5>
+                    <p class="" style="font-size: 10px;"> 
+                        {{#each contractTypes}}
+                        {{name}} = {{violationCount}} <br><br>
+                        {{/each}}
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card">
+                <div class="card-body">
                     <h5 class="card-title">Contract Request Per Type</h5>
                     <p class="" style="font-size: 10px;"> 
                         MOA/TOR/Contracts for purchases, services, venue, and other piece of work: {{contracttype.a}} <br><br>
