@@ -84,7 +84,9 @@ const oulccontroller = {
                 })
                 .sort()
                 .exec();
-   
+
+            const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
+                
             var dateToday = new Date();
             var month = dateToday.getMonth(); //this starts with 0
             var day = dateToday.getDate(); //actual date is utc but it applies the local time
@@ -99,10 +101,17 @@ const oulccontroller = {
             let initialReview = {count: 0, percentage: 0};
             let legalReview = {count: 0, percentage: 0};
             let contracttype = {a: 0, b:0, c:0, d: 0, e:0, f:0, g:0, h:0, i:0};
-          
 
+            //set violation count per department as 0 initially
+            for (y=0; y<departments.length; y++) {
+                departments[y].violationCount = 0;
+                console.log(departments[y].violationCount);
+            }
+          
             //get number of pending requests
             for (i=0; i<contractrequests.length; i++) {
+
+                // START OF REQUEST COUNT PER STATUS
                 if (contractrequests[i].statusCounter == "1"){
                     pending.all++;
                     if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
@@ -118,7 +127,9 @@ const oulccontroller = {
                 else if (contractrequests[i].statusCounter == "7"){
                     clearedCard.count++;
                 }
+                // END OF REQUEST COUNT PER STATUS
 
+                // START OF REQUEST COUNT PER TYPE
                 if(contractrequests[i].contractType.name == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work"){
                     contracttype.a++;
                 }
@@ -131,8 +142,27 @@ const oulccontroller = {
                 else if(contractrequests[i].contractType.name == "Licensing or Subscription Agreements"){
                     contracttype.h++;
                 }
+                // END OF REQUEST COUNT PER TYPE
 
+                // START OF VIOLATION COUNT PER DEPARTMENT
+                // To calculate the time difference of two dates
+                var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
+                if (Difference_In_Days < 0){
+                    Difference_In_Days = Math.floor(Difference_In_Days);
+                }
+                else {
+                    Difference_In_Days = Math.ceil(Difference_In_Days);
+                }
+
+                for (j=0; j<departments.length; j++) {
+                    if (contractrequests[i].requester.department.abbrev == departments[j].abbrev && Difference_In_Days < 7) {
+                        departments[j].violationCount++;
+                    }   
+                }
+                // END OF VIOLATION COUNT PER DEPARTMENT
             }
 
             // compute percentage per status
@@ -169,7 +199,8 @@ const oulccontroller = {
                 initialReview: initialReview,
                 legalReview: legalReview,
                 requestCount: contractrequests.length,
-                contracttype
+                contracttype: contracttype,
+                departments: departments
             });
 
         } catch (err) {
