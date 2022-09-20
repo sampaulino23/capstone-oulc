@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const RepositorySchema = mongoose.Schema({
+const RepositoryFileSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -20,5 +20,5 @@ const RepositorySchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Repository', RepositorySchema);
+module.exports = mongoose.model('RepositoryFile', RepositoryFileSchema);
 

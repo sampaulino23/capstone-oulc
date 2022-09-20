@@ -14,7 +14,7 @@ const Status = require('../models/Status.js');
 const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
-const Repository = require('../models/Repository.js');
+const RepositoryFile = require('../models/RepositoryFile.js');
 
 // Connecting mongoose to our database 
 mongoose.connect(url, {
@@ -201,7 +201,7 @@ const specificrequestcontroller = {
             const fileuploaddate = req.file.uploadDate;
             const requestid = req.body.uploadRepositoryFileID;
 
-            const newRepositoryFile = new Repository({
+            const newRepositoryFile = new RepositoryFile({
                 name: filename,
                 requestid: mongoose.Types.ObjectId(requestid),
                 uploadDate: fileuploaddate,

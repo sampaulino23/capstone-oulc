@@ -36,20 +36,15 @@
             <div id = "right-col" class="col-6">
                 <div> Information </div>
 
-                {{#each repository}}
-
-                Document Number {{requestid.trackingNumber}}<br>
-                Document Title {{requestid.requestTitle}}<br>
-                Document Type {{requestid.contractType.name}}<br>
-                Subject Matter {{requestid.subjectMatter}}<br>
+                Document Number {{repositoryFile.requestid.trackingNumber}}<br>
+                Document Title {{repositoryFile.requestid.requestTitle}}<br>
+                Document Type {{repositoryFile.requestid.contractType.name}}<br>
+                Subject Matter {{repositoryFile.requestid.subjectMatter}}<br>
                 Effectivity Date <br>
-                From {{formatdate requestid.effectivityStartDate}}<br> 
-                To {{formatdate requestid.effectivityEndDate}} <br>
-                Duration {{daysDuration}} Days<br>
+                From {{formatdate repositoryFile.requestid.effectivityStartDate}}<br> 
+                To {{formatdate repositoryFile.requestid.effectivityEndDate}} <br>
+                Duration {{repositoryFile.daysDuration}} Days<br>
                 Tags <br>
-
-                {{/each}}
-
 
             </div>
         </div>

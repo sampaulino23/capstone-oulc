@@ -17,7 +17,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
-const Repository = require('../models/Repository.js');
+const RepositoryFile = require('../models/RepositoryFile.js');
 
 // Connecting mongoose to our database 
 mongoose.connect(url, {
@@ -451,7 +451,7 @@ const oulccontroller = {
     getRepository: async (req, res) => {
         try {
 
-            const repository = await Repository.find({}).lean()
+            const repositoryFiles = await RepositoryFile.find({}).lean()
             .populate({
                 path: 'requestid',
                 populate: {
@@ -463,7 +463,7 @@ const oulccontroller = {
     
             res.render('repository', {
                 user_role: req.session.role,
-                repository: repository
+                repositoryFiles: repositoryFiles
             });
 
         } catch (err) {
@@ -476,38 +476,35 @@ const oulccontroller = {
 
             var path = req.path.split('/')[2];
 
-            const repository = await Repository.find({_id : path}).lean()
+            const repositoryFile = await RepositoryFile.findOne({_id : path}).lean()
             .populate({
                 path: 'requestid',
                 populate: {
                     path: 'contractType'
                     } 
             })
-            .sort({uploadDate: 1})
+            .lean()
             .exec();
 
-            for (i = 0; i < repository.length; i++) {
+            // To calculate the time difference of two dates
+            var Difference_In_Time = repositoryFile.requestid.effectivityEndDate.getTime() - repositoryFile.requestid.effectivityStartDate.getTime();
+                    
+            // To calculate the no. of days between two dates
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-                // To calculate the time difference of two dates
-                var Difference_In_Time = repository[i].requestid.effectivityEndDate.getTime() - repository[i].requestid.effectivityStartDate.getTime();
-                      
-                // To calculate the no. of days between two dates
-                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-
-                if (Difference_In_Days < 0){
-                    Difference_In_Days = Math.floor(Difference_In_Days);
-                }
-                else {
-                    Difference_In_Days = Math.ceil(Difference_In_Days);
-                }
-
-                // To set number of days gap in contract request
-                repository[i].daysDuration = Difference_In_Days;
+            if (Difference_In_Days < 0){
+                Difference_In_Days = Math.floor(Difference_In_Days);
             }
-    
+            else {
+                Difference_In_Days = Math.ceil(Difference_In_Days);
+            }
+
+            // To set number of days gap in contract request
+            repositoryFile.daysDuration = Difference_In_Days;
+            
             res.render('specificrepositoryfile', {
                 user_role: req.session.role,
-                repository: repository
+                repositoryFile: repositoryFile
 
             });
 
