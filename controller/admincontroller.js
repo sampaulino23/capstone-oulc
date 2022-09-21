@@ -78,6 +78,8 @@ const admincontroller = {
     postAddUser: async (req, res) => {
         try {
 
+            // add user
+
             //generate random 8 character password
             var password = Math.random().toString(36).substr(2, 8);
 
