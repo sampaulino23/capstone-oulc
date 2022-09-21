@@ -19,13 +19,6 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 
-// Connecting mongoose to our database 
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('Mongo DB connected!'))
-    .catch(err => console.log(err));
-
 // Create mongo connection
 const conn = mongoose.createConnection(url);
 

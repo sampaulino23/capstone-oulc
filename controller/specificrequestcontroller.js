@@ -16,14 +16,6 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
 
-// Connecting mongoose to our database 
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('Mongo DB connected!'))
-    .catch(err => console.log(err));
-
-
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket

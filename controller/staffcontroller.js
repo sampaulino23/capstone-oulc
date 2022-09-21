@@ -13,13 +13,6 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 
-// Connecting mongoose to our database 
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('Mongo DB connected!'))
-    .catch(err => console.log(err));
-
 const staffcontroller = {
 
     getRequests: async (req, res) => {
