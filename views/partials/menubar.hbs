@@ -14,6 +14,13 @@
         </div>
         {{/compare}}
 
+        {{#compare user_role "==" "Attorney"}}
+        {{> sidenav}}
+        <div class="navbar-logo">
+            <a href="/attorney"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
+        </div>
+        {{/compare}}
+
         <ul>
         <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
         {{/if}}
