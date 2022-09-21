@@ -19,7 +19,7 @@
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                        <a target="_blank" href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                        <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
                     </td>
                 </tr>
                 {{/each}}
