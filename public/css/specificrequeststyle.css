@@ -21,7 +21,6 @@
 
 #subheader {
     position: relative;
-    margin-left: 121px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
@@ -289,4 +288,33 @@
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
+}
+
+.full-size-btn {
+    width: auto;
+    padding:10px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0px;
+    margin-right: 20px;
+    background: #0C8039;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
+    letter-spacing: 1px;
+    outline: none;
+    border: none;
+    color: white;
+    float: right;
+    margin-right: 0px;
+}
+
+.subheader-row {
+    display: flex;
+    margin-left: 121px;
+    margin-right: 121px;
+}
+
+#fileView-full {
+    display: none;
 }

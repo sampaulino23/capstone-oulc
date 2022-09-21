@@ -17,25 +17,34 @@
 <body>
     <div id="header">
         Contract Approval Request Details
+        <!--
         {{#each user}}
         <input type="" id="username" value="{{fullName}}">
         {{/each}}
-
+        !-->
         <div id = "status">
             <div class = "status-text">Status:</div>
             <div class = "status-text actual">{{contractrequest.status}}</div>
         </div>
     </div>
-    <div id="subheader">
-        <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
-        <p class = "divider" style = "display: inline;"> > </p>
-        <a href = "/" id = "selected" class = "approval-request-href">Approval Request Details</a>
+    <div class = "subheader-row">
+        <div class = "col-6">
+            <div id="subheader">
+                <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
+                <p class = "divider" style = "display: inline;"> > </p>
+                <a href = "/" id = "selected" class = "approval-request-href">Approval Request Details</a>
+            </div>
+        </div>
+        <div class="col-6">
+            <button class="full-size-btn" onclick="collapseRightCol()">Collapse Contract Details</button>
+        </div>
     </div>
+    
 
     <div class="container">
         <div class="row">
             <!-- LEFT SIDE -->
-            <div class="col-6">
+            <div class="left-col col-6">
                 <div class="input-group mb-3">
                     <span class="file-selected input-group-text">File Selected:</span>  
                     <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
@@ -49,6 +58,8 @@
                 </div>
                 <div id="fileView">
                 </div>
+            </div>
+            <div id="fileView-full">
             </div>
 
 
@@ -233,6 +244,13 @@
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.add("selected");
+    }
+
+    function collapseRightCol() {
+
+        document.getElementById("right-col").style.display = "none";
+        document.getElementById("fileView").style.display = "none";
+        document.getElementById("fileView-full").style.display = "block";
     }
 
 </script>
