@@ -433,6 +433,10 @@ const oulccontroller = {
                 console.log(doc);
 
                 const downStream = gridfsBucket.openDownloadStreamByName(doc.filename);
+
+                // res.setHeader('Content-Type', 'application/pdf');
+                // res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
                 downStream.pipe(res);
             });
 

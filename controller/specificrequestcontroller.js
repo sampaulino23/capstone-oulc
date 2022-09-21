@@ -19,7 +19,7 @@ const RepositoryFile = require('../models/RepositoryFile.js');
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket;
+let gridfsBucket, gridfsBucketRequestDocuments;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
@@ -370,6 +370,34 @@ const specificrequestcontroller = {
             console.log(err);
         }
     },
+
+    downloadContractVersion: async (req, res) => {
+        try {
+
+            const cursor = gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(req.params.fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    // Read output to browser
+                    const readstream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+
+                    res.setHeader('Content-Type', 'application/pdf');
+                    res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
+                    readstream.pipe(res);
+                } else {
+                    res.send({
+                        isPDF: false
+                    });
+                }
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 }
 

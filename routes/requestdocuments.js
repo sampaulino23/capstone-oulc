@@ -82,11 +82,8 @@ router.post('/uploadrequestdocs', upload.fields([
   { name: 'refDocFiles' }
 ]), specificrequestcontroller.postUploadRequestDocuments);
 
-// upload contract
-// router.post('/uploadcontract', uploadRequestDocs.single('file'), specificrequestcontroller.postUploadContract);
-// upload reference document
-// router.post('/uploadrefdoc', upload.single('file'), specificrequestcontroller.postUploadRefDoc);
-
+// download contract version pdf
+router.get('/downloadcontractversion/:fileid', specificrequestcontroller.downloadContractVersion);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
