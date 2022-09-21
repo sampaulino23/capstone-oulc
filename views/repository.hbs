@@ -12,26 +12,41 @@
     </head>
     <body>
         <div id="header">Contract Repository</div>
-
-        <div id = "template-bar" class="">
-            <div class="">
-                <input class="form-control" id="myInput" onkeyup="searchRepositoryTable()" type="text" placeholder="Search...">
-            </div>
-            <div class="">
-                <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
-            </div>
-        </div>
-
         <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div id = "template-bar" class="">
+                        <div class="">
+                            <button class="upload-contract-btn" data-bs-toggle="modal" data-bs-target="#uploadTemplateModal">+ Upload Contract</button>
+                        </div>
+                        <div class="">
+                            <input class="form-control" id="myInput" onkeyup="searchRepositoryTable()" type="text" placeholder="Search...">
+                        </div>
+                        <div class="">
+                            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row"> 
                 <!-- LEFT SIDE -->
                 <div class="col-4">
-            
+                    <div class="container">
+                        <div class = "folder-header">
+                            Folders
+                        </div>
+                        <div class = "folder-container">
+                            hello
+                        </div>
+                    </div>
                 </div>
 
                 <!-- RIGHT SIDE -->
                 
-                <div class="col-8" id="repositoryView">
+                <div class="container col-8" id="repositoryView">
+                    <div class = "files-header">
+                        Files
+                    </div>
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
                             <div class="w-100">
@@ -40,12 +55,12 @@
                                     <thead class="table-headers">
                                         <tr>
                                             <th style="width: 30%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Name</th>
-                                            <th style="width: 30%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
-                                            <th style="width: 30%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Action</th>
+                                            <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
+                                            <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myRepositoryTable">
+                                    <tbody id="myRepositoryTable" style = "word-break: break-word;">
                                         {{#each repositoryFiles}}
                                         <tr style="cursor: pointer;" id="{{_id}}" onclick="window.location.href='/staff/viewFile/{{_id}}'">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
@@ -54,22 +69,12 @@
                                             <td id = "" class="action-cell text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; cursor: default;">
                                                 <div id="actions">
                                                     <div class="dropstart">
-                                                        <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
-                                                        aria-expanded="false" style ="cursor: pointer;"></i>
+                                                        {{#if isWordFile}}
+                                                        <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                                                        {{else}}
+                                                        <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                                                        {{/if}}
                                                         <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteContractModal{{@index}}" style ="cursor: pointer;"></i>
-                                                        <ul class="dropdown-menu">
-                                                            <li><button class="dropdown-item get-edit-user" type="button"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#replaceTemplateModal{{@index}}">Replace</button>
-                                                            </li>
-                                                            <li>
-                                                                {{#if isWordFile}}
-                                                                <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="dropdown-item download-template text-body">Download .DOC File</a>
-                                                                {{else}}
-                                                                <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="dropdown-item download-template text-body">Download .PDF File</a>
-                                                                {{/if}}
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                             </td>
@@ -84,5 +89,11 @@
             </div>
         </div>
     </body>
-
 </html>
+<script>
+    $(document).ready(() => {
+        $('.action-cell').click(function(event){
+            event.stopPropagation();
+        });
+    });
+</script>

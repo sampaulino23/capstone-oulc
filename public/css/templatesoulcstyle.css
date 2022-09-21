@@ -23,7 +23,7 @@
     color:#fff;
 }
 
-.full-size-btn, .upload-btn {
+.full-size-btn, .upload-btn, .upload-contract-btn {
     width: auto;
     padding:12px 12px;
     font-family: 'Poppins', sans-serif;
@@ -31,6 +31,7 @@
     font-style: normal;
     font-weight: 700;
     margin: 0px;
+    margin-right: 20px;
     background: #0C8039;
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
     letter-spacing: 1px;
@@ -40,6 +41,7 @@
 }
 
 .full-size-btn {
+    float: right;
     display:none;
     margin-right: 0px;
 }
@@ -97,7 +99,6 @@
 #template-bar {
     margin-bottom: 20px;
     display: flex;
-    justify-content: space-between;
 }
 
 .table-headers {
@@ -168,4 +169,24 @@
 
 .border-div {
     border-bottom: solid #000 1px;
+}
+
+.folder-header, .files-header {
+    color: #000;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.folder-container {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 30px 40px;
+    line-height: 30px;
+    color: #000;
+    background: rgba(217, 217, 217, 0.2);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

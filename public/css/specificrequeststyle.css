@@ -275,3 +275,18 @@
 #request-btns {
     margin-top: 50px;
 }
+
+.file-selected {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    background: none;
+    border: none;
+}
+
+.form-select {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
