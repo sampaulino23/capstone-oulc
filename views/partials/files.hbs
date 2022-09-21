@@ -7,17 +7,17 @@
             style="width: 100%; font-size: 16px; background:#D9D9D9;">
             <thead class="table-headers">
                 <tr>
-                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
+                    <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
                     <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Date Modified</th>
-                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Reviewed</th>
+                    <th style="width: 2%; padding: 15px; 15px; text-align: center; border-bottom: 1px solid white; border-left: 1px solid white;">Reviewed</th>
                 </tr>
             </thead>
-            <tbody id="documentsAttachedTable">
+            <tbody id="documentsAttachedTable" style = "word-break: break-word;">
                 {{#each latestversioncontracts}}
                 <tr id="{{_id}}" class="latest-version-contract-row">
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{filename}}</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <td class="text-center" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
                         <input type="checkbox" class="is-reviewed form-check-input" value="{{isreviewed}}" {{#if isreviewed}}checked="checked"{{/if}}>
                     </td>
                 </tr>
@@ -26,7 +26,7 @@
                 <tr id="{{_id}}" class="reference-document-row">
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{filename}}</td>
                     <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <td class="text-center" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
                         <input type="checkbox" class="is-reviewed form-check-input" value="{{isreviewed}}" {{#if isreviewed}}checked="checked"{{/if}}>
                     </td>
                 </tr>

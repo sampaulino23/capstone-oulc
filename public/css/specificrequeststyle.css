@@ -159,7 +159,7 @@
 
 .mark-btn:hover {
     background: #9F9F9F;
-    color: #000;
+    color: #fff;
     transition: 0.25s;
 }
 
@@ -317,4 +317,22 @@
 
 #fileView-full {
     display: none;
+}
+
+.form-check-input {
+    background: #FFFFFF;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+    filter: grayscale(100%);
+  }
+
+.marked-complete-review-btn {
+    background: #0C8039;
+    color: #fff;
+}
+
+.marked-complete-review-btn:hover {
+    color: #000;
 }
