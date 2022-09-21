@@ -325,10 +325,38 @@ const specificrequestcontroller = {
         }
     },
 
+    getContractVersions: async (req, res) => {
+        try {
+            const fileid = req.query.fileid;
+
+            const contractversion = await ContractVersion.findOne({file: fileid})
+                .exec();
+
+            var contractversionslist = [];
+
+            var isContract;
+
+            if (contractversion != null) {
+                contractversionslist = await ContractVersion.find({contract: contractversion.contract})
+                    .exec();
+
+                isContract = true;
+            } else {
+                isContract = false
+            }
+
+            res.send({
+                contractversionslist: contractversionslist,
+                isContract: isContract
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     viewFile: async (req, res) => {
         try {
-
-            console.log(req.params.fileid);
 
             const cursor = gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(req.params.fileid)});
 
@@ -337,16 +365,12 @@ const specificrequestcontroller = {
                     console.log(err);
                 } else if (doc.contentType === 'application/pdf') {
                     // Read output to browser
-                    console.log('filename: ' + doc.filename);
-
                     const readstream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
                     readstream.pipe(res);
                 } else {
                     res.send({
                         isPDF: false
                     });
-
-                    console.log('filename: ');
                 }
             });
 

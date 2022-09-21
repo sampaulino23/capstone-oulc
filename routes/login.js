@@ -101,4 +101,7 @@ router.post('/forgotpasswordconfirmation', logincontroller.postForgotPassword);
 // set reviewed documents for a specific contract request
 router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocuments);
 
+// set reviewed documents for a specific contract request
+router.get('/getcontractversions', specificrequestcontroller.getContractVersions);
+
 module.exports = router;
