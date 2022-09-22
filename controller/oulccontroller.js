@@ -60,7 +60,7 @@ const oulccontroller = {
     getDashboard: async (req, res) => {
         try {
 
-            console.log ("DASHBOARD" + req.session);
+            console.log ("DASHBOARD" + JSON.stringify(req.session));
             console.log ("DASHBOARD" + req.session.role);
 
             const contractrequests = await ContractRequest.find({}).lean()
