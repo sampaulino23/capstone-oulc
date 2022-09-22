@@ -7,6 +7,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/dashboardstyle.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        
     </head>
     <body>
         <div id="header">Dashboard</div>
@@ -28,55 +30,46 @@
                 Year
             </button>
         </ul>
-        
+        <div class = "container">
+            <div class= "card-row row">
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Pending Documents</div>
+                    <div class = "sub-dashboard-header">{{pending.today}} today</div>
+                    <div class = "dashboard-item-body">{{pending.all}}</div>
+                    <div class = "dashboard-item-sub-body">Documents</div>
+                </div>
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Cleared Documents</div>
+                    <div class = "sub-dashboard-header"><br></div>
+                    <div class = "dashboard-item-body">{{cleared.percentage}}%</div>
+                    <div class = "dashboard-item-sub-body">{{cleared.count}}/{{requestCount}} Documents Cleared</div>
+                </div>
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Status of Contracts</div>
+                    <div id = "piechart" class = "chart"></div>
+                </div>
+            </div>
+            <div class= "card-row row">
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Waiting Documents</div>
+                    <div class = "sub-dashboard-header">{{waiting.today}} today</div>
+                    <div class = "dashboard-item-body">{{waiting.all}}</div>
+                    <div class = "dashboard-item-sub-body">Documents</div>
+                </div>
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">To Review</div>
+                    <div class = "sub-dashboard-header">{{toreview.today}} today</div>
+                    <div class = "dashboard-item-body">{{toreview.all}}</div>
+                    <div class = "dashboard-item-sub-body">Documents</div>
+                </div>
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Contract Request Per Type</div>
+                    <div id = "columnchart" class = "chart"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Pending Documents</h5>
-                    <p class="card-text"> {{pending.today}} today</p>
-                    <p class="card-text"> {{pending.all}} Documents</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Cleared Documents</h5>
-                    <p class="card-text"> {{cleared.percentage}}%</p>
-                    <p class="card-text"> {{cleared.count}}/{{requestCount}} Documents Cleared</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Status of Contracts</h5>
-                    <p class="card-text"> Pending = {{pending.percentage}}%</p>
-                    <p class="card-text"> Initial Review = {{initialReview.percentage}}%</p>
-                    <p class="card-text"> Legal Review = {{legalReview.percentage}}%</p>
-                    <p class="card-text"> Cleared = {{cleared.percentage}}%</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Waiting Documents</h5>
-                    <p class="card-text"> {{waiting.today}} today</p>
-                    <p class="card-text"> {{waiting.all}} Documents</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">To Review</h5>
-                    <p class="card-text"> {{toreview.today}} today</p>
-                    <p class="card-text"> {{toreview.all}} Documents</p>
-                </div>
-                </div>
-            </div>
             <div class="col mb-4">
                 <div class="card">
                 <div class="card-body">
@@ -114,6 +107,56 @@
                 </div>
             </div>
         </div>
-
     </body>
 </html>
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    
+
+    function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+        ['Status', 'Requests'],
+        ['Pending',     {{pending.all}}],
+        ['Initial Review',      {{initialReview.count}}],
+        ['Legal Review',  {{legalReview.count}}],
+        ['Cleared', {{cleared.count}}],
+    ]);
+
+    var options = {
+        chartArea: {
+        height: '70%',
+        width: '70%'
+        },
+        legend: 'labeled',
+        pieSliceText: 'none',
+        colors: ['#6DB388', '#00713D', '#0C8039', '#6AB085', '#6DA58B'],
+        backgroundColor: { fill:'transparent' }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+
+    var data2 = google.visualization.arrayToDataTable([
+        ['MOA/TOR', 'Count', { role: 'style' }],
+        ['OJT', 2, '#00713D'],            // RGB value
+        ['Silver', 19, '#00713D'],            // English color name
+        ['Gold', 4, '#00713D'],
+        ['Gold', 2, '#00713D'],
+    ]);
+    var options2 = {
+          width: 200,
+          legend: { position: 'none' },
+          backgroundColor: { fill:'transparent' }
+        };
+
+    var columnchart = new google.charts.Bar(document.getElementById('columnchart'));
+    columnchart.draw(data2, options2);
+
+    }
+    
+    </script>
