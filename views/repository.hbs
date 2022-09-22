@@ -33,10 +33,27 @@
                 <div class="col-4">
                     <div class="container">
                         <div class = "folder-header">
-                            Folders
+                             
                         </div>
                         <div class = "folder-container">
-                            hello
+                        <ul class="nav-tabs" id="myTab" role="tablist">
+                        <button class="nav-item" id="a-tab" data-toggle="tab" href="#all" role="tab"
+                        aria-controls="all" value="MOA/TOR/Contracts for purchases, services, venue, and other piece of work" onclick="viewTypeA()">
+                            MOA/TOR/Contracts for purchases, services, venue, and other piece of work
+                        </button> <br>
+                        <button class="nav-item selected" id="b-tab" data-toggle="tab" href="#activeusers" role="tab"
+                        aria-controls="activeusers" value="OJT/Internship Agreements" onclick="viewTypeB()">
+                            OJT/Internship Agreements
+                        </button> <br>
+                        <button class="nav-item" id="d-tab" data-toggle="tab" href="#inactiveusers" role="tab"
+                        aria-controls="inactiveusers" value="MOA/Contracts for Workshops or Trainings" onclick="viewTypeD()">
+                            MOA/Contracts for Workshops or Trainings
+                        </button> <br>
+                        <button class="nav-item" id="h-tab" data-toggle="tab" href="#inactiveusers" role="tab"
+                        aria-controls="inactiveusers" value="Licensing or Subscription Agreements" onclick="viewTypeH()">
+                            Licensing or Subscription Agreements
+                        </button> <br>
+                        </ul>
                         </div>
                     </div>
                 </div>

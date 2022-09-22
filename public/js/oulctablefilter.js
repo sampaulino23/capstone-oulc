@@ -321,3 +321,96 @@ function searchRepositoryTable() {
         }
       }
 } 
+
+// Tab Filters (Document Type)
+function viewTypeA(){ 
+    var button = document.getElementById("a-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        documenttype = cells[1] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !documenttype || (filter === documenttype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    document.getElementById("a-tab").classList.add("selected");
+    document.getElementById("b-tab").classList.remove("selected");
+    document.getElementById("d-tab").classList.remove("selected");
+    document.getElementById("h-tab").classList.remove("selected");
+}
+
+function viewTypeB(){ 
+    var button = document.getElementById("b-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        documenttype = cells[1] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !documenttype || (filter === documenttype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    document.getElementById("a-tab").classList.remove("selected");
+    document.getElementById("b-tab").classList.add("selected");
+    document.getElementById("d-tab").classList.remove("selected");
+    document.getElementById("h-tab").classList.remove("selected");
+}
+
+function viewTypeD(){ 
+    var button = document.getElementById("d-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        documenttype = cells[1] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !documenttype || (filter === documenttype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    document.getElementById("a-tab").classList.remove("selected");
+    document.getElementById("b-tab").classList.remove("selected");
+    document.getElementById("d-tab").classList.add("selected");
+    document.getElementById("h-tab").classList.remove("selected");
+}
+
+function viewTypeH(){ 
+    var button = document.getElementById("h-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        documenttype = cells[1] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !documenttype || (filter === documenttype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    document.getElementById("a-tab").classList.remove("selected");
+    document.getElementById("b-tab").classList.remove("selected");
+    document.getElementById("d-tab").classList.remove("selected");
+    document.getElementById("h-tab").classList.add("selected");
+}
