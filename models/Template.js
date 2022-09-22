@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const TemplateSchema = mongoose.Schema({
     name: {
-        type: String,
+        type: String,   // filename of the file upload
         required: true
     },
     type: {
@@ -18,11 +18,11 @@ const TemplateSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
-    wordFileName: {
-        type: String,
+    wordFileId: {
+        type: mongoose.Schema.Types.ObjectId,
     },
-    pdfFileName: {
-        type: String,
+    pdfFileId: {
+        type: mongoose.Schema.Types.ObjectId,
     }
     
 });
