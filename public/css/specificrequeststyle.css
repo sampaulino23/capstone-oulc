@@ -49,13 +49,14 @@
     transition: 0.25s
 }
 
-.approval-request-href, .approval-request-href:visited, .approval-request-href:link, .approval-request-href:active
+.approval-request-href, .approval-request-href:visited, .approval-request-href:link, .approval-request-href:active,
+.contract-repository-href, .contract-repository-href:visited, .contract-repository-href:link, .contract-repository-href:active
 {
     text-decoration: none;
     color: #ABABAB;
 }
 
-.approval-request-href:hover {
+.approval-request-href:hover, .contract-repository-href:hover {
     color: #000;
     transition: 0.25s;
 }
@@ -125,6 +126,8 @@
     color: #000;
     background: rgba(217, 217, 217, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    overflow-y:auto;
+    max-height: 600px;
 }
 
 #discussion-div {
@@ -335,4 +338,19 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .marked-complete-review-btn:hover {
     color: #000;
+}
+
+.contract-repo-nav {
+    margin-left: 121px;
+}
+
+.info-nav-item {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 18px;
+    line-height: 54px;
+    font-weight: 700;
+    margin-left: 0px;
+    color:#000;
+    border-bottom: solid #0C8039 5px;
 }

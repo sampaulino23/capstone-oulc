@@ -17,33 +17,52 @@
     <div id="header">
         Contract Repository
     </div>
-    {{!-- <div id="subheader">
-        <a href="#" class = "contract-repository-href">Contract Repository</a>
-        <p class = "divider" style = "display: inline;"> > </p>
-        <a href = "/" id = "selected" class = "contract-repository-href"> ... </a>
-    </div> --}}
-
+    <div class = "row">
+        <div class = "col-6">
+            <div class = "contract-repo-nav" id = "subheader">
+                <a href="/staff/repository" class = "contract-repository-href">Contract Repository</a>
+                <p class = "divider" style = "display: inline;"> > </p>
+                <a href = "/" id = "selected" class = "contract-repository-href">{{repositoryFile.requestid.requestTitle}}</a>
+            </div>
+        </div>
+        <div class = "col-6">
+            <span class = "info-nav-item">Information</span>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="row">
 
             <!-- LEFT SIDE -->
             <div class="col-6">
-                <embed id ="pdf-viewer" src="/files/AA-Template.pdf" type="application/pdf" width="100%" height="600px" />
+                <embed id ="pdf-viewer" src="/files/AA-Template.pdf" type="application/pdf" width="100%" height="600px"/>
             </div>
-
-
             <!-- RIGHT SIDE -->
-            <div id = "right-col" class="col-6">
-                <div> Information </div>
-
-                Document Number {{repositoryFile.requestid.trackingNumber}}<br>
-                Document Title {{repositoryFile.requestid.requestTitle}}<br>
-                Document Type {{repositoryFile.requestid.contractType.name}}<br>
-                Subject Matter {{repositoryFile.requestid.subjectMatter}}<br>
-                Effectivity Date <br>
-                From {{formatdate repositoryFile.requestid.effectivityStartDate}}<br> 
-                To {{formatdate repositoryFile.requestid.effectivityEndDate}} <br>
-                Duration {{repositoryFile.daysDuration}} Days<br>
+            <div id = "summary-table" class="col-6">
+                Document Number<br>
+                <input type="text" class = "text-input" value="{{repositoryFile.requestid.trackingNumber}}" readonly>
+                Document Title<br>
+                <input type="text" class = "text-input" value="{{repositoryFile.requestid.requestTitle}}" readonly>
+                Document Type <br>
+                <input type="text" class = "text-input" value="{{repositoryFile.requestid.contractType.name}}" readonly>
+                Subject Matter<br>
+                <textarea name="textarea" class = "subject-matter" readonly>{{repositoryFile.requestid.subjectMatter}}</textarea>
+                <div class="col-6">
+                    Effectivity Date <br>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        From: <input type="text" class = "text-input" value="{{formatdate repositoryFile.requestid.effectivityStartDate}}" readonly>
+                    </div>
+                    <div class="col">
+                        To: <input type="text" class = "text-input" value="{{formatdate repositoryFile.requestid.effectivityEndDate}}" readonly>
+                    </div>
+                    <div class="col">
+                        Duration: <input type="text" class = "text-input" value="{{repositoryFile.daysDuration}} days" readonly>
+                    </div>
+                </div>
+                <br>
+                File<br>
                 Tags <br>
 
             </div>

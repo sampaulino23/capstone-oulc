@@ -15,7 +15,7 @@ $(document).ready(() => {
         embedPDFViewFull.setAttribute('height', '800px');
         
         fileView.append(embedPDFView);
-        fileViewFull.append(embedPDFView);
+        fileViewFull.append(embedPDFViewFull);
 
         $.ajax({
             url: "/getcontractversions",
