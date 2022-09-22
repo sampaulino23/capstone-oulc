@@ -60,24 +60,25 @@ let gfs;
 
 conn.once('open',() => {
   gfs = Grid(conn, mongoose.mongo);
-  gfs.collection('uploads');
+  gfs.collection('templates');
 });
 
 const storage = new GridFsStorage({
   db: promise,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
+      // crypto.randomBytes(16, (err, buf) => {
+        // if (err) {
+          // return reject(err);
+        // }
+        // const filename = buf.toString('hex') + path.extname(file.originalname);
+        const filename = file.originalname;
         const fileInfo = {
           filename: filename,
-          bucketName: 'uploads'
+          bucketName: 'templates'
         };
         resolve(fileInfo);
-      });
+      // });
     });
   }
 });

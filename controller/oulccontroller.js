@@ -27,7 +27,7 @@ let gridfsBucket;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
-        bucketName: 'uploads'
+        bucketName: 'templates'
     });
 });
 
@@ -274,7 +274,6 @@ const oulccontroller = {
     uploadTemplate: async (req, res) => {
         try {
 
-            const templateTitle = req.body.title;
             const contractTypeInput = req.body.contractType;
 
             const contractType = await ContractType.findOne({name: contractTypeInput}).exec();
@@ -321,21 +320,25 @@ const oulccontroller = {
                             const buf = crypto.randomBytes(16);
                             var pdfFilename = buf.toString('hex') + '.pdf';
 
+                            var pdfFileObjectId = pdfFilename.slice(0, -4);
+
+                            console.log(pdfFileObjectId);
+
                             // upload pdf file to gridfsbucket
-                            response.data.pipe(gridfsBucket.openUploadStream(pdfFilename, {contentType: 'application/pdf'}));
+                            response.data.pipe(gridfsBucket.openUploadStreamWithId(mongoose.Types.ObjectId(pdfFileObjectId), pdfFilename, {contentType: 'application/pdf'}));
 
                             // create template object
                             const newTemplate = new Template({
-                                name: templateTitle,
+                                name: filename,
                                 type: mongoose.Types.ObjectId(contractType._id),
                                 uploadDate: fileuploaddate,
                                 isWordFile: true,
-                                wordFileName: filename,
-                                pdfFileName: pdfFilename
+                                wordFileId: doc._id,
+                                pdfFileId: mongoose.Types.ObjectId(pdfFileObjectId)
                             });
 
                             console.log('0');
-        
+
                             // insert template object to db
                             newTemplate.save(function(){
                                 console.log('3');
@@ -370,11 +373,11 @@ const oulccontroller = {
                     console.log('pdf');
 
                     const newTemplate = new Template({
-                        name: templateTitle,
+                        name: filename,
                         type: mongoose.Types.ObjectId(contractType._id),
                         uploadDate: fileuploaddate,
                         isWordFile: false,
-                        pdfFileName: filename
+                        pdfFileId: doc._id
                     });
 
                     newTemplate.save(function(){
