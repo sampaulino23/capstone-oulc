@@ -221,17 +221,20 @@ const logincontroller = {
                                 }
                                 else{
                                     console.log("credentials are correct");
-                                    console.log (userlogged.role.name);
+                                    // console.log (userlogged.role.name);
                                     if (userlogged.role.name == "Staff"){
                                         req.session.role = userlogged.role.name;
+                                        console.log ("HI" + req.session.role);
                                         res.redirect('/staff/');
                                     }
                                     else if (userlogged.role.name == "Attorney"){
                                         req.session.role = userlogged.role.name;
+                                        console.log ("HI" + req.session.role);
                                         res.redirect('/attorney');
                                     }
                                     else {
                                         req.session.role = userlogged.role.name;
+                                        console.log ("HI" + req.session.role);
                                         res.redirect('/admin/usermanagement');
                                     }
                                 }
