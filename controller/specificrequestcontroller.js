@@ -7,6 +7,7 @@ const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const Contract = require('../models/Contract.js');
 const ContractVersion = require('../models/ContractVersion.js');
+const VersionNote = require('../models/VersionNote.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
 const Feedback = require('../models/Feedback.js');
 const ContractType = require('../models/ContractType.js');
@@ -111,8 +112,14 @@ const specificrequestcontroller = {
             var contractversions = [];
 
             for (contract of contracts) {
-                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).lean().exec();
-                latestversioncontracts.push(latestversioncontract);
+                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
+                    .lean()
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .exec();
+                
+                    latestversioncontracts.push(latestversioncontract);
 
                 const contractversion = await ContractVersion.find({contract: contract._id})
                     .lean()
