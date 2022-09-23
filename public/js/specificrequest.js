@@ -3,6 +3,12 @@ $(document).ready(() => {
     $(window).on('load', function() {
 
         var fileidSelected = $('#fileSelected').find(":selected").val();
+        
+        // change file view
+        const fileView = $('#fileView');
+        const fileViewFull = $('#fileView-full');
+        fileView.empty();
+        fileViewFull.empty();
 
         const embedPDFView = document.createElement('embed');
         embedPDFView.setAttribute('src', `/request/viewfile/${fileidSelected}`);
