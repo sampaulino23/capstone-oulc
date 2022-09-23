@@ -48,6 +48,7 @@
                                     <tbody id="myTemplateTable" style = "word-break: break-word;">
                                         {{#each templates}}
                                         <tr style="cursor: pointer;" id="{{_id}}" onclick="">
+                                            {{!-- <p class="pdf-file-id" hidden>{{pdfFileId}}</p> --}}
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{type.name}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td>

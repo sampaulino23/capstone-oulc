@@ -233,16 +233,14 @@ const oulccontroller = {
 
     viewTemplateOnClick: async (req, res) => {
 
-        console.log('View template on click');
-
         const templateid = req.query.templateid;
 
         const template = await Template.findById(templateid).exec();
 
-        console.log(template.pdfFileName);
+        console.log(template.pdfFileId.toString());
 
         res.send({
-            pdfFileName: template.pdfFileName
+            pdfFileId: template.pdfFileId.toString()
         })
 
     },
@@ -250,15 +248,9 @@ const oulccontroller = {
     viewTemplate: async (req, res) => {
         try {
 
-            console.log('view template');
+            const fileid = req.params.fileid;
 
-            const templateid = req.query.templateid;
-
-            console.log(templateid);
-
-            const template = Template.findById(templateid).exec();
-
-            const cursor = gridfsBucket.find({_id: template.pdfFileId});
+            const cursor = gridfsBucket.find({_id: mongoose.Types.ObjectId(fileid)});
 
             cursor.forEach((doc, err) => {
                 if (err) {
@@ -266,27 +258,12 @@ const oulccontroller = {
                 } else if (doc.contentType === 'application/pdf') {
                     const readstream = gridfsBucket.openDownloadStream(doc._id);
                     readstream.pipe(res);
+                } else {
+                    res.status(404).json({
+                        err: 'No file exist'
+                    });
                 }
             })
-
-            // gridfsBucket.find({_id: req.params.filename}).toArray((err, file) => {
-            //     // Check if files exist
-            //     if (!file || file.length == 0) {
-            //         return res.status(404).json({
-            //             err: 'file does not exist'
-            //         });
-            //     }
-            //     // Check if document
-            //     if (file[0].contentType === 'application/pdf') {
-            //         // Read output to browser
-            //         const readstream = gridfsBucket.openDownloadStream(file[0]._id);
-            //         readstream.pipe(res);
-            //     } else {
-            //         res.status(404).json({
-            //             err: 'Not a pdf document'
-            //         });
-            //     }
-            // });
 
         } catch (err) {
             console.log(err);
