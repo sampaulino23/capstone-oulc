@@ -313,15 +313,11 @@ const oulccontroller = {
                               responseType: "stream"
                             })
                         
-                            // response.data.pipe(fs.createWriteStream("result.pdf"))
-
                             // generate pdf filename using crypto module
                             const buf = crypto.randomBytes(12);
                             var pdfFilename = buf.toString('hex') + '.pdf';
 
                             var pdfFileObjectId = pdfFilename.slice(0, -4);
-
-                            console.log(pdfFileObjectId);
 
                             // upload pdf file to gridfsbucket
                             response.data.pipe(gridfsBucket.openUploadStreamWithId(mongoose.Types.ObjectId(pdfFileObjectId), pdfFilename, {contentType: 'application/pdf'}));
@@ -336,11 +332,17 @@ const oulccontroller = {
                                 pdfFileId: mongoose.Types.ObjectId(pdfFileObjectId)
                             });
 
-                            console.log('0');
-
                             // insert template object to db
                             newTemplate.save(function(){
-                                console.log('3');
+                                // delete a file
+                                fs.unlink('word_file.docx', (err) => {
+                                    if (err) {
+                                        throw err;
+                                    }
+
+                                    console.log("Word file is deleted.");
+                                });
+
                                 res.redirect('back');
                             });
 
@@ -352,8 +354,6 @@ const oulccontroller = {
 
                         // fs.createReadStream('result.pdf').
                         //   pipe(gridfsBucket.openUploadStream('myfile'));
-
-                        console.log('1');
                         
                         function streamToString(stream) {
                           const chunks = []
@@ -364,8 +364,6 @@ const oulccontroller = {
                           })
                         }
                     });
-
-                    console.log('2');
 
                 } else if (doc.contentType === 'application/pdf') {
                     console.log(doc);
@@ -380,7 +378,6 @@ const oulccontroller = {
                     });
 
                     newTemplate.save(function(){
-                        console.log('3');
                         res.redirect('back');
                     });
                 }
@@ -395,12 +392,7 @@ const oulccontroller = {
         try {
 
             const originalTemplateId = req.body.replaceTemplate;
-            const filename = req.file.filename;
             const file_id = mongoose.Types.ObjectId(req.file.id);
-
-            console.log(originalTemplateId);
-            console.log(filename);
-            console.log(file_id);
 
             const template = await Template.findById(originalTemplateId).exec()
 
@@ -446,8 +438,6 @@ const oulccontroller = {
 
                             var pdfFileObjectId = pdfFilename.slice(0, -4);
 
-                            console.log('pdfFileObjectId: ' + pdfFileObjectId);
-
                             // upload pdf file to gridfsbucket
                             response.data.pipe(gridfsBucket.openUploadStreamWithId(mongoose.Types.ObjectId(pdfFileObjectId), pdfFilename, {contentType: 'application/pdf'}));
 
@@ -463,15 +453,10 @@ const oulccontroller = {
                                 }
 
                                 // if update template success
-                                console.log('updatedTemplate: ' + updatedTemplate);
-
-                                console.log('originalTemplateIsWordFile: ' + originalTemplateIsWordFile);
 
                                 if (updatedTemplate != null) {
 
                                     if (originalTemplateIsWordFile == true) {
-
-                                        console.log('true toh');
 
                                         const originalTemplateWordFileId = template.wordFileId;
 
@@ -482,18 +467,23 @@ const oulccontroller = {
                                         gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
                                     } else if (originalTemplateIsWordFile == false) {
 
-                                        console.log('false to aogag toh');
-                                        
                                         // delete old pdf file from gridfs
                                         gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
                                     }
                                 }
 
-                                console.log('3');
+                                // delete a file
+                                fs.unlink('word_file.docx', (err) => {
+                                    if (err) {
+                                        throw err;
+                                    }
+
+                                    console.log("Word file is deleted.");
+                                });
+
                                 res.redirect('back');
                             });
 
-                            console.log('0');
 
                           } catch (err) {
                             // const errorString = await streamToString(e.response.data)
@@ -501,10 +491,7 @@ const oulccontroller = {
                           }
                         })()
 
-                        // fs.createReadStream('result.pdf').
-                        //   pipe(gridfsBucket.openUploadStream('myfile'));
 
-                        console.log('1');
                         
                         function streamToString(stream) {
                           const chunks = []
@@ -516,18 +503,11 @@ const oulccontroller = {
                         }
                     });
 
-                    console.log('2');
 
                 } else if (doc.contentType === 'application/pdf') {
                     console.log(doc);
                     console.log('pdf');
 
-                    // newTemplate.save(function(){
-                    //     console.log('3');
-                    //     res.redirect('back');
-                    // });
-
-                    console.log('originaltemplateid ' + originalTemplateId);
 
                     const updatedTemplate = Template.findByIdAndUpdate(originalTemplateId, {
                         name: doc.filename,
@@ -560,14 +540,6 @@ const oulccontroller = {
                 }
             });
 
-            // const newTemplate = await Template.findByIdAndUpdate(originalTemplateId, {
-            //     name: filename,
-            //     file: file_id
-            // });
-
-            // if (newTemplate) {
-            //     gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateFileId));
-            // }
             
         } catch (err) {
             console.log(err);
