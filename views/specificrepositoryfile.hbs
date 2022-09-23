@@ -16,8 +16,11 @@
         $(document).ready( () => {
             $('.addtag-btn').click(function () {
                  var tag = document.getElementById("inputtag").value;
+                 var tagViewID = document.getElementById("tag-view");
+                 var tagView = document.getElementById("tag-view").innerHTML;
                  var id = document.getElementById("repid").value;
                  console.log(id);
+                 tagViewID.append("," + tag);
 
             $.ajax({
                 url: "/addtag",
@@ -87,8 +90,8 @@
                 </div>
                 <br>
                 File<br>
-                Tags <br>
-                [ {{repositoryFile.tags}} ]<br> 
+                Tags <br> 
+               [   <span id = "tag-view"> {{repositoryFile.tags}}</span> ]<br> 
                 <!--<form action="/staff/addtag" method="POST"> -->
                     <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}"> 
                     <input type="text" id="inputtag" name="inputtag"><br>
