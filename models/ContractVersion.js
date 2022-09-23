@@ -25,6 +25,10 @@ const ContractVersionSchema = mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    versionNotes: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'VersionNote',
     }
 });
 
