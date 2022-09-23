@@ -196,26 +196,29 @@ const oulccontroller = {
 
             const templateid = req.body.deleteTemplate;
 
+            // delete template object
             const template = await Template.findByIdAndDelete(templateid).exec();
 
             if (template) {
 
-                const cursor = await gridfsBucket.find({filename: template.wordFileName}, {limit: 1});
-                cursor.forEach((doc, err) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(doc);
-                        gridfsBucket.delete(doc._id);
-                    }
-                });
+                // delete word file in gridfs
+                if (template.isWordFile == true) {
+                    const cursor = await gridfsBucket.find({_id: mongoose.Types.ObjectId(template.wordFileId)}, {limit: 1});
+                    cursor.forEach((doc, err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            gridfsBucket.delete(doc._id);
+                        }
+                    });
+                }
 
-                const cursor2 = await gridfsBucket.find({filename: template.pdfFileName}, {limit: 1});
+                // delete pdf file in gridfs
+                const cursor2 = await gridfsBucket.find({_id: mongoose.Types.ObjectId(template.pdfFileId)}, {limit: 1});
                 cursor2.forEach((doc, err) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log(doc);
                         gridfsBucket.delete(doc._id);
                     }
                 });
