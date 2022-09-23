@@ -632,7 +632,27 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    addTag: async (req, res) => {
+        try {
+            var tag = req.query.tag;
+            var id = req.query.id;
+            console.log("ID IS: " + id);
+            console.log(tag);
+
+            try{
+                await RepositoryFile.findOneAndUpdate({_id : id}, { $push: { tags: tag } }).exec();
+                //res.redirect('back');
+            } catch (err) {
+                console.log(err);
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
 }
 
 module.exports = oulccontroller;

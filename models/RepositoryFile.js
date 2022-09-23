@@ -17,7 +17,10 @@ const RepositoryFileSchema = mongoose.Schema({
     uploadDate: {
         type: Date,
         required: true
-    }
+    }, 
+    tags: [{
+        type: String
+    }]
 });
 
 module.exports = mongoose.model('RepositoryFile', RepositoryFileSchema);

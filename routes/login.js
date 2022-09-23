@@ -25,6 +25,7 @@ require('../config/passport')(passport);
 
 const logincontroller = require('../controller/logincontroller.js');
 const resetpasswordcontroller = require('../controller/resetpasswordcontroller.js');
+const oulccontroller = require('../controller/oulccontroller.js');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -103,5 +104,7 @@ router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocumen
 
 // set reviewed documents for a specific contract request
 router.get('/getcontractversions', specificrequestcontroller.getContractVersions);
+
+router.get('/addtag', oulccontroller.addTag);
 
 module.exports = router;

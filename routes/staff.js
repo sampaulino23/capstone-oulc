@@ -98,6 +98,8 @@ router.get('/template/:fileid', oulccontroller.viewTemplate);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 
+//router.post('/addtag', oulccontroller.addTag);
+
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
 

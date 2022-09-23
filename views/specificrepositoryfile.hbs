@@ -11,6 +11,30 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/specificrequeststyle.css">
+
+    <script>
+        $(document).ready( () => {
+            $('.addtag-btn').click(function () {
+                 var tag = document.getElementById("inputtag").value;
+                 var id = document.getElementById("repid").value;
+                 console.log(id);
+
+            $.ajax({
+                url: "/addtag",
+                method: "GET",
+                contentType: "application/json",
+                 data: {tag: tag, id: id},
+                success: function() {
+                    console.log('SUCCESS');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        });
+    </script>
 </head>
 
 <body>
@@ -64,6 +88,12 @@
                 <br>
                 File<br>
                 Tags <br>
+                [ {{repositoryFile.tags}} ]<br> 
+                <!--<form action="/staff/addtag" method="POST"> -->
+                    <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}"> 
+                    <input type="text" id="inputtag" name="inputtag"><br>
+                    <button type="" class="addtag-btn">Add Tag</button>
+                <!--</form> -->
 
             </div>
         </div>
