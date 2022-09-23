@@ -92,9 +92,9 @@ router.get('/templates', staffcontroller.getTemplates);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
-router.get('/downloadtemplate/:filename', oulccontroller.getDownloadTemplate);
+router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
-router.get('/template/:filename', oulccontroller.viewTemplate);
+router.get('/template/:fileid', oulccontroller.viewTemplate);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 

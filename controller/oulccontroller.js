@@ -247,24 +247,43 @@ const oulccontroller = {
     viewTemplate: async (req, res) => {
         try {
 
-            gridfsBucket.find({filename: req.params.filename}).toArray((err, file) => {
-                // Check if files exist
-                if (!file || file.length == 0) {
-                    return res.status(404).json({
-                        err: 'file does not exist'
-                    });
-                }
-                // Check if document
-                if (file[0].contentType === 'application/pdf') {
-                    // Read output to browser
-                    const readstream = gridfsBucket.openDownloadStream(file[0]._id);
+            console.log('view template');
+
+            const templateid = req.query.templateid;
+
+            console.log(templateid);
+
+            const template = Template.findById(templateid).exec();
+
+            const cursor = gridfsBucket.find({_id: template.pdfFileId});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    const readstream = gridfsBucket.openDownloadStream(doc._id);
                     readstream.pipe(res);
-                } else {
-                    res.status(404).json({
-                        err: 'Not a pdf document'
-                    });
                 }
-            });
+            })
+
+            // gridfsBucket.find({_id: req.params.filename}).toArray((err, file) => {
+            //     // Check if files exist
+            //     if (!file || file.length == 0) {
+            //         return res.status(404).json({
+            //             err: 'file does not exist'
+            //         });
+            //     }
+            //     // Check if document
+            //     if (file[0].contentType === 'application/pdf') {
+            //         // Read output to browser
+            //         const readstream = gridfsBucket.openDownloadStream(file[0]._id);
+            //         readstream.pipe(res);
+            //     } else {
+            //         res.status(404).json({
+            //             err: 'Not a pdf document'
+            //         });
+            //     }
+            // });
 
         } catch (err) {
             console.log(err);
@@ -317,7 +336,7 @@ const oulccontroller = {
                             // response.data.pipe(fs.createWriteStream("result.pdf"))
 
                             // generate pdf filename using crypto module
-                            const buf = crypto.randomBytes(16);
+                            const buf = crypto.randomBytes(12);
                             var pdfFilename = buf.toString('hex') + '.pdf';
 
                             var pdfFileObjectId = pdfFilename.slice(0, -4);
@@ -345,9 +364,9 @@ const oulccontroller = {
                                 res.redirect('back');
                             });
 
-                          } catch (e) {
-                            const errorString = await streamToString(e.response.data)
-                            console.log(errorString)
+                          } catch (err) {
+                            // const errorString = await streamToString(e.response.data)
+                            console.log(err)
                           }
                         })()
 
@@ -427,21 +446,17 @@ const oulccontroller = {
     getDownloadTemplate: async (req, res) => {
         try {
 
-            const filename = req.params.filename;
+            const fileid = req.params.fileid;
 
-            console.log(filename);
-
-            const cursor = gridfsBucket.find({filename: filename});
+            const cursor = gridfsBucket.find({_id: mongoose.Types.ObjectId(fileid)});
             cursor.forEach((doc, err) => {
                 if (err) {
                     console.log(err);
                 }
-                console.log(doc);
+                const downStream = gridfsBucket.openDownloadStream(doc._id);
 
-                const downStream = gridfsBucket.openDownloadStreamByName(doc.filename);
-
-                // res.setHeader('Content-Type', 'application/pdf');
-                // res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+                res.setHeader('Content-Type', doc.contentType);
+                res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
 
                 downStream.pipe(res);
             });
