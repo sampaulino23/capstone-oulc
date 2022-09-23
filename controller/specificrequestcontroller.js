@@ -125,6 +125,7 @@ const specificrequestcontroller = {
                             }
                         }
                     })
+                    .sort({version: -1})
                     .exec();
 
                 for (eachcontractversion of contractversion) {
