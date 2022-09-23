@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
 
 const MongoStore = require('connect-mongo');
-// const staffcontroller = require('../controller/staffcontroller.js');
+const staffcontroller = require('../controller/staffcontroller.js');
 const oulccontroller = require('../controller/oulccontroller.js');
 
 //passport config
@@ -86,6 +86,15 @@ const upload = multer({ storage });
 router.use(require('connect-flash')());
 
 router.get('/', oulccontroller.getDashboard);
+router.get('/templates', staffcontroller.getTemplates);
+router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
+router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
+router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
+router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
+router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
+router.get('/template/:fileid', oulccontroller.viewTemplate);
+router.get('/repository', oulccontroller.getRepository);
+router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
