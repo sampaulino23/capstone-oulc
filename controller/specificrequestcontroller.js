@@ -132,6 +132,9 @@ const specificrequestcontroller = {
                             }
                         }
                     })
+                    .populate({
+                        path: 'versionNote'
+                    })
                     .sort({version: -1})
                     .exec();
 
@@ -338,6 +341,9 @@ const specificrequestcontroller = {
 
             if (contractversion != null) {
                 contractversionslist = await ContractVersion.find({contract: contractversion.contract})
+                    .populate({
+                        path: 'contract'
+                    })
                     .exec();
 
                 isContract = true;

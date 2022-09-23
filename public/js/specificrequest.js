@@ -52,7 +52,10 @@ $(document).ready(() => {
                                 contractversionrow.show();
                             }
 
-                            $('#versionNote' + contractversion._id).show();
+                            // if latest version of contract
+                            if (contractversion.contract.latestversion == contractversion.version) {
+                                $('#versionNote' + contractversion._id).show();
+                            }
                         }
                     }
 
@@ -120,7 +123,10 @@ $(document).ready(() => {
                                 contractversionrow.show();
                             }
 
-                            $('#versionNote' + contractversion._id).show();
+                            // if latest version of contract
+                            if (contractversion.contract.latestversion == contractversion.version) {
+                                $('#versionNote' + contractversion._id).show();
+                            }
                         }
                     }
 
@@ -137,6 +143,16 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
+    });
+    $('.contract-version-row').click(function () {
+
+        const contractversionid = $(this).attr('id');
+
+        console.log(contractversionid);
+
+        $('.version-note-card').hide();
+        $('#versionNote' + contractversionid).show();
+
     });
     $('.forlegalreview').click(function () {
         // alert(this.id);
