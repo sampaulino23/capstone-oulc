@@ -30,14 +30,17 @@ $(document).ready(() => {
             data: {fileid: fileidSelected},
             success: function(res) {
 
+                console.log(res.contractversionslist);
+
                 const contractversionslist = res.contractversionslist;
                 var rowCount = $('#contractVersionsTable tr').length;
                 var rows = $('#contractVersionsTable tr');
                 $('#contractVersionsDiv').show();
 
                 if (res.isContract == true) {
-                    rows.show();
+                    rows.hide();
                     $('#notContractText').attr('hidden', true);
+                    $('.version-note-card').hide();
 
                     for(var i = 0; i < rowCount; i++) {
                         for (contractversion of contractversionslist) {
@@ -46,8 +49,10 @@ $(document).ready(() => {
                             
                             if (contractversionrowid == contractversion._id) {
                                 // filter contract version list
-                                contractversionrow.hide();
+                                contractversionrow.show();
                             }
+
+                            $('#versionNote' + contractversion._id).show();
                         }
                     }
 
@@ -101,18 +106,21 @@ $(document).ready(() => {
                 $('#contractVersionsDiv').show();
 
                 if (res.isContract == true) {
-                    rows.show();
+                    rows.hide();
                     $('#notContractText').attr('hidden', true);
+                    $('.version-note-card').hide();
 
                     for(var i = 0; i < rowCount; i++) {
                         for (contractversion of contractversionslist) {
                             var contractversionrow = $('#contractVersionsTable tr:eq(' + i + ' )');
                             var contractversionrowid = contractversionrow.attr('id');
-                            
+
                             if (contractversionrowid == contractversion._id) {
                                 // filter contract version list
-                                contractversionrow.hide();
+                                contractversionrow.show();
                             }
+
+                            $('#versionNote' + contractversion._id).show();
                         }
                     }
 

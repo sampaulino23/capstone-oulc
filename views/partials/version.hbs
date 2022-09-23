@@ -26,23 +26,25 @@
             </tbody>
         </table>
 
-        <h5>Version Notes: </h5>
-        {{#each latestversioncontracts}}
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold">Version {{version}}.0 ({{filename}})</h5>
-                {{#compare version '==' 1}}
-                <p class="card-text">No comments for this version</p>
-                {{else}}
-                <p class="card-text fw-semibold">OULC Comments</p>
-                <p class="card-text">{{versionNote.oulcComments}}</p>
-                <p class="card-text fw-semibold">3rd Party Response</p>
-                <p class="card-text">{{versionNote.thirdPartyResponse}}</p>
-                <p class="card-text fw-semibold">Remarks/Response by Requesting Party</p>
-                <p class="card-text">{{versionNote.requestingPartyRemarks}}</p>
-                {{/compare}}
+        <div class="container" id="versionNotesDiv">
+            <h5>Version Notes: </h5>
+            {{#each latestversioncontracts}}
+            <div class="card version-note-card" id="versionNote{{_id}}">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold">Version {{version}}.0 ({{filename}})</h5>
+                    {{#compare version '==' 1}}
+                    <p class="card-text">No comments for this version</p>
+                    {{else}}
+                    <p class="card-text fw-semibold">OULC Comments</p>
+                    <p class="card-text">{{versionNote.oulcComments}}</p>
+                    <p class="card-text fw-semibold">3rd Party Response</p>
+                    <p class="card-text">{{versionNote.thirdPartyResponse}}</p>
+                    <p class="card-text fw-semibold">Remarks/Response by Requesting Party</p>
+                    <p class="card-text">{{versionNote.requestingPartyRemarks}}</p>
+                    {{/compare}}
+                </div>
             </div>
+            {{/each}}
         </div>
-        {{/each}}
     </div>
 </div>
