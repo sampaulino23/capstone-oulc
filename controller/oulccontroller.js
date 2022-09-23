@@ -308,7 +308,7 @@ const oulccontroller = {
                           try {
                             const response = await axios.post('https://api.pspdfkit.com/build', formData, {
                               headers: formData.getHeaders({
-                                  'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
+                                  'Authorization': 'Bearer pdf_live_A8KAhWydkVoVruRCuJ50xONECa4uroQO7jIiose5aSi'
                               }),
                               responseType: "stream"
                             })
@@ -435,7 +435,7 @@ const oulccontroller = {
                           try {
                             const response = await axios.post('https://api.pspdfkit.com/build', formData, {
                               headers: formData.getHeaders({
-                                  'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
+                                  'Authorization': 'Bearer pdf_live_A8KAhWydkVoVruRCuJ50xONECa4uroQO7jIiose5aSi'
                               }),
                               responseType: "stream"
                             })
