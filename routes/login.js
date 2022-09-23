@@ -106,5 +106,6 @@ router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocumen
 router.get('/getcontractversions', specificrequestcontroller.getContractVersions);
 
 router.get('/addtag', oulccontroller.addTag);
+router.get('/removetag', oulccontroller.removeTag);
 
 module.exports = router;

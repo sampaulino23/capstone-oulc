@@ -653,6 +653,27 @@ const oulccontroller = {
         }
     },
 
+    
+    removeTag: async (req, res) => {
+        try {
+            var tag = req.query.tag;
+            var id = req.query.id;
+            //var position = req.query.position;
+            console.log("ID IS: " + id);
+            console.log("Removed: " + tag);
+
+            try{
+                await RepositoryFile.findOneAndUpdate({_id : id}, { $pull: { tags: tag } }).exec();
+                //res.redirect('back');
+            } catch (err) {
+                console.log(err);
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
 }
 
 module.exports = oulccontroller;

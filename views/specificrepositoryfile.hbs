@@ -16,11 +16,14 @@
         $(document).ready( () => {
             $('.addtag-btn').click(function () {
                  var tag = document.getElementById("inputtag").value;
-                 var tagViewID = document.getElementById("tag-view");
-                 var tagView = document.getElementById("tag-view").innerHTML;
                  var id = document.getElementById("repid").value;
-                 console.log(id);
-                 tagViewID.append("," + tag);
+                 var container = document.getElementById("tag-container");
+                 var button = document.createElement("button");
+                 button.innerText = tag + " X";
+                 button.value = tag;
+                 button.class = "removetag-btn";
+                 button.id = "tag-view";
+                 container.appendChild(button);
 
             $.ajax({
                 url: "/addtag",
@@ -34,6 +37,26 @@
                     console.log(err);
                 }
             });
+        });
+
+         $('.removetag-btn').click(function () {
+
+             var tag = document.getElementById("tag-view").value;
+             var id = document.getElementById("repid").value;
+
+            $.ajax({
+                url: "/removetag",
+                method: "GET",
+                contentType: "application/json",
+                 data: {tag: tag, id: id},
+                success: function() {
+                    console.log('SUCCESS');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+
         });
 
         });
@@ -90,8 +113,12 @@
                 </div>
                 <br>
                 File<br>
-                Tags <br> 
-               [   <span id = "tag-view"> {{repositoryFile.tags}}</span> ]<br> 
+                Tags <br>
+                <div id="tag-container">
+                {{#each repositoryFile.tags}}
+                <button id = "tag-view" class="removetag-btn" value="{{this}}"> {{this}} X</button> <br> 
+                {{/each}}
+                </div>
                 <!--<form action="/staff/addtag" method="POST"> -->
                     <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}"> 
                     <input type="text" id="inputtag" name="inputtag"><br>
