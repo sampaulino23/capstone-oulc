@@ -395,28 +395,179 @@ const oulccontroller = {
         try {
 
             const originalTemplateId = req.body.replaceTemplate;
-
             const filename = req.file.filename;
             const file_id = mongoose.Types.ObjectId(req.file.id);
 
-            console.log(filename);
             console.log(originalTemplateId);
+            console.log(filename);
             console.log(file_id);
 
             const template = await Template.findById(originalTemplateId).exec()
 
-            const originalTemplateFileId = template.file;
+            const originalTemplateIsWordFile = template.isWordFile;
+            const originalTemplatePdfFileId = template.pdfFileId;
 
-            const newTemplate = await Template.findByIdAndUpdate(originalTemplateId, {
-                name: filename,
-                file: file_id
+            // find uploaded file in gridfs
+            const cursor = gridfsBucket.find({_id: file_id});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || doc.contentType === 'application/msword') {
+                    console.log(doc);
+                    console.log('word');
+                    const writableStream = fs.createWriteStream('./word_file.docx');
+
+                    const downStream = gridfsBucket.openDownloadStream(doc._id);
+                    downStream.pipe(writableStream);
+
+                    writableStream.on('close', function(){
+                        const formData = new FormData()
+                        formData.append('instructions', JSON.stringify({
+                          parts: [
+                            {
+                              file: "document"
+                            }
+                          ]
+                        }))
+                        formData.append('document', fs.createReadStream('word_file.docx'))
+                        
+                        ;(async () => {
+                          try {
+                            const response = await axios.post('https://api.pspdfkit.com/build', formData, {
+                              headers: formData.getHeaders({
+                                  'Authorization': 'Bearer pdf_live_qIwmoNBh0yB5LOWeRv78cKXDMFW9PKvF3ELZfHqV0Oq'
+                              }),
+                              responseType: "stream"
+                            })
+
+                            // generate pdf filename using crypto module
+                            const buf = crypto.randomBytes(12);
+                            var pdfFilename = buf.toString('hex') + '.pdf';
+
+                            var pdfFileObjectId = pdfFilename.slice(0, -4);
+
+                            console.log('pdfFileObjectId: ' + pdfFileObjectId);
+
+                            // upload pdf file to gridfsbucket
+                            response.data.pipe(gridfsBucket.openUploadStreamWithId(mongoose.Types.ObjectId(pdfFileObjectId), pdfFilename, {contentType: 'application/pdf'}));
+
+                            Template.findByIdAndUpdate(originalTemplateId, {
+                                name: doc.filename,
+                                uploadDate: doc.uploadDate,
+                                isWordFile: true,
+                                wordFileId: doc._id,
+                                pdfFileId: mongoose.Types.ObjectId(pdfFileObjectId)
+                            }, (err, updatedTemplate) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+
+                                // if update template success
+                                console.log('updatedTemplate: ' + updatedTemplate);
+
+                                console.log('originalTemplateIsWordFile: ' + originalTemplateIsWordFile);
+
+                                if (updatedTemplate != null) {
+
+                                    if (originalTemplateIsWordFile == true) {
+
+                                        console.log('true toh');
+
+                                        const originalTemplateWordFileId = template.wordFileId;
+
+                                        // delete old word file from gridfs
+                                        gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateWordFileId));
+
+                                        // delete old pdf file from gridfs
+                                        gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
+                                    } else if (originalTemplateIsWordFile == false) {
+
+                                        console.log('false to aogag toh');
+                                        
+                                        // delete old pdf file from gridfs
+                                        gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
+                                    }
+                                }
+
+                                console.log('3');
+                                res.redirect('back');
+                            });
+
+                            console.log('0');
+
+                          } catch (err) {
+                            // const errorString = await streamToString(e.response.data)
+                            console.log(err)
+                          }
+                        })()
+
+                        // fs.createReadStream('result.pdf').
+                        //   pipe(gridfsBucket.openUploadStream('myfile'));
+
+                        console.log('1');
+                        
+                        function streamToString(stream) {
+                          const chunks = []
+                          return new Promise((resolve, reject) => {
+                            stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)))
+                            stream.on("error", (err) => reject(err))
+                            stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")))
+                          })
+                        }
+                    });
+
+                    console.log('2');
+
+                } else if (doc.contentType === 'application/pdf') {
+                    console.log(doc);
+                    console.log('pdf');
+
+                    // newTemplate.save(function(){
+                    //     console.log('3');
+                    //     res.redirect('back');
+                    // });
+
+                    console.log('originaltemplateid ' + originalTemplateId);
+
+                    const updatedTemplate = Template.findByIdAndUpdate(originalTemplateId, {
+                        name: doc.filename,
+                        uploadDate: doc.uploadDate,
+                        isWordFile: false,
+                        pdfFileId: doc._id
+                    }).exec();
+
+                    // if update template success
+                    if (updatedTemplate != null) {
+
+                        if (originalTemplateIsWordFile == true) {
+
+                            const originalTemplateWordFileId = template.wordFileId;
+
+                            // delete old word file from gridfs
+                            gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateWordFileId));
+
+                            // delete old pdf file from gridfs
+                            gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
+                        } else if (originalTemplateIsWordFile == false) {
+                            
+                            // delete old pdf file from gridfs
+                            gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplatePdfFileId));
+                        }
+
+                    }
+
+                    res.redirect('back');
+                }
             });
 
-            if (newTemplate) {
-                gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateFileId));
-            }
+            // const newTemplate = await Template.findByIdAndUpdate(originalTemplateId, {
+            //     name: filename,
+            //     file: file_id
+            // });
 
-            res.redirect('back');
+            // if (newTemplate) {
+            //     gridfsBucket.delete(mongoose.Types.ObjectId(originalTemplateFileId));
+            // }
             
         } catch (err) {
             console.log(err);
