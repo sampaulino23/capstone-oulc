@@ -1,5 +1,21 @@
 $(document).ready(() => {
 
+    $('#uploadTemplateBtn').click(function() {
+        $("#uploadingFileToast").toast({
+            delay: 8000
+        });
+
+        // Show toast  
+        $("#uploadingFileToast").toast("show");
+    });
+    $('#confirmReplaceTemplate').click(function() {
+        $("#replacingFileToast").toast({
+            delay: 8000
+        });
+
+        // Show toast  
+        $("#replacingFileToast").toast("show");
+    });
     $('tr').click(function () {
         
         var templateid = $(this).attr('id');
