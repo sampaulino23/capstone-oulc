@@ -57,8 +57,10 @@ $(document).ready(() => {
         var allreviewed = true;
 
         for(var i = 0; i < rowCount; i++) {
-            var documentattachedrow = $('#myOrderProductTable tr:eq(' + i + ' )');
+            var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
             var isreviewed = documentattachedrow.find('.is-reviewed').val();
+
+            console.log(i + ' ' + isreviewed);
 
             if (isreviewed == 'false') {    // if not all reviewed
                 allreviewed = false;
@@ -75,6 +77,9 @@ $(document).ready(() => {
             // disable for revision button
             $("#forRevisionBtn").attr("disabled", true);
             document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+        } else {
+            $("#allReviewed").attr("hidden", false);
+
         }
     });
     $('.is-reviewed').change(function () {
