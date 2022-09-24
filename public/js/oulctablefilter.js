@@ -109,7 +109,7 @@ function resetRequestType(){ //for admin user management
 }
 
 // Tab Filters (Request Status)
-function viewAll(){ 
+function viewAllRequests(){ 
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
 
@@ -310,10 +310,11 @@ function searchRepositoryTable() {
         td = tr[i].getElementsByTagName("td")[0]; // for column one
         td1 = tr[i].getElementsByTagName("td")[1]; // for column two
         td2 = tr[i].getElementsByTagName("td")[2];
+        td4 = tr[i].getElementsByTagName("td")[4]; //tags hidden column
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) ||
-          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -323,6 +324,20 @@ function searchRepositoryTable() {
 } 
 
 // Tab Filters (Document Type)
+function viewAllRepository(){ 
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        row.style.display = ""; // shows this row
+    }
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("a-tab").classList.remove("selected");
+    document.getElementById("b-tab").classList.remove("selected");
+    document.getElementById("d-tab").classList.remove("selected");
+    document.getElementById("h-tab").classList.remove("selected");
+}
+
 function viewTypeA(){ 
     var button = document.getElementById("a-tab");
     var table = document.getElementById("table");
@@ -340,6 +355,7 @@ function viewTypeA(){
             row.style.display = "none"; // hides this row
         }
     }
+    document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("a-tab").classList.add("selected");
     document.getElementById("b-tab").classList.remove("selected");
     document.getElementById("d-tab").classList.remove("selected");
@@ -363,6 +379,7 @@ function viewTypeB(){
             row.style.display = "none"; // hides this row
         }
     }
+    document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("a-tab").classList.remove("selected");
     document.getElementById("b-tab").classList.add("selected");
     document.getElementById("d-tab").classList.remove("selected");
@@ -386,6 +403,7 @@ function viewTypeD(){
             row.style.display = "none"; // hides this row
         }
     }
+    document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("a-tab").classList.remove("selected");
     document.getElementById("b-tab").classList.remove("selected");
     document.getElementById("d-tab").classList.add("selected");
@@ -409,6 +427,7 @@ function viewTypeH(){
             row.style.display = "none"; // hides this row
         }
     }
+    document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("a-tab").classList.remove("selected");
     document.getElementById("b-tab").classList.remove("selected");
     document.getElementById("d-tab").classList.remove("selected");

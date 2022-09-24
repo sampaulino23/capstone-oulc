@@ -37,6 +37,10 @@
                         </div>
                         <div class = "folder-container">
                             <ul class="nav-tabs" id="myTab" role="tablist">
+                                <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                                aria-controls="all" onclick="viewAllRepository()">
+                                <p class = "selector"></p>All 
+                                </button> <br>
                                 <button class="nav-item" id="a-tab" data-toggle="tab" href="#all" role="tab"
                                 aria-controls="all" value="MOA/TOR/Contracts for purchases, services, venue, and other piece of work" onclick="viewTypeA()">
                                 <p class = "selector"></p>MOA/TOR/Contracts for purchases, services, venue, and other piece of work
@@ -95,6 +99,8 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td data-target="#modalUserView{{@index}}" class="text-left"
+                                            style="padding: 23px 20px; display:none;">{{tags}}</td>
                                         </tr>
                                         {{/each}}
                                     </tbody>

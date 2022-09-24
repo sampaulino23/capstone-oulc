@@ -19,11 +19,12 @@
                  var id = document.getElementById("repid").value;
                  var container = document.getElementById("tag-container");
                  var button = document.createElement("button");
-                 button.innerText = tag + " X";
-                 button.value = tag;
-                 button.class = "removetag-btn";
                  button.id = "tag-view";
+                 button.class = "removetag-btn";
+                 button.value = tag;
+                 button.innerText = tag + " X";
                  container.appendChild(button);
+                 document.getElementById("inputtag").value = "";
 
             $.ajax({
                 url: "/addtag",
@@ -43,6 +44,9 @@
 
              var tag = document.getElementById("tag-view").value;
              var id = document.getElementById("repid").value;
+             var container = document.getElementById("tag-container");
+             var button = document.getElementById("tag-view");
+             container.removeChild(button);
 
             $.ajax({
                 url: "/removetag",
@@ -116,7 +120,7 @@
                 Tags <br>
                 <div id="tag-container">
                 {{#each repositoryFile.tags}}
-                <button id = "tag-view" class="removetag-btn" value="{{this}}"> {{this}} X</button> <br> 
+                <button id = "tag-view" class="removetag-btn" value="{{this}}"> {{this}} X</button> 
                 {{/each}}
                 </div>
                 <!--<form action="/staff/addtag" method="POST"> -->

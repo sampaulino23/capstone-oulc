@@ -664,6 +664,8 @@ const oulccontroller = {
 
             try{
                 await RepositoryFile.findOneAndUpdate({_id : id}, { $pull: { tags: tag } }).exec();
+                //await RepositoryFile.findOneAndUpdate({_id : id}, { $unset: { "tags.1": 1 } }).exec();
+                //await RepositoryFile.findOneAndUpdate({_id : id}, { $pull: { tags: null } }).exec();
                 //res.redirect('back');
             } catch (err) {
                 console.log(err);
