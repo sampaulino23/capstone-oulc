@@ -67,6 +67,16 @@
                     <div id = "columnchart" class = "chart"></div>
                 </div>
             </div>
+            <div class= "card-row row">
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Violation Per Department</div>
+                    <div id = "columnchart" class = "chart"></div>
+                </div>
+                <div class="indiv-cards col">
+                    <div class = "dashboard-item">Violation Per Type</div>
+                    <div id = "columnchart" class = "chart"></div>
+                </div>
+            </div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-3">
@@ -114,10 +124,8 @@
     google.charts.load('current', {'packages':['corechart']});
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawChart);
-    
 
     function drawChart() {
-
     var data = google.visualization.arrayToDataTable([
         ['Status', 'Requests'],
         ['Pending',     {{pending.all}}],
@@ -140,18 +148,19 @@
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
     chart.draw(data, options);
-
     var data2 = google.visualization.arrayToDataTable([
-        ['MOA/TOR', 'Count', { role: 'style' }],
-        ['OJT', 2, '#00713D'],            // RGB value
-        ['Silver', 19, '#00713D'],            // English color name
-        ['Gold', 4, '#00713D'],
-        ['Gold', 2, '#00713D'],
+        ['Request Types', 'Count', { role: 'style' }],
+        ['MOA/TOR', 2, '#00713D'],// RGB value
+        ['OJT/Internship', 19, '#00713D'], // English color name
+        ['MOA/Contracts', 4, '#00713D'],
+        ['Licensing/Subscription', 2, '#00713D']
     ]);
+
     var options2 = {
-          width: 200,
-          legend: { position: 'none' },
-          backgroundColor: { fill:'transparent' }
+        width: 200,
+        height: 200,
+        legend: { position: 'none' },
+        backgroundColor: { fill:'transparent' }
         };
 
     var columnchart = new google.charts.Bar(document.getElementById('columnchart'));
@@ -159,4 +168,4 @@
 
     }
     
-    </script>
+</script>

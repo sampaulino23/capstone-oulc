@@ -20,7 +20,7 @@
                  var container = document.getElementById("tag-container");
                  var button = document.createElement("button");
                  button.id = "tag-view";
-                 button.class = "removetag-btn";
+                 button.class = "tag removetag-btn";
                  button.value = tag;
                  button.innerText = tag + " X";
                  container.appendChild(button);
@@ -117,17 +117,20 @@
                 </div>
                 <br>
                 File<br>
-                Tags <br>
+                <div id = "add-tag-div">
+                    <p>Tags</p>
+                    <!--<form action="/staff/addtag" method="POST"> -->
+                    <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}">
+                    <input type="text" id="inputtag" name="inputtag" placeholder="Enter new tag..."><br>
+                    <button type="" class="addtag-btn">+ Add Tag</button>
+                <!--</form> -->
+                </div>
+                
                 <div id="tag-container">
                 {{#each repositoryFile.tags}}
-                <button id = "tag-view" class="removetag-btn" value="{{this}}"> {{this}} X</button> 
+                <button id = "tag-view" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
                 {{/each}}
                 </div>
-                <!--<form action="/staff/addtag" method="POST"> -->
-                    <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}"> 
-                    <input type="text" id="inputtag" name="inputtag"><br>
-                    <button type="" class="addtag-btn">Add Tag</button>
-                <!--</form> -->
 
             </div>
         </div>
