@@ -8,12 +8,56 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/dashboardstyle.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!--        <script>
+            $(document).ready( function() {
+                var now = new Date();
+                var month = (now.getMonth() + 1);               
+                var day = now.getDate();
+                if (month < 10) 
+                    month = "0" + month;
+                if (day < 10) 
+                    day = "0" + day;
+                var today = now.getFullYear() + '-' + month + '-' + day;
+                $('#enddate').val(today);
+
+                $('.datefilter').click(function () {
+                    var startdate = document.getElementById("startdate").value;
+                    var enddate = document.getElementById("enddate").value;
+                    //alert(enddate);
+
+                $.ajax({
+                    url: "/",
+                    method: "GET",
+                    contentType: "application/json",
+                    data: {startdate: startdate, enddate: enddate},
+                    success: function() {
+                    console.log('SUCCESS');
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+
+            }); 
+
+            });
+        </script> -->
         
     </head>
     <body>
         <div id="header">Dashboard</div>
+        <form action="/staff/dashboard" method="POST">
         <ul class="nav-tabs" id="myTab" role="tablist">
-            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+            <label for="start">Start date:</label>
+            <input type="date" id="startdate" name="startdate" value="" min="" max="" required>
+
+            <label for="start">End date:</label>
+            <input type="date" id="enddate" name="enddate" min="" max="" required>
+        <button type="submit" id="datefilter" class="datefilter"> Filter Date</button>
+        </form>
+            
+<!--            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
                 aria-controls="all" value="" onclick="viewAll()">
                 Day
             </button>
@@ -28,7 +72,7 @@
             <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
                 aria-controls="inactiveusers" value="false" onclick="viewInactive()">
                 Year
-            </button>
+            </button> -->
         </ul>
         <div class = "container">
             <div class= "card-row row">

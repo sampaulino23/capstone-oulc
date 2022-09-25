@@ -90,7 +90,144 @@ const oulccontroller = {
             var day = dateToday.getDate(); //actual date is utc but it applies the local time
             var year = dateToday.getFullYear();
             console.log(dateToday);
-            // console.log(month + " " + day + " " + year);
+
+            let pending = {all:0, today:0, percentage: 0};
+            let waiting = {all:0, today:0};
+            let toreview = {all:0, today:0};
+            let clearedCard = {count: 0, percentage: 0};
+            let initialReview = {count: 0, percentage: 0};
+            let legalReview = {count: 0, percentage: 0};
+
+            //set violation count per department as 0 initially
+            for (y=0; y<departments.length; y++) {
+                departments[y].violationCount = 0;
+            }
+            for (z=0; z<contractTypes.length; z++) {
+                contractTypes[z].violationCount = 0;
+                contractTypes[z].requestCount = 0;
+            }
+        
+            for (i=0; i<contractrequests.length; i++) {
+
+                // START OF REQUEST COUNT PER STATUS
+                if (contractrequests[i].statusCounter == "1"){
+                    pending.all++;
+                    if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                        pending.today++;
+                    }
+                }
+                else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
+                    initialReview.count++;
+                }
+                else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
+                    legalReview.count++;
+                }
+                else if (contractrequests[i].statusCounter == "7"){
+                    clearedCard.count++;
+                }
+                // END OF REQUEST COUNT PER STATUS
+
+                // START OF REQUEST COUNT PER TYPE
+                for (k=0; k<contractTypes.length; k++) {
+                    if (contractrequests[i].contractType.name == contractTypes[k].name) {
+                        contractTypes[k].requestCount++;
+                    }   
+                }
+                // END OF REQUEST COUNT PER TYPE
+
+                // START OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
+                // To calculate the time difference of two dates
+                var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                if (Difference_In_Days < 0){
+                    Difference_In_Days = Math.floor(Difference_In_Days);
+                }
+                else {
+                    Difference_In_Days = Math.ceil(Difference_In_Days);
+                }
+
+                if (Difference_In_Days < 7) {
+                    for (j=0; j<departments.length; j++) {
+                        if (contractrequests[i].requester.department.abbrev == departments[j].abbrev) {
+                            departments[j].violationCount++;
+                        }   
+                    }
+                    for (k=0; k<contractTypes.length; k++) {
+                        if (contractrequests[i].contractType.name == contractTypes[k].name) {
+                            contractTypes[k].violationCount++;
+                        }   
+                    }
+                }
+                // END OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
+            }
+
+            // compute percentage per status
+            clearedCard.percentage = ((clearedCard.count/contractrequests.length) * 100).toFixed(2);
+            pending.percentage = ((pending.all/contractrequests.length) * 100).toFixed(2);
+            initialReview.percentage = ((initialReview.count/contractrequests.length) * 100).toFixed(2);
+            legalReview.percentage = ((legalReview.count/contractrequests.length) * 100).toFixed(2);
+
+            if (req.session.role == "Staff"){
+                //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
+                getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
+                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+            }
+    
+            res.render('dashboardoulc', {
+                user_role:req.session.role,
+                pending: pending,
+                waiting: waiting,
+                toreview: toreview,
+                cleared: clearedCard,
+                initialReview: initialReview,
+                legalReview: legalReview,
+                requestCount: contractrequests.length,
+                departments: departments,
+                contractTypes: contractTypes
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getDashboardDate: async (req, res) => {
+        try {
+
+            //console.log ("DASHBOARD" + JSON.stringify(req.session));
+            //console.log ("DASHBOARD" + req.session.role);
+            var startdate = req.body.startdate;
+            var enddate = req.body.enddate;
+
+            console.log(startdate + " until " + enddate);
+
+            //const contractrequests = await ContractRequest.find({requestDate: dateToday}).lean()
+            const contractrequests = await ContractRequest.find({requestDate: {$gte: new Date(startdate).toISOString(), $lte: new Date(enddate).toISOString()}}).lean()
+                .populate({
+                    path: 'requester',
+                    populate: {
+                        path: 'department'
+                      } 
+                })
+                .populate({
+                    path: 'contractType'
+                })
+                .populate({
+                    path: 'asssignedAttorney'
+                })
+                .sort()
+                .exec();
+
+            const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
+            const contractTypes = await ContractType.find({}).lean().exec();
+                
+            var dateToday = new Date();
+            var month = dateToday.getMonth(); //this starts with 0
+            var day = dateToday.getDate(); //actual date is utc but it applies the local time
+            var year = dateToday.getFullYear();
+            console.log(dateToday);
 
             let pending = {all:0, today:0, percentage: 0};
             let waiting = {all:0, today:0};
