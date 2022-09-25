@@ -23,12 +23,15 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket;
+let gridfsBucket, gridfsBucketRepo;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'templates'
     });
+    gridfsBucketRepo = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'repository'
+    })
 });
 
 function getStaffWaiting (month, day, year, contractrequests, waiting) {
@@ -257,6 +260,31 @@ const oulccontroller = {
                     console.log(err);
                 } else if (doc.contentType === 'application/pdf') {
                     const readstream = gridfsBucket.openDownloadStream(doc._id);
+                    readstream.pipe(res);
+                } else {
+                    res.status(404).json({
+                        err: 'No file exist'
+                    });
+                }
+            })
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    viewRepositoryFile: async (req, res) => {
+        try {
+
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    const readstream = gridfsBucketRepo.openDownloadStream(doc._id);
                     readstream.pipe(res);
                 } else {
                     res.status(404).json({
@@ -675,6 +703,46 @@ const oulccontroller = {
             console.log(err);
         }
     },
+
+    downloadRepositoryFile: async (req, res) => {
+
+        const fileid = req.params.fileid;
+
+        const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+        cursor.forEach((doc, err) => {
+            if (err) {
+                console.log(err);
+            }
+            const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
+
+            res.setHeader('Content-Type', doc.contentType);
+            res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
+            downStream.pipe(res);
+        });
+
+    },
+
+    deleteRepositoryFile: async (req, res) => {
+        console.log('Delete Repo File');
+
+        const repositoryfileid = req.body.deleteRepositoryFile;
+        const fileid = req.params.fileid;
+
+        // delete repositoryfile object
+        await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+
+        const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+        cursor.forEach((doc, err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                gridfsBucketRepo.delete(doc._id);
+            }
+        });
+
+        res.redirect('back');
+    }
 
 }
 
