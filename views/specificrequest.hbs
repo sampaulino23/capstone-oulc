@@ -59,9 +59,6 @@
                 <div id="fileView">
                 </div>
             </div>
-            <div id="fileView-full">
-            </div>
-
 
             <!-- RIGHT SIDE -->
             <div id = "right-col" class="col-6">
@@ -195,6 +192,28 @@
     </div>
 </div>
 
+<!-- View Full Size Template Modal -->
+<div class="modal fade modal-xl" id="view-full-size-modal" tabindex="-1" aria-labelledby="view-full-size-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100" id="exampleModalLabel">View File Full Size</h5>
+                <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="fileView-full">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     
 </html>
 
@@ -238,14 +257,6 @@
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.add("selected");
     }
-
-    function collapseRightCol() {
-
-        document.getElementById("right-col").style.display = "none";
-        document.getElementById("fileView").style.display = "none";
-        document.getElementById("fileView-full").style.display = "block";
-    }
-
 </script>
 
     

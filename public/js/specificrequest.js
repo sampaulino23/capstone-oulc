@@ -6,21 +6,19 @@ $(document).ready(() => {
         
         // change file view
         const fileView = $('#fileView');
-        const fileViewFull = $('#fileView-full');
         fileView.empty();
-        fileViewFull.empty();
-
         const embedPDFView = document.createElement('embed');
         embedPDFView.setAttribute('src', `/request/viewfile/${fileidSelected}`);
         embedPDFView.setAttribute('width', '100%');
         embedPDFView.setAttribute('height', '600px');
+        fileView.append(embedPDFView);
 
+        const fileViewFull = $('#fileView-full');
+        fileViewFull.empty();
         const embedPDFViewFull = document.createElement('embed');
         embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileidSelected}`);
         embedPDFViewFull.setAttribute('width', '100%');
         embedPDFViewFull.setAttribute('height', '800px');
-        
-        fileView.append(embedPDFView);
         fileViewFull.append(embedPDFViewFull);
 
         $.ajax({
@@ -79,22 +77,20 @@ $(document).ready(() => {
 
         // change file view
         const fileView = $('#fileView');
-        const fileViewFull = $('#fileView-full');
         fileView.empty();
-        fileViewFull.empty();
-
         const embedPDFView = document.createElement('embed');
         embedPDFView.setAttribute('src', `/request/viewfile/${fileid}`);
         embedPDFView.setAttribute('width', '100%');
         embedPDFView.setAttribute('height', '600px');
+        fileView.append(embedPDFView);
 
+        const fileViewFull = $('#fileView-full');
+        fileViewFull.empty();
         const embedPDFViewFull = document.createElement('embed');
         embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileid}`);
         embedPDFViewFull.setAttribute('width', '100%');
         embedPDFViewFull.setAttribute('height', '800px');
-
-        fileView.append(embedPDFView);
-        fileViewFull.append(embedPDFViewFull)
+        fileViewFull.append(embedPDFViewFull);
 
         $.ajax({
             url: "/getcontractversions",
