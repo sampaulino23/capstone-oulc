@@ -273,6 +273,31 @@ const oulccontroller = {
         }
     },
 
+    viewRepositoryFile: async (req, res) => {
+        try {
+
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    const readstream = gridfsBucketRepo.openDownloadStream(doc._id);
+                    readstream.pipe(res);
+                } else {
+                    res.status(404).json({
+                        err: 'No file exist'
+                    });
+                }
+            })
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     uploadTemplate: async (req, res) => {
         try {
 
