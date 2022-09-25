@@ -96,7 +96,7 @@ router.get('/template/:fileid', oulccontroller.viewTemplate);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/downloadrepositoryfile/:fileid', oulccontroller.downloadRepositoryFile);
-router.get('/deleterepositoryfile/:fileid', oulccontroller.deleteRepositoryFile);
+router.post('/deleterepositoryfile/:fileid', oulccontroller.deleteRepositoryFile);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

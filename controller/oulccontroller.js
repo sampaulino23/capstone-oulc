@@ -681,8 +681,6 @@ const oulccontroller = {
 
     downloadRepositoryFile: async (req, res) => {
 
-        console.log('Download Repo File');
-
         const fileid = req.params.fileid;
 
         const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
@@ -701,7 +699,24 @@ const oulccontroller = {
     },
 
     deleteRepositoryFile: async (req, res) => {
+        console.log('Delete Repo File');
 
+        const repositoryfileid = req.body.deleteRepositoryFile;
+        const fileid = req.params.fileid;
+
+        // delete repositoryfile object
+        await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+
+        const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+        cursor.forEach((doc, err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                gridfsBucketRepo.delete(doc._id);
+            }
+        });
+
+        res.redirect('back');
     }
 
 }
