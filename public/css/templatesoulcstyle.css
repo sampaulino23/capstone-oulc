@@ -111,8 +111,8 @@
 }
 
 .modal-header {
+    display: flex;
     background: #00713D;
-    justify-content: center;
     font-family: 'Poppins';
     font-weight: bolder;
     text-align: center;
@@ -201,4 +201,21 @@
 
 .nav-tabs {
     border: none;
+}
+
+.header-close-btn {
+    height: fit-content;
+    line-height: normal;
+    padding: 0px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 36px;
+    float: right;
+    margin-right: 20px;
+}
+
+.header-close-btn:hover {
+    color: #000;
+    transition: .25s;
 }

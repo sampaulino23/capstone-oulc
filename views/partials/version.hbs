@@ -1,50 +1,52 @@
-<div class="container">
-    <h5 id="notContractText" hidden="true">File selected is not a contract.</h5>
-    <div class="files-div" id="contractVersionsDiv">
-        <div class = "files-header">Contract Versions: </div><br>
-        <table id="table" class="sortable table table-hover"
-            style="width: 100%; font-size: 16px; background:#D9D9D9;">
-            <thead class="table-headers">
-                <tr>
-                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Version</th>
-                    <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
-                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
-                    <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="contractVersionsTable">
-                {{#each contractversions}}
-                <tr id="{{_id}}" class="contract-version-row">
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{version}}.0</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
-                    <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                        <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-
-        <div class="container" id="versionNotesDiv">
-            <h5>Version Notes: </h5>
+<h5 id="notContractText" hidden="true">File selected is not a contract.</h5>
+<div class="files-div" id="contractVersionsDiv">
+    <div class = "version-header">Contract Versions: </div><br>
+    <table id="table" class="sortable table table-hover"
+        style="width: 100%; font-size: 16px; background:#D9D9D9;">
+        <thead class="table-headers">
+            <tr>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Version</th>
+                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="contractVersionsTable">
             {{#each contractversions}}
-            <div class="card version-note-card" id="versionNote{{_id}}">
-                <div class="card-body">
-                    <h5 class="card-title fw-semibold">Version {{version}}.0 ({{filename}})</h5>
-                    {{#compare version '==' 1}}
-                    <p class="card-text">No comments for this version</p>
-                    {{else}}
-                    <p class="card-text fw-semibold">OULC Comments</p>
-                    <p class="card-text">{{versionNote.oulcComments}}</p>
-                    <p class="card-text fw-semibold">3rd Party Response</p>
-                    <p class="card-text">{{versionNote.thirdPartyResponse}}</p>
-                    <p class="card-text fw-semibold">Remarks/Response by Requesting Party</p>
-                    <p class="card-text">{{versionNote.requestingPartyRemarks}}</p>
-                    {{/compare}}
-                </div>
-            </div>
+            <tr id="{{_id}}" class="contract-version-row">
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{version}}.0</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                </td>
+            </tr>
             {{/each}}
+        </tbody>
+    </table>
+
+    <br><div class = "version-header">Version Notes:</div><br>
+    {{#each contractversions}}
+    <div class="card version-note-card" id="versionNote{{_id}}">
+        <p><b>File Name: </b>{{filename}}</p>
+        <p><b>Version: </b>{{version}}.0</p>
+        <hr>
+        {{#compare version '==' 1}}
+        <p class="card-text">No comments for this version</p>
+        {{else}}
+        <div class ="version-comments">
+            <p class="version-feedback-author">OULC Comments:</p>
+            <p class="card-text">{{versionNote.oulcComments}}</p>
         </div>
+        <div class ="version-comments">
+            <p class="version-feedback-author">3rd Party Response:</p>
+            <p class="card-text">{{versionNote.thirdPartyResponse}}</p>
+        </div>
+        <div class ="version-comments">
+            <p class="version-feedback-author">Requesting Party Remarks/Response:</p>
+            <p class="card-text">{{versionNote.requestingPartyRemarks}}</p>
+        </div>
+        {{/compare}}
     </div>
+    {{/each}}
 </div>

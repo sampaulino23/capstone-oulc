@@ -81,7 +81,8 @@
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Replace Template</h5>
+                                                        <h5 class="w-100 modal-title" id="exampleModalLabel">Replace Template</h5>
+                                                        <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="custom-file">
@@ -113,14 +114,15 @@
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Template</h5>
+                                                        <h5 class="w-100 modal-title" id="exampleModalLabel">Delete Template</h5>
+                                                        <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body" style = "text-align: center;">
                                                         <div class="">
                                                             <form action="/staff/deletetemplate" method="POST">
                                                             <div class="mb-3">
                                                                 <input type="hidden" class="form-control" value="{{_id}}" name="deleteTemplate">
-                                                                Are you sure you want to delete template "{{name}}"?
+                                                                Are you sure you want to delete template<br>"{{name}}"?
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
@@ -181,7 +183,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload Template</h5>
+                    <h5 class="w-100 modal-title" id="exampleModalLabel">Upload Template</h5>
+                    <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
                 </div>
                 <form action="/staff/uploadtemplate" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -210,7 +213,10 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">View Full Size Template</h5>
+                    <h5 class="modal-title w-100" id="exampleModalLabel">View Full Size Template</h5>
+                    <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                        &times;
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div id="templateViewFullSize">
