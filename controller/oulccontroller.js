@@ -23,12 +23,15 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket;
+let gridfsBucket, gridfsBucketRepo;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'templates'
     });
+    gridfsBucketRepo = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'repository'
+    })
 });
 
 function getStaffWaiting (month, day, year, contractrequests, waiting) {
@@ -675,6 +678,31 @@ const oulccontroller = {
             console.log(err);
         }
     },
+
+    downloadRepositoryFile: async (req, res) => {
+
+        console.log('Download Repo File');
+
+        const fileid = req.params.fileid;
+
+        const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+        cursor.forEach((doc, err) => {
+            if (err) {
+                console.log(err);
+            }
+            const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
+
+            res.setHeader('Content-Type', doc.contentType);
+            res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
+            downStream.pipe(res);
+        });
+
+    },
+
+    deleteRepositoryFile: async (req, res) => {
+
+    }
 
 }
 

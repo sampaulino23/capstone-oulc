@@ -90,11 +90,7 @@
                                             <td id = "" class="action-cell text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; cursor: default;">
                                                 <div id="actions">
                                                     <div class="dropstart">
-                                                        {{#if isWordFile}}
-                                                        <a target="_blank" href="/staff/downloadtemplate/{{wordFileName}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
-                                                        {{else}}
-                                                        <a target="_blank" href="/staff/downloadtemplate/{{pdfFileName}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
-                                                        {{/if}}
+                                                        <a href="/attorney/downloadrepositoryfile/{{file}}" class="download-repository-file text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
                                                         <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteContractModal{{@index}}" style ="cursor: pointer;"></i>
                                                     </div>
                                                 </div>
