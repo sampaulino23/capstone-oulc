@@ -62,6 +62,13 @@ async function seedStatus() {
             statusAttorney: 'Cleared',
             statusRequester: 'Cleared'
         },
+        {
+            //  Cancelled
+            counter: 8,
+            statusStaff: 'Cancelled',
+            statusAttorney: 'Cancelled',
+            statusRequester: 'Cancelled'
+        }
     ];
 
     for (eachStatus of statuses) {
