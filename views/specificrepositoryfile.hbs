@@ -19,7 +19,7 @@
                  var id = document.getElementById("repid").value;
                  var container = document.getElementById("tag-container");
                  var button = document.createElement("button");
-                 //button.setAttribute("id", "tag-view");
+                 button.setAttribute("id", "tag-view-" + tag);
                  button.setAttribute("class", "tag removetag-btn");
                  //button.classList.add("tag removetag-btn");
                  button.value = tag;
@@ -41,28 +41,27 @@
             });
         });
 
-         $('.removetag-btn').click(function () {
+         $(document).on("click", ".removetag-btn", function () {
 
-             var tag = document.getElementById("tag-view").value;
-             var id = document.getElementById("repid").value;
-             var container = document.getElementById("tag-container");
-             var button = document.getElementById("tag-view");
-             container.removeChild(button);
-
-            $.ajax({
-                url: "/removetag",
-                method: "GET",
-                contentType: "application/json",
-                 data: {tag: tag, id: id},
-                success: function() {
-                    console.log('SUCCESS');
-                },
-                error: function(err) {
-                    console.log(err);
-                }
+            var tagID = this.id;
+            var tag = document.getElementById(tagID).value;
+            var id = document.getElementById("repid").value;
+            var container = document.getElementById("tag-container");
+            var button = document.getElementById(tagID);
+            container.removeChild(button);
+                $.ajax({
+                    url: "/removetag",
+                    method: "GET",
+                    contentType: "application/json",
+                        data: {tag: tag, id: id},
+                    success: function() {
+                        console.log('SUCCESS');
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });        
             });
-
-        });
 
         });
     </script>
@@ -129,7 +128,7 @@
                 
                 <div id="tag-container">
                 {{#each repositoryFile.tags}}
-                <button id = "tag-view" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
+                <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
                 {{/each}}
                 </div>
 
