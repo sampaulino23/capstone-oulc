@@ -194,14 +194,19 @@
     chart.draw(data, options);
     var data2 = google.visualization.arrayToDataTable([
         ['Request Types', 'Count', { role: 'style' }],
+        {{#each contractTypes}}
+        ['{{name}}', {{requestCount}}, '#00713D'],
+        /*
         ['MOA/TOR', 2, '#00713D'],// RGB value
         ['OJT/Internship', 19, '#00713D'], // English color name
         ['MOA/Contracts', 4, '#00713D'],
         ['Licensing/Subscription', 2, '#00713D']
+        */
+        {{/each}}
     ]);
 
     var options2 = {
-        width: 200,
+        width: 1000,
         height: 200,
         legend: { position: 'none' },
         backgroundColor: { fill:'transparent' }
