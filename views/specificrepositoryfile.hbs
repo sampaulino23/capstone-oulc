@@ -19,10 +19,11 @@
                  var id = document.getElementById("repid").value;
                  var container = document.getElementById("tag-container");
                  var button = document.createElement("button");
-                 button.id = "tag-view";
-                 button.class = "tag removetag-btn";
+                 //button.setAttribute("id", "tag-view");
+                 button.setAttribute("class", "tag removetag-btn");
+                 //button.classList.add("tag removetag-btn");
                  button.value = tag;
-                 button.innerText = tag + " X";
+                 button.innerText = tag + " x";
                  container.appendChild(button);
                  document.getElementById("inputtag").value = "";
 

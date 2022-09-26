@@ -323,7 +323,9 @@ const oulccontroller = {
                 legalReview: legalReview,
                 requestCount: contractrequests.length,
                 departments: departments,
-                contractTypes: contractTypes
+                contractTypes: contractTypes,
+                startdate: startdate,
+                enddate: enddate
             });
 
         } catch (err) {
