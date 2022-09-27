@@ -49,6 +49,9 @@
     margin-top: 10px;
     margin-left: 121px;
     margin-right: 121px;
+    margin-bottom: 50px;
+    max-height: 450px;
+    overflow: auto;
 }
 
 .table-headers {
