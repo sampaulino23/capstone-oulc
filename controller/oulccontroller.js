@@ -58,6 +58,30 @@ function getStaffToReview (month, day, year, contractrequests, toreview) {
     }
 }
 
+function getAttorneyWaiting (month, day, year, contractrequests, waiting, loggedInAttorney) {
+    //get number of waiting requests (staff)
+    for (i=0; i<contractrequests.length; i++) {
+        if (contractrequests[i].statusCounter == "5" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
+            waiting.all++
+            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                waiting.today++
+            }
+        }
+    }
+}
+
+function getAttorneyToReview (month, day, year, contractrequests, toreview, loggedInAttorney) {
+    //get number of waiting requests (staff)
+    for (i=0; i<contractrequests.length; i++) {
+        if (contractrequests[i].statusCounter == "6" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
+            toreview.all++
+            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                toreview.today++
+            }
+        }
+    }
+}
+
 const oulccontroller = {
 
     getDashboard: async (req, res) => {
@@ -77,7 +101,7 @@ const oulccontroller = {
                     path: 'contractType'
                 })
                 .populate({
-                    path: 'asssignedAttorney'
+                    path: 'assignedAttorney'
                 })
                 .sort()
                 .exec();
@@ -174,6 +198,13 @@ const oulccontroller = {
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
                 getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
+            else if (req.session.role == "Attorney"){
+                //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
+                getAttorneyWaiting(month, day, year, contractrequests, waiting, req.user._id); //get number of waiting request for attorney
+                getAttorneyToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for attorney
+               
+            }
+            
     
             res.render('dashboardoulc', {
                 user_role:req.session.role,
@@ -215,7 +246,7 @@ const oulccontroller = {
                     path: 'contractType'
                 })
                 .populate({
-                    path: 'asssignedAttorney'
+                    path: 'assignedAttorney'
                 })
                 .sort()
                 .exec();

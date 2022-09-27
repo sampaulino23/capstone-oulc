@@ -225,7 +225,7 @@ const logincontroller = {
                                     if (userlogged.role.name == "Staff"){
                                         req.session.role = userlogged.role.name;
                                         console.log ("HI" + req.session.role);
-                                        res.redirect('/staff/');
+                                        res.redirect('/staff');
                                     }
                                     else if (userlogged.role.name == "Attorney"){
                                         req.session.role = userlogged.role.name;
