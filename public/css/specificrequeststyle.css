@@ -436,6 +436,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 }
 
 .version-note-card {
+    font-size: 16px;
     padding: 20px 20px;
     margin-bottom: 20px;
     background: rgba(217, 217, 217, 0.2);
