@@ -34,7 +34,7 @@ async function seedContractRequest() {
             thirdPartyRepresentativeEmail: "bianca@accenture.com",
             contractingParty: "Accenture PH",
             amountInvolved: 5000,
-            asssignedAttorney: "6318a6b4c0119ed0b4b6bb82"
+            assignedAttorney: "6318a6b4c0119ed0b4b6bb82"
         }
 
     ];

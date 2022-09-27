@@ -81,7 +81,7 @@ const ContractRequestSchema = mongoose.Schema({
     amountInvolved: {
         type: Number,
     },
-    asssignedAttorney: {
+    assignedAttorney: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
