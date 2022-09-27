@@ -114,50 +114,11 @@
             <div class= "card-row row">
                 <div class="indiv-cards col">
                     <div class = "dashboard-item">Violation Per Department</div>
-                    <div id = "columnchart" class = "chart"></div>
+                    <div id = "columnchart-violation-dept" class = "chart"></div>
                 </div>
                 <div class="indiv-cards col">
                     <div class = "dashboard-item">Violation Per Type</div>
-                    <div id = "columnchart" class = "chart"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Violation Per Department</h5>
-                    <p class="" style="font-size: 10px;"> 
-                        {{#each departments}}
-                        {{abbrev}} = {{violationCount}} <br><br>
-                        {{/each}}
-                    </p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Violation Per Type</h5>
-                    <p class="" style="font-size: 10px;"> 
-                        {{#each contractTypes}}
-                        {{name}} = {{violationCount}} <br><br>
-                        {{/each}}
-                    </p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Contract Request Per Type</h5>
-                    <p class="" style="font-size: 10px;"> 
-                        {{#each contractTypes}}
-                        {{name}} = {{requestCount}} <br><br>
-                        {{/each}}
-                    </p>
-                </div>
+                    <div id = "columnchart-violation-type" class = "chart"></div>
                 </div>
             </div>
         </div>
@@ -170,6 +131,7 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+    // for pie chart
     var data = google.visualization.arrayToDataTable([
         ['Status', 'Requests'],
         ['Pending',     {{pending.all}}],
@@ -192,28 +154,65 @@
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
     chart.draw(data, options);
+
+    // for column chart of contract request per type
     var data2 = google.visualization.arrayToDataTable([
         ['Request Types', 'Count', { role: 'style' }],
         {{#each contractTypes}}
         ['{{name}}', {{requestCount}}, '#00713D'],
-        /*
-        ['MOA/TOR', 2, '#00713D'],// RGB value
-        ['OJT/Internship', 19, '#00713D'], // English color name
-        ['MOA/Contracts', 4, '#00713D'],
-        ['Licensing/Subscription', 2, '#00713D']
-        */
         {{/each}}
     ]);
 
     var options2 = {
-        width: 1000,
+        width: 350,
         height: 200,
         legend: { position: 'none' },
-        backgroundColor: { fill:'transparent' }
+        hAxis: { textPosition: 'none' },
+        backgroundColor: 'transparent',
+        gridlines: { color: 'transparent' },
         };
 
-    var columnchart = new google.charts.Bar(document.getElementById('columnchart'));
+    var columnchart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
     columnchart.draw(data2, options2);
+
+    // for column chart of violation per department
+    var data3 = google.visualization.arrayToDataTable([
+        ['Department', 'Count', { role: 'style' }],
+        {{#each departments}}
+        ['{{abbrev}}', {{violationCount}}, '#00713D'],
+        {{/each}}
+    ]);
+
+    var options3 = {
+        width: 550,
+        height: 200,
+        legend: { position: 'none' },
+        backgroundColor: 'transparent',
+        gridlines: { color: 'transparent' },
+        };
+
+    var columnchart = new google.visualization.ColumnChart(document.getElementById('columnchart-violation-dept'));
+    columnchart.draw(data3, options3);
+
+    // for column chart of violation per type
+    var data4 = google.visualization.arrayToDataTable([
+        ['Department', 'Count', { role: 'style' }],
+        {{#each contractTypes}}
+        ['{{name}}', {{violationCount}}, '#00713D'],
+        {{/each}}
+    ]);
+
+    var options4 = {
+        width: 550,
+        height: 200,
+        legend: { position: 'none' },
+        hAxis: { textPosition: 'none' },
+        backgroundColor: 'transparent',
+        gridlines: { color: 'transparent' },
+        };
+
+    var columnchart = new google.visualization.ColumnChart(document.getElementById('columnchart-violation-type'));
+    columnchart.draw(data4, options4);
 
     }
     
