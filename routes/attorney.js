@@ -86,6 +86,7 @@ const upload = multer({ storage });
 router.use(require('connect-flash')());
 
 router.get('/', oulccontroller.getDashboard);
+router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);

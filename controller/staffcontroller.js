@@ -36,7 +36,13 @@ const staffcontroller = {
 
                 for (i = 0; i < contractrequests.length; i++) {
                     const statusList = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
-                    contractrequests[i].status = statusList.statusStaff;
+                    if (req.session.role == "Staff") {
+                        contractrequests[i].status = statusList.statusStaff;
+                    }
+                    else {
+                        contractrequests[i].status = statusList.statusAttorney;
+                    }
+                    
 
                     // var date1 = contractrequests[i].requestDate;
                     // var date2 = contractrequests[i].effectivityStartDate;
