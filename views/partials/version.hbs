@@ -28,8 +28,7 @@
     <br><div class = "version-header">Version Notes:</div><br>
     {{#each contractversions}}
     <div class="card version-note-card" id="versionNote{{_id}}">
-        <p><b>File Name: </b>{{filename}}</p>
-        <p><b>Version: </b>{{version}}.0</p>
+        <p><b>File: </b>{{filename}} (Version {{version}}.0)</p>
         <hr>
         {{#compare version '==' 1}}
         <p class="card-text">No comments for this version</p>
