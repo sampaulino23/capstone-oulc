@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/css/dashboardstyle.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<!--        <script>
+        <script>
             $(document).ready( function() {
                 var now = new Date();
                 var month = (now.getMonth() + 1);               
@@ -19,30 +19,35 @@
                 if (day < 10) 
                     day = "0" + day;
                 var today = now.getFullYear() + '-' + month + '-' + day;
-                $('#enddate').val(today);
 
-                $('.datefilter').click(function () {
-                    var startdate = document.getElementById("startdate").value;
+                var startdate = document.getElementById("startdate").value;
+                var enddate = document.getElementById("enddate").value;
+
+                if(startdate == ""){
+                    document.getElementById("startdate").setAttribute("max", today);
+                    document.getElementById("enddate").setAttribute("max", today);
+                }
+                if (startdate != ""){
+                    document.getElementById("enddate").setAttribute("min", startdate);
+                }
+                if(enddate != ""){
+                    document.getElementById("startdate").setAttribute("max", enddate);
+                    document.getElementById("enddate").setAttribute("max", today);
+                }
+               
+                $('#enddate').on('change', function() {
                     var enddate = document.getElementById("enddate").value;
-                    //alert(enddate);
-
-                $.ajax({
-                    url: "/",
-                    method: "GET",
-                    contentType: "application/json",
-                    data: {startdate: startdate, enddate: enddate},
-                    success: function() {
-                    console.log('SUCCESS');
-                    },
-                    error: function(err) {
-                        console.log(err);
-                    }
+                    document.getElementById("startdate").setAttribute("max", enddate);
                 });
 
-            }); 
+                 $('#startdate').on('change', function() {
+                    var startdate = document.getElementById("startdate").value;
+                    document.getElementById("enddate").setAttribute("min", startdate);
+                    document.getElementById("enddate").setAttribute("max", today);
+                });
 
             });
-        </script> -->
+        </script> 
         
     </head>
     <body>
@@ -56,24 +61,8 @@
             <input type="date" class = "date-input" id="enddate" name="enddate" value="{{enddate}}" min="" max="" required>
         <button type="submit" id="datefilter" class="datefilter"> Filter Date</button>
         </form>
-            
-<!--            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                aria-controls="all" value="" onclick="viewAll()">
-                Day
-            </button>
-            <button class="nav-item selected" id="activeusers-tab" data-toggle="tab" href="#activeusers" role="tab"
-                aria-controls="activeusers" value="true" onclick="viewActive()">
-                Week
-            </button>
-            <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
-                aria-controls="inactiveusers" value="false" onclick="viewInactive()">
-                Month
-            </button>
-            <button class="nav-item" id="inactiveusers-tab" data-toggle="tab" href="#inactiveusers" role="tab"
-                aria-controls="inactiveusers" value="false" onclick="viewInactive()">
-                Year
-            </button> -->
         </ul>
+        
         <div class = "container">
             <div class= "card-row row">
                 <div class="indiv-cards col">
