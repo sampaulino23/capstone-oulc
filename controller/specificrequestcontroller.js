@@ -54,7 +54,7 @@ const specificrequestcontroller = {
                     path: 'contractType'
                 })
                 .populate({
-                    path: 'asssignedAttorney'
+                    path: 'assignedAttorney'
                 })
                 .sort({requestDate: 1})
                 .exec();
