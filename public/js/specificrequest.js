@@ -13,7 +13,7 @@ $(document).ready(() => {
         embedPDFView.setAttribute('height', '600px');
         fileView.append(embedPDFView);
 
-        const fileViewFull = $('#fileView-full');
+        const fileViewFull = $('#fileViewFull');
         fileViewFull.empty();
         const embedPDFViewFull = document.createElement('embed');
         embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileidSelected}`);
@@ -77,19 +77,22 @@ $(document).ready(() => {
 
         // change file view
         const fileView = $('#fileView');
+        const fileViewFull = $('#fileViewFull');
+        
         fileView.empty();
+        fileViewFull.empty();
+
         const embedPDFView = document.createElement('embed');
         embedPDFView.setAttribute('src', `/request/viewfile/${fileid}`);
         embedPDFView.setAttribute('width', '100%');
         embedPDFView.setAttribute('height', '600px');
-        fileView.append(embedPDFView);
 
-        const fileViewFull = $('#fileView-full');
-        fileViewFull.empty();
         const embedPDFViewFull = document.createElement('embed');
         embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileid}`);
         embedPDFViewFull.setAttribute('width', '100%');
         embedPDFViewFull.setAttribute('height', '800px');
+
+        fileView.append(embedPDFView);
         fileViewFull.append(embedPDFViewFull);
 
         $.ajax({
