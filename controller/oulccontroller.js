@@ -794,6 +794,7 @@ const oulccontroller = {
         try {
 
             var path = req.path.split('/')[2];
+            var val = "test";
 
             const repositoryFile = await RepositoryFile.findOne({_id : path}).lean()
             .populate({
@@ -804,6 +805,12 @@ const oulccontroller = {
             })
             .lean()
             .exec();
+
+           /* if(await RepositoryFile.findOne({_id : path ,tags: val}).exec()){
+                console.log("EXISTS!");
+            }else{
+                console.log("N/A");
+            }*/
 
             // To calculate the time difference of two dates
             var Difference_In_Time = repositoryFile.requestid.effectivityEndDate.getTime() - repositoryFile.requestid.effectivityStartDate.getTime();
@@ -833,25 +840,26 @@ const oulccontroller = {
     },
 
     addTag: async (req, res) => {
-        try {
+       
             var tag = req.query.tag;
             var id = req.query.id;
             console.log("ID IS: " + id);
             console.log(tag);
 
-            try{
-                await RepositoryFile.findOneAndUpdate({_id : id}, { $push: { tags: tag } }).exec();
-                //res.redirect('back');
-            } catch (err) {
-                console.log(err);
+            if(await RepositoryFile.findOne({_id : id ,tags: tag}).exec()){
+                console.log("SAME!!!!!!!!!");
+            }
+            else{
+                console.log("ADDED SUCCESS");
+                try{
+                    await RepositoryFile.findOneAndUpdate({_id : id}, { $push: { tags: tag } }).exec();
+                } catch (err) {
+                    console.log(err);
+                }
             }
 
-        } catch (err) {
-            console.log(err);
-        }
     },
 
-    
     removeTag: async (req, res) => {
         try {
             var tag = req.query.tag;
@@ -862,9 +870,6 @@ const oulccontroller = {
 
             try{
                 await RepositoryFile.findOneAndUpdate({_id : id}, { $pull: { tags: tag } }).exec();
-                //await RepositoryFile.findOneAndUpdate({_id : id}, { $unset: { "tags.1": 1 } }).exec();
-                //await RepositoryFile.findOneAndUpdate({_id : id}, { $pull: { tags: null } }).exec();
-                //res.redirect('back');
             } catch (err) {
                 console.log(err);
             }

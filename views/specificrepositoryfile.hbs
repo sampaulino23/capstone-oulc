@@ -14,31 +14,32 @@
 
     <script>
         $(document).ready( () => {
+            
             $('.addtag-btn').click(function () {
                  var tag = document.getElementById("inputtag").value;
                  var id = document.getElementById("repid").value;
                  var container = document.getElementById("tag-container");
                  var button = document.createElement("button");
+
                  button.setAttribute("id", "tag-view-" + tag);
                  button.setAttribute("class", "tag removetag-btn");
-                 //button.classList.add("tag removetag-btn");
                  button.value = tag;
                  button.innerText = tag + " x";
                  container.appendChild(button);
                  document.getElementById("inputtag").value = "";
 
-            $.ajax({
-                url: "/addtag",
-                method: "GET",
-                contentType: "application/json",
-                 data: {tag: tag, id: id},
-                success: function() {
-                    console.log('SUCCESS');
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
+                $.ajax({
+                    url: "/addtag",
+                    method: "GET",
+                    contentType: "application/json",
+                    data: {tag: tag, id: id},
+                    success: function() {
+                        console.log('SUCCESS');
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
         });
 
          $(document).on("click", ".removetag-btn", function () {
