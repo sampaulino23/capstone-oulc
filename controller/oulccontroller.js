@@ -770,6 +770,7 @@ const oulccontroller = {
     getRepository: async (req, res) => {
         try {
 
+            const contracttypes = await ContractType.find({}).lean().exec();
             const repositoryFiles = await RepositoryFile.find({}).lean()
             .populate({
                 path: 'requestid',
@@ -782,6 +783,7 @@ const oulccontroller = {
     
             res.render('repository', {
                 user_role: req.session.role,
+                contracttypes: contracttypes,
                 repositoryFiles: repositoryFiles
             });
 

@@ -37,6 +37,7 @@ function searchRequestTable() {
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 } 
 
 //Dropdown Filter
@@ -64,6 +65,27 @@ function filterContractType(){ //for inventory (product category) and purchasing
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
+}
+
+//Dropdown Filter
+function repositoryFilterContractType(){ //for inventory (product category) and purchasing (product category)
+    var dropdown = document.getElementById("repositorycontractdropdown");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = dropdown.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        contracttype = cells[1] || null; // gets the 2nd `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if (filter === "All" || !contracttype || (filter === contracttype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
 }
 
 function filterRequestType(){ //for inventory (product category) and purchasing (product category)
@@ -90,6 +112,7 @@ function filterRequestType(){ //for inventory (product category) and purchasing 
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 // Reset Dropdown Filter Values
@@ -122,6 +145,7 @@ function viewAllRequests(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 function viewPending(){ 
@@ -148,6 +172,7 @@ function viewPending(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 function viewToReview(){ 
@@ -174,6 +199,7 @@ function viewToReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 function viewWaiting(){ 
@@ -200,6 +226,7 @@ function viewWaiting(){
     document.getElementById("waiting-tab").classList.add("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 function viewForLegalReview(){ 
@@ -226,6 +253,7 @@ function viewForLegalReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.add("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
 function viewCleared(){ 
@@ -252,6 +280,34 @@ function viewCleared(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.add("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
+}
+
+function viewCancelled(){ 
+    var button = document.getElementById("cancelled-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter === requeststatus.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
+    document.getElementById("waiting-tab").classList.remove("selected");
+    document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.add("selected");
 }
 
 /* TEMPLATES TABLE */

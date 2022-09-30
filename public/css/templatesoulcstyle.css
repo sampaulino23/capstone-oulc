@@ -96,11 +96,6 @@
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-#template-bar {
-    margin-bottom: 20px;
-    display: flex;
-}
-
 .table-headers {
     background: rgba(12, 128, 57, 0.6);
     color: #000;
@@ -218,4 +213,37 @@
 .header-close-btn:hover {
     color: #000;
     transition: .25s;
+}
+
+.contract-type-text {
+    color: #000;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding-right: 10px;
+}
+
+#repositorycontractdropdown {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 10px;
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 49px;
+    align-content: center;
+}
+
+.repodropdown {
+    float: right;
+}
+
+.search-repo {
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: baseline;
+    width: 300px;
 }
