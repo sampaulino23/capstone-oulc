@@ -72,22 +72,22 @@
     <div id="header">
         Contract Repository
     </div>
-    <div class = "row">
+    <div class = "subheader-row row g-0">
         <div class = "col-6">
             <div class = "contract-repo-nav" id = "subheader">
-                <a href="/staff/repository" class = "contract-repository-href">Contract Repository</a>
+                <a href="/staff/repository" class = "contract-repository-href">Repository Files</a>
                 <p class = "divider" style = "display: inline;"> > </p>
-                <a href = "/" id = "selected" class = "contract-repository-href">{{repositoryFile.requestid.requestTitle}}</a>
+                <a href = "/staff/viewFile/{{repositoryFile._id}}" id = "selected" class = "contract-repository-href">{{repositoryFile.requestid.requestTitle}}</a>
             </div>
         </div>
         <div class = "col-6">
             <span class = "info-nav-item">Information</span>
+            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#viewFullSizeModal">View Full Size</button>
         </div>
     </div>
     
     <div class="container">
         <div class="row">
-
             <!-- LEFT SIDE -->
             <div class="col-6">
                 <embed id ="pdf-viewer" src="/attorney/repositoryfile/{{repositoryFile.file}}" type="application/pdf" width="100%" height="600px"/>
@@ -132,11 +132,32 @@
                 <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
                 {{/each}}
                 </div>
-
             </div>
         </div>
-
     </div>
+
+    <!-- View Full Size Template Modal -->
+    <div class="modal fade modal-xl" id="viewFullSizeModal" tabindex="-1" aria-labelledby="viewFullSizeModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100" id="exampleModalLabel">View Full Size Template</h5>
+                    <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="templateViewFullSize">
+                        <embed id ="pdf-viewer" src="/attorney/repositoryfile/{{repositoryFile.file}}" type="application/pdf" width="100%" height="800px"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

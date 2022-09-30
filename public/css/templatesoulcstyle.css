@@ -247,3 +247,16 @@
     align-items: baseline;
     width: 300px;
 }
+
+#template-bar {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.deleteRepoFile {
+    background: #F66969;
+}
+
+.deleteRepoFile:hover {
+    background: #ff3939;
+}
