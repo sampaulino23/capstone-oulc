@@ -22,6 +22,16 @@
         {{/compare}}
 
         <ul>
+        <li>
+            <div class = "account-profile-pic" id = "accountName">
+                <div class="circle">
+                    <div id = "initials" class = "initials">
+                        
+                    </div>
+                </div>
+                <span id = "userrole">{{user_role}}</span>
+            </div>
+        </li>
         <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
         {{/if}}
         <!--
@@ -60,6 +70,12 @@
 </nav>
 
 <script>
+    // temporary get the initials of the logged user
+    var loggedUser = document.getElementById('userrole').textContent;
+    var initials = loggedUser.charAt(0)
+    document.getElementById("initials").textContent = initials;
+
+
     var pagename = document.getElementById('page-name').textContent;
     if (pagename == "Shop") {
         document.getElementById('shop').setAttribute("class", "active");
@@ -115,5 +131,6 @@
     document.getElementById('page-name').style.color = "#FFEDE3";
     document.getElementById('user').style.color = "#FFEDE3";
     document.getElementById('page-name').style.cursor = "default";
-    document.getElementById('user').style.cursor = "default";  
+    document.getElementById('user').style.cursor = "default";
+
 </script>

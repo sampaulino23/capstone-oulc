@@ -9,45 +9,50 @@
         <link rel="stylesheet" href="/css/dashboardstyle.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-        <script>
-            $(document).ready( function() {
-                var now = new Date();
-                var month = (now.getMonth() + 1);               
-                var day = now.getDate();
-                if (month < 10) 
-                    month = "0" + month;
-                if (day < 10) 
-                    day = "0" + day;
-                var today = now.getFullYear() + '-' + month + '-' + day;
+<script>
+    $(document).ready( function() {
+        var now = new Date();
+        var month = (now.getMonth() + 1);               
+        var day = now.getDate();
+        if (month < 10) 
+            month = "0" + month;
+        if (day < 10) 
+            day = "0" + day;
+        var today = now.getFullYear() + '-' + month + '-' + day;
 
-                var startdate = document.getElementById("startdate").value;
-                var enddate = document.getElementById("enddate").value;
+        var startdate = document.getElementById("startdate").value;
+        var enddate = document.getElementById("enddate").value;
 
-                if(startdate == ""){
-                    document.getElementById("startdate").setAttribute("max", today);
-                    document.getElementById("enddate").setAttribute("max", today);
-                }
-                if (startdate != ""){
-                    document.getElementById("enddate").setAttribute("min", startdate);
-                }
-                if(enddate != ""){
-                    document.getElementById("startdate").setAttribute("max", enddate);
-                    document.getElementById("enddate").setAttribute("max", today);
-                }
-               
-                $('#enddate').on('change', function() {
-                    var enddate = document.getElementById("enddate").value;
-                    document.getElementById("startdate").setAttribute("max", enddate);
-                });
+        if(startdate == ""){
+            document.getElementById("startdate").setAttribute("max", today);
+            document.getElementById("enddate").setAttribute("max", today);
+        }
+        if (startdate != ""){
+            document.getElementById("enddate").setAttribute("min", startdate);
+        }
+        if(enddate != ""){
+            document.getElementById("startdate").setAttribute("max", enddate);
+            document.getElementById("enddate").setAttribute("max", today);
+        }
+        
+        $('#enddate').on('change', function() {
+            var enddate = document.getElementById("enddate").value;
+            document.getElementById("startdate").setAttribute("max", enddate);
+        });
 
-                 $('#startdate').on('change', function() {
-                    var startdate = document.getElementById("startdate").value;
-                    document.getElementById("enddate").setAttribute("min", startdate);
-                    document.getElementById("enddate").setAttribute("max", today);
-                });
+            $('#startdate').on('change', function() {
+            var startdate = document.getElementById("startdate").value;
+            document.getElementById("enddate").setAttribute("min", startdate);
+            document.getElementById("enddate").setAttribute("max", today);
+        });
 
-            });
-        </script> 
+        var clearedPercentage = document.getElementById("clearedPercentage").textContent;
+        if (clearedPercentage == "NaN%") {
+            document.getElementById("clearedPercentage").textContent = "0%";
+        }
+
+    });
+</script> 
         
     </head>
     <body>
@@ -74,7 +79,7 @@
                 <div class="indiv-cards col">
                     <div class = "dashboard-item">Cleared Documents</div>
                     <div class = "sub-dashboard-header"><br></div>
-                    <div class = "dashboard-item-body">{{cleared.percentage}}%</div>
+                    <div id = "clearedPercentage" class = "dashboard-item-body">{{cleared.percentage}}%</div>
                     <div class = "dashboard-item-sub-body">{{cleared.count}}/{{requestCount}} Documents Cleared</div>
                 </div>
                 <div class="indiv-cards col">
