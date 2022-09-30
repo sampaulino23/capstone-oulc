@@ -845,28 +845,27 @@ const oulccontroller = {
        
             var tag = req.query.tag;
             var id = req.query.id;
+
             console.log("ID IS: " + id);
             console.log(tag);
 
             if(await RepositoryFile.findOne({_id : id ,tags: tag}).exec()){
-                console.log("SAME!!!!!!!!!");
+                console.log("Tag already exists. Can't add.");
             }
             else{
-                console.log("ADDED SUCCESS");
                 try{
                     await RepositoryFile.findOneAndUpdate({_id : id}, { $push: { tags: tag } }).exec();
                 } catch (err) {
                     console.log(err);
                 }
+                console.log("Tag was added succesfully.");
             }
-
     },
 
     removeTag: async (req, res) => {
         try {
             var tag = req.query.tag;
             var id = req.query.id;
-            //var position = req.query.position;
             console.log("ID IS: " + id);
             console.log("Removed: " + tag);
 

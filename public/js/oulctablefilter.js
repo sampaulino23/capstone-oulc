@@ -1,7 +1,6 @@
 //TABLE FILTER FOR OULC... //
 
 /* REQUESTS TABLE */
-
 //Search Filter 
 function searchRequestTable() {
     var input, filter, table, tr, td, td2, td3,td4, td5, td6, td7, i;
@@ -41,7 +40,7 @@ function searchRequestTable() {
 } 
 
 //Dropdown Filter
-function filterContractType(){ //for inventory (product category) and purchasing (product category)
+function filterContractType(){ //for contract type dropdown
     var dropdown = document.getElementById("contracttypedropdown");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
@@ -69,26 +68,7 @@ function filterContractType(){ //for inventory (product category) and purchasing
 }
 
 //Dropdown Filter
-function repositoryFilterContractType(){ //for inventory (product category) and purchasing (product category)
-    var dropdown = document.getElementById("repositorycontractdropdown");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = dropdown.value;
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        cells = row.getElementsByTagName("td");
-        contracttype = cells[1] || null; // gets the 2nd `td` or nothing
-        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if (filter === "All" || !contracttype || (filter === contracttype.textContent)) {
-            row.style.display = ""; // shows this row
-        }
-        else {
-            row.style.display = "none"; // hides this row
-        }
-    }
-}
-
-function filterRequestType(){ //for inventory (product category) and purchasing (product category)
+function filterRequestType(){ //for requests type dropdown
     var dropdown = document.getElementById("requesttypedropdown");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
@@ -311,6 +291,7 @@ function viewCancelled(){
 }
 
 /* TEMPLATES TABLE */
+//Search Filter 
 function searchTemplateTable() {
     var input, filter, table, tr, td, td2, i;
       input = document.getElementById("myInput");
@@ -355,6 +336,7 @@ $(document).ready(function() {
 });
 
 /* REPOSITORY TABLE */
+//Search Filter 
 function searchRepositoryTable() {
     var input, filter, table, tr, td, td2, i;
       input = document.getElementById("myInput");
@@ -379,113 +361,22 @@ function searchRepositoryTable() {
       }
 } 
 
-// Tab Filters (Document Type)
-function viewAllRepository(){ 
+// Dropdown Filters (Document Type)
+function repositoryFilterContractType(){ //for contract type dropdown
+    var dropdown = document.getElementById("repositorycontractdropdown");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        row.style.display = ""; // shows this row
-    }
-    document.getElementById("all-tab").classList.add("selected");
-    document.getElementById("a-tab").classList.remove("selected");
-    document.getElementById("b-tab").classList.remove("selected");
-    document.getElementById("d-tab").classList.remove("selected");
-    document.getElementById("h-tab").classList.remove("selected");
-}
-
-function viewTypeA(){ 
-    var button = document.getElementById("a-tab");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = button.value;
+    var filter = dropdown.value;
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        documenttype = cells[1] || null; // gets the 8th `td` or nothing
+        contracttype = cells[1] || null; // gets the 2nd `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !documenttype || (filter === documenttype.textContent)) {
+        if (filter === "All" || !contracttype || (filter === contracttype.textContent)) {
             row.style.display = ""; // shows this row
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("a-tab").classList.add("selected");
-    document.getElementById("b-tab").classList.remove("selected");
-    document.getElementById("d-tab").classList.remove("selected");
-    document.getElementById("h-tab").classList.remove("selected");
-}
-
-function viewTypeB(){ 
-    var button = document.getElementById("b-tab");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = button.value;
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        cells = row.getElementsByTagName("td");
-        documenttype = cells[1] || null; // gets the 8th `td` or nothing
-        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !documenttype || (filter === documenttype.textContent)) {
-            row.style.display = ""; // shows this row
-        }
-        else {
-            row.style.display = "none"; // hides this row
-        }
-    }
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("a-tab").classList.remove("selected");
-    document.getElementById("b-tab").classList.add("selected");
-    document.getElementById("d-tab").classList.remove("selected");
-    document.getElementById("h-tab").classList.remove("selected");
-}
-
-function viewTypeD(){ 
-    var button = document.getElementById("d-tab");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = button.value;
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        cells = row.getElementsByTagName("td");
-        documenttype = cells[1] || null; // gets the 8th `td` or nothing
-        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !documenttype || (filter === documenttype.textContent)) {
-            row.style.display = ""; // shows this row
-        }
-        else {
-            row.style.display = "none"; // hides this row
-        }
-    }
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("a-tab").classList.remove("selected");
-    document.getElementById("b-tab").classList.remove("selected");
-    document.getElementById("d-tab").classList.add("selected");
-    document.getElementById("h-tab").classList.remove("selected");
-}
-
-function viewTypeH(){ 
-    var button = document.getElementById("h-tab");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = button.value;
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        cells = row.getElementsByTagName("td");
-        documenttype = cells[1] || null; // gets the 8th `td` or nothing
-        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !documenttype || (filter === documenttype.textContent)) {
-            row.style.display = ""; // shows this row
-        }
-        else {
-            row.style.display = "none"; // hides this row
-        }
-    }
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("a-tab").classList.remove("selected");
-    document.getElementById("b-tab").classList.remove("selected");
-    document.getElementById("d-tab").classList.remove("selected");
-    document.getElementById("h-tab").classList.add("selected");
 }

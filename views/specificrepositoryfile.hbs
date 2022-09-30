@@ -16,17 +16,30 @@
         $(document).ready( () => {
             
             $('.addtag-btn').click(function () {
-                 var tag = document.getElementById("inputtag").value;
-                 var id = document.getElementById("repid").value;
-                 var container = document.getElementById("tag-container");
-                 var button = document.createElement("button");
+                var tag = document.getElementById("inputtag").value;
+                var id = document.getElementById("repid").value;
+                var container = document.getElementsByClassName("tag-container");
+                var buttons = container[0].getElementsByTagName("button");
+                var exists = 0;
 
-                 button.setAttribute("id", "tag-view-" + tag);
-                 button.setAttribute("class", "tag removetag-btn");
-                 button.value = tag;
-                 button.innerText = tag + " x";
-                 container.appendChild(button);
-                 document.getElementById("inputtag").value = "";
+                for (var iIndex = 0; iIndex < buttons.length; iIndex++){
+                    if(buttons[iIndex].value == tag){
+                        exists++;
+                    }
+                };
+
+                if(exists == 0){
+                    var button = document.createElement("button");
+                    var tagcontainer = document.getElementById("tag-container");
+                    button.setAttribute("id", "tag-view-" + tag);
+                    button.setAttribute("class", "tag removetag-btn");
+                    button.value = tag;
+                    button.innerText = tag + " x";
+                    tagcontainer.appendChild(button);
+                    document.getElementById("inputtag").value = "";
+                } else{
+                    alert("TAG ALREADY EXISTS. INPUT NEW ONE")
+                }
 
                 $.ajax({
                     url: "/addtag",
@@ -127,7 +140,7 @@
                 <!--</form> -->
                 </div>
                 
-                <div id="tag-container">
+                <div id="tag-container" class="tag-container">
                 {{#each repositoryFile.tags}}
                 <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
                 {{/each}}
