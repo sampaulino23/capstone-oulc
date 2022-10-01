@@ -38,7 +38,8 @@
                     tagcontainer.appendChild(button);
                     document.getElementById("inputtag").value = "";
                 } else{
-                    alert("TAG ALREADY EXISTS. INPUT NEW ONE")
+                    //alert("TAG ALREADY EXISTS. INPUT NEW ONE");
+                    document.getElementById("invalidtag").style.display = "";
                 }
 
                 $.ajax({
@@ -75,6 +76,10 @@
                         console.log(err);
                     }
                 });        
+            });
+
+            $('.inputtag').keyup(function () {
+                document.getElementById("invalidtag").style.display = "none";
             });
 
         });
@@ -133,17 +138,17 @@
                 File<br>
                 <div id = "add-tag-div">
                     <p>Tags</p>
-                    <!--<form action="/staff/addtag" method="POST"> -->
                     <input type="hidden" id="repid" name="repid" value="{{repositoryFile._id}}">
-                    <input type="text" id="inputtag" name="inputtag" placeholder="Enter new tag..."><br>
+                    <input type="text" id="inputtag" class="inputtag" name="inputtag" placeholder="Enter new tag...">
                     <button type="" class="addtag-btn">+ Add Tag</button>
-                <!--</form> -->
                 </div>
+
+                <p id="invalidtag" style="color: red; display: none;">Tag already exists. Enter a new tag name.</p> 
                 
                 <div id="tag-container" class="tag-container">
-                {{#each repositoryFile.tags}}
-                <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
-                {{/each}}
+                    {{#each repositoryFile.tags}}
+                    <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
+                    {{/each}}
                 </div>
             </div>
         </div>
