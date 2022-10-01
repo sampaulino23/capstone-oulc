@@ -33,6 +33,8 @@ $(document).ready(() => {
 
             if (statusListDisabled.includes(statusCounter)) {
                 $('.is-reviewed').prop('disabled', true);
+                $('#forLegalReviewBtn').prop('disabled', true);
+                $('#forRevisionBtn').prop('disabled', true);
             }
         } else if (role == 'Attorney') {
             // disable checkbox if status counter is within [1, 2, 3, 5, 7, 8]
@@ -41,6 +43,8 @@ $(document).ready(() => {
 
             if (statusListDisabled.includes(statusCounter)) {
                 $('.is-reviewed').prop('disabled', true);
+                $('#forLegalReviewBtn').prop('disabled', true);
+                $('#forRevisionBtn').prop('disabled', true);
             }
         }
 
