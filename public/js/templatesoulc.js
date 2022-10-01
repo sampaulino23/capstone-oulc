@@ -2,6 +2,7 @@ $(document).ready(() => {
 
     $('#uploadTemplateBtn').click(function() {
         if ($('#file').val()) {
+
             $("#uploadingFileToast").toast({
                 delay: 8000
             });
@@ -9,6 +10,10 @@ $(document).ready(() => {
             // Show toast  
             $("#uploadingFileToast").toast("show");
         }
+
+        // code belows gets the contentType of the file uploaded
+        // var fileUploaded = $('#file').prop('files')[0].contentType;
+        // console.log(fileUploaded);
     });
     $('#confirmReplaceTemplate').click(function() {
         $("#replacingFileToast").toast({

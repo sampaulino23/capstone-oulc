@@ -82,7 +82,17 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if(ext !== '.pdf' && ext !== '.doc' && ext !== '.docx') {
+        return callback('Only .PDF .DOC .DOCX are allowed')
+    }
+    callback(null, true)
+},
+});
 
 router.use(require('connect-flash')());
 
