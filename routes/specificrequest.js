@@ -114,7 +114,16 @@ const storageRequestDocs = new GridFsStorage({
   }
 });
 
-const uploadRequestDocs = multer( {storageRequestDocs} );
+const uploadRequestDocs = multer( {
+  storage: storageRequestDocs,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if(ext !== '.pdf' && ext !== '.doc' && ext !== '.docx') {
+        return callback('Only .PDF .DOC .DOCX are allowed')
+    }
+    callback(null, true)
+},
+} );
 
 // upload request documents
 router.post('/uploadrequestdocs', uploadRequestDocs.fields([
