@@ -331,7 +331,13 @@ $(document).ready(function() {
         }
     }
 
-    viewPending();
+    const currentRole = $('#currentRole').val();
+
+    if (currentRole == 'Staff') {
+        viewPending();
+    } else if (currentRole == 'Attorney') {
+        viewForLegalReview();
+    }
 
 });
 

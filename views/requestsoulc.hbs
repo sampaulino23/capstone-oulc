@@ -12,6 +12,7 @@
     </head>
     <body>
         <div id="header">Contract Approval Requests</div>
+        <input type="hidden" id="currentRole" value="{{user.role.name}}">
 
         <ul class="nav-tabs" id="myTab" role="tablist">
             {{#compare user.role.name '==' 'Staff'}}
@@ -41,7 +42,7 @@
                 aria-controls="all" value="" onclick="viewAllRequests()">
                 All
             </button>
-            <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
+            <button class="nav-item selected" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
                 For Legal Review
             </button>
