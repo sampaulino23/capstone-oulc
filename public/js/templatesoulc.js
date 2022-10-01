@@ -1,12 +1,14 @@
 $(document).ready(() => {
 
     $('#uploadTemplateBtn').click(function() {
-        $("#uploadingFileToast").toast({
-            delay: 8000
-        });
+        if ($('#file').val()) {
+            $("#uploadingFileToast").toast({
+                delay: 8000
+            });
 
-        // Show toast  
-        $("#uploadingFileToast").toast("show");
+            // Show toast  
+            $("#uploadingFileToast").toast("show");
+        }
     });
     $('#confirmReplaceTemplate').click(function() {
         $("#replacingFileToast").toast({
