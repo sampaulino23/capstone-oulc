@@ -12,6 +12,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
+const { populate } = require('../models/User.js');
 
 const staffcontroller = {
 
@@ -65,9 +66,16 @@ const staffcontroller = {
                 }
 
             const contracttypes = await ContractType.find({}).lean().exec();
-    
+
+            const user = await User.findById(req.user).lean()
+                            .populate({
+                                path: 'role'
+                            })
+                            .exec();
+            
             res.render('requestsoulc', {
                 user_role:req.session.role,
+                user: user,
                 contracttypes: contracttypes,
                 contractrequests: contractrequests
             });

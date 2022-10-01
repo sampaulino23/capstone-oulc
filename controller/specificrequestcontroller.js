@@ -39,7 +39,11 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
 
             var userid = req.user._id;
-            const user = await User.find({_id : userid}).lean().exec();
+            const user = await User.findById(userid).lean()
+                            .populate({
+                                path: 'role'
+                            })
+                            .exec();
 
             // console.log(path);
 

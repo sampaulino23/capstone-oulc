@@ -21,6 +21,31 @@ $(document).ready(() => {
         embedPDFViewFull.setAttribute('height', '800px');
         fileViewFull.append(embedPDFViewFull);
 
+        // get current user id
+        const role = $('#currentRole').val();
+        console.log(role);
+
+        // if current role is Staff
+        if (role == 'Staff') {
+            // disable checkbox if status counter is within [2, 4, 5, 6, 7, 8]
+            const statusCounter = parseInt($('#statusCounter').val());
+            const statusListDisabled = [2, 4, 5, 6, 7, 8];
+
+            if (statusListDisabled.includes(statusCounter)) {
+                $('.is-reviewed').prop('disabled', true);
+            }
+        } else if (role == 'Attorney') {
+            // disable checkbox if status counter is within [1, 2, 3, 5, 7, 8]
+            const statusCounter = parseInt($('#statusCounter').val());
+            const statusListDisabled = [1, 2, 3, 5, 7, 8];
+
+            if (statusListDisabled.includes(statusCounter)) {
+                $('.is-reviewed').prop('disabled', true);
+            }
+        }
+
+        console.log(statusCounter);
+
         $.ajax({
             url: "/getcontractversions",
             method: "GET",

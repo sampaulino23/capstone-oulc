@@ -7,13 +7,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/requestsoulcstyle.css">
-
+        <script src="/js/requestsoulc.js" type="text/javascript"></script>
         <script src="/js/oulctablefilter.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="header">Contract Approval Requests</div>
 
         <ul class="nav-tabs" id="myTab" role="tablist">
+            {{#compare user.role.name '==' 'Staff'}}
             <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
                 aria-controls="all" value="" onclick="viewAllRequests()">
                 All
@@ -34,14 +35,33 @@
                 aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
                 For Legal Review
             </button>
+            {{/compare}}
+            {{#compare user.role.name '==' 'Attorney'}}
+            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                aria-controls="all" value="" onclick="viewAllRequests()">
+                All
+            </button>
+            <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
+                For Legal Review
+            </button>
+            <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Waiting" onclick="viewWaiting()">
+                Waiting
+            </button>
             <button class="nav-item" id="cleared-tab" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="Cleared" onclick="viewCleared()">
                 Cleared
+            </button>
+            <button class="nav-item" id="reroutedTab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Rerouted" onclick="">
+                Rerouted
             </button>
             <button class="nav-item" id="cancelled-tab" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelled()">
                 Cancelled
             </button>
+            {{/compare}}
         </ul>
 
         <div id="query-search">
