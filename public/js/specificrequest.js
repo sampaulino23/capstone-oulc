@@ -3,7 +3,7 @@ $(document).ready(() => {
     $(window).on('load', function() {
 
         var fileidSelected = $('#fileSelected').find(":selected").val();
-        
+
         // change file view
         const fileView = $('#fileView');
         fileView.empty();
@@ -43,8 +43,9 @@ $(document).ready(() => {
 
             if (statusListDisabled.includes(statusCounter)) {
                 $('.is-reviewed').prop('disabled', true);
-                $('#forLegalReviewBtn').prop('disabled', true);
+                $('#approveBtn').prop('disabled', true);
                 $('#forRevisionBtn').prop('disabled', true);
+                $('#routeAttorneyBtn').prop('disabled', true);
             }
         }
 
