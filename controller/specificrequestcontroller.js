@@ -149,6 +149,10 @@ const specificrequestcontroller = {
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
+            const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
+
+            const attorneys = await User.find({role: roleAttorney,_id: { $ne: userid }}).lean().exec();
+
             res.render('specificrequest', {
                 user_role:req.session.role,
                 contractrequest: contractrequest,
@@ -156,7 +160,8 @@ const specificrequestcontroller = {
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
-                user: user
+                user: user,
+                attorneys: attorneys
             });
 
         } catch (err) {
