@@ -143,7 +143,7 @@
 
             <div class="modal-body">
                 <div class="custom-file mb-3">
-
+                    {{#compare user_role "==" "Staff"}}
                     <form action="/request/forrevision/staff" method="POST">
                     <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addStaffFeedbackID">
                         <div class="input-feedback mb-3">
@@ -155,6 +155,21 @@
                             <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
                         </div>
                     </form>
+                    {{/compare}}
+
+                    {{#compare user_role "==" "Attorney"}}
+                    <form action="/request/forrevision/attorney" method="POST">
+                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addAttorneyFeedbackID">
+                        <div class="input-feedback mb-3">
+                            <label for="fullname" class="form-label">Enter Comments/Feedback:</label>
+                            <input type="text" class="form-control" id="addAttorneyFeedback" name="addAttorneyFeedback" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                        </div>
+                    </form>
+                    {{/compare}}
                 </div>
             </div>
         </div>

@@ -90,6 +90,9 @@ router.get('/forlegalreview', specificrequestcontroller.forLegalReview);
 router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff);
 // staff end
 
+// attorney start
+router.post('/forrevision/attorney', specificrequestcontroller.postForRevisionAttorney);
+// attorney end
 
 // requesting office start
 router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);

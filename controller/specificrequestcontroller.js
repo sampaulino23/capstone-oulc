@@ -85,7 +85,14 @@ const specificrequestcontroller = {
             // }
 
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
-            contractrequest.status = statusList.statusStaff;
+
+            if (req.user.roleName == "Staff") {
+                contractrequest.status = statusList.statusStaff;
+            }
+            else if (req.user.roleName == "Attorney") {
+                contractrequest.status = statusList.statusAttorney;
+            }
+            
 
             // To calculate the time difference of two dates
             var Difference_In_Time = contractrequest.effectivityEndDate.getTime() - contractrequest.effectivityStartDate.getTime();
@@ -194,6 +201,41 @@ const specificrequestcontroller = {
             console.log("Inside For Revision Office Staff");
 
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
+            await feedback.save();
+            // var feedback = req.body.addStaffFeedback;
+            // var id = req.body.addStaffFeedbackID;
+
+            res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    forLegalReview: async (req, res) => { //staff
+        try {
+            console.log("Inside For Legal Review");
+            var userid = req.query.userid;
+            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 4} });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postForRevisionAttorney: async (req, res) => { //attorney
+        try {
+
+            var contractRequestId = req.body.addAttorneyFeedbackID;
+
+            var feedback = new Feedback({
+                contractRequest: req.body.addAttorneyFeedbackID,
+                user_id: req.user._id,
+                content: req.body.addAttorneyFeedback
+            });
+
+            console.log("Inside For Revision Attorney");
+
+            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
             await feedback.save();
             // var feedback = req.body.addStaffFeedback;
             // var id = req.body.addStaffFeedbackID;
