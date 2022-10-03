@@ -154,7 +154,7 @@ const specificrequestcontroller = {
             const attorneys = await User.find({role: roleAttorney,_id: { $ne: userid }}).lean().exec();
 
             res.render('specificrequest', {
-                user_role:req.session.role,
+                user_role:req.user.roleName,
                 contractrequest: contractrequest,
                 feedback: feedback,
                 latestversioncontracts: latestversioncontracts,

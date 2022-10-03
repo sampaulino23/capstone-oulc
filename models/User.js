@@ -22,6 +22,10 @@ const UserSchema = mongoose.Schema({
         ref: 'Role',
         required: true
     },
+    roleName: {
+        type: String,
+        required: true
+    },
     isActive: {
         type: Boolean,
         default: false

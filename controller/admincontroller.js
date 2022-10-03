@@ -60,7 +60,7 @@ const admincontroller = {
             res.render('adduser', {
                 departments: departments,
                 roles: roles,
-                user_role: req.session.role
+                user_role: req.user.roleName
             });
 
         } catch (err) {
@@ -87,6 +87,7 @@ const admincontroller = {
                 email: req.body.email,
                 department: department._id,
                 role: role._id,
+                roleName: roleName,
                 isActive: true,
                 password: password,
                 isDefaultPass: true
@@ -104,7 +105,7 @@ const admincontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "capstone.zelong@gmail.com", //change to user.email when done testing
+                to: "capstone.samantha@gmail.com", //change to user.email when done testing
                 subject: "New account password",
                 text: "Welcome to the OULC's Contract Management System, " + user.fullName + ". To log in to our system, please use this as your password: " + user.password +
                 " http://localhost:3000/resetpassword/" + user._id 
@@ -167,7 +168,7 @@ const admincontroller = {
                 departments: departments,
                 roles: roles,
                 newlyAddedUser: newUser,
-                user_role: req.session.role
+                user_role: req.user.roleName
             });
 
         } catch (err) {

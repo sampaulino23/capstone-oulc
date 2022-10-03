@@ -37,7 +37,7 @@ const staffcontroller = {
 
                 for (i = 0; i < contractrequests.length; i++) {
                     const statusList = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
-                    if (req.session.role == "Staff") {
+                    if (req.user.roleName == "Staff") {
                         contractrequests[i].status = statusList.statusStaff;
                     }
                     else {
@@ -74,7 +74,7 @@ const staffcontroller = {
                             .exec();
             
             res.render('requestsoulc', {
-                user_role:req.session.role,
+                user_role:req.user.roleName,
                 user: user,
                 contracttypes: contracttypes,
                 contractrequests: contractrequests
@@ -94,7 +94,7 @@ const staffcontroller = {
                 }).exec();
     
             res.render('templatesoulc', {
-                user_role: req.session.role,
+                user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 templates: templates
             });

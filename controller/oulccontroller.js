@@ -86,10 +86,6 @@ const oulccontroller = {
 
     getDashboard: async (req, res) => {
         try {
-
-            console.log ("DASHBOARD" + JSON.stringify(req.session));
-            console.log ("DASHBOARD" + req.session.role);
-
             const contractrequests = await ContractRequest.find({}).lean()
                 .populate({
                     path: 'requester',
@@ -193,12 +189,12 @@ const oulccontroller = {
             initialReview.percentage = ((initialReview.count/contractrequests.length) * 100).toFixed(2);
             legalReview.percentage = ((legalReview.count/contractrequests.length) * 100).toFixed(2);
 
-            if (req.session.role == "Staff"){
+            if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
                 getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
-            else if (req.session.role == "Attorney"){
+            else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getAttorneyWaiting(month, day, year, contractrequests, waiting, req.user._id); //get number of waiting request for attorney
                 getAttorneyToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for attorney
@@ -207,7 +203,7 @@ const oulccontroller = {
             
     
             res.render('dashboardoulc', {
-                user_role:req.session.role,
+                user_role:req.user.roleName,
                 pending: pending,
                 waiting: waiting,
                 toreview: toreview,
@@ -226,9 +222,6 @@ const oulccontroller = {
 
     getDashboardDate: async (req, res) => {
         try {
-
-            //console.log ("DASHBOARD" + JSON.stringify(req.session));
-            //console.log ("DASHBOARD" + req.session.role);
             var startdate = req.body.startdate;
             var enddate = req.body.enddate;
 
@@ -338,14 +331,21 @@ const oulccontroller = {
             initialReview.percentage = ((initialReview.count/contractrequests.length) * 100).toFixed(2);
             legalReview.percentage = ((legalReview.count/contractrequests.length) * 100).toFixed(2);
 
-            if (req.session.role == "Staff"){
+            if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
                 getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
+            else if (req.user.roleName == "Attorney"){
+                //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
+                getAttorneyWaiting(month, day, year, contractrequests, waiting, req.user._id); //get number of waiting request for attorney
+                getAttorneyToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for attorney
+               
+            }
+            
     
             res.render('dashboardoulc', {
-                user_role:req.session.role,
+                user_role:req.user.roleName,
                 pending: pending,
                 waiting: waiting,
                 toreview: toreview,
@@ -785,7 +785,7 @@ const oulccontroller = {
             .exec();
     
             res.render('repository', {
-                user_role: req.session.role,
+                user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 repositoryFiles: repositoryFiles
             });
@@ -834,7 +834,7 @@ const oulccontroller = {
             repositoryFile.daysDuration = Difference_In_Days;
             
             res.render('specificrepositoryfile', {
-                user_role: req.session.role,
+                user_role: req.user.roleName,
                 repositoryFile: repositoryFile
 
             });
