@@ -35,13 +35,17 @@ const staffcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
+            console.log('length: ' + contractrequests.length);
+
             for (i = 0; i < contractrequests.length; i++) {
                 const statusList = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
                 if (req.user.roleName == "Staff") {
                     contractrequests[i].status = statusList.statusStaff;
+                    console.log(i + ' ' + contractrequests[i].statusCounter + ' ' + contractrequests[i].status);
                 }
                 else {
                     contractrequests[i].status = statusList.statusAttorney;
+                    console.log(i + ' ' + contractrequests[i].statusCounter + ' ' + contractrequests[i].status);
                 }
                 
 

@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
     $('.is-reviewed').change(function () {
+
         var currentval = $(this).val();
 
         if (currentval == 'true') {
@@ -23,32 +24,103 @@ $(document).ready(() => {
             }
         }
 
-        if (allreviewed == true) {
+        if (allreviewed == false) {
+            $("#allReviewed").attr("hidden", true);
+    
+            if (role == 'Staff') {
+                // disable for legal review button
+                $("#forLegalReviewBtn").attr("disabled", true);
+                document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
+                document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
+    
+                // disable for revision button
+                $("#forRevisionBtn").attr("disabled", true);
+                document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+            } else if (role == 'Attorney') {
+                // disable for approve button
+                $("#approveBtn").attr("disabled", true);
+                document.getElementById("approveBtn").style.cursor = "not-allowed";
+    
+                // disable for revision button
+                $("#forRevisionBtn").attr("disabled", true);
+                document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+    
+                // disable for route attorney button
+                $("#routeAttorneyBtn").attr("disabled", true);
+                document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
+            }
+            
+        } else {
             $("#allReviewed").attr("hidden", false);
+    
+            if (role == 'Staff') {
+                // enable for legal review button
+                $("#forLegalReviewBtn").attr("disabled", false);
+                document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
+                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
+                document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
+    
+                // enable for revision button
+                $("#forRevisionBtn").attr("disabled", false);
+                document.getElementById("forRevisionBtn").style.cursor = "pointer";
+    
+            } else if (role == 'Attorney') {
+                // enable for approve button
+                $("#approveBtn").attr("disabled", false);
+                document.getElementById("approveBtn").style.cursor = "pointer";
+    
+                // enable for revision button
+                $("#forRevisionBtn").attr("disabled", false);
+                document.getElementById("forRevisionBtn").style.cursor = "pointer";
+    
+                // enable for approve button
+                $("#routeAttorneyBtn").attr("disabled", false);
+                document.getElementById("routeAttorneyBtn").style.cursor = "pointer";
+            }
+            
+        }
 
-            // enable for legal review button
-            $("#forLegalReviewBtn").attr("disabled", false);
-            document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
-            document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
-            document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
+        // if (allreviewed == true) {
+        //     $("#allReviewed").attr("hidden", false);
 
-            // enable for revision button
-            $("#forRevisionBtn").attr("disabled", false);
-            document.getElementById("forRevisionBtn").style.cursor = "pointer";
+        //     // enable for legal review button
+        //     $("#forLegalReviewBtn").attr("disabled", false);
+        //     document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
+        //     document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
+        //     document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
+
+        //     // enable for revision button
+        //     $("#forRevisionBtn").attr("disabled", false);
+        //     document.getElementById("forRevisionBtn").style.cursor = "pointer";
+
+        //     $("#approveBtn").attr("disabled", false);
+        //     document.getElementById("approveBtn").style.cursor = "pointer";
+
+        //     // enable for approve button
+        //     $("#routeAttorneyBtn").attr("disabled", false);
+        //     document.getElementById("routeAttorneyBtn").style.cursor = "pointer";
             
 
-        } else if (allreviewed == false) {
-            $("#allReviewed").attr("hidden", true);
+        // } else if (allreviewed == false) {
+        //     $("#allReviewed").attr("hidden", true);
 
-            // disable for legal review button
-            $("#forLegalReviewBtn").attr("disabled", true);
-            document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
-            document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
+        //     // disable for legal review button
+        //     $("#forLegalReviewBtn").attr("disabled", true);
+        //     document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
+        //     document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
 
-            // disable for revision button
-            $("#forRevisionBtn").attr("disabled", true);
-            document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
-        }
+        //     // disable for revision button
+        //     $("#forRevisionBtn").attr("disabled", true);
+        //     document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+
+        //     // disable for approve button
+        //     $("#approveBtn").attr("disabled", true);
+        //     document.getElementById("approveBtn").style.cursor = "not-allowed";
+
+        //     // disable for route attorney button
+        //     $("#routeAttorneyBtn").attr("disabled", true);
+        //     document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
+        // }
 
     });
 
