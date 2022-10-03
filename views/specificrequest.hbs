@@ -199,6 +199,25 @@
     </div>
 </div>
 
+<!-- Mark request as cleared -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Confirm Mark as Cleared</h5>
+            </div>
+
+            <div class="modal-body centered">
+                Are you sure you want to mark the request as cleared?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="mark-as-btn markascleared" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Upload Signed Contract Modal -->
 <div class="modal fade" id="uploadRepositoryFile" tabindex="-1" aria-labelledby="uploadRepositoryFile" aria-hidden="true">
     <div class="modal-dialog">

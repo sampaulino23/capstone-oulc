@@ -211,17 +211,6 @@ const specificrequestcontroller = {
         }
     },
 
-    forLegalReview: async (req, res) => { //staff
-        try {
-            console.log("Inside For Legal Review");
-            var userid = req.query.userid;
-            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 4} });
-
-        } catch (err) {
-            console.log(err);
-        }
-    },
-
     postForRevisionAttorney: async (req, res) => { //attorney
         try {
 
@@ -241,6 +230,17 @@ const specificrequestcontroller = {
             // var id = req.body.addStaffFeedbackID;
 
             res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    markAsCleared: async (req, res) => { //attorney
+        try {
+            console.log("Inside Mark as Cleared");
+            var userid = req.query.userid;
+            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 7} });
+
         } catch (err) {
             console.log(err);
         }
