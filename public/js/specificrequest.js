@@ -1,106 +1,204 @@
-$(document).ready(() => {
+$(window).bind('beforeunload', function() {
+    var rowCount = $('#documentsAttachedTable tr').length;
 
-    $(window).on('load', function() {
+    var allreviewed = true;
 
-        var fileidSelected = $('#fileSelected').find(":selected").val();
+    var documentsattached = [];
 
-        // change file view
-        const fileView = $('#fileView');
-        fileView.empty();
-        const embedPDFView = document.createElement('embed');
-        embedPDFView.setAttribute('src', `/request/viewfile/${fileidSelected}`);
-        embedPDFView.setAttribute('width', '100%');
-        embedPDFView.setAttribute('height', '600px');
-        fileView.append(embedPDFView);
+    for(var i = 0; i < rowCount; i++) {
+        var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
+        var documentattachedrowid = documentattachedrow.attr('id');
+        var documentattachedrowtype = documentattachedrow.attr('class');
+        var isreviewed = documentattachedrow.find('.is-reviewed').val();
 
-        const fileViewFull = $('#fileViewFull');
-        fileViewFull.empty();
-        const embedPDFViewFull = document.createElement('embed');
-        embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileidSelected}`);
-        embedPDFViewFull.setAttribute('width', '100%');
-        embedPDFViewFull.setAttribute('height', '800px');
-        fileViewFull.append(embedPDFViewFull);
+        var documenttype;
 
-        // get current user id
-        const role = $('#currentRole').val();
-        console.log(role);
-
-        // if current role is Staff
-        if (role == 'Staff') {
-            // disable checkbox if status counter is within [2, 4, 5, 6, 7, 8]
-            const statusCounter = parseInt($('#statusCounter').val());
-            const statusListDisabled = [2, 4, 5, 6, 7, 8];
-
-            if (statusListDisabled.includes(statusCounter)) {
-                $('.is-reviewed').prop('disabled', true);
-                $('#forLegalReviewBtn').prop('disabled', true);
-                $('#forRevisionBtn').prop('disabled', true);
-            }
-        } else if (role == 'Attorney') {
-            // disable checkbox if status counter is within [1, 2, 3, 5, 7, 8]
-            const statusCounter = parseInt($('#statusCounter').val());
-            const statusListDisabled = [1, 2, 3, 5, 7, 8];
-
-            if (statusListDisabled.includes(statusCounter)) {
-                $('.is-reviewed').prop('disabled', true);
-                $('#approveBtn').prop('disabled', true);
-                $('#forRevisionBtn').prop('disabled', true);
-                $('#routeAttorneyBtn').prop('disabled', true);
-            }
+        if (documentattachedrowtype == 'latest-version-contract-row') {
+            documenttype = 'contract';
+        } else if (documentattachedrowtype == 'reference-document-row') {
+            documenttype = 'refdoc';
         }
+
+        if (isreviewed == 'false') {    // if not all reviewed
+            allreviewed = false;
+        }
+
+        let documentattached = {
+            documentid: documentattachedrowid,
+            documenttype: documenttype,
+            isreviewed: isreviewed
+        }
+        
+        documentsattached.push(documentattached);
+    }
+
+    if (allreviewed == false) {
+        $("#allReviewed").attr("hidden", true);
+    }
+
+    $.ajax({
+        url: "/setrevieweddocuments",
+        method: "GET",
+        contentType: "application/json",
+        data: {documentsattached: documentsattached},
+        success: function() {
+            console.log('SUCCESS');
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+});
+
+$(window).on('load', function() {
+
+    var fileidSelected = $('#fileSelected').find(":selected").val();
+
+    // change file view
+    const fileView = $('#fileView');
+    fileView.empty();
+    const embedPDFView = document.createElement('embed');
+    embedPDFView.setAttribute('src', `/request/viewfile/${fileidSelected}`);
+    embedPDFView.setAttribute('width', '100%');
+    embedPDFView.setAttribute('height', '600px');
+    fileView.append(embedPDFView);
+
+    const fileViewFull = $('#fileViewFull');
+    fileViewFull.empty();
+    const embedPDFViewFull = document.createElement('embed');
+    embedPDFViewFull.setAttribute('src', `/request/viewfile/${fileidSelected}`);
+    embedPDFViewFull.setAttribute('width', '100%');
+    embedPDFViewFull.setAttribute('height', '800px');
+    fileViewFull.append(embedPDFViewFull);
+
+    // get current user id
+    const role = $('#currentRole').val();
+    console.log(role);
+
+    // if current role is Staff
+    if (role == 'Staff') {
+        // disable checkbox if status counter is within [2, 4, 5, 6, 7, 8]
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [2, 4, 5, 6, 7, 8];
 
         console.log(statusCounter);
 
-        $.ajax({
-            url: "/getcontractversions",
-            method: "GET",
-            contentType: "application/json",
-            data: {fileid: fileidSelected},
-            success: function(res) {
+        if (statusListDisabled.includes(statusCounter)) {
+            $('.is-reviewed').prop('disabled', true);
+            $('#forLegalReviewBtn').prop('disabled', true);
+            $('#forRevisionBtn').prop('disabled', true);
+        }
+    } else if (role == 'Attorney') {
+        // disable checkbox if status counter is within [1, 2, 3, 5, 7, 8]
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [1, 2, 3, 5, 7, 8];
 
-                console.log(res.contractversionslist);
+        console.log(statusCounter);
 
-                const contractversionslist = res.contractversionslist;
-                var rowCount = $('#contractVersionsTable tr').length;
-                var rows = $('#contractVersionsTable tr');
-                $('#contractVersionsDiv').show();
+        if (statusListDisabled.includes(statusCounter)) {
+            $('.is-reviewed').prop('disabled', true);
+            $('#approveBtn').prop('disabled', true);
+            $('#forRevisionBtn').prop('disabled', true);
+            $('#routeAttorneyBtn').prop('disabled', true);
+        }
+    }
 
-                if (res.isContract == true) {
-                    rows.hide();
-                    $('#notContractText').attr('hidden', true);
-                    $('.version-note-card').hide();
+    $.ajax({
+        url: "/getcontractversions",
+        method: "GET",
+        contentType: "application/json",
+        data: {fileid: fileidSelected},
+        success: function(res) {
 
-                    for(var i = 0; i < rowCount; i++) {
-                        for (contractversion of contractversionslist) {
-                            var contractversionrow = $('#contractVersionsTable tr:eq(' + i + ' )');
-                            var contractversionrowid = contractversionrow.attr('id');
-                            
-                            if (contractversionrowid == contractversion._id) {
-                                // filter contract version list
-                                contractversionrow.show();
-                            }
+            console.log(res.contractversionslist);
 
-                            // if latest version of contract
-                            if (contractversion.contract.latestversion == contractversion.version) {
-                                $('#versionNote' + contractversion._id).show();
-                            }
+            const contractversionslist = res.contractversionslist;
+            var rowCount = $('#contractVersionsTable tr').length;
+            var rows = $('#contractVersionsTable tr');
+            $('#contractVersionsDiv').show();
+
+            if (res.isContract == true) {
+                rows.hide();
+                $('#notContractText').attr('hidden', true);
+                $('.version-note-card').hide();
+
+                for(var i = 0; i < rowCount; i++) {
+                    for (contractversion of contractversionslist) {
+                        var contractversionrow = $('#contractVersionsTable tr:eq(' + i + ' )');
+                        var contractversionrowid = contractversionrow.attr('id');
+                        
+                        if (contractversionrowid == contractversion._id) {
+                            // filter contract version list
+                            contractversionrow.show();
+                        }
+
+                        // if latest version of contract
+                        if (contractversion.contract.latestversion == contractversion.version) {
+                            $('#versionNote' + contractversion._id).show();
                         }
                     }
-
-                } else {
-                    $('#contractVersionsDiv').hide();
-                    $('#notContractText').attr('hidden', false);
-
                 }
 
-                console.log('SUCCESS');
+            } else {
+                $('#contractVersionsDiv').hide();
+                $('#notContractText').attr('hidden', false);
 
-            },
-            error: function(err) {
-                console.log(err);
             }
-        });
+
+            console.log('SUCCESS');
+
+        },
+        error: function(err) {
+            console.log(err);
+        }
     });
+
+
+    // for files tab
+    var rowCount = $('#documentsAttachedTable tr').length;
+
+    var allreviewed = true;
+
+    for(var i = 0; i < rowCount; i++) {
+        var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
+        var isreviewed = documentattachedrow.find('.is-reviewed').val();
+
+        console.log(i + ' ' + isreviewed);
+
+        if (isreviewed == 'false') {    // if not all reviewed
+            allreviewed = false;
+        }
+    }
+
+    if (allreviewed == false) {
+        $("#allReviewed").attr("hidden", true);
+
+        // disable for legal review button
+        $("#forLegalReviewBtn").attr("disabled", true);
+        document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
+        document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
+
+        // disable for revision button
+        $("#forRevisionBtn").attr("disabled", true);
+        document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+    } else {
+        $("#allReviewed").attr("hidden", false);
+
+        // enable for legal review button
+        $("#forLegalReviewBtn").attr("disabled", false);
+        document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
+        document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
+        document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
+
+        // enable for revision button
+        $("#forRevisionBtn").attr("disabled", false);
+        document.getElementById("forRevisionBtn").style.cursor = "pointer";
+
+    }
+});
+
+$(document).ready(() => {
+
     $('#fileSelected').change(function () {
         
         var fileid = $(this).val();
