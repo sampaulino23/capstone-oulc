@@ -179,8 +179,8 @@ const specificrequestcontroller = {
     forLegalReview: async (req, res) => { //staff
         try {
             console.log("Inside For Legal Review");
-            var userid = req.query.userid;
-            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 4} });
+            var contractid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { statusCounter: 4} });
 
         } catch (err) {
             console.log(err);
@@ -238,8 +238,8 @@ const specificrequestcontroller = {
     markAsCleared: async (req, res) => { //attorney
         try {
             console.log("Inside Mark as Cleared");
-            var userid = req.query.userid;
-            await ContractRequest.findOneAndUpdate({ _id: userid }, { $set: { statusCounter: 7} });
+            var contractid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { statusCounter: 7} });
 
         } catch (err) {
             console.log(err);

@@ -317,7 +317,7 @@ $(document).ready(() => {
             url: "/request/forlegalreview",
             method: "GET",
             contentType: "application/json",
-            data: { userid: this.id },
+            data: { contractid: this.id },
             success: setTimeout(function () {
                 console.log('SUCCESS');
                 location.reload();
@@ -334,7 +334,7 @@ $(document).ready(() => {
             url: "/request/approveRequest",
             method: "GET",
             contentType: "application/json",
-            data: { userid: this.id },
+            data: { contractid: this.id },
             success: setTimeout(function () {
                 console.log('SUCCESS');
                 location.reload();
