@@ -19,7 +19,15 @@ const staffcontroller = {
     getRequests: async (req, res) => {
         try {
 
-            const contractrequests = await ContractRequest.find({}).lean()
+            if(req.user.roleName == "Attorney" && req.user._id != "6318a6b4c0119ed0b4b6bb82"){
+                var query = {assignedAttorney: req.user._id};
+            }
+            else{
+                var query = {};
+            }
+
+            console.log(query + req.user.fullName);
+            const contractrequests = await ContractRequest.find(query).lean()
                 .populate({
                     path: 'requester',
                     populate: {

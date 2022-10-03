@@ -103,6 +103,7 @@
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
                                 <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
+                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Atty</th>
                             </tr>
                         </thead>
                         <tbody id="myRequestTable">
@@ -118,6 +119,7 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{assignedAttorney.fullName}}</td>
                             </tr>
 
                             {{/each}}
