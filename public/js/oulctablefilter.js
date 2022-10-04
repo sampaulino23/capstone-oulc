@@ -125,6 +125,7 @@ function viewAllRequests(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -152,6 +153,7 @@ function viewPending(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -179,6 +181,7 @@ function viewToReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -206,6 +209,7 @@ function viewWaiting(){
     document.getElementById("waiting-tab").classList.add("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -233,6 +237,7 @@ function viewForLegalReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.add("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -260,6 +265,35 @@ function viewCleared(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.add("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
+    document.getElementById("cancelled-tab").classList.remove("selected");
+}
+
+function viewRerouted(){ 
+    var atty = document.getElementById("currentId");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = atty.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[8] || null; // gets the 9th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter != requeststatus.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("pending-tab").classList.remove("selected");
+    document.getElementById("toreview-tab").classList.remove("selected");
+    document.getElementById("waiting-tab").classList.remove("selected");
+    document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.add("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -287,6 +321,7 @@ function viewCancelled(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
+    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.add("selected");
 }
 
