@@ -13,6 +13,7 @@
     <body>
         <div id="header">Contract Approval Requests</div>
         <input type="hidden" id="currentRole" value="{{user.role.name}}">
+        <input type="hidden" id="currentId" value="{{user._id}}">
 
         <ul class="nav-tabs" id="myTab" role="tablist">
             {{#compare user.role.name '==' 'Staff'}}
@@ -54,7 +55,7 @@
                 aria-controls="inactiveusers" value="Cleared" onclick="viewCleared()">
                 Cleared
             </button>
-            <button class="nav-item" id="reroutedTab" data-toggle="tab" href="" role="tab"
+            <button class="nav-item" id="reroutedTab" data-toggle="tab" href="" role="tab" 
                 aria-controls="inactiveusers" value="Rerouted" onclick="">
                 Rerouted
             </button>

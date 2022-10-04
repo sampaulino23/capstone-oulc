@@ -26,7 +26,7 @@ const staffcontroller = {
                 var query = {};
             }
 
-            console.log(query + req.user.fullName);
+            //console.log(query + req.user.fullName);
             const contractrequests = await ContractRequest.find(query).lean()
                 .populate({
                     path: 'requester',
