@@ -24,6 +24,10 @@ $(document).ready(() => {
             }
         }
 
+        // get current role
+        const role = $('#currentRole').val();
+        console.log(role);
+
         if (allreviewed == false) {
             $("#allReviewed").attr("hidden", true);
     
@@ -45,9 +49,6 @@ $(document).ready(() => {
                 $("#forRevisionBtn").attr("disabled", true);
                 document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
     
-                // disable for route attorney button
-                $("#routeAttorneyBtn").attr("disabled", true);
-                document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
             }
             
         } else {
@@ -73,54 +74,9 @@ $(document).ready(() => {
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
     
-                // enable for approve button
-                $("#routeAttorneyBtn").attr("disabled", false);
-                document.getElementById("routeAttorneyBtn").style.cursor = "pointer";
             }
             
         }
-
-        // if (allreviewed == true) {
-        //     $("#allReviewed").attr("hidden", false);
-
-        //     // enable for legal review button
-        //     $("#forLegalReviewBtn").attr("disabled", false);
-        //     document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
-        //     document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
-        //     document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
-
-        //     // enable for revision button
-        //     $("#forRevisionBtn").attr("disabled", false);
-        //     document.getElementById("forRevisionBtn").style.cursor = "pointer";
-
-        //     $("#approveBtn").attr("disabled", false);
-        //     document.getElementById("approveBtn").style.cursor = "pointer";
-
-        //     // enable for approve button
-        //     $("#routeAttorneyBtn").attr("disabled", false);
-        //     document.getElementById("routeAttorneyBtn").style.cursor = "pointer";
-            
-
-        // } else if (allreviewed == false) {
-        //     $("#allReviewed").attr("hidden", true);
-
-        //     // disable for legal review button
-        //     $("#forLegalReviewBtn").attr("disabled", true);
-        //     document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
-        //     document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
-
-        //     // disable for revision button
-        //     $("#forRevisionBtn").attr("disabled", true);
-        //     document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
-
-        //     // disable for approve button
-        //     $("#approveBtn").attr("disabled", true);
-        //     document.getElementById("approveBtn").style.cursor = "not-allowed";
-
-        //     // disable for route attorney button
-        //     $("#routeAttorneyBtn").attr("disabled", true);
-        //     document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
-        // }
 
     });
 
