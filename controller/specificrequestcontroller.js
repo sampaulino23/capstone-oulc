@@ -251,7 +251,20 @@ const specificrequestcontroller = {
             const contractrequestid = req.query.contractrequestid;
             const routedattorney = req.query.routedattorney;
 
-            await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } })
+            await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } }).exec();
+
+            // Reset is-reviewed to false for all latest contracts and reference documents attached
+            const contracts = await Contract.find({ contractRequest: contractrequestid }).exec();
+
+            for (contract of contracts) {
+                await ContractVersion.findOneAndUpdate({ contract: contract._id,  version: contract.latestversion}, { $set: { isreviewed: false } }).exec();
+            }
+
+            const referencedocuments = await ReferenceDocument.find({ contractRequest: contractrequestid }).exec();
+
+            for (referencedocument of referencedocuments) {
+                await ReferenceDocument.findByIdAndUpdate(referencedocument._id, { $set: { isreviewed: false } }).exec();
+            }
 
         } catch (err) {
             console.log(err);
