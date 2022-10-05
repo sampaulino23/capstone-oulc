@@ -246,6 +246,18 @@ const specificrequestcontroller = {
         }
     },
 
+    routeToAnotherAttorney: async (req, res) => {
+        try {
+            const contractrequestid = req.query.contractrequestid;
+            const routedattorney = req.query.routedattorney;
+
+            await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } })
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     postUploadRepositoryFile: async (req, res) => { // requesting office
         try {
 

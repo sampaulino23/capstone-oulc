@@ -388,6 +388,30 @@ $(document).ready(() => {
         });
 
     });
+    $('#routeToAnotherAttorney').click(function () {
+        
+        const contractrequestid = $('#contractRequestId').val();
+
+        const routedattorney = $('#routeAttorneySelect').find(':selected').val();
+
+        $.ajax({
+            url: "/request/routeattorney",
+            method: "GET",
+            contentType: "application/json",
+            data: { 
+                contractrequestid: contractrequestid,
+                routedattorney: routedattorney
+            },
+            success: setTimeout(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }, 100),
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    });
 
     // $('.forrevision').click(function () {
     //     alert(this.id);
