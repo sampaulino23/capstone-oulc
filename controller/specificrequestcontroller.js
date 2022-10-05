@@ -462,6 +462,123 @@ const specificrequestcontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getRevisionHistory: async (req, res) => { //staff
+        try {
+
+            // var path = req.path.split('/')[2];
+
+            // var userid = req.user._id;
+            // const user = await User.findById(userid).lean()
+            //                 .populate({
+            //                     path: 'role'
+            //                 })
+            //                 .exec();
+
+            // // console.log(path);
+
+            // const contractrequest = await ContractRequest.findById(path).lean()
+            //     .populate({
+            //         path: 'requester',
+            //         populate: {
+            //             path: 'department'
+            //           } 
+            //     })
+            //     .populate({
+            //         path: 'contractType'
+            //     })
+            //     .populate({
+            //         path: 'assignedAttorney'
+            //     })
+            //     .sort({requestDate: 1})
+            //     .exec();
+
+    
+
+            // const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
+
+            // if (req.user.roleName == "Staff") {
+            //     contractrequest.status = statusList.statusStaff;
+            // }
+            // else if (req.user.roleName == "Attorney") {
+            //     contractrequest.status = statusList.statusAttorney;
+            // }
+            
+
+            // // To calculate the time difference of two dates
+            // var Difference_In_Time = contractrequest.effectivityEndDate.getTime() - contractrequest.effectivityStartDate.getTime();
+                    
+            // // To calculate the no. of days between two dates
+            // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+            // if (Difference_In_Days < 0){
+            //     Difference_In_Days = Math.floor(Difference_In_Days);
+            // }
+            // else {
+            //     Difference_In_Days = Math.ceil(Difference_In_Days);
+            // }
+
+            // // To set number of days gap in contract request
+            // contractrequest.daysDuration = Difference_In_Days;
+
+            // const feedback = await Feedback.find({contractRequest : path}).lean()
+            //     .populate({
+            //         path: 'user_id'
+            //     })
+            //     .sort({date: -1})
+            //     .exec();
+
+            // const contracts = await Contract.find({contractRequest: path}).lean().exec();
+
+            // var latestversioncontracts = [];
+            // var contractversions = [];
+
+            // for (contract of contracts) {
+            //     const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
+            //         .lean()
+            //         .populate({
+            //             path: 'versionNote'
+            //         })
+            //         .exec();
+                
+            //         latestversioncontracts.push(latestversioncontract);
+
+            //     const contractversion = await ContractVersion.find({contract: contract._id})
+            //         .lean()
+            //         .populate({
+            //             path: 'contract',
+            //             populate: {
+            //                 path: 'contractRequest',
+            //                 populate: {
+            //                     path: 'requester',
+            //                 }
+            //             }
+            //         })
+            //         .populate({
+            //             path: 'versionNote'
+            //         })
+            //         .sort({version: -1})
+            //         .exec();
+
+            //     for (eachcontractversion of contractversion) {
+            //         contractversions.push(eachcontractversion);
+            //     }
+            // }
+
+            // const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
+
+            // const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
+
+            // const attorneys = await User.find({role: roleAttorney,_id: { $ne: userid }}).lean().exec();
+
+            res.render('revisionhistory', {
+                user_role:req.user.roleName
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }

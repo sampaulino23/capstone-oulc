@@ -93,6 +93,7 @@ router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff
 // attorney start
 router.post('/forrevision/attorney', specificrequestcontroller.postForRevisionAttorney);
 router.get('/approveRequest', specificrequestcontroller.markAsCleared);
+router.get('/revisionHistory', specificrequestcontroller.getRevisionHistory);
 // attorney end
 
 // requesting office start
