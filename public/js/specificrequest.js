@@ -194,6 +194,7 @@ $(window).on('load', function() {
     if (!isDisabled) {
         if (allreviewed == false) {
             $("#allReviewed").attr("hidden", true);
+            $("#checkAll").prop("checked", false);
     
             if (role == 'Staff') {
                 // disable for legal review button
@@ -217,6 +218,7 @@ $(window).on('load', function() {
             
         } else {
             $("#allReviewed").attr("hidden", false);
+            $("#checkAll").prop("checked", true);
     
             if (role == 'Staff') {
                 // enable for legal review button
