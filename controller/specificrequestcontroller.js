@@ -17,6 +17,8 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
 
+const fs = require('fs');
+
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
@@ -30,6 +32,9 @@ conn.once('open', () => {
         bucketName: 'requestdocuments'
     });
 });
+
+var client = require('@draftable/compare-api').client('erkpQU-test', 'bbbe3883ab6c7505da79f85bd60bfdaf');
+var comparisons = client.comparisons;
 
 const specificrequestcontroller = {
 
@@ -470,6 +475,24 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
 
             console.log(path);
+
+            comparisons.create({
+                left: {
+                    source: fs.readFileSync('./ISTREND Syllabus (Summer 21-22) (1).pdf'),
+                    fileType: 'pdf',
+                },
+                right: {
+                    source: fs.readFileSync('./ISTREND Syllabus (Summer 21-22).pdf'),
+                    fileType: 'pdf',
+                },
+                public: true
+            }).then(function(comparison) {
+                console.log("Comparison created: %s", comparison);
+                // Generate a signed viewer URL to access the private comparison. The expiry
+                // time defaults to 30 minutes if the valid_until parameter is not provided.
+                const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+            });
 
             res.render('revisionhistory', {
                 user_role:req.user.roleName

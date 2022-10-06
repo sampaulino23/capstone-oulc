@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/sampaulino23/capstone-oulc#readme",
   "dependencies": {
+    "@draftable/compare-api": "^1.4.3",
     "ajax": "0.0.4",
     "assert": "^2.0.0",
     "axios": "^0.27.2",
