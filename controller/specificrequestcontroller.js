@@ -504,14 +504,14 @@ const specificrequestcontroller = {
 
             comparisons.create({
                 left: {
-                    source: fs.readFileSync('./ISTREND Syllabus (Summer 21-22) (1).pdf'),
+                    source: fs.readFileSync('./MOA External Sponsorship-Template.pdf'),
                     fileType: 'pdf',
                 },
                 right: {
-                    source: fs.readFileSync('./ISTREND Syllabus (Summer 21-22).pdf'),
+                    source: fs.readFileSync('./MOA External Sponsorship.pdf'),
                     fileType: 'pdf',
                 },
-                public: true
+                publiclyAccessible: true
             }).then(function(comparison) {
                 console.log("Comparison created: %s", comparison);
                 // Generate a signed viewer URL to access the private comparison. The expiry
