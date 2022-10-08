@@ -10,6 +10,8 @@
                 <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
                 <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
             </tr>
+            <a href="/request/revisionHistory/{{contract._id}}" class="revision-history text-body"><button class="mark-as-btn" id="">Revision History</button></a>
+            
         </thead>
         <tbody id="contractVersionsTable">
             {{#each contractversions}}
@@ -19,7 +21,6 @@
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
                     <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
-                    <a href="/request/revisionHistory/{{contract._id}}" class="revision-history text-body"><button class="mark-as-btn" id="">Revision History</button></a>
                 </td>
             </tr>
             {{/each}}
