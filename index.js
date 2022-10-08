@@ -118,18 +118,18 @@ const server = app.listen(process.env.PORT || 3000);
 
 const io = socket(server);
 io.on("connection", function (socket) {
-    console.log("User made socket connection");
+    console.log("User made socket connection " + socket.id);
 
-    socket.on('user-join', function(data){
+    /*socket.on('user-join', function(data){
         //Send message to everyone
         this.username = data;
         io.sockets.emit('user-join', data);
         console.log(data);
-     });
+     });*/
 
     socket.on('chat-message', function(data){
         //Send message to everyone
-        data.username = this.username;
+        //data.username = this.username;
         io.sockets.emit('chat-message', data);
         console.log(data);
      });

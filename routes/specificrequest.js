@@ -140,6 +140,9 @@ router.post('/uploadrequestdocs', uploadRequestDocs.fields([
 // view file on contract request
 router.get('/viewfile/:fileid', specificrequestcontroller.viewFile);
 
+// Messages
+router.get('/sendmessage', specificrequestcontroller.getMessage);
+
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
 });

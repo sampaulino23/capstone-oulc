@@ -81,7 +81,7 @@
     <div class = "discussion-header">Discussion Thread:</div>
     <br>
     <ul id="messages">Sample</ul>
-    <form id="form" action="">
+    <form id="form" action="/request/attorney/sendmessage" method="GET">
       <input id="input" autocomplete="off" placeholder = "Type message here..." /><button class = "send-btn">Send</button>
     </form>
 
@@ -90,45 +90,35 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
 <script src = "/socket.io/socket.io.js"></script>
 <script> 
-    const socket = io(); 
+    //const socket = io(); 
 
     var form = document.getElementById('form');
     var input = document.getElementById('input');
     var messages = document.getElementById('discussion-div');
-    var username = document.getElementById('username').value;
+    //var username = document.getElementById('username').value;
 
     //console.log("THE USER IS: " + username);
-
-
-    //form.addEventListener('submit', function(e) {
-    //    e.preventDefault();
-
-    //    if (input.value) {
-    //    socket.emit('message', input.value);
-    //    input.value = '';
-    //    }
-    //});-->
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        //addMessage(input.value);
+        addMessage(input.value);
 
-        socket.emit("chat-message", {
+        /*socket.emit("chat-message", {
             message: input.value
-        });
+        });*/
 
         input.value = "";
         return false;
     }, false);
 
     socket.on("chat-message", function(data) {
-        addMessage(username + ": " + data.message);
+        addMessage( ": " + data.message);
     });
 
-    socket.on("user_join", function(data) {
+    /*socket.on("user_join", function(data) {
         addMessage(data + " just joined the chat!");
-    });
+    });*/
 
     function addMessage(message) {
         var ul = document.createElement("ul");

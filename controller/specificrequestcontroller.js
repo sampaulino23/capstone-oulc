@@ -10,6 +10,7 @@ const ContractVersion = require('../models/ContractVersion.js');
 const VersionNote = require('../models/VersionNote.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
 const Feedback = require('../models/Feedback.js');
+const Message = require('../models/Message.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
 const Role = require('../models/Role.js');
@@ -526,7 +527,23 @@ const specificrequestcontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    getMessage: async (req, res) => {
+       
+        var message = req.query.message;
+        var sender = req.query.id;
+        var name = req.query.name;
+
+        console.log(name + ": " + message);
+
+        // insert message to db
+        var newMessage = new Message({
+            message: message,
+            enderName: name
+        });
+        await newMessage.save();
+},
 
 }
 
