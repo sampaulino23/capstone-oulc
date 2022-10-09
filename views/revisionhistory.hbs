@@ -32,14 +32,14 @@
         <div class="left-col col-6">
                 <div class="input-group mb-3">
                     <span class="file-selected input-group-text">Contract Title</span>
-                    <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
-                        {{#each latestversioncontracts}}
-                            <option value="{{file}}">{{filename}}</option>
+                    <select class="form-select" name="fileSelectedLeft" id="fileSelectedLeft" aria-label="file-selected">
+                        {{#each contractversions}}
+                            <option value="{{file}}">Version {{version}}</option>
                         {{/each}}
                     </select>
-                    <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
-                        {{#each latestversioncontracts}}
-                            <option value="{{file}}">{{filename}}</option>
+                    <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
+                        {{#each contractversions}}
+                            <option value="{{file}}">Version {{version}}</option>
                         {{/each}}
                     </select>
                 </div>

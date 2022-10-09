@@ -498,9 +498,17 @@ const specificrequestcontroller = {
     getRevisionHistory: async (req, res) => { //staff
         try {
 
-            var path = req.path.split('/')[2];
+            // var path = req.path.split('/')[2];
 
-            console.log(path);
+            // console.log(path);
+
+            const contractfileid = req.body.contractFileId;
+            console.log(contractfileid);
+
+            const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).exec();
+            console.log(selectedcontractversion);
+
+            const contractversions = await ContractVersion.find({ contract: selectedcontractversion.contract }).lean().exec();
 
             comparisons.create({
                 left: {
@@ -521,7 +529,8 @@ const specificrequestcontroller = {
             });
 
             res.render('revisionhistory', {
-                user_role:req.user.roleName
+                user_role: req.user.roleName,
+                contractversions: contractversions
             });
 
         } catch (err) {
