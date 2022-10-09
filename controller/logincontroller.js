@@ -79,6 +79,9 @@ const logincontroller = {
             else if (req.session.role == "Administrator") {
                 res.redirect('/admin/usermanagement');
             }
+            else if (req.session.role == "Requester") {
+                res.redirect('/requester');
+            }
             else {
                 res.render('login', {
                     // profileurl: '/profile/' + req.session.uname,
@@ -227,6 +230,9 @@ const logincontroller = {
                                     }
                                     else if (userlogged.role.name == "Attorney"){
                                         res.redirect('/attorney');
+                                    }
+                                    else if (userlogged.role.name == "Requester"){
+                                        res.redirect('/requester');
                                     }
                                     else {
                                         res.redirect('/admin/usermanagement');

@@ -100,6 +100,9 @@ app.use('/staff', staffRoute);
 const attorneyRoute = require('./routes/attorney');
 app.use('/attorney', attorneyRoute);
 
+const requesterRoute = require('./routes/requester');
+app.use('/requester', requesterRoute);
+
 const specificRequestRoute = require('./routes/specificrequest');
 app.use('/request', specificRequestRoute);
 
