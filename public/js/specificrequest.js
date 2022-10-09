@@ -54,6 +54,9 @@ $(window).on('load', function() {
 
     var fileidSelected = $('#fileSelected').find(":selected").val();
 
+    // change contractFileId for revision history feature
+    $('#contractFileId').val(fileidSelected);
+
     // change file view
     const fileView = $('#fileView');
     fileView.empty();
@@ -277,6 +280,9 @@ $(document).ready(() => {
     $('#fileSelected').change(function () {
         
         var fileid = $(this).val();
+
+        // change contractFileId for revision history feature
+        $('#contractFileId').val(fileid);
 
         // change file view
         const fileView = $('#fileView');

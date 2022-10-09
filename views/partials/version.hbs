@@ -10,8 +10,10 @@
                 <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
                 <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
             </tr>
-            <a href="/request/revisionHistory/{{contract._id}}" class="revision-history text-body"><button class="mark-as-btn" id="">Revision History</button></a> <!-- NEED ID OF CONTRACT SELECTED -->
-
+            <form method="POST" action="/request/revisionHistory">
+                <input type="hidden" name="contractFileId" id="contractFileId" val="">
+                <button type="submit" class="mark-as-btn" id="revisionHistory">Revision History</button>
+            </form>
         </thead>
         <tbody id="contractVersionsTable">
             {{#each contractversions}}
