@@ -86,6 +86,7 @@ const staffcontroller = {
                             .exec();
             
             res.render('requestsoulc', {
+                user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 user: user,
                 contracttypes: contracttypes,

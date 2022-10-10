@@ -40,7 +40,7 @@
     right: 10px;
     padding-top: 18px;
     font-size: 30px;
-    color: #fff;
+    color: #fff !important;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
