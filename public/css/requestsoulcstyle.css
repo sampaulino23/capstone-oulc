@@ -55,12 +55,14 @@
 }
 
 .table-headers {
-    background: rgba(12, 128, 57, 0.6);
-    color: #000;
+    background: #0c8039;
+    color: rgb(255, 255, 255);
     font-weight: bolder;
     line-height: 24px;
     text-align:center;
     cursor: pointer;
+    position: sticky;
+    top: 0;
 }
 
 #myTable {
@@ -120,4 +122,19 @@
     width: 213px;
     height: 49px;
     align-content: center;
+}
+
+.focus {
+    background-color: rgba(12, 128, 57, 0.6);
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pageNumber {
+    padding: 2px;
+}
+
+table {
+    border-collapse: collapse;
 }
