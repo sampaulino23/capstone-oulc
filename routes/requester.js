@@ -44,6 +44,7 @@ router.use(passport.session());
 router.use(require('connect-flash')());
 
 router.get('/', requestercontroller.getHome);
+router.get('/createrequest', requestercontroller.getCreateRequest);
 
 
 passport.serializeUser((user_id, done) =>{

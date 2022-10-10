@@ -32,6 +32,19 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getCreateRequest: async (req, res) => {
+        try {
+           
+            res.render('createrequest', {
+                user_fullname:req.user.fullName,
+                user_role:req.user.roleName
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
