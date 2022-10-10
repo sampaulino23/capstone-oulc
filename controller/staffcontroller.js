@@ -107,6 +107,7 @@ const staffcontroller = {
                 }).exec();
     
             res.render('templatesoulc', {
+                user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 templates: templates

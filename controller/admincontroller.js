@@ -60,6 +60,7 @@ const admincontroller = {
             res.render('adduser', {
                 departments: departments,
                 roles: roles,
+                user_fullname:req.user.fullName,
                 user_role: req.user.roleName
             });
 
@@ -168,6 +169,7 @@ const admincontroller = {
                 departments: departments,
                 roles: roles,
                 newlyAddedUser: newUser,
+                user_fullname:req.user.fullName,
                 user_role: req.user.roleName
             });
 

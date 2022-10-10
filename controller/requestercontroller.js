@@ -25,6 +25,7 @@ const requestercontroller = {
         try {
            
             res.render('requesterhome', {
+                user_fullname:req.user.fullName,
                 user_role:req.user.roleName
             });
 

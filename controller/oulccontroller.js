@@ -203,6 +203,7 @@ const oulccontroller = {
             
     
             res.render('dashboardoulc', {
+                user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 pending: pending,
                 waiting: waiting,
@@ -345,6 +346,7 @@ const oulccontroller = {
             
     
             res.render('dashboardoulc', {
+                user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 pending: pending,
                 waiting: waiting,
@@ -785,6 +787,7 @@ const oulccontroller = {
             .exec();
     
             res.render('repository', {
+                user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 repositoryFiles: repositoryFiles
@@ -834,6 +837,7 @@ const oulccontroller = {
             repositoryFile.daysDuration = Difference_In_Days;
             
             res.render('specificrepositoryfile', {
+                user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 repositoryFile: repositoryFile
 
