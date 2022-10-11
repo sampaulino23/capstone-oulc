@@ -45,6 +45,7 @@ router.use(require('connect-flash')());
 
 router.get('/', requestercontroller.getHome);
 router.get('/createrequest', requestercontroller.getCreateRequest);
+router.post('/createcontractrequest', requestercontroller.postCreateRequest);
 
 
 passport.serializeUser((user_id, done) =>{

@@ -45,6 +45,47 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    postCreateRequest: async (req, res) => {
+        try {
+            // var roleName = req.body.role;
+            // var departmentAbbrev = req.body.department;
+
+            // const role = await Role.findOne({name: roleName}).exec();
+            // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
+
+            var contractrequest = new ContractRequest({
+                 requester: req.user._id,
+                 contractType: "6318a39958ff2002a67f7507", //Test only. 
+                 trackingNumber: "12345", //Test only. Automate
+                 subjectMatter: req.body.subject,
+                 requestDate: Date.now(),
+                 requestTitle: req.body.documenttitle,
+                 effectivityStartDate: req.body.starteffectivity,
+                 effectivityEndDate: req.body.endeffectivity,
+                // contactPerson: "" --> not in schema
+                 contactNum: req.body.contactno,
+                // reviewType: req.body.reviewtype, --> Test only. Input field to be changed
+                 signatoryLevel: req.body.signatorylevel, //Test only. Automate
+                 signatoryName: req.body.signatoryname,
+                 templateUsed: "DLSU Template", //req.body.templateused, //Test only. Input field to be changed
+                 sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
+                 thirdPartyRepresentativeName: req.body.thirdpartyname,
+                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
+                 contractingParty: req.body.contractingparty,
+                 amountInvolved: req.body.amount,
+                 assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
+            });
+
+            await contractrequest.save();
+            res.redirect('/requester');
+
+            
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

@@ -15,7 +15,7 @@
 
         <div style="padding: 50px;">
 
-        <form action="/admin/adduser" method="POST">
+        <form action="/requester/createcontractrequest" method="POST">
             <div class="mb-3">
                 <label for="department" class="form-label">Department/Unit</label>
                 <input type="text" name="department" class="form-control" id="department" required>
@@ -30,7 +30,7 @@
             </div>
             <div class="mb-3">
                 <label for="signatorylevel" class="form-label">Signatory Level</label>
-                <input type="text" name="signatorylevel" class="form-control" id="signatorylevel" required>
+                <input type="number" name="signatorylevel" class="form-control" id="signatorylevel" required>
             </div>
             <div class="mb-3">
                 <label for="contactperson" class="form-label">*Contact Person</label>
@@ -59,6 +59,10 @@
             <div class="mb-3">
                 <label for="templateused" class="form-label">*Template Used</label>
                 <input type="text" name="templateused" class="form-control" id="templateused" required>
+            </div>
+            <div class="mb-3">
+                <label for="templateused" class="form-label">*Section Changes</label>
+                <input type="text" name="sectionchanges" class="form-control" id="sectionchanges" required>
             </div>
             <div class="mb-3">
                 <label for="contractingparty" class="form-label">*Name of Other Contracting Party</label>
