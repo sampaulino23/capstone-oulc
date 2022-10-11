@@ -18,11 +18,12 @@
 <body>
     <div id="header">
         Contract Approval Request Details
-        <!--
-        {{#each user}}
-        <input type="" id="username" value="{{fullName}}">
-        {{/each}}
-        !-->
+        
+        <input type="hidden" id="requestid" value="{{contractrequest._id}}">
+        <input type="hidden" id="requesterid" value="{{contractrequest.requester._id}}">
+        <input type="" id="conversationid" value="{{conversation._id}}">
+        
+        
         <div id = "status">
             <div class = "status-text">Status:</div>
             <div class = "status-text actual">{{contractrequest.status}}</div>
