@@ -17,6 +17,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const Conversation = require('../models/Conversation.js');
 
 const fs = require('fs');
 
@@ -45,13 +46,14 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
 
             var userid = req.user._id;
-            const user = await User.findById(userid).lean()
-                            .populate({
-                                path: 'role'
-                            })
-                            .exec();
 
             // console.log(path);
+
+            const conversation = await Conversation.findOne({contractRequest: path}).lean().exec();
+
+            //console.log(conversation);
+
+            const messages = await Message.find({}).lean().exec();
 
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
@@ -65,6 +67,9 @@ const specificrequestcontroller = {
                 })
                 .populate({
                     path: 'assignedAttorney'
+                })
+                .populate({
+                    path: 'conversation'
                 })
                 .sort({requestDate: 1})
                 .exec();
@@ -175,7 +180,9 @@ const specificrequestcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 user: user,
-                attorneys: attorneys
+                attorneys: attorneys,
+                conversation: conversation,
+                messages: messages
             });
 
         } catch (err) {
@@ -587,21 +594,41 @@ const specificrequestcontroller = {
         }
     },
 
-    getMessage: async (req, res) => {
+    sendMessage: async (req, res) => {
        
-        var message = req.query.message;
-        var sender = req.query.id;
-        var name = req.query.name;
+        try {
+            var message = req.query.message;
+            //var sender = req.body.id;
+            //var name = req.user.fullName;
+            //var requestid = req.query.requestid;
+            var conversationid = req.query.conversationid;
+            var user1 = req.user._id;
+            //var user2 = req.query.requesterid;
 
-        console.log(name + ": " + message);
+            //console.log(requestid + " by " + user1);
+            //console.log(name + ": " + message);
+            console.log(user1 + ": " + message + " in conversation " + conversationid);
 
-        // insert message to db
-        var newMessage = new Message({
-            message: message,
-            enderName: name
-        });
-        await newMessage.save();
-},
+            // insert message to db
+            let newMessage = new Message({
+                conversationId: conversationid,
+                sender: user1,
+                content: message
+            }); 
+
+            /*let newConversation = new Conversation({
+                contractRequest: requestid,
+                members: [user1, user2]
+            }); */
+
+            await newMessage.save();
+            //await newConversation.save();
+          
+        }catch(err) {
+			console.log(err);
+		}
+        console.log("Message was sent succesfully.");
+    },
 
 }
 
