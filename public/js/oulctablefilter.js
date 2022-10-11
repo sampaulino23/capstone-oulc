@@ -179,7 +179,7 @@ function viewPending(){
             row.style.display = "none"; // hides this row
         }
     }
-
+    length--;
     alert(length);
 
     document.getElementById("all-tab").classList.remove("selected");
@@ -197,6 +197,7 @@ function viewToReview(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    var length = 0;
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
@@ -204,11 +205,47 @@ function viewToReview(){
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter === requeststatus.textContent)) {
             row.style.display = ""; // shows this row
+            length++;
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
+    length = length-1;
+    alert(length);
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    // need help in this part of code
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(tr[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(tr[i]).show();
+        }
+    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
@@ -262,8 +299,6 @@ function viewWaiting(){
     );
 
     // need help in this part of code
-    $('table').find('tbody tr:has(td)').hide();
-    var tr = $('table tbody tr:has(td)');
     for (var i = 0; i <= recordPerPage - 1; i++) {
         $(tr[i]).show();
     }
