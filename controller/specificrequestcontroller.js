@@ -528,16 +528,142 @@ const specificrequestcontroller = {
             // console.log(beforecontractversion);
 
             const cursor = gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(latestcontractversion.file), mongoose.Types.ObjectId(beforecontractversion.file)]}});
+            
+            // const bothdocuments = await cursor.toArray();
+
+            // for (document of bothdocuments) {
+            //     if (beforecontractversion.file.toString() == document._id.toString()) {
+            //         const writableStream = fs.createWriteStream('./right_compare.pdf');
+            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
+            //         downStream.pipe(writableStream);
+
+            //         console.log('right');
+            //     } else if (latestcontractversion.file.toString() == document._id.toString()) {
+            //         const writableStream = fs.createWriteStream('./left_compare.pdf');
+            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
+            //         downStream.pipe(writableStream);
+
+            //         console.log('left');
+            //     }
+            // }
+
+            var counter = 0;
+
             cursor.forEach((doc, err) => {
                 if (err) {
                     console.log(err);
                 } else if (doc.contentType === 'application/pdf') {
                     console.log(doc._id);
                     console.log('found');
+
+                    counter++;
+                    console.log(counter);
+
+                    if (beforecontractversion.file.toString() == doc._id.toString()) {
+                        const writableStream = fs.createWriteStream('./right_compare.pdf');
+                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+                        downStream.pipe(writableStream);
+
+                        console.log('right');
+
+                        if (counter == 2) {
+                            writableStream.on('close', function(){
+                                var identifier = comparisons.generateIdentifier();
+    
+                                comparisons.create({
+                                    identifier: identifier,
+                                    left: {
+                                        source: fs.readFileSync('./left_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    right: {
+                                        source: fs.readFileSync('./right_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    publiclyAccessible: true
+                                }).then(function(comparison) {
+                                    console.log("Comparison created: %s", comparison);
+                                    // Generate a signed viewer URL to access the private comparison. The expiry
+                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
+                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
                     
+                                    fs.unlink('left_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+                                    
+                                    fs.unlink('right_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    res.render('revisionhistory', {
+                                        user_fullname:req.user.fullName,
+                                        user_role: req.user.roleName,
+                                        contractversions: contractversions,
+                                        draftable: viewerURL
+                                    });
+                                });
+                            });
+                        }
+                    } else if (latestcontractversion.file.toString() == doc._id.toString()) {
+                        const writableStream = fs.createWriteStream('./left_compare.pdf');
+                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+                        downStream.pipe(writableStream);
+
+                        console.log('left');
+
+                        if (counter == 2) {
+                            writableStream.on('close', function(){
+                                var identifier = comparisons.generateIdentifier();
+    
+                                comparisons.create({
+                                    identifier: identifier,
+                                    left: {
+                                        source: fs.readFileSync('./left_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    right: {
+                                        source: fs.readFileSync('./right_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    publiclyAccessible: true
+                                }).then(function(comparison) {
+                                    console.log("Comparison created: %s", comparison);
+                                    // Generate a signed viewer URL to access the private comparison. The expiry
+                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
+                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+                    
+                                    fs.unlink('left_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    fs.unlink('right_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    res.render('revisionhistory', {
+                                        user_fullname:req.user.fullName,
+                                        user_role: req.user.roleName,
+                                        contractversions: contractversions,
+                                        draftable: viewerURL
+                                    });
+                                });
+                            });
+                        }
+                    }
                 }
             });
 
+            // code below deletes comparisons
             // comparisons.getAll().then(function(oldest_comparisons) {
             //     console.log("Deleting oldest 10 comparisons ...");
 
@@ -553,33 +679,33 @@ const specificrequestcontroller = {
             //     }
             // });
 
-            var identifier = comparisons.generateIdentifier();
+            // var identifier = comparisons.generateIdentifier();
 
-            comparisons.create({
-                identifier: identifier,
-                left: {
-                    source: fs.readFileSync('./MOA External Sponsorship-Template.pdf'),
-                    fileType: 'pdf',
-                },
-                right: {
-                    source: fs.readFileSync('./ojt.pdf'),
-                    fileType: 'pdf',
-                },
-                publiclyAccessible: true
-            }).then(function(comparison) {
-                console.log("Comparison created: %s", comparison);
-                // Generate a signed viewer URL to access the private comparison. The expiry
-                // time defaults to 30 minutes if the valid_until parameter is not provided.
-                const viewerURL = comparisons.signedViewerURL(comparison.identifier);
-                console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+            // comparisons.create({
+            //     identifier: identifier,
+            //     left: {
+            //         source: fs.readFileSync('./left_compare.pdf'),
+            //         fileType: 'pdf',
+            //     },
+            //     right: {
+            //         source: fs.readFileSync('./right_compare.pdf'),
+            //         fileType: 'pdf',
+            //     },
+            //     publiclyAccessible: true
+            // }).then(function(comparison) {
+            //     console.log("Comparison created: %s", comparison);
+            //     // Generate a signed viewer URL to access the private comparison. The expiry
+            //     // time defaults to 30 minutes if the valid_until parameter is not provided.
+            //     const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+            //     console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
 
-                res.render('revisionhistory', {
-                    user_fullname:req.user.fullName,
-                    user_role: req.user.roleName,
-                    contractversions: contractversions,
-                    draftable: viewerURL
-                });
-            });
+            //     res.render('revisionhistory', {
+            //         user_fullname:req.user.fullName,
+            //         user_role: req.user.roleName,
+            //         contractversions: contractversions,
+            //         draftable: viewerURL
+            //     });
+            // });
             
 
         } catch (err) {
