@@ -17,6 +17,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const Conversation = require('../models/Conversation.js');
 
 const fs = require('fs');
 
@@ -45,13 +46,14 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
 
             var userid = req.user._id;
-            const user = await User.findById(userid).lean()
-                            .populate({
-                                path: 'role'
-                            })
-                            .exec();
 
             // console.log(path);
+
+            const conversation = await Conversation.findOne({contractRequest: path}).lean().exec();
+
+            //console.log(conversation);
+
+            const messages = await Message.find({}).lean().exec();
 
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
@@ -65,6 +67,9 @@ const specificrequestcontroller = {
                 })
                 .populate({
                     path: 'assignedAttorney'
+                })
+                .populate({
+                    path: 'conversation'
                 })
                 .sort({requestDate: 1})
                 .exec();
@@ -174,8 +179,9 @@ const specificrequestcontroller = {
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
-                user: user,
-                attorneys: attorneys
+                attorneys: attorneys,
+                conversation: conversation,
+                messages: messages
             });
 
         } catch (err) {
@@ -504,57 +510,250 @@ const specificrequestcontroller = {
             // console.log(path);
 
             const contractfileid = req.body.contractFileId;
-            console.log(contractfileid);
+            // console.log(contractfileid);
 
             const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).exec();
-            console.log(selectedcontractversion);
+            // console.log(selectedcontractversion);
+
+            const contract = await Contract.findById(selectedcontractversion.contract).exec();
+            // console.log(contract);
 
             const contractversions = await ContractVersion.find({ contract: selectedcontractversion.contract }).lean().exec();
+            // console.log(contractversions);
 
-            comparisons.create({
-                left: {
-                    source: fs.readFileSync('./MOA External Sponsorship-Template.pdf'),
-                    fileType: 'pdf',
-                },
-                right: {
-                    source: fs.readFileSync('./MOA External Sponsorship.pdf'),
-                    fileType: 'pdf',
-                },
-                publiclyAccessible: true
-            }).then(function(comparison) {
-                console.log("Comparison created: %s", comparison);
-                // Generate a signed viewer URL to access the private comparison. The expiry
-                // time defaults to 30 minutes if the valid_until parameter is not provided.
-                const viewerURL = comparisons.signedViewerURL(comparison.identifier);
-                console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+            const latestcontractversion = await ContractVersion.findOne({ version: contract.latestversion, contract: contract}).exec();
+            // console.log(latestcontractversion);
+
+            if (contract.latestversion <= 1) {
+                var versionbefore = contract.latestversion;
+            } else {
+                var versionbefore = contract.latestversion - 1;
+            }
+
+            const beforecontractversion = await ContractVersion.findOne({ version: versionbefore, contract: contract}).exec();
+            // console.log(beforecontractversion);
+
+            const cursor = gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(latestcontractversion.file), mongoose.Types.ObjectId(beforecontractversion.file)]}});
+            
+            // const bothdocuments = await cursor.toArray();
+
+            // for (document of bothdocuments) {
+            //     if (beforecontractversion.file.toString() == document._id.toString()) {
+            //         const writableStream = fs.createWriteStream('./right_compare.pdf');
+            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
+            //         downStream.pipe(writableStream);
+
+            //         console.log('right');
+            //     } else if (latestcontractversion.file.toString() == document._id.toString()) {
+            //         const writableStream = fs.createWriteStream('./left_compare.pdf');
+            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
+            //         downStream.pipe(writableStream);
+
+            //         console.log('left');
+            //     }
+            // }
+
+            var counter = 0;
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    console.log(doc._id);
+                    console.log('found');
+
+                    counter++;
+                    console.log(counter);
+
+                    if (beforecontractversion.file.toString() == doc._id.toString()) {
+                        const writableStream = fs.createWriteStream('./right_compare.pdf');
+                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+                        downStream.pipe(writableStream);
+
+                        console.log('right');
+
+                        if (counter == 2) {
+                            writableStream.on('close', function(){
+                                var identifier = comparisons.generateIdentifier();
+    
+                                comparisons.create({
+                                    identifier: identifier,
+                                    left: {
+                                        source: fs.readFileSync('./left_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    right: {
+                                        source: fs.readFileSync('./right_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    publiclyAccessible: true
+                                }).then(function(comparison) {
+                                    console.log("Comparison created: %s", comparison);
+                                    // Generate a signed viewer URL to access the private comparison. The expiry
+                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
+                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+                    
+                                    fs.unlink('left_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+                                    
+                                    fs.unlink('right_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    res.render('revisionhistory', {
+                                        user_fullname:req.user.fullName,
+                                        user_role: req.user.roleName,
+                                        contractversions: contractversions,
+                                        draftable: viewerURL
+                                    });
+                                });
+                            });
+                        }
+                    } else if (latestcontractversion.file.toString() == doc._id.toString()) {
+                        const writableStream = fs.createWriteStream('./left_compare.pdf');
+                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+                        downStream.pipe(writableStream);
+
+                        console.log('left');
+
+                        if (counter == 2) {
+                            writableStream.on('close', function(){
+                                var identifier = comparisons.generateIdentifier();
+    
+                                comparisons.create({
+                                    identifier: identifier,
+                                    left: {
+                                        source: fs.readFileSync('./left_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    right: {
+                                        source: fs.readFileSync('./right_compare.pdf'),
+                                        fileType: 'pdf',
+                                    },
+                                    publiclyAccessible: true
+                                }).then(function(comparison) {
+                                    console.log("Comparison created: %s", comparison);
+                                    // Generate a signed viewer URL to access the private comparison. The expiry
+                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
+                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+                    
+                                    fs.unlink('left_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    fs.unlink('right_compare.pdf', (err) => {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                    });
+
+                                    res.render('revisionhistory', {
+                                        user_fullname:req.user.fullName,
+                                        user_role: req.user.roleName,
+                                        contractversions: contractversions,
+                                        draftable: viewerURL
+                                    });
+                                });
+                            });
+                        }
+                    }
+                }
             });
 
-            res.render('revisionhistory', {
-                user_fullname:req.user.fullName,
-                user_role: req.user.roleName,
-                contractversions: contractversions
-            });
+            // code below deletes comparisons
+            // comparisons.getAll().then(function(oldest_comparisons) {
+            //     console.log("Deleting oldest 10 comparisons ...");
+
+            //     console.log(oldest_comparisons.length);
+
+            //     const deleteStartIndex = Math.max(0, oldest_comparisons.length - 10);
+            
+            //     for (let i = deleteStartIndex; i < oldest_comparisons.length; ++i) {
+            //         const identifier = oldest_comparisons[i].identifier;
+            //         comparisons.destroy(identifier).then(function() {
+            //             console.log("Comparison '%s' deleted.", identifier);
+            //         });
+            //     }
+            // });
+
+            // var identifier = comparisons.generateIdentifier();
+
+            // comparisons.create({
+            //     identifier: identifier,
+            //     left: {
+            //         source: fs.readFileSync('./left_compare.pdf'),
+            //         fileType: 'pdf',
+            //     },
+            //     right: {
+            //         source: fs.readFileSync('./right_compare.pdf'),
+            //         fileType: 'pdf',
+            //     },
+            //     publiclyAccessible: true
+            // }).then(function(comparison) {
+            //     console.log("Comparison created: %s", comparison);
+            //     // Generate a signed viewer URL to access the private comparison. The expiry
+            //     // time defaults to 30 minutes if the valid_until parameter is not provided.
+            //     const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+            //     console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+
+            //     res.render('revisionhistory', {
+            //         user_fullname:req.user.fullName,
+            //         user_role: req.user.roleName,
+            //         contractversions: contractversions,
+            //         draftable: viewerURL
+            //     });
+            // });
+            
 
         } catch (err) {
             console.log(err);
         }
     },
 
-    getMessage: async (req, res) => {
+    sendMessage: async (req, res) => {
        
-        var message = req.query.message;
-        var sender = req.query.id;
-        var name = req.query.name;
+        try {
+            var message = req.query.message;
+            //var sender = req.body.id;
+            //var name = req.user.fullName;
+            //var requestid = req.query.requestid;
+            var conversationid = req.query.conversationid;
+            var user1 = req.user._id;
+            //var user2 = req.query.requesterid;
 
-        console.log(name + ": " + message);
+            //console.log(requestid + " by " + user1);
+            //console.log(name + ": " + message);
+            console.log(user1 + ": " + message + " in conversation " + conversationid);
 
-        // insert message to db
-        var newMessage = new Message({
-            message: message,
-            enderName: name
-        });
-        await newMessage.save();
-},
+            // insert message to db
+            let newMessage = new Message({
+                conversationId: conversationid,
+                sender: user1,
+                content: message
+            }); 
+
+            /*let newConversation = new Conversation({
+                contractRequest: requestid,
+                members: [user1, user2]
+            }); */
+
+            await newMessage.save();
+            //await newConversation.save();
+          
+        }catch(err) {
+			console.log(err);
+		}
+        console.log("Message was sent succesfully.");
+    },
 
 }
 

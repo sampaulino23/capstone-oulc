@@ -108,4 +108,7 @@ router.get('/getcontractversions', specificrequestcontroller.getContractVersions
 router.get('/addtag', oulccontroller.addTag);
 router.get('/removetag', oulccontroller.removeTag);
 
+// Messages
+router.get('/sendmessage', specificrequestcontroller.sendMessage);
+
 module.exports = router;

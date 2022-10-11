@@ -18,6 +18,7 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const Conversation = require('../models/Conversation.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -802,7 +803,6 @@ const oulccontroller = {
         try {
 
             var path = req.path.split('/')[2];
-            var val = "test";
 
             const repositoryFile = await RepositoryFile.findOne({_id : path}).lean()
             .populate({

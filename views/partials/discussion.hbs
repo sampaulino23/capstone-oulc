@@ -19,7 +19,7 @@
           margin-bottom: 30px;
       }
 
-      #input {
+      #inputmessage {
           border: none;
           padding: 0 1rem;
           flex-grow: 1;
@@ -27,7 +27,7 @@
           margin: 0.25rem;
       }
 
-      #input:focus {
+      #inputmessage:focus {
           outline: none;
       }
 
@@ -77,17 +77,61 @@
 
 </style>
 
+<script>
+    $(document).ready( () => { 
+        
+        $('.send-btn').click(function () {  
+            event.preventDefault();
+            //var name = document.getElementById("username").value;
+            var message = document.getElementById("inputmessage").value;
+            var requestid = document.getElementById("requestid").value;
+            var requesterid = document.getElementById("requesterid").value;
+            var conversationid = document.getElementById("conversationid").value;
+            addMessage(message);
+
+            $.ajax({
+                    url: "/sendmessage",
+                    method: "GET",
+                    contentType: "application/json",
+                    data: {conversationid: conversationid, message: message},
+                    success: function() {
+                        console.log('SUCCESS');
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+
+        });
+
+    });
+
+    function addMessage(message) {
+        var ul = document.createElement("ul");
+        ul.id = 'message-box';
+        ul.innerHTML = message;
+        messages.appendChild(ul);
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
 <div id = "discussion-div">
+    <div>Chat Members: {{conversation.members}}</div>
     <div class = "discussion-header">Discussion Thread:</div>
+    {{#each messages}}
+        <ul id="messages">{{sender}} {{content}}</ul>
+    {{/each}}
     <br>
-    <ul id="messages">Sample</ul>
-    <form id="form" action="/request/attorney/sendmessage" method="GET">
-      <input id="input" autocomplete="off" placeholder = "Type message here..." /><button class = "send-btn">Send</button>
-    </form>
+    <ul id="messages"></ul>
+    <div id="form" >
+      <input id="inputmessage" autocomplete="off" placeholder = "Type message here..." />
+      <button class = "send-btn" type="submit">Send</button>
+    </div>
 
 </div>
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
+<!--
 <script src = "/socket.io/socket.io.js"></script>
 <script> 
     //const socket = io(); 
@@ -127,4 +171,4 @@
         messages.appendChild(ul);
         window.scrollTo(0, document.body.scrollHeight);
     }
-</script>
+</script> -->
