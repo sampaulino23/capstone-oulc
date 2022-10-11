@@ -179,7 +179,6 @@ const specificrequestcontroller = {
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
-                user: user,
                 attorneys: attorneys,
                 conversation: conversation,
                 messages: messages
