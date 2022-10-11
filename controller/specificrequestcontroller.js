@@ -504,20 +504,65 @@ const specificrequestcontroller = {
             // console.log(path);
 
             const contractfileid = req.body.contractFileId;
-            console.log(contractfileid);
+            // console.log(contractfileid);
 
             const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).exec();
-            console.log(selectedcontractversion);
+            // console.log(selectedcontractversion);
+
+            const contract = await Contract.findById(selectedcontractversion.contract).exec();
+            // console.log(contract);
 
             const contractversions = await ContractVersion.find({ contract: selectedcontractversion.contract }).lean().exec();
+            // console.log(contractversions);
+
+            const latestcontractversion = await ContractVersion.findOne({ version: contract.latestversion, contract: contract}).exec();
+            // console.log(latestcontractversion);
+
+            if (contract.latestversion <= 1) {
+                var versionbefore = contract.latestversion;
+            } else {
+                var versionbefore = contract.latestversion - 1;
+            }
+
+            const beforecontractversion = await ContractVersion.findOne({ version: versionbefore, contract: contract}).exec();
+            // console.log(beforecontractversion);
+
+            const cursor = gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(latestcontractversion.file), mongoose.Types.ObjectId(beforecontractversion.file)]}});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    console.log(doc._id);
+                    console.log('found');
+                    
+                }
+            });
+
+            // comparisons.getAll().then(function(oldest_comparisons) {
+            //     console.log("Deleting oldest 10 comparisons ...");
+
+            //     console.log(oldest_comparisons.length);
+
+            //     const deleteStartIndex = Math.max(0, oldest_comparisons.length - 10);
+            
+            //     for (let i = deleteStartIndex; i < oldest_comparisons.length; ++i) {
+            //         const identifier = oldest_comparisons[i].identifier;
+            //         comparisons.destroy(identifier).then(function() {
+            //             console.log("Comparison '%s' deleted.", identifier);
+            //         });
+            //     }
+            // });
+
+            var identifier = comparisons.generateIdentifier();
 
             comparisons.create({
+                identifier: identifier,
                 left: {
                     source: fs.readFileSync('./MOA External Sponsorship-Template.pdf'),
                     fileType: 'pdf',
                 },
                 right: {
-                    source: fs.readFileSync('./MOA External Sponsorship.pdf'),
+                    source: fs.readFileSync('./ojt.pdf'),
                     fileType: 'pdf',
                 },
                 publiclyAccessible: true
@@ -527,13 +572,15 @@ const specificrequestcontroller = {
                 // time defaults to 30 minutes if the valid_until parameter is not provided.
                 const viewerURL = comparisons.signedViewerURL(comparison.identifier);
                 console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
-            });
 
-            res.render('revisionhistory', {
-                user_fullname:req.user.fullName,
-                user_role: req.user.roleName,
-                contractversions: contractversions
+                res.render('revisionhistory', {
+                    user_fullname:req.user.fullName,
+                    user_role: req.user.roleName,
+                    contractversions: contractversions,
+                    draftable: viewerURL
+                });
             });
+            
 
         } catch (err) {
             console.log(err);
