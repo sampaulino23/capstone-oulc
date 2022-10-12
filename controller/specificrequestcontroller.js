@@ -533,7 +533,7 @@ const specificrequestcontroller = {
             const beforecontractversion = await ContractVersion.findOne({ version: versionbefore, contract: contract}).exec();
             // console.log(beforecontractversion);
 
-            const cursor = gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(latestcontractversion.file), mongoose.Types.ObjectId(beforecontractversion.file)]}});
+            const cursor = await gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(beforecontractversion.file), mongoose.Types.ObjectId(latestcontractversion.file)]}});
             
             // const bothdocuments = await cursor.toArray();
 
@@ -559,11 +559,11 @@ const specificrequestcontroller = {
                 if (err) {
                     console.log(err);
                 } else if (doc.contentType === 'application/pdf') {
-                    console.log(doc._id);
-                    console.log('found');
+                    // console.log(doc);
+                    // console.log('found');
 
                     counter++;
-                    console.log(counter);
+                    // console.log(counter);
 
                     if (beforecontractversion.file.toString() == doc._id.toString()) {
                         const writableStream = fs.createWriteStream('./right_compare.pdf');
@@ -610,6 +610,8 @@ const specificrequestcontroller = {
                                         user_fullname:req.user.fullName,
                                         user_role: req.user.roleName,
                                         contractversions: contractversions,
+                                        leftcontractversion: latestcontractversion._id.toString(),
+                                        rightcontractversion: beforecontractversion._id.toString(),
                                         draftable: viewerURL
                                     });
                                 });
@@ -660,6 +662,8 @@ const specificrequestcontroller = {
                                         user_fullname:req.user.fullName,
                                         user_role: req.user.roleName,
                                         contractversions: contractversions,
+                                        leftcontractversion: latestcontractversion._id.toString(),
+                                        rightcontractversion: beforecontractversion._id.toString(),
                                         draftable: viewerURL
                                     });
                                 });
