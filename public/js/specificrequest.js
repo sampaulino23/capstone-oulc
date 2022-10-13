@@ -90,6 +90,7 @@ $(window).on('load', function() {
 
         if (statusListDisabled.includes(statusCounter)) {
             $('.is-reviewed').prop('disabled', true);
+            $('#checkAll').prop('disabled', true);
 
             $('#forLegalReviewBtn').prop('disabled', true);
             document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
@@ -108,6 +109,7 @@ $(window).on('load', function() {
 
         if (statusListDisabled.includes(statusCounter)) {
             $('.is-reviewed').prop('disabled', true);
+            $('#checkAll').prop('disabled', true);
             
             $('#approveBtn').prop('disabled', true);
             document.getElementById("approveBtn").style.cursor = "not-allowed";
