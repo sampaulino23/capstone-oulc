@@ -522,3 +522,8 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 #compare-btn {
     margin-left: 20px;
 }
+
+.download-repository-file {
+    text-decoration: underline !important;
+    font-style: normal;
+}
