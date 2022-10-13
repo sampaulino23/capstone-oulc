@@ -214,38 +214,6 @@ function viewToReview(){
     length = length-1;
     alert(length);
 
-    var totalRows = length;
-    var recordPerPage = 4;
-    var totalPages = Math.ceil(totalRows / recordPerPage);
-    var $pages = $('<div id="pages"></div>');
-    for (i = 0; i < totalPages; i++) {
-        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
-    }
-    
-    $("#after-table").html($pages);
-
-    $('.pageNumber').hover(
-        function() {
-            $(this).addClass('focus');
-        },
-        function() {
-            $(this).removeClass('focus');
-        }
-    );
-
-    // need help in this part of code
-    for (var i = 0; i <= recordPerPage - 1; i++) {
-        $(tr[i]).show();
-    }
-
-    $('span').click(function(event) {
-        $('#table').find('tbody tr:has(td)').hide();
-        var nBegin = ($(this).text() - 1) * recordPerPage;
-        var nEnd = $(this).text() * recordPerPage - 1;
-        for (var i = nBegin; i <= nEnd; i++) {
-            $(tr[i]).show();
-        }
-    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
@@ -278,39 +246,6 @@ function viewWaiting(){
     }
     length = length-1;
     alert(length);
-
-    var totalRows = length;
-    var recordPerPage = 4;
-    var totalPages = Math.ceil(totalRows / recordPerPage);
-    var $pages = $('<div id="pages"></div>');
-    for (i = 0; i < totalPages; i++) {
-        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
-    }
-    
-    $("#after-table").html($pages);
-
-    $('.pageNumber').hover(
-        function() {
-            $(this).addClass('focus');
-        },
-        function() {
-            $(this).removeClass('focus');
-        }
-    );
-
-    // need help in this part of code
-    for (var i = 0; i <= recordPerPage - 1; i++) {
-        $(tr[i]).show();
-    }
-
-    $('span').click(function(event) {
-        $('#table').find('tbody tr:has(td)').hide();
-        var nBegin = ($(this).text() - 1) * recordPerPage;
-        var nEnd = $(this).text() * recordPerPage - 1;
-        for (var i = nBegin; i <= nEnd; i++) {
-            $(tr[i]).show();
-        }
-    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
