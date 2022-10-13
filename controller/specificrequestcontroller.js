@@ -534,7 +534,8 @@ const specificrequestcontroller = {
             // console.log(beforecontractversion);
 
             const cursor = await gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(beforecontractversion.file), mongoose.Types.ObjectId(latestcontractversion.file)]}});
-            
+
+            // code below is for bothdocuments implementation
             // const bothdocuments = await cursor.toArray();
 
             // for (document of bothdocuments) {
@@ -553,125 +554,188 @@ const specificrequestcontroller = {
             //     }
             // }
 
-            var counter = 0;
+            // code belows in the optimized implementation
+            const bothdocuments = await cursor.toArray();
 
-            cursor.forEach((doc, err) => {
-                if (err) {
-                    console.log(err);
-                } else if (doc.contentType === 'application/pdf') {
-                    // console.log(doc);
-                    // console.log('found');
+            const writableStream = fs.createWriteStream('./right_compare.pdf');
+            const downStream = gridfsBucketRequestDocuments.openDownloadStream(bothdocuments[0]._id);
+            downStream.pipe(writableStream);
+            console.log('right');
 
-                    counter++;
-                    // console.log(counter);
+            downStream.on('end', function() {
+                const writableStream2 = fs.createWriteStream('./left_compare.pdf');
+                const downStream2 = gridfsBucketRequestDocuments.openDownloadStream(bothdocuments[1]._id);
+                downStream2.pipe(writableStream2);
+                console.log('left');
 
-                    if (beforecontractversion.file.toString() == doc._id.toString()) {
-                        const writableStream = fs.createWriteStream('./right_compare.pdf');
-                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
-                        downStream.pipe(writableStream);
-
-                        console.log('right');
-
-                        if (counter == 2) {
-                            writableStream.on('close', function(){
-                                var identifier = comparisons.generateIdentifier();
+                downStream2.on('end', function(){
+                    var identifier = comparisons.generateIdentifier();
     
-                                comparisons.create({
-                                    identifier: identifier,
-                                    left: {
-                                        source: fs.readFileSync('./left_compare.pdf'),
-                                        fileType: 'pdf',
-                                    },
-                                    right: {
-                                        source: fs.readFileSync('./right_compare.pdf'),
-                                        fileType: 'pdf',
-                                    },
-                                    publiclyAccessible: true
-                                }).then(function(comparison) {
-                                    console.log("Comparison created: %s", comparison);
-                                    // Generate a signed viewer URL to access the private comparison. The expiry
-                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
-                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
-                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
-                    
-                                    fs.unlink('left_compare.pdf', (err) => {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                    });
-                                    
-                                    fs.unlink('right_compare.pdf', (err) => {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                    });
-
-                                    res.render('revisionhistory', {
-                                        user_fullname:req.user.fullName,
-                                        user_role: req.user.roleName,
-                                        contractversions: contractversions,
-                                        leftcontractversion: latestcontractversion._id.toString(),
-                                        rightcontractversion: beforecontractversion._id.toString(),
-                                        draftable: viewerURL
-                                    });
-                                });
-                            });
-                        }
-                    } else if (latestcontractversion.file.toString() == doc._id.toString()) {
-                        const writableStream = fs.createWriteStream('./left_compare.pdf');
-                        const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
-                        downStream.pipe(writableStream);
-
-                        console.log('left');
-
-                        if (counter == 2) {
-                            writableStream.on('close', function(){
-                                var identifier = comparisons.generateIdentifier();
+                    comparisons.create({
+                        identifier: identifier,
+                        left: {
+                            source: fs.readFileSync('./left_compare.pdf'),
+                            fileType: 'pdf',
+                        },
+                        right: {
+                            source: fs.readFileSync('./right_compare.pdf'),
+                            fileType: 'pdf',
+                        },
+                        publiclyAccessible: true
+                    }).then(function(comparison) {
+                        console.log("Comparison created: %s", comparison);
+                        // Generate a signed viewer URL to access the private comparison. The expiry
+                        // time defaults to 30 minutes if the valid_until parameter is not provided.
+                        const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                        console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
     
-                                comparisons.create({
-                                    identifier: identifier,
-                                    left: {
-                                        source: fs.readFileSync('./left_compare.pdf'),
-                                        fileType: 'pdf',
-                                    },
-                                    right: {
-                                        source: fs.readFileSync('./right_compare.pdf'),
-                                        fileType: 'pdf',
-                                    },
-                                    publiclyAccessible: true
-                                }).then(function(comparison) {
-                                    console.log("Comparison created: %s", comparison);
-                                    // Generate a signed viewer URL to access the private comparison. The expiry
-                                    // time defaults to 30 minutes if the valid_until parameter is not provided.
-                                    const viewerURL = comparisons.signedViewerURL(comparison.identifier);
-                                    console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
-                    
-                                    fs.unlink('left_compare.pdf', (err) => {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                    });
+                        fs.unlink('left_compare.pdf', (err) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log('left success');
+                        });
+                        
+                        fs.unlink('right_compare.pdf', (err) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log('right success');
+                        });
 
-                                    fs.unlink('right_compare.pdf', (err) => {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                    });
+                        res.render('revisionhistory', {
+                            user_fullname:req.user.fullName,
+                            user_role: req.user.roleName,
+                            contractversions: contractversions,
+                            leftcontractversion: latestcontractversion._id.toString(),
+                            rightcontractversion: beforecontractversion._id.toString(),
+                            draftable: viewerURL
+                        });
+                    });
+                });
 
-                                    res.render('revisionhistory', {
-                                        user_fullname:req.user.fullName,
-                                        user_role: req.user.roleName,
-                                        contractversions: contractversions,
-                                        leftcontractversion: latestcontractversion._id.toString(),
-                                        rightcontractversion: beforecontractversion._id.toString(),
-                                        draftable: viewerURL
-                                    });
-                                });
-                            });
-                        }
-                    }
-                }
             });
+
+            // code below is the second solution (un-optimized and buggy)
+            // var counter = 0;
+
+            // cursor.forEach((doc, err) => {
+            //     if (err) {
+            //         console.log(err);
+            //     } else if (doc.contentType === 'application/pdf') {
+            //         // console.log(doc);
+            //         // console.log('found');
+
+            //         counter++;
+            //         // console.log(counter);
+
+            //         if (beforecontractversion.file.toString() == doc._id.toString()) {
+            //             const writableStream = fs.createWriteStream('./right_compare.pdf');
+            //             const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+            //             downStream.pipe(writableStream);
+
+            //             console.log('right');
+
+            //             if (counter == 2) {
+            //                 writableStream.on('close', function(){
+            //                     var identifier = comparisons.generateIdentifier();
+    
+            //                     comparisons.create({
+            //                         identifier: identifier,
+            //                         left: {
+            //                             source: fs.readFileSync('./left_compare.pdf'),
+            //                             fileType: 'pdf',
+            //                         },
+            //                         right: {
+            //                             source: fs.readFileSync('./right_compare.pdf'),
+            //                             fileType: 'pdf',
+            //                         },
+            //                         publiclyAccessible: true
+            //                     }).then(function(comparison) {
+            //                         console.log("Comparison created: %s", comparison);
+            //                         // Generate a signed viewer URL to access the private comparison. The expiry
+            //                         // time defaults to 30 minutes if the valid_until parameter is not provided.
+            //                         const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+            //                         console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+                    
+            //                         fs.unlink('left_compare.pdf', (err) => {
+            //                             if (err) {
+            //                                 throw err;
+            //                             }
+            //                         });
+                                    
+            //                         fs.unlink('right_compare.pdf', (err) => {
+            //                             if (err) {
+            //                                 throw err;
+            //                             }
+            //                         });
+
+            //                         res.render('revisionhistory', {
+            //                             user_fullname:req.user.fullName,
+            //                             user_role: req.user.roleName,
+            //                             contractversions: contractversions,
+            //                             leftcontractversion: latestcontractversion._id.toString(),
+            //                             rightcontractversion: beforecontractversion._id.toString(),
+            //                             draftable: viewerURL
+            //                         });
+            //                     });
+            //                 });
+            //             }
+            //         } else if (latestcontractversion.file.toString() == doc._id.toString()) {
+            //             const writableStream = fs.createWriteStream('./left_compare.pdf');
+            //             const downStream = gridfsBucketRequestDocuments.openDownloadStream(doc._id);
+            //             downStream.pipe(writableStream);
+
+            //             console.log('left');
+
+            //             if (counter == 2) {
+            //                 writableStream.on('close', function(){
+            //                     var identifier = comparisons.generateIdentifier();
+    
+            //                     comparisons.create({
+            //                         identifier: identifier,
+            //                         left: {
+            //                             source: fs.readFileSync('./left_compare.pdf'),
+            //                             fileType: 'pdf',
+            //                         },
+            //                         right: {
+            //                             source: fs.readFileSync('./right_compare.pdf'),
+            //                             fileType: 'pdf',
+            //                         },
+            //                         publiclyAccessible: true
+            //                     }).then(function(comparison) {
+            //                         console.log("Comparison created: %s", comparison);
+            //                         // Generate a signed viewer URL to access the private comparison. The expiry
+            //                         // time defaults to 30 minutes if the valid_until parameter is not provided.
+            //                         const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+            //                         console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+                    
+            //                         fs.unlink('left_compare.pdf', (err) => {
+            //                             if (err) {
+            //                                 throw err;
+            //                             }
+            //                         });
+
+            //                         fs.unlink('right_compare.pdf', (err) => {
+            //                             if (err) {
+            //                                 throw err;
+            //                             }
+            //                         });
+
+            //                         res.render('revisionhistory', {
+            //                             user_fullname:req.user.fullName,
+            //                             user_role: req.user.roleName,
+            //                             contractversions: contractversions,
+            //                             leftcontractversion: latestcontractversion._id.toString(),
+            //                             rightcontractversion: beforecontractversion._id.toString(),
+            //                             draftable: viewerURL
+            //                         });
+            //                     });
+            //                 });
+            //             }
+            //         }
+            //     }
+            // });
 
             // code below deletes comparisons
             // comparisons.getAll().then(function(oldest_comparisons) {
@@ -689,6 +753,7 @@ const specificrequestcontroller = {
             //     }
             // });
 
+            // code below is the first solution for foundation
             // var identifier = comparisons.generateIdentifier();
 
             // comparisons.create({
