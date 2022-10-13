@@ -179,7 +179,7 @@ function viewPending(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length);
+    alert(length-1);
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -220,7 +220,7 @@ function viewToReview(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length);
+    alert(length-1);
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -264,7 +264,7 @@ function viewWaiting(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length);
+    alert(length-1);
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -330,7 +330,7 @@ function viewForLegalReview(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length);
+    alert(length-1);
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -380,18 +380,57 @@ function viewCleared(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter === requeststatus.textContent)) {
-            row.style.display = ""; // shows this row
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
+    alert(length-1);
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
@@ -408,18 +447,56 @@ function viewRerouted(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = atty.value;
+    var length = 0;
+    let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[8] || null; // gets the 9th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter != requeststatus.textContent)) {
-            row.style.display = ""; // shows this row
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
+    alert(length-1);
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
@@ -436,18 +513,56 @@ function viewCancelled(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter === requeststatus.textContent)) {
-            row.style.display = ""; // shows this row
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
+    alert(length-1);
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
