@@ -81,8 +81,6 @@ const requestercontroller = {
             await contractrequest.save();
             res.redirect('/requester');
 
-            
-
         } catch (err) {
             console.log(err);
         }

@@ -533,7 +533,24 @@ const specificrequestcontroller = {
             const beforecontractversion = await ContractVersion.findOne({ version: versionbefore, contract: contract}).exec();
             // console.log(beforecontractversion);
 
-            const cursor = await gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(beforecontractversion.file), mongoose.Types.ObjectId(latestcontractversion.file)]}});
+            // code below is old solution
+            // const cursor = await gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(beforecontractversion.file), mongoose.Types.ObjectId(latestcontractversion.file)]}});
+
+            const cursorRight = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(beforecontractversion.file)});
+
+            const cursorLeft = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(latestcontractversion.file)});
+
+            let documentRight, documentLeft;
+
+            if (await cursorRight.hasNext()) {
+                documentRight = await cursorRight.next();
+            }
+            console.log(documentRight);
+
+            if (await cursorLeft.hasNext()) {
+                documentLeft = await cursorLeft.next();
+            }
+            console.log(documentLeft);
 
             // code below is for bothdocuments implementation
             // const bothdocuments = await cursor.toArray();
@@ -555,16 +572,16 @@ const specificrequestcontroller = {
             // }
 
             // code belows in the optimized implementation
-            const bothdocuments = await cursor.toArray();
+            // const bothdocuments = await cursor.toArray();
 
             const writableStream = fs.createWriteStream('./right_compare.pdf');
-            const downStream = gridfsBucketRequestDocuments.openDownloadStream(bothdocuments[0]._id);
+            const downStream = gridfsBucketRequestDocuments.openDownloadStream(documentRight._id);
             downStream.pipe(writableStream);
             console.log('right');
 
             downStream.on('end', function() {
                 const writableStream2 = fs.createWriteStream('./left_compare.pdf');
-                const downStream2 = gridfsBucketRequestDocuments.openDownloadStream(bothdocuments[1]._id);
+                const downStream2 = gridfsBucketRequestDocuments.openDownloadStream(documentLeft._id);
                 downStream2.pipe(writableStream2);
                 console.log('left');
 
