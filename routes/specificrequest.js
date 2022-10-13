@@ -94,6 +94,7 @@ router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff
 router.post('/forrevision/attorney', specificrequestcontroller.postForRevisionAttorney);
 router.get('/approveRequest', specificrequestcontroller.markAsCleared);
 router.post('/revisionHistory', specificrequestcontroller.getRevisionHistory);
+router.post('/comparerevisionhistory', specificrequestcontroller.compareRevisionHistory);
 router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 // attorney end
 

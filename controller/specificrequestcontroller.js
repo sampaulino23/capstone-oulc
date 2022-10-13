@@ -502,6 +502,18 @@ const specificrequestcontroller = {
         }
     },
 
+    compareRevisionHistory: async (req, res) => {
+        try {
+
+            console.log('Compare Revision History');
+
+            res.send('Compare Revision History');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     getRevisionHistory: async (req, res) => { //staff
         try {
 

@@ -30,29 +30,30 @@
     <div class="container">
 
         <div class="left-col col-6">
-                <div class="input-group mb-3">
-                    <span class="file-selected input-group-text">Contract Title</span>
-                    <select class="form-select" name="fileSelectedLeft" id="fileSelectedLeft" aria-label="file-selected">
-                        {{#each contractversions}}
-                        {{#compare ../leftcontractversion "==" _id}}
-                            <option value="{{file}}" selected>Version {{version}}</option>
-                        {{else}}
-                            <option value="{{file}}">Version {{version}}</option>
-                        {{/compare}}
-                        {{/each}}
-                    </select>
-                    <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
-                        {{#each contractversions}}
-                        {{#compare ../rightcontractversion "==" _id}}
-                            <option value="{{file}}" selected>Version {{version}}</option>
-                        {{else}}
-                            <option value="{{file}}">Version {{version}}</option>
-                        {{/compare}}
-                        {{/each}}
-                    </select>
-                    <button class="btn btn-primary" type="submit">Compare</button>
-                </div>
-                
+                <form action="/request/comparerevisionhistory" method="POST">
+                    <div class="input-group mb-3">
+                        <span class="file-selected input-group-text">Contract Title</span>
+                        <select class="form-select" name="fileSelectedLeft" id="fileSelectedLeft" aria-label="file-selected">
+                            {{#each contractversions}}
+                            {{#compare ../leftcontractversion "==" _id}}
+                                <option value="{{file}}" selected>Version {{version}}</option>
+                            {{else}}
+                                <option value="{{file}}">Version {{version}}</option>
+                            {{/compare}}
+                            {{/each}}
+                        </select>
+                        <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
+                            {{#each contractversions}}
+                            {{#compare ../rightcontractversion "==" _id}}
+                                <option value="{{file}}" selected>Version {{version}}</option>
+                            {{else}}
+                                <option value="{{file}}">Version {{version}}</option>
+                            {{/compare}}
+                            {{/each}}
+                        </select>
+                        <button class="btn btn-primary" type="submit">Compare</button>
+                    </div>
+                </form>
             </div>
 
             <div id="comparisonView">
