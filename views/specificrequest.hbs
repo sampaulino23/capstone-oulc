@@ -36,7 +36,7 @@
             <div id="subheader">
                 <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
                 <p class = "divider" style = "display: inline;"> > </p>
-                <a href = "/" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                <a href = "/request/staff/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
             </div>
         </div>
         <div class="col-6">
@@ -186,7 +186,7 @@
                 <h5 class="w-100 modal-title" id="exampleModalLabel">Route to Another Attorney</h5>
             </div>
             <div class="modal-body centered">
-                <div>Select a different attorney to route the approval request to:</div>
+                <div>Select a different attorney to route the approval request to:</div><br>
                 <select id="routeAttorneySelect">
                     {{#each attorneys}}
                     <option value="{{_id}}">{{fullName}}</option>
