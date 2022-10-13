@@ -179,7 +179,7 @@ function viewPending(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -220,7 +220,7 @@ function viewToReview(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -264,7 +264,7 @@ function viewWaiting(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -330,7 +330,7 @@ function viewForLegalReview(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -396,7 +396,7 @@ function viewCleared(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -463,7 +463,7 @@ function viewRerouted(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
@@ -529,7 +529,7 @@ function viewCancelled(){
             row.style.display = "none"; // hides this row
         }
     }
-    alert(length-1);
+    
 
     var totalRows = length;
     var recordPerPage = 4;
