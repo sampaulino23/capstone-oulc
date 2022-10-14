@@ -15,6 +15,10 @@
 
     <script>
         $(document).ready( () => {
+
+            $('span').click(function(event){
+                event.stopPropagation();
+            });
             
             $('.addtag-btn').click(function () {
                 var tag = document.getElementById("inputtag").value;
@@ -35,7 +39,8 @@
                     button.setAttribute("id", "tag-view-" + tag);
                     button.setAttribute("class", "tag removetag-btn");
                     button.value = tag;
-                    button.innerText = tag + " x";
+                    var closeBtn = ' \u00D7'
+                    button.innerText = tag + closeBtn;
                     tagcontainer.appendChild(button);
                     document.getElementById("inputtag").value = "";
                 } else{
@@ -84,6 +89,7 @@
             });
 
         });
+        
     </script>
 </head>
 
@@ -152,7 +158,7 @@
                 
                 <div id="tag-container" class="tag-container">
                     {{#each repositoryFile.tags}}
-                    <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"> {{this}} <span>&times;</span></button> 
+                    <button id = "tag-view-{{this}}" class="tag removetag-btn" value="{{this}}"><span style= "cursor: default;" >{{this}} </span>&times;</button> 
                     {{/each}}
                 </div>
             </div>
