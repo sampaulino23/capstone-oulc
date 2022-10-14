@@ -53,7 +53,7 @@ const specificrequestcontroller = {
 
             //console.log(conversation);
 
-            const messages = await Message.find({}).lean().exec();
+            const messages = await Message.find({}).lean().exec(); //Put conversationId here to get designated messages only 
 
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
@@ -907,27 +907,19 @@ const specificrequestcontroller = {
             //var name = req.user.fullName;
             //var requestid = req.query.requestid;
             var conversationid = req.query.conversationid;
-            var user1 = req.user._id;
+            var sender = req.user.fullName;
             //var user2 = req.query.requesterid;
 
-            //console.log(requestid + " by " + user1);
-            //console.log(name + ": " + message);
-            console.log(user1 + ": " + message + " in conversation " + conversationid);
+            console.log(sender + ": " + message + " in conversation " + conversationid);
 
             // insert message to db
             let newMessage = new Message({
                 conversationId: conversationid,
-                sender: user1,
+                sender: sender,
                 content: message
             }); 
 
-            /*let newConversation = new Conversation({
-                contractRequest: requestid,
-                members: [user1, user2]
-            }); */
-
             await newMessage.save();
-            //await newConversation.save();
           
         }catch(err) {
 			console.log(err);

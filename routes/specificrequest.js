@@ -98,6 +98,9 @@ router.post('/comparerevisionhistory', specificrequestcontroller.compareRevision
 router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 // attorney end
 
+//send message
+//router.get('/sendmessage', specificrequestcontroller.sendMessage);
+
 // requesting office start
 router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
 // requesting office end

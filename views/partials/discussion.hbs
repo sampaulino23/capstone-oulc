@@ -81,36 +81,38 @@
     $(document).ready( () => { 
         
         $('.send-btn').click(function () {  
-            event.preventDefault();
-            //var name = document.getElementById("username").value;
+            //event.preventDefault();
             var message = document.getElementById("inputmessage").value;
-            var requestid = document.getElementById("requestid").value;
+            //var conversationid = document.getElementById("conversationid").value;
+            //var name = document.getElementById("username").value;
+            //var requestid = document.getElementById("requestid").value;
             var requesterid = document.getElementById("requesterid").value;
-            var conversationid = document.getElementById("conversationid").value;
-            addMessage(message);
+            //alert(conversationid + ": " + message);
+            addMessage(requesterid, message);
 
-            $.ajax({
-                    url: "/sendmessage",
-                    method: "GET",
-                    contentType: "application/json",
-                    data: {conversationid: conversationid, message: message},
-                    success: function() {
-                        console.log('SUCCESS');
-                    },
-                    error: function(err) {
-                        console.log(err);
-                    }
-                });
+//            $.ajax({
+//                    url: "/sendmessage",
+//                    method: "GET",
+//                   contentType: "application/json",
+//                    data: {conversationid: conversationid, message: message},
+//                    success: function() {
+//                        console.log('SUCCESS');
+//                   },
+//                    error: function(err) {
+//                        console.log(err);
+//                    }
+//                });
 
         });
 
     });
 
-    function addMessage(message) {
+    function addMessage(requesterid, message) {
         var ul = document.createElement("ul");
-        ul.id = 'message-box';
-        ul.innerHTML = message;
-        messages.appendChild(ul);
+        var messagebox = document.getElementById("messagebox");
+        ul.id = 'messages';
+        ul.innerHTML = requesterid + " : " + message;
+        messagebox.appendChild(ul);
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
@@ -119,13 +121,13 @@
     <div>Chat Members: {{conversation.members}}</div>
     <div class = "discussion-header">Discussion Thread:</div>
     {{#each messages}}
-        <ul id="messages">{{sender}} {{content}}</ul>
+        <ul id="messages">{{sender}} : {{content}}</ul>
     {{/each}}
-    <br>
-    <ul id="messages"></ul>
+    <div id="messagebox"></div>
+    <!--<ul id="messages"></ul>-->
     <div id="form" >
       <input id="inputmessage" autocomplete="off" placeholder = "Type message here..." />
-      <button class = "send-btn" type="submit">Send</button>
+      <button class="send-btn" type="submit">Send</button>
     </div>
 
 </div>
