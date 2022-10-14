@@ -39,28 +39,28 @@
             </button>
             {{/compare}}
             {{#compare user.role.name '==' 'Attorney'}}
-            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                aria-controls="all" value="" onclick="viewAllRequests()">
+            <button class="nav-item" id="all-tab-atty" data-toggle="tab" href="#all" role="tab"
+                aria-controls="all" value="" onclick="viewAllRequestsAtty()">
                 All
             </button>
-            <button class="nav-item selected" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
+            <button class="nav-item selected" id="forlegalreview-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReviewAtty()">
                 For Legal Review
             </button>
-            <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="Waiting" onclick="viewWaiting()">
+            <button class="nav-item" id="waiting-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Waiting" onclick="viewWaitingAtty()">
                 Waiting
             </button>
-            <button class="nav-item" id="cleared-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="Cleared" onclick="viewCleared()">
+            <button class="nav-item" id="cleared-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cleared" onclick="viewClearedAtty()">
                 Cleared
             </button>
-            <button class="nav-item" id="rerouted-tab" data-toggle="tab" href="" role="tab" 
-                aria-controls="inactiveusers" value="Rerouted" onclick="viewRerouted()">
+            <button class="nav-item" id="rerouted-tab-atty" data-toggle="tab" href="" role="tab" 
+                aria-controls="inactiveusers" value="Rerouted" onclick="viewReroutedAtty()">
                 Rerouted
             </button>
-            <button class="nav-item" id="cancelled-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelled()">
+            <button class="nav-item" id="cancelled-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledAtty()">
                 Cancelled
             </button>
             {{/compare}}

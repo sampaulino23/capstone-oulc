@@ -160,6 +160,52 @@ function viewAllRequests(){
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
+function viewAllRequestsAtty(){ 
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+
+    var totalRows = $('#table').find('tbody tr:has(td)').length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    var tr = $('table tbody tr:has(td)');
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(tr[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(tr[i]).show();
+        }
+    });
+    
+    document.getElementById("all-tab-atty").classList.add("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
+    document.getElementById("waiting-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-atty").classList.remove("selected");
+    document.getElementById("rerouted-tab-atty").classList.remove("selected");
+    document.getElementById("cancelled-tab-atty").classList.remove("selected");
+}
+
 function viewPending(){ 
     var button = document.getElementById("pending-tab");
     var table = document.getElementById("table");
@@ -288,7 +334,7 @@ function viewToReview(){
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
-function viewWaiting(){ 
+function viewWaiting(){
     var button = document.getElementById("waiting-tab");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
@@ -354,6 +400,70 @@ function viewWaiting(){
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
+function viewWaitingAtty(){
+    var button = document.getElementById("waiting-tab-atty");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter === requeststatus.textContent)) {
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row)
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
+    document.getElementById("all-tab-atty").classList.remove("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
+    document.getElementById("waiting-tab-atty").classList.add("selected");
+    document.getElementById("cleared-tab-atty").classList.remove("selected");
+    document.getElementById("rerouted-tab-atty").classList.remove("selected");
+    document.getElementById("cancelled-tab-atty").classList.remove("selected");
+}
+
 function viewForLegalReview(){ 
     var button = document.getElementById("forlegalreview-tab");
     var table = document.getElementById("table");
@@ -412,12 +522,76 @@ function viewForLegalReview(){
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
-    document.getElementById("toreview-tab").classList.remove("selected");
+    // document.getElementById("toreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.add("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
     document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
+}
+
+function viewForLegalReviewAtty(){ 
+    var button = document.getElementById("forlegalreview-tab-atty");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter === requeststatus.textContent)) {
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
+    document.getElementById("all-tab-atty").classList.remove("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.add("selected");
+    document.getElementById("waiting-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-atty").classList.remove("selected");
+    document.getElementById("rerouted-tab-atty").classList.remove("selected");
+    document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
 function viewCleared(){ 
@@ -478,16 +652,79 @@ function viewCleared(){
 
 
     document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("pending-tab").classList.remove("selected");
-    document.getElementById("toreview-tab").classList.remove("selected");
-    document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
+    document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.add("selected");
     document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
-function viewRerouted(){ 
+function viewClearedAtty(){ 
+    var button = document.getElementById("cleared-tab-atty");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !requeststatus || (filter === requeststatus.textContent)) {
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    
+
+    var totalRows = length;
+    var recordPerPage = 4;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
+
+    document.getElementById("all-tab-atty").classList.remove("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
+    document.getElementById("waiting-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-atty").classList.add("selected");
+    document.getElementById("rerouted-tab-atty").classList.remove("selected");
+    document.getElementById("cancelled-tab-atty").classList.remove("selected");
+}
+
+function viewReroutedAtty(){ 
     var atty = document.getElementById("currentId");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
@@ -543,18 +780,16 @@ function viewRerouted(){
         }
     });
 
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("pending-tab").classList.remove("selected");
-    document.getElementById("toreview-tab").classList.remove("selected");
-    document.getElementById("waiting-tab").classList.remove("selected");
-    document.getElementById("forlegalreview-tab").classList.remove("selected");
-    document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.add("selected");
-    document.getElementById("cancelled-tab").classList.remove("selected");
+    document.getElementById("all-tab-atty").classList.remove("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
+    document.getElementById("waiting-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-atty").classList.remove("selected");
+    document.getElementById("rerouted-tab-atty").classList.add("selected");
+    document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
-function viewCancelled(){ 
-    var button = document.getElementById("cancelled-tab");
+function viewCancelledAtty(){ 
+    var button = document.getElementById("cancelled-tab-atty");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
@@ -609,14 +844,12 @@ function viewCancelled(){
         }
     });
 
-    document.getElementById("all-tab").classList.remove("selected");
-    document.getElementById("pending-tab").classList.remove("selected");
-    document.getElementById("toreview-tab").classList.remove("selected");
-    document.getElementById("waiting-tab").classList.remove("selected");
-    document.getElementById("forlegalreview-tab").classList.remove("selected");
-    document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
-    document.getElementById("cancelled-tab").classList.add("selected");
+    document.getElementById("all-tab-atty").classList.remove("selected");
+    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
+    document.getElementById("waiting-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-atty").classList.remove("selected");
+    document.getElementById("rerouted-tab-atty").classList.remove("selected");
+    document.getElementById("cancelled-tab-atty").classList.add("selected");
 }
 
 /* TEMPLATES TABLE */
@@ -665,7 +898,7 @@ $(document).ready(function() {
     if (currentRole == 'Staff') {
         viewPending();
     } else if (currentRole == 'Attorney') {
-        viewForLegalReview();
+        viewForLegalReviewAtty();
     }
 });
 
