@@ -55,7 +55,7 @@ const requestercontroller = {
             // const role = await Role.findOne({name: roleName}).exec();
             // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
 
-            const users = await User.find({roleName: "Staff"}).lean()
+            const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
 
             var contractrequest = new ContractRequest({
