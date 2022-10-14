@@ -166,21 +166,21 @@ function viewPending(){
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
     var length = 0;
+    let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter === requeststatus.textContent)) {
-            row.style.display = ""; // shows this row
+            // row.style.display = ""; // shows this row
             length++;
+            filteredRows.push(row);
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
-    
-
     var totalRows = length;
     var recordPerPage = 4;
     var totalPages = Math.ceil(totalRows / recordPerPage);
@@ -190,6 +190,29 @@ function viewPending(){
     }
     
     $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.add("selected");
@@ -207,21 +230,21 @@ function viewToReview(){
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
     var length = 0;
+    let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !requeststatus || (filter === requeststatus.textContent)) {
-            row.style.display = ""; // shows this row
+            // row.style.display = ""; // shows this row
             length++;
+            filteredRows.push(row);
         }
         else {
             row.style.display = "none"; // hides this row
         }
     }
-    
-
     var totalRows = length;
     var recordPerPage = 4;
     var totalPages = Math.ceil(totalRows / recordPerPage);
@@ -232,6 +255,28 @@ function viewToReview(){
     
     $("#after-table").html($pages);
 
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
 
     document.getElementById("all-tab").classList.remove("selected");
     document.getElementById("pending-tab").classList.remove("selected");
