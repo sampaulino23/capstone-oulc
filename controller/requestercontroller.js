@@ -13,7 +13,7 @@ const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
 const Template = require('../models/Template.js');
-const Role = require('../models/Role.js');
+const Conversation = require('../models/Conversation.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
@@ -55,6 +55,9 @@ const requestercontroller = {
             // const role = await Role.findOne({name: roleName}).exec();
             // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
 
+            const users = await User.find({roleName: "Staff"}).lean()
+                .exec();
+
             var contractrequest = new ContractRequest({
                  requester: req.user._id,
                  contractType: "6318a39958ff2002a67f7507", //Test only. 
@@ -78,8 +81,19 @@ const requestercontroller = {
                  assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });
 
-            await contractrequest.save();
-            res.redirect('/requester');
+            await contractrequest.save(async function(){
+                var membersList = [req.user._id];
+                for (i=0; i < users.length; i++) {
+                    membersList.push(users[i]._id);
+                }
+            
+                var conversation = new Conversation({
+                    contractRequest: contractrequest._id,
+                    members: membersList
+                });
+                await conversation.save();
+                res.redirect('/requester');
+            });
 
         } catch (err) {
             console.log(err);
