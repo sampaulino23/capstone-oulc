@@ -53,11 +53,14 @@ const { join } = require('path');
 const promise = mongoose.connect(mongoURI, { useNewUrlParser: true });
 
 const conn = mongoose.connection;
-let gfs;
+let gfs, gfsRequestDocs;
 
 conn.once('open',() => {
   gfs = Grid(conn, mongoose.mongo);
   gfs.collection('repository');
+
+  gfsRequestDocs = Grid(conn, mongoose.mongo);
+  gfsRequestDocs.collection('requestdocuments');
 });
 
 const storage = new GridFsStorage({
@@ -105,10 +108,10 @@ router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
 // requesting office end
 
-conn.once('open',() => {
-  gfs = Grid(conn, mongoose.mongo);
-  gfs.collection('requestdocuments');
-});
+// conn.once('open',() => {
+//   gfs = Grid(conn, mongoose.mongo);
+//   gfs.collection('requestdocuments');
+// });
 
 const storageRequestDocs = new GridFsStorage({
   db: promise,
