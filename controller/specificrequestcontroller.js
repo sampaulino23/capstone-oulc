@@ -51,9 +51,7 @@ const specificrequestcontroller = {
 
             const conversation = await Conversation.findOne({contractRequest: path}).lean().exec();
 
-            //console.log(conversation);
-
-            const messages = await Message.find({}).lean().exec(); //Put conversationId here to get designated messages only 
+            const messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
 
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({

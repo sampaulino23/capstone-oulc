@@ -83,42 +83,43 @@
         $('.send-btn').click(function () {  
             //event.preventDefault();
             var message = document.getElementById("inputmessage").value;
-            //var conversationid = document.getElementById("conversationid").value;
+            var conversationid = document.getElementById("conversationid").value;
             //var name = document.getElementById("username").value;
             //var requestid = document.getElementById("requestid").value;
-            var requesterid = document.getElementById("requesterid").value;
-            //alert(conversationid + ": " + message);
-            addMessage(requesterid, message);
+            var username = document.getElementById("username").value;
+            addMessage(username, message);
 
-//            $.ajax({
-//                    url: "/sendmessage",
-//                    method: "GET",
-//                   contentType: "application/json",
-//                    data: {conversationid: conversationid, message: message},
-//                    success: function() {
-//                        console.log('SUCCESS');
-//                   },
-//                    error: function(err) {
-//                        console.log(err);
-//                    }
-//                });
+            $.ajax({
+                    url: "/sendmessage",
+                    method: "GET",
+                   contentType: "application/json",
+                    data: {conversationid: conversationid, message: message},
+                    success: function() {
+                        console.log('SUCCESS');
+                   },
+                    error: function(err) {
+                        console.log(err);
+                    }
+            });
+
+            document.getElementById("inputmessage").value = "";
 
         });
 
     });
 
-    function addMessage(requesterid, message) {
+    function addMessage(username, message) {
         var ul = document.createElement("ul");
         var messagebox = document.getElementById("messagebox");
         ul.id = 'messages';
-        ul.innerHTML = requesterid + " : " + message;
+        ul.innerHTML = username + " : " + message;
         messagebox.appendChild(ul);
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
 
 <div id = "discussion-div">
-    <div>Chat Members: {{conversation.members}}</div>
+    <!--<div>Chat Members: {{conversation.members}}</div>-->
     <div class = "discussion-header">Discussion Thread:</div>
     {{#each messages}}
         <ul id="messages">{{sender}} : {{content}}</ul>
