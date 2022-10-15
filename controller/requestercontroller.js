@@ -36,10 +36,24 @@ const requestercontroller = {
 
     getCreateRequest: async (req, res) => {
         try {
-           
+
+            const user = await User.findById(req.user).lean()
+                .populate({
+                    path: 'department',
+                    ref: 'Department'
+                })
+                .exec();
+
+            var today = new Date();
+
+            const contracttypes = await ContractType.find({}).lean().exec();
+
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
-                user_role:req.user.roleName
+                user_role:req.user.roleName,
+                department: user.department.abbrev,
+                requestdate: today,
+                contracttypes: contracttypes
             });
 
         } catch (err) {

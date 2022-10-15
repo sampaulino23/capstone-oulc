@@ -18,11 +18,11 @@
         <form action="/requester/createcontractrequest" method="POST">
             <div class="mb-3">
                 <label for="department" class="form-label">Department/Unit</label>
-                <input type="text" name="department" class="form-control" id="department" required>
+                <input type="text" name="department" class="form-control" id="department" value="{{department}}" required readonly>
             </div>
             <div class="mb-3">
                 <label for="requestdate" class="form-label">Request Date</label>
-                <input type="text" name="requestdate" class="form-control" id="requestdate" required>
+                <input type="text" name="requestdate" class="form-control" id="requestdate" value="{{formatdate requestdate}}" required readonly>
             </div>
             <div class="mb-3">
                 <label for="signatoryname" class="form-label">*Name of Signatory</label>
@@ -54,7 +54,11 @@
             </div>
             <div class="mb-3">
                 <label for="documenttype" class="form-label">*Document Type</label>
-                <input type="text" name="documenttype" class="form-control" id="documenttype" required>
+                <select class="form-select" aria-label="Document Type" name="documenttype" id="documenttype">
+                    {{#each contracttypes}}
+                    <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="mb-3">
                 <label for="templateused" class="form-label">*Template Used</label>
