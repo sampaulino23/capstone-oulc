@@ -19,6 +19,20 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 
+const conn = mongoose.createConnection(url);
+
+// Init gridfsBucket
+let gridfsBucket, gridfsBucketRequestDocuments;
+
+conn.once('open', () => {
+    // gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+    //     bucketName: 'repository'
+    // });
+    gridfsBucketRequestDocuments = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'requestdocuments'
+    });
+});
+
 const requestercontroller = {
 
     getHome: async (req, res) => {
@@ -68,6 +82,9 @@ const requestercontroller = {
 
             // const role = await Role.findOne({name: roleName}).exec();
             // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
+
+            const files = req.files;
+            console.log(files);
 
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();

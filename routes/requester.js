@@ -61,7 +61,7 @@ conn.once('open',() => {
     gfs.collection('requestdocuments');
 });
 
-const storageRequestDocs = new GridFsStorage({
+const storage = new GridFsStorage({
     db: promise,
     file: (req, file) => {
       return new Promise((resolve, reject) => {
@@ -75,8 +75,8 @@ const storageRequestDocs = new GridFsStorage({
     }
 });
 
-const uploadRequestDocs = multer( {
-    storage: storageRequestDocs,
+const upload = multer( {
+    storage: storage,
     fileFilter: function (req, file, callback) {
       var ext = path.extname(file.originalname);
       if(ext !== '.pdf' && ext !== '.doc' && ext !== '.docx') {
@@ -88,7 +88,7 @@ const uploadRequestDocs = multer( {
 
 router.get('/', requestercontroller.getHome);
 router.get('/createrequest', requestercontroller.getCreateRequest);
-router.post('/createcontractrequest', uploadRequestDocs.fields([
+router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
