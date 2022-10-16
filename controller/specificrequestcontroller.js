@@ -49,10 +49,11 @@ const specificrequestcontroller = {
 
             // console.log(path);
 
-            const conversation = await Conversation.findOne({contractRequest: path}).lean().exec();
-
+            const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
+            
             const messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
 
+            
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
                     path: 'requester',
