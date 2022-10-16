@@ -44,16 +44,12 @@ const specificrequestcontroller = {
         try {
 
             var path = req.path.split('/')[2];
-
             var userid = req.user._id;
 
-            // console.log(path);
-
             const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
-            
+
             const messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
 
-            
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
                     path: 'requester',
@@ -73,27 +69,6 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            // for (i = 0; i < contractrequest.length; i++) {
-            //     const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
-            //     contractrequest[i].status = statusList.statusStaff;
-
-            //     // To calculate the time difference of two dates
-            //     var Difference_In_Time = contractrequest[i].effectivityEndDate.getTime() - contractrequest[i].effectivityStartDate.getTime();
-                      
-            //     // To calculate the no. of days between two dates
-            //     var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-
-            //     if (Difference_In_Days < 0){
-            //         Difference_In_Days = Math.floor(Difference_In_Days);
-            //     }
-            //     else {
-            //         Difference_In_Days = Math.ceil(Difference_In_Days);
-            //     }
-
-            //     // To set number of days gap in contract request
-            //     contractrequest[i].daysDuration = Difference_In_Days;
-            // }
-
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             if (req.user.roleName == "Staff") {
@@ -102,7 +77,6 @@ const specificrequestcontroller = {
             else if (req.user.roleName == "Attorney") {
                 contractrequest.status = statusList.statusAttorney;
             }
-            
 
             // To calculate the time difference of two dates
             var Difference_In_Time = contractrequest.effectivityEndDate.getTime() - contractrequest.effectivityStartDate.getTime();
@@ -214,8 +188,6 @@ const specificrequestcontroller = {
 
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
             await feedback.save();
-            // var feedback = req.body.addStaffFeedback;
-            // var id = req.body.addStaffFeedbackID;
 
             res.redirect('back');
         } catch (err) {
@@ -238,8 +210,6 @@ const specificrequestcontroller = {
 
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
             await feedback.save();
-            // var feedback = req.body.addStaffFeedback;
-            // var id = req.body.addStaffFeedbackID;
 
             res.redirect('back');
         } catch (err) {
