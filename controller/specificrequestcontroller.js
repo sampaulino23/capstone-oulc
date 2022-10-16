@@ -50,6 +50,7 @@ const specificrequestcontroller = {
             const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
 
             if (conversation) {
+                console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
             }
             
