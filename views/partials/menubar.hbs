@@ -21,6 +21,13 @@
         </div>
         {{/compare}}
 
+        {{#compare user_role "==" "Requester"}}
+        {{> sidenav}}
+        <div class="navbar-logo">
+            <a href="/requester"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
+        </div>
+        {{/compare}}
+
         <ul>
         <li>
             <div class = "account-profile-pic" id = "accountName">

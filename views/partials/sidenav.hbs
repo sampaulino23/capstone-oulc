@@ -22,6 +22,15 @@
     <a href="/logout" id = "sidenav-logout">Log Out</a>
     {{/compare}}
 
+    {{#compare user_role "==" "Requester"}}
+    <a href="/requester"><img src="/img/home.png" style="width:45px; padding:0px; margin-right: 15px;"/>Home</a>
+    <a href="/attorney/contractrequests"><img src="/img/approval_requests_logo.png" style="width:45px; padding:0px; margin-right: 15px;"/>Approval Requests</a>
+    <a href="/"><img src="/img/contract_templates_logo.png" style="width:45px; padding:0px; margin-right: 15px;"/>Contract Templates</a>
+    <a href="/"><img src="/img/docu_repository_logo.jpg" style="width:45px; padding:0px; margin-right: 15px;"/>Document Repository</a>
+    <a href="/"><img src="/img/help_icon.png" style="width:45px; padding:0px; margin-right: 15px;"/>Help Articles</a>
+    <a href="/logout" id = "sidenav-logout">Log Out</a>
+    {{/compare}}
+
 </div>
 
 <script>
