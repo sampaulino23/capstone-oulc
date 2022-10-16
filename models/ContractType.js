@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 const ContractTypeSchema = mongoose.Schema({
     name: {
         type: String,
-        code: String,
         required: true
     },
+    code: {
+        type: String,
+        required: true
+    }
     
 });
 

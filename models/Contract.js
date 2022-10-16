@@ -10,9 +10,9 @@ const ContractSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Template',
     },
-    title: {
-        type: String,
-    },
+    // title: {
+    //     type: String,
+    // },
     latestversion: {
         type: Number
     }
