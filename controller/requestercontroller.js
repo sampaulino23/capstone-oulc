@@ -9,8 +9,11 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 const User = require('../models/User.js');
+const Contract = require('../models/Contract.js');
+const ContractVersion = require('../models/ContractVersion.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
+const ReferenceDocument = require('../models/ReferenceDocument.js');
 const Status = require('../models/Status.js');
 const Template = require('../models/Template.js');
 const Conversation = require('../models/Conversation.js');
@@ -86,6 +89,8 @@ const requestercontroller = {
             const files = req.files;
             console.log(files);
 
+            
+
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
 
@@ -113,6 +118,49 @@ const requestercontroller = {
             });
 
             await contractrequest.save(async function(){
+                if (files.contractFiles != null) {
+                    for (contractFile of files.contractFiles) {
+                        console.log(contractFile);
+                        console.log(contractFile.id);
+    
+                        // insert contract object to db
+                        var newContract = new Contract({
+                            contractRequest: contractrequest._id,
+                            latestversion: 1
+                        });
+    
+                        var contract = await newContract.save();
+                        
+                        // insert contract version object to db
+                        var newContractVersion = new ContractVersion({
+                            contract: contract._id,
+                            version: 1,
+                            uploadDate: contractFile.uploadDate,
+                            file: contractFile.id,
+                            filename: contractFile.filename
+                        })
+    
+                        await newContractVersion.save();
+                    }
+                }
+    
+                if (files.refDocFiles != null) {
+                    for (refDocFile of files.refDocFiles) {
+                        console.log(refDocFile);
+                        console.log(refDocFile.id);
+    
+                        // insert reference document object to db
+                        var newReferenceDocument = new ReferenceDocument({
+                            contractRequest: contractrequest._id,
+                            uploadDate: refDocFile.uploadDate,
+                            file: refDocFile.id,
+                            filename: refDocFile.filename
+                        });
+    
+                        await newReferenceDocument.save();
+                    }
+                }
+
                 var membersList = [req.user._id];
                 for (i=0; i < users.length; i++) {
                     membersList.push(users[i]._id);
