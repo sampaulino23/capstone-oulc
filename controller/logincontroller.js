@@ -57,41 +57,30 @@ const logincontroller = {
         
         if (!req.user) {
             res.render('login', {
-                // profileurl: '/profile/' + req.session.uname,
                 pagename: 'Log In',
                 title: 'Log In'
             });
         }
         else {
-
-            const userlogged = await User.findOne({ email: req.user.email }).lean()
-                            .populate({
-                                path: 'role'
-                            }).exec();
-            req.session.role = userlogged.role.name;
-
-            if (req.session.role == "Staff"){
+            if (req.user.roleName == "Staff"){
                 res.redirect('/staff');
             }
-            else if (req.session.role == "Attorney") {
+            else if (req.user.roleName == "Attorney") {
                 res.redirect('/attorney');
             }
-            else if (req.session.role == "Administrator") {
+            else if (req.user.roleName == "Administrator") {
                 res.redirect('/admin/usermanagement');
             }
-            else if (req.session.role == "Requester") {
+            else if (req.user.roleName == "Requester") {
                 res.redirect('/requester');
             }
             else {
                 res.render('login', {
-                    // profileurl: '/profile/' + req.session.uname,
                     pagename: 'Log In',
                     title: 'Log In'
                 });
             }
         }
-       
-        
     },
 
     getError: function (req, res) {
@@ -158,9 +147,6 @@ const logincontroller = {
     },
 
     postInsert: async (req, res, next) => {
-        var createUserID;
-        var ObjectId = require('mongodb').ObjectID;
-        var profileURL;
 
         const role = await Role.findOne({name: "Administrator"}).exec();
         console.log(role._id);
