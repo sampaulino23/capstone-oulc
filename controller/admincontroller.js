@@ -17,39 +17,7 @@ function checkAdmin(req,res,next){
     }
 }
 
-// const transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     auth: {
-//         user: "capstone.samantha@gmail.com",
-//         pass: "uapnxnyyyqqsfkax"
-//     }
-// });
-
-// const options = {
-//     from: "capstone.samantha@gmail.com",
-//     to: "samantha.capstone@gmail.com",
-//     subject: "SENDING EMAIL WITH NODE",
-//     text: "wow! so simple"
-// }
-
- 
-
-
 const admincontroller = {
-
-    // sendEmail: function (req, res) { // function for send mail
-
-    //     transporter.sendMail (options, function (err, info) {
-    //         if (err) {
-    //             console.log(err);
-    //             return;
-    //         }
-    //         console.log("Sent: " + info.response);
-    //     })       
-        
-    // },
-
-
 
     getAddUser: async (req, res) => {
         try {
@@ -71,8 +39,6 @@ const admincontroller = {
 
     postAddUser: async (req, res) => {
         try {
-
-            // add user
 
             //generate random 8 character password
             var password = Math.random().toString(36).substr(2, 8);
