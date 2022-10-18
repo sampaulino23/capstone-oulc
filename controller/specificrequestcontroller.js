@@ -45,7 +45,7 @@ const specificrequestcontroller = {
 
             var path = req.path.split('/')[2];
             var userid = req.user._id;
-            const messages = null;
+            var messages = null;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
 
