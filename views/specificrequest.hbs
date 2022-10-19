@@ -29,6 +29,7 @@
             <div class = "status-text actual">{{contractrequest.status}}</div>
             <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
             <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
+            <input type="hidden" id="contractStatus" name="contractStatus" value="{{contractrequest.status}}">
         </div>
     </div>
     <div class = "subheader-row">
@@ -67,6 +68,28 @@
             <!-- RIGHT SIDE -->
             <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
+                {{#compare contractrequest.status "==" "Pending"}}
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li>
+                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
+                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
+                    </li>
+                </ul>
+                {{/compare}}
+
+                {{#compare contractrequest.status "!=" "Pending"}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -89,6 +112,7 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
+                {{/compare}}
 
                 <!-- Tab panes -->
                 <div class="tab-content">
