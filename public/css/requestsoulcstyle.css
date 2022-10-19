@@ -134,3 +134,10 @@
 .pageNumber {
     padding: 2px;
 }
+
+#after-table {
+    position:sticky;
+    bottom: 0;
+    margin-top: 5px;
+    background-color: #fff;
+}
