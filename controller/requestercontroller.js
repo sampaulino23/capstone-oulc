@@ -89,17 +89,24 @@ const requestercontroller = {
             const files = req.files;
             console.log(files);
 
-            
-
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
+
+            const daterange = req.body.daterange;
+            console.log(daterange);
+
+            let startDate = new Date(daterange.substring(0, 10));
+            let endDate = new Date(daterange.substring(13));
+
+            console.log(startDate);
+            console.log(endDate);
 
             var contractrequest = new ContractRequest({
                  requester: req.user._id,
                  contractType: "6318a39958ff2002a67f7507", //Test only. 
                  trackingNumber: "12345", //Test only. Automate
                  subjectMatter: req.body.subject,
-                 requestDate: Date.now(),
+                 requestDate: req.body.requestdate,
                  requestTitle: req.body.documenttitle,
                  effectivityStartDate: req.body.starteffectivity,
                  effectivityEndDate: req.body.endeffectivity,

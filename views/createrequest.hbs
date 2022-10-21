@@ -9,6 +9,11 @@
         <link rel="stylesheet" href="/css/dashboardstyle.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="/js/createrequest.js"></script>
+        {{!-- Daterange picker files --}}
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     </head>
     <body>
         <div id="header">Requesting Office Create Request </div>
@@ -80,17 +85,21 @@
                 <label for="subject" class="form-label">*Subject Matter</label>
                 <input type="text" name="subject" class="form-control" id="subject" >
             </div>
-            <div class="mb-3">
+            {{!-- <div class="mb-3">
                 <label for="starteffectivity" class="form-label">*Effectivity Date From</label>
                 <input type="date" name="starteffectivity" class="form-control" id="starteffectivity" >
             </div>
             <div class="mb-3">
                 <label for="endeffectivity" class="form-label">*Until</label>
                 <input type="date" name="endeffectivity" class="form-control" id="endeffectivity" >
+            </div> --}}
+            <div class="mb-3">
+                <label for="daterange" class="form-label">*Effectivity Date</label>
+                <input type="text" class="form-control" name="daterange"/>
             </div>
             <div class="mb-3">
                 <label for="duration" class="form-label">Duration</label>
-                <input type="number" name="duration" class="form-control" id="duration" >
+                <input type="number" name="duration" class="form-control" id="duration" readonly required>
             </div>
             <div class="mb-3">
                 <label for="reviewtype" class="form-label">*Type of Review</label>
