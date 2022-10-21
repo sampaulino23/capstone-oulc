@@ -67,10 +67,27 @@
             </div>
             <div class="mb-3">
                 <label for="templateused" class="form-label">*Template Used</label>
-                <input type="text" name="templateused" class="form-control" id="templateused" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="templateused" id="radioTemplateUsed1" value="templateUsedDlsu" checked>
+                    <label class="form-check-label" for="radioTemplateUsed1">
+                        DLSU Template
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="templateused" id="radioTemplateUsed2" value="templateUsedOther">
+                    <label class="form-check-label" for="radioTemplateUsed2">
+                        Other (e.g.: From other party, own template)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="templateused" id="radioTemplateUsed3" value="templateUsedDlsuWithChanges">
+                    <label class="form-check-label" for="radioTemplateUsed3">
+                        DLSU Template with changes in section/paragraph
+                    </label>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="templateused" class="form-label">*Section Changes</label>
+            <div class="mb-3" id="sectionChangesDiv" hidden>
+                <label for="sectionchanges" class="form-label">*Section Changes</label>
                 <input type="text" name="sectionchanges" class="form-control" id="sectionchanges" >
             </div>
             <div class="mb-3">
@@ -103,7 +120,18 @@
             </div>
             <div class="mb-3">
                 <label for="reviewtype" class="form-label">*Type of Review</label>
-                <input type="text" name="reviewtype" class="form-control" id="reviewtype" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reviewtype" id="radioReviewType1" checked>
+                    <label class="form-check-label" for="radioReviewType1">
+                        Regular
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reviewtype" id="radioReviewType2">
+                    <label class="form-check-label" for="radioReviewType2">
+                        Express
+                    </label>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="contractFiles" class="form-label">*Upload Contract(s)</label>

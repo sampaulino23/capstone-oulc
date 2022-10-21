@@ -37,6 +37,13 @@ $(document).ready(() => {
                 console.log('invalid');
             }
         }
-
+    });
+    $("input[name='templateused']").click(() => {
+        
+        if ($('#radioTemplateUsed3').is(':checked')) {
+            $('#sectionChangesDiv').prop('hidden', false);
+        } else {
+            $('#sectionChangesDiv').prop('hidden', true);
+        }
     });
 });
