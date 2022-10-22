@@ -79,17 +79,27 @@
 
 </style>
 
+<script src = "/socket.io/socket.io.js"></script>
+
 <script>
-    $(document).ready( () => { 
+    $(document).ready( () => {
+        var socket = io(); 
         
-        $('.send-btn').click(function () {  
+        $('.send-btn').click(function () {   
             //event.preventDefault();
             var message = document.getElementById("inputmessage").value;
             var conversationid = document.getElementById("conversationid").value;
-            //var name = document.getElementById("username").value;
-            //var requestid = document.getElementById("requestid").value;
             var username = document.getElementById("username").value;
-            addMessage(username, message);
+            //addMessage(username, message);
+
+            socket.emit("chat-message", {
+                username: username,
+                message: message
+            });
+
+            socket.on("chat-message", function(data) {
+                addMessage(data.username, data.message);
+            });
 
             $.ajax({
                     url: "/sendmessage",
@@ -127,7 +137,6 @@
         <ul id="messages">{{sender}} : {{content}}</ul>
     {{/each}}
     <div id="messagebox"></div>
-    <!--<ul id="messages"></ul>-->
     <div id="form" >
         <input id="inputmessage" autocomplete="off" placeholder = "Type message here..." />
         <button class="send-btn" type="submit">Send</button>

@@ -68,7 +68,7 @@
             <!-- RIGHT SIDE -->
             <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
-                {{#compare contractrequest.status "==" "Pending"}}
+                <!--{{#compare contractrequest.status "==" "Pending"}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -87,9 +87,9 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{/compare}}
+                {{/compare}}-->
 
-                {{#compare contractrequest.status "!=" "Pending"}}
+                {{#compare contractrequest.status "==" "Pending"}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
