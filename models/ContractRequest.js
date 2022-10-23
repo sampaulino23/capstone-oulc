@@ -40,6 +40,10 @@ const ContractRequestSchema = mongoose.Schema({
         required: true,
         default: 1
     },
+    contactPerson: {
+        type: String,
+        required: true
+    },
     contactNum: {
         type: String,
         required: true
