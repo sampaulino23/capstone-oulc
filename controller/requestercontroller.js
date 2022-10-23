@@ -86,49 +86,67 @@ const requestercontroller = {
             // const role = await Role.findOne({name: roleName}).exec();
             // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
 
+            function makeid(length) {
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                  result += characters.charAt(Math.floor(Math.random() * charactersLength));
+               }
+               return result;
+            }
+
             const files = req.files;
-            console.log(files);
 
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
 
             const daterange = req.body.daterange;
-            console.log(daterange);
 
             let startDate = new Date(daterange.substring(0, 10));
             let endDate = new Date(daterange.substring(13));
 
-            console.log(startDate);
-            console.log(endDate);
+            const datenow = new Date();
+
+            var month = ('0' + (datenow.getMonth() + 1)).slice(-2);
+            var day = ('0' + (datenow.getDate())).slice(-2);
+            var year = datenow.getFullYear();
+
+            var base32 = makeid(4);
+
+            const contracttype = await ContractType.findById(req.body.documenttype).exec();
+
+            var trackingNumber = '' + year + month + day + base32 + '-' + contracttype.code;
+            console.log('trackingNumber: ' + trackingNumber);
 
             var contractrequest = new ContractRequest({
-                 requester: req.user._id,
-                 contractType: "6318a39958ff2002a67f7507", //Test only. 
-                 trackingNumber: "12345", //Test only. Automate
-                 subjectMatter: req.body.subject,
-                 requestDate: req.body.requestdate,
-                 requestTitle: req.body.documenttitle,
-                 effectivityStartDate: req.body.starteffectivity,
-                 effectivityEndDate: req.body.endeffectivity,
-                // contactPerson: "" --> not in schema
-                 contactNum: req.body.contactno,
-                // reviewType: req.body.reviewtype, --> Test only. Input field to be changed
-                 signatoryLevel: req.body.signatorylevel, //Test only. Automate
-                 signatoryName: req.body.signatoryname,
-                 templateUsed: "DLSU Template", //req.body.templateused, //Test only. Input field to be changed
-                 sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
-                 thirdPartyRepresentativeName: req.body.thirdpartyname,
-                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
-                 contractingParty: req.body.contractingparty,
-                 amountInvolved: req.body.amount,
-                 assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
+                requester: req.user._id,
+                contractType: req.body.documenttype, 
+                trackingNumber: trackingNumber,
+                subjectMatter: req.body.subject,
+                requestDate: req.body.requestdate,
+                requestTitle: req.body.documenttitle,
+                effectivityStartDate: startDate,
+                effectivityEndDate: endDate,
+                contactPerson: req.body.contactperson,
+                contactNum: req.body.contactno,
+                reviewType: req.body.reviewtype,
+                signatoryLevel: req.body.signatorylevel, //Test only. Automate
+                signatoryName: req.body.signatoryname,
+                templateUsed: req.body.templateused,
+                sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
+                thirdPartyRepresentativeName: req.body.thirdpartyname,
+                thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
+                contractingParty: req.body.contractingparty,
+                amountInvolved: req.body.amount,
+                assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });
 
             await contractrequest.save(async function(){
                 if (files.contractFiles != null) {
                     for (contractFile of files.contractFiles) {
-                        console.log(contractFile);
-                        console.log(contractFile.id);
+                        // console.log(contractFile);
+                        // console.log(contractFile.id);
     
                         // insert contract object to db
                         var newContract = new Contract({
@@ -153,8 +171,8 @@ const requestercontroller = {
     
                 if (files.refDocFiles != null) {
                     for (refDocFile of files.refDocFiles) {
-                        console.log(refDocFile);
-                        console.log(refDocFile.id);
+                        // console.log(refDocFile);
+                        // console.log(refDocFile.id);
     
                         // insert reference document object to db
                         var newReferenceDocument = new ReferenceDocument({
