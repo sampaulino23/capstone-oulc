@@ -64,7 +64,7 @@ const ContractRequestSchema = mongoose.Schema({
     },
     templateUsed: {
         type: String,
-        enum: ['DLSU Template', 'DLSU Template with changes in section/paragraph', 'Other (e.g.: From other party, own templates'],
+        enum: ['DLSU Template', 'DLSU Template with changes in section/paragraph', 'Other (e.g.: From other party, own templates)'],
         required: true
     },
     sectionChangeNotes: {
