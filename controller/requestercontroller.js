@@ -117,7 +117,6 @@ const requestercontroller = {
             const contracttype = await ContractType.findById(req.body.documenttype).exec();
 
             var trackingNumber = '' + year + month + day + base32 + '-' + contracttype.code;
-            console.log('trackingNumber: ' + trackingNumber);
 
             var contractrequest = new ContractRequest({
                 requester: req.user._id,

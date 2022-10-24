@@ -1,3 +1,7 @@
+$(window).on('load', function() {
+    $('#duration').val(0);
+});
+
 $(document).ready(() => {
     // a and b are javascript Date objects
     function dateDiffInDays(a, b) {
@@ -19,24 +23,6 @@ $(document).ready(() => {
 
         const duration = dateDiffInDays(startDate, endDate);
         $('#duration').val(duration);
-    });
-    $('#starteffectivity, #endeffectivity').change(() => {
-
-        const start = $('#starteffectivity').val();
-        const end = $('#endeffectivity').val();
-
-        if (start != '' && end != '') {
-
-            const startDate = new Date(start);
-            const endDate = new Date(end);
-
-            if (startDate < endDate) {
-                const duration = dateDiffInDays(startDate, endDate);
-                $('#duration').val(duration);
-            } else {
-                console.log('invalid');
-            }
-        }
     });
     $("input[name='templateused']").click(() => {
         
