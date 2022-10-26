@@ -6,9 +6,6 @@ const ReferenceDocumentSchema = mongoose.Schema({
         ref: 'ContractRequest',
         required: true
     },
-    title: {
-        type: String,
-    },
     uploadDate: {
         type: Date,
         required: true

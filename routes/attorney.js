@@ -60,7 +60,7 @@ let gfs;
 
 conn.once('open',() => {
   gfs = Grid(conn, mongoose.mongo);
-  gfs.collection('uploads');
+  gfs.collection('templates');
 });
 
 const storage = new GridFsStorage({
@@ -74,7 +74,7 @@ const storage = new GridFsStorage({
         const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: 'uploads'
+          bucketName: 'templates'
         };
         resolve(fileInfo);
       });
