@@ -33,7 +33,6 @@
             <div class="row"> 
                 <!-- LEFT SIDE -->
                 <div class="col-6">
-                    
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
                             <div class="w-100">
@@ -61,7 +60,7 @@
                                                         aria-expanded="false" style ="cursor: pointer;"></i>
                                                         <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteTemplateModal{{@index}}" style ="cursor: pointer;"></i>
                                                         <ul class="dropdown-menu">
-                                                            <li><button class="dropdown-item get-edit-user" type="button"
+                                                            <li class = "bi-replace"><button class="dropdown-item get-edit-user" type="button"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#replaceTemplateModal{{@index}}">Replace</button>
                                                             </li>
@@ -241,3 +240,18 @@
     </div>
 
 </html>
+
+<script>
+    var user_role = "{{user_role}}";
+    var trashIconList;
+    var replaceIconList;
+    
+    if (user_role == "Requester"){
+        trashIconList = document.getElementsByClassName("bi-trash");
+        replaceIconList = document.getElementsByClassName("bi-replace");
+        for (var i = 0; i < trashIconList.length; i++ ) {
+            trashIconList[i].style.display = "none";
+            replaceIconList[i].style.display = "none";
+        }
+    }
+</script>
