@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority';
+const staffcontroller = require('../controller/staffcontroller.js');
 
 const MongoStore = require('connect-mongo');
 const requestercontroller = require('../controller/requestercontroller.js');
@@ -87,6 +88,7 @@ const upload = multer( {
 });
 
 router.get('/', requestercontroller.getHome);
+router.get('/templates', staffcontroller.getTemplates);
 router.get('/createrequest', requestercontroller.getCreateRequest);
 router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
