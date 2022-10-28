@@ -51,8 +51,12 @@ const staffcontroller = {
                     contractrequests[i].status = statusList.statusStaff;
                     // console.log(i + ' ' + contractrequests[i].statusCounter + ' ' + contractrequests[i].status);
                 }
-                else {
+                else if (req.user.roleName == "Attorney"){
                     contractrequests[i].status = statusList.statusAttorney;
+                    // console.log(i + ' ' + contractrequests[i].statusCounter + ' ' + contractrequests[i].status);
+                }
+                else {
+                    contractrequests[i].status = statusList.statusRequester;
                     // console.log(i + ' ' + contractrequests[i].statusCounter + ' ' + contractrequests[i].status);
                 }
                 
