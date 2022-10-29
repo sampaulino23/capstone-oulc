@@ -166,6 +166,122 @@ const specificrequestcontroller = {
         }
     },
 
+    getRequesterSpecificRequest: async (req, res) => { //requester
+        try {
+
+            var path = req.path.split('/')[2];
+            var userid = req.user._id;
+            var messages = null;
+
+            const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
+
+            if (conversation) {
+                console.log("INSIDE CONVERSATION");
+                messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
+            }
+            
+            const contractrequest = await ContractRequest.findById(path).lean()
+                .populate({
+                    path: 'requester',
+                    populate: {
+                        path: 'department'
+                      } 
+                })
+                .populate({
+                    path: 'contractType'
+                })
+                .populate({
+                    path: 'assignedAttorney'
+                })
+                .populate({
+                    path: 'conversation'
+                })
+                .sort({requestDate: 1})
+                .exec();
+
+            const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
+
+            contractrequest.status = statusList.statusRequester;
+
+            // To calculate the time difference of two dates
+            var Difference_In_Time = contractrequest.effectivityEndDate.getTime() - contractrequest.effectivityStartDate.getTime();
+                    
+            // To calculate the no. of days between two dates
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+            if (Difference_In_Days < 0){
+                Difference_In_Days = Math.floor(Difference_In_Days);
+            }
+            else {
+                Difference_In_Days = Math.ceil(Difference_In_Days);
+            }
+
+            // To set number of days gap in contract request
+            contractrequest.daysDuration = Difference_In_Days;
+
+            const feedback = await Feedback.find({contractRequest : path}).lean()
+                .populate({
+                    path: 'user_id'
+                })
+                .sort({date: -1})
+                .exec();
+
+            const contracts = await Contract.find({contractRequest: path}).lean().exec();
+
+            var latestversioncontracts = [];
+            var contractversions = [];
+
+            for (contract of contracts) {
+                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
+                    .lean()
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .exec();
+                
+                    latestversioncontracts.push(latestversioncontract);
+
+                const contractversion = await ContractVersion.find({contract: contract._id})
+                    .lean()
+                    .populate({
+                        path: 'contract',
+                        populate: {
+                            path: 'contractRequest',
+                            populate: {
+                                path: 'requester',
+                            }
+                        }
+                    })
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .sort({version: -1})
+                    .exec();
+
+                for (eachcontractversion of contractversion) {
+                    contractversions.push(eachcontractversion);
+                }
+            }
+
+            const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
+
+            res.render('specificrequestrequester', {
+                user_fullname:req.user.fullName,
+                user_role:req.user.roleName,
+                contractrequest: contractrequest,
+                feedback: feedback,
+                latestversioncontracts: latestversioncontracts,
+                referencedocuments: referencedocuments,
+                contractversions: contractversions,
+                conversation: conversation,
+                messages: messages
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     forLegalReview: async (req, res) => { //staff
         try {
             console.log("Inside For Legal Review");

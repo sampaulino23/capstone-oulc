@@ -84,6 +84,7 @@ const ContractRequestSchema = mongoose.Schema({
     },
     amountInvolved: {
         type: Number,
+        default: 0,
     },
     assignedAttorney: {
         type: mongoose.Schema.Types.ObjectId,
