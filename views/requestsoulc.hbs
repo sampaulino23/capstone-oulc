@@ -64,6 +64,32 @@
                 Cancelled
             </button>
             {{/compare}}
+            {{#compare user.role.name '==' 'Requester'}}
+            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                aria-controls="all" value="" onclick="viewAllRequests()">
+                All
+            </button>
+            <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Revision" onclick="viewWaiting()">
+                For Revision
+            </button>
+            <button class="nav-item selected" id="pending-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="activeusers" value="Pending" onclick="viewPending()">
+                Pending
+            </button>
+            <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
+                For Legal Review
+            </button>
+           <button class="nav-item" id="cleared-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cleared" onclick="viewClearedAtty()">
+                Cleared
+            </button>
+           <button class="nav-item" id="cancelled-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledAtty()">
+                Cancelled
+            </button>
+            {{/compare}}
         </ul>
 
         <div id="query-search">
