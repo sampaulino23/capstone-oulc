@@ -265,7 +265,7 @@ const specificrequestcontroller = {
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
-            res.render('specificrequestrequester', {
+            res.render('specificrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 contractrequest: contractrequest,

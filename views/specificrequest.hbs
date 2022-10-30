@@ -37,7 +37,11 @@
             <div id="subheader">
                 <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
                 <p class = "divider" style = "display: inline;"> > </p>
+                {{#compare user_role "==" "Requester"}}
+                <a href = "/request/requester/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                {{else}}
                 <a href = "/request/staff/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                {{/compare}}
             </div>
         </div>
         <div class="col-6">
@@ -88,6 +92,29 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
+                {{else}}
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li>
+                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
+                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
+                            type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
+                    </li>
+                </ul>
                 {{/ifCond}}
                 {{/ifCond}}
 
@@ -115,10 +142,7 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{/ifCond}}
-                {{/ifCond}}
-                
-                {{#compare contractrequest.status "!=" "Pending"}}
+                {{else}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -141,7 +165,37 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{/compare}}
+                {{/ifCond}}
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Requester"}}
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li>
+                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="revision-tab" data-bs-toggle="tab" data-bs-target="#revision"
+                            type="button" role="tab" aria-controls="revision" onclick="selectRevision()">Revision</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
+                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
+                            type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
+                    </li>
+                </ul>
+                {{/ifCond}}
+                
+                {{!-- {{#compare contractrequest.status "!=" "Pending"}}
+                
+                {{/compare}} --}}
 
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -150,6 +204,9 @@
                     </div>
                     <div class="tab-pane" id="files" role="tabpanel" aria-labelledby="files-tab">
                         {{>files}}
+                    </div>
+                    <div class="tab-pane" id="revision" role="tabpanel" aria-labelledby="revision-tab">
+                        {{>revision}}
                     </div>
                     <div class="tab-pane" id="version" role="tabpanel" aria-labelledby="version-tab">
                         {{>version}}
@@ -335,6 +392,7 @@
     function selectSummary() {
         document.getElementById("summary-tab").classList.add("selected");
         document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("revision-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -343,6 +401,15 @@
     function selectFiles() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.add("selected");
+        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("version-tab").classList.remove("selected");
+        document.getElementById("discussion-tab").classList.remove("selected");
+        document.getElementById("feedback-tab").classList.remove("selected");
+    }
+    function selectRevision() {
+        document.getElementById("summary-tab").classList.remove("selected");
+        document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("revision-tab").classList.add("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -350,6 +417,7 @@
     function selectVersion() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("revision-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.add("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -357,6 +425,7 @@
     function selectDiscussion() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("revision-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.add("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -364,6 +433,7 @@
     function selectFeedback() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
+        document.getElementById("revision-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.add("selected");
