@@ -179,14 +179,14 @@
                 </div>
                 <div class="solo-row mb-3">
                     <label for="contractFiles" class="form-label">*Upload Contract(s)*</label>
-                    <input type="file" name="contractFiles" class="" id="contractFiles" multiple >
+                    <input type="file" name="contractFiles" accept="application/pdf" class="" id="contractFiles" multiple required>
                 </div>
                 <div class="solo-row mb-3">
                     <label for="refDocFiles" class="form-label">Upload Reference Document(s)*</label>
-                    <input type="file" name="refDocFiles" class="" id="refDocFiles" multiple >
+                    <input type="file" name="refDocFiles" accept="application/pdf" class="" id="refDocFiles" multiple required>
                 </div>
                 <div class = "solo-row btn-div">
-                    <a href = "/requester" class = "btn-div-href">< Back to Home</a>
+                    <a href = "/requester" class = "btn-div-href"> Back to Home</a>
                     <button type="submit" id = "continue-btn" class="create-btn">Continue</button>
                 </div>
             </form>
