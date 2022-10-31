@@ -86,6 +86,9 @@ const requestercontroller = {
             // const role = await Role.findOne({name: roleName}).exec();
             // const department = await Department.findOne({abbrev: departmentAbbrev}).exec();
 
+            console.log("SL " + req.body.signatorylevel);
+            console.log("INSIDE CREATE REQUEST");
+
             function makeid(length) {
                 var result           = '';
                 var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
@@ -142,6 +145,8 @@ const requestercontroller = {
             });
 
             await contractrequest.save(async function(){
+                console.log("INSIDE CREATE REQUEST SAVE");
+                console.log(contractrequest);
                 if (files.contractFiles != null) {
                     for (contractFile of files.contractFiles) {
                         // console.log(contractFile);
