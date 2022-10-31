@@ -33,3 +33,11 @@ $(document).ready(() => {
         }
     });
 });
+
+function lockChanges() {
+    $("#requestForm :input").prop('readonly', true);
+}
+
+document.getElementById("continueBtn").addEventListener("click", function(event){
+    event.preventDefault()
+});

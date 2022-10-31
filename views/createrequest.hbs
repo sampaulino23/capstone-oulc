@@ -47,15 +47,15 @@
                 1. Joint Initial and Final Review Form
             </div>
 
-            <form action="/requester/createcontractrequest" method="POST"  enctype="multipart/form-data">
+            <form id = "requestForm" action="/requester/createcontractrequest" method="POST"  enctype="multipart/form-data">
             <div class = "row">
                 <div class="col label-and-input mb-3">
                     <label for="department" class="form-label">Department/Unit</label>
-                    <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly>
+                    <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly disabled>
                 </div>
                 <div class="col label-and-input mb-3">
                     <label for="requestdate" class="form-label">Request Date</label>
-                    <input type="text" name="requestdate" class="text-input read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly>
+                    <input type="text" name="requestdate" class="text-input read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly disabled>
                 </div>
             </div>
             <div class = "row">
@@ -64,8 +64,8 @@
                     <input type="text" name="signatoryname" class="text-input" id="signatoryname" >
                 </div>
                 <div class="col label-and-input mb-3">
-                    <label for="signatorylevel" class="form-label">Signatory Level</label>
-                    <input type="number" name="signatorylevel" class="text-input read-only" id="signatorylevel" >
+                    <label for="signatorylevel" class="form-label">Signatory Level</label>                      
+                    <input type="number" name="signatorylevel" class="text-input read-only" id="signatorylevel" disabled>
                 </div>
             </div>
             <div class = "row">
@@ -158,7 +158,7 @@
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="duration" class="form-label">Duration (days)</label>
-                        <input type="number" name="duration" class="text-input read-only" id="duration" readonly required>
+                        <input type="number" name="duration" class="text-input read-only" id="duration" readonly required disabled>
                     </div>
                 </div>
                 
@@ -186,10 +186,10 @@
                     <input type="file" name="refDocFiles" accept="application/pdf" class="" id="refDocFiles" multiple required>
                 </div>
                 <div class = "solo-row btn-div">
-                    <a href = "/requester" class = "btn-div-href"> Back to Home</a>
-                    <button type="submit" id = "continue-btn" class="create-btn">Continue</button>
+                    <a href = "/requester" class = "btn-div-href">&#60; Back to Home</a>
+                    <button type="submit" id = "continueBtn" class="" onclick = "lockChanges()">Continue</button>
                 </div>
             </form>
-    </div>
+        </div>
     </body>
 </html>
