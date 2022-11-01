@@ -50,8 +50,8 @@
             <form id = "requestForm" action="/requester/createcontractrequest" method="POST"  enctype="multipart/form-data">
             <div class = "row">
                 <div class="col label-and-input mb-3">
-                    <label for="department" class="form-label">Document No.</label>
-                    <input type="text" name="department" class="text-input read-only" id="department" value="{{trackingNumber}}" required readonly disabled>
+                    <label for="department" class="form-label">Department/Unit</label>
+                    <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly disabled>
                 </div>
                 <div class="col label-and-input mb-3">
                     <label for="requestdate" class="form-label">Request Date</label>

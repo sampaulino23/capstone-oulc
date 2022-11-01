@@ -124,10 +124,14 @@
                             <tr>
                                 <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Request Date</th>
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Days Gap</th>
-                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Effectivity Date</th>
-                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Contract Type</th>
+                                <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Effectivity Date</th>
+                                <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Contract Type</th>
                                 <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Document Title</th>
+                                {{#compare user.role.name '!=' 'Requester'}}
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Department</th>
+                                {{else}}
+                                <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Document No.</th>
+                                {{/compare}}
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
                                 <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
                                 <!-- For tab -->
@@ -144,7 +148,11 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requestTitle}}</td>
+                                {{#compare ../user.role.name '!=' 'Requester'}}
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>
+                                {{else}}
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{trackingNumber}}</td>
+                                {{/compare}}
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
                                 <!-- For tab -->
