@@ -97,7 +97,7 @@
                 message: message
             });
 
-            socket.on("chat-message", function(data) {
+            socket.off("chat-message").on("chat-message", function(data) {
                 addMessage(data.username, data.message);
             });
 
