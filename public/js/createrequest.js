@@ -23,6 +23,16 @@ $(document).ready(() => {
 
         const duration = dateDiffInDays(startDate, endDate);
         $('#duration').val(duration);
+
+        /*if(duration <= 365){
+            $('#signatorylevel').val(5);
+        }
+        else if(duration <= 1095){
+            $('#signatorylevel').val(3);
+        }
+        else{
+            $('#signatorylevel').val(2);
+        }*/
     });
     $("input[name='templateused']").click(() => {
         
@@ -32,4 +42,34 @@ $(document).ready(() => {
             $('#sectionChangesDiv').prop('hidden', true);
         }
     });
+
+    $(".amtdate").change(function() { 
+        var amount = document.getElementById("amount").value;
+        var duration = document.getElementById("duration").value;
+
+        if(amount <= 100000){
+            $('#signatorylevel').val(5);
+        } 
+        else if(document.getElementById("amount").value <= 500000 ){
+            $('#signatorylevel').val(3);
+        }
+        else if(document.getElementById("amount").value <= 1000000){
+            $('#signatorylevel').val(2);
+        }
+        else{
+            $('#signatorylevel').val(1);
+        }
+
+        /*if(duration <= 365){
+            $('#signatorylevel').val(5);
+        }
+        else if(duration <= 1095){
+            $('#signatorylevel').val(3);
+        }
+        else{
+            $('#signatorylevel').val(2);
+        }*/
+    });
+
 });
+
