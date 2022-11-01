@@ -40,10 +40,33 @@ const requestercontroller = {
 
     getHome: async (req, res) => {
         try {
+
+            var violationcount = 0;
+
+            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
+
+            for (i = 0; i < contractrequests.length; i++) {
+                // To calculate the time difference of two dates
+                var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+                if (Difference_In_Days < 0){
+                    Difference_In_Days = Math.floor(Difference_In_Days);
+                }
+                else {
+                    Difference_In_Days = Math.ceil(Difference_In_Days);
+                }
+
+                if (Difference_In_Days < 7) {
+                    violationcount++
+                }
+            }
            
             res.render('requesterhome', {
                 user_fullname:req.user.fullName,
-                user_role:req.user.roleName
+                user_role:req.user.roleName,
+                violationcount: violationcount
             });
 
         } catch (err) {
