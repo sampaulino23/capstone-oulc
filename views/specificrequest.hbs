@@ -175,8 +175,8 @@
                             type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
                     </li>
                     <li>
-                        <button class="nav-item" id="revision-tab" data-bs-toggle="tab" data-bs-target="#revision"
-                            type="button" role="tab" aria-controls="revision" onclick="selectRevision()">Revision</button>
+                        <button class="nav-item" id="changes-tab" data-bs-toggle="tab" data-bs-target="#changes"
+                            type="button" role="tab" aria-controls="changes" onclick="selectChanges()">Changes</button>
                     </li>
                     <li>
                         <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
@@ -205,8 +205,8 @@
                     <div class="tab-pane" id="files" role="tabpanel" aria-labelledby="files-tab">
                         {{>files}}
                     </div>
-                    <div class="tab-pane" id="revision" role="tabpanel" aria-labelledby="revision-tab">
-                        {{>revision}}
+                    <div class="tab-pane" id="changes" role="tabpanel" aria-labelledby="changes-tab">
+                        {{>changes}}
                     </div>
                     <div class="tab-pane" id="version" role="tabpanel" aria-labelledby="version-tab">
                         {{>version}}
@@ -392,7 +392,7 @@
     function selectSummary() {
         document.getElementById("summary-tab").classList.add("selected");
         document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("changes-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -401,15 +401,15 @@
     function selectFiles() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.add("selected");
-        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("changes-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
     }
-    function selectRevision() {
+    function selectChanges() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("revision-tab").classList.add("selected");
+        document.getElementById("changes-tab").classList.add("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -417,7 +417,7 @@
     function selectVersion() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("changes-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.add("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -425,7 +425,7 @@
     function selectDiscussion() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("changes-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.add("selected");
         document.getElementById("feedback-tab").classList.remove("selected");
@@ -433,7 +433,7 @@
     function selectFeedback() {
         document.getElementById("summary-tab").classList.remove("selected");
         document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("revision-tab").classList.remove("selected");
+        document.getElementById("changes-tab").classList.remove("selected");
         document.getElementById("version-tab").classList.remove("selected");
         document.getElementById("discussion-tab").classList.remove("selected");
         document.getElementById("feedback-tab").classList.add("selected");
