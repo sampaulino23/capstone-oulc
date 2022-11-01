@@ -2,10 +2,12 @@
 <div class="files-div" id="contractVersionsDiv">
     <div class = "version-header">
         Contract Versions:
+        {{#ifCond user_role '!=' "Requester"}}
         <form method="POST" action="/request/revisionHistory" class = "revision-form">
             <input type="hidden" name="contractFileId" id="contractFileId" val="">
             <button type="submit" class="mark-as-btn" id="revisionHistory">View Revision History</button>
         </form>
+        {{/ifCond}}
     </div><br>
     <table id="table" class="sortable table table-hover"
         style="width: 100%; font-size: 16px; background:#D9D9D9;">
