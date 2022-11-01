@@ -6,7 +6,7 @@ const ContractSchema = mongoose.Schema({
         ref: 'ContractRequest',
         required: true
     },
-    template: {
+    template: { // may not be necessary
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Template',
     },
