@@ -144,6 +144,10 @@ const requestercontroller = {
                 assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });
 
+            if (contractrequest.amountInvolved == null) {
+                contractrequest.amountInvolved = 0;
+            }
+
             await contractrequest.save(async function(){
                 console.log("INSIDE CREATE REQUEST SAVE");
                 console.log(contractrequest);
