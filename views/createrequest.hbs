@@ -32,7 +32,7 @@
                 Fill up IRF & FRF
                 <hr class = "steps-divider" size="3" color="#000">
             </div>
-            <div class="steps-circle">
+            <div class="steps-circle" id = "step2">
                 <div class = "step-no">
                     2
                 </div>
@@ -185,9 +185,9 @@
                     <label for="refDocFiles" class="form-label">Upload Reference Document(s)</label>
                     <input type="file" name="refDocFiles" accept="application/pdf" class="" id="refDocFiles" multiple>
                 </div>
-                <div class = "solo-row btn-div">
-                    <a href = "/requester" class = "btn-div-href">&#60; Back to Home</a>
-                    <button type="submit" id = "continueBtn" class="" onclick = "lockChanges()">Continue</button>
+                <div id = "btnsDiv" class = "solo-row btn-div">
+                    <a href = "/requester" id = "backToHomeHref" class = "btn-div-href">&#60; Back to Home</a>
+                    <button id = "continueBtn" class="formBtn">Continue</button>
                 </div>
             </form>
         </div>
@@ -201,9 +201,11 @@
         let allAreFilled = true;
 
         document.getElementById("requestForm").querySelectorAll("[required]").forEach(function(i) {
-            if (!allAreFilled)
-                form.submit();
+            if (!allAreFilled) {
+                // form.submit();
+                
                 return;
+            }
 
             if (i.type === "radio") {
                 let radioValueCheck = false;
@@ -222,8 +224,45 @@
                 alert('Fill all the fields');
                 form.addEventListener('submit', (event) => {
                     // stop form submission
+                    event.preventDefault();
+                });
+            } else {
                 event.preventDefault();
-            });
-        }
+                replaceBtn();
+            }
     };
+
+    function replaceBtn() {
+        document.getElementById("step2").classList.add("selected-step");
+        $('#requestForm input').prop("readonly", true);
+        $('#requestForm select').prop("readonly", true);
+        $('#requestForm input').addClass("read-only");
+        $('#requestForm select').addClass("read-only");
+        $("#requestForm input:radio").attr("readonly",true);
+
+        const continueBtn = document.getElementById("continueBtn");
+        const backHomeHref = document.getElementById("backToHomeHref");
+        continueBtn.remove();
+        backHomeHref.remove();
+        const myDiv = document.getElementById("btnsDiv");
+                
+        var newHref = document.createElement('a');
+        var linkText = document.createTextNode("< Fill up IRF & FRF");
+        newHref.appendChild(linkText);
+        newHref.className = "btn-div-href";
+        newHref.id = 'backToStep1';
+        newHref.href = "/";
+        myDiv.appendChild(newHref);
+
+        var newBtn = document.createElement('Button');
+        var text = document.createTextNode("Submit Request");
+        newBtn.className = "formBtn";
+        newBtn.id = 'submitRequestBtn';
+        newBtn.type = "submit"
+        newBtn.appendChild(text);
+        myDiv.appendChild(newBtn);
+
+
+
+    }
 </script>

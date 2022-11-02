@@ -190,7 +190,7 @@ hr.steps-divider {
     white-space: normal;
 }
 
-#continueBtn {
+.formBtn {
     color: #fff;
     text-align: center;
     padding: 12px 35px;
@@ -210,7 +210,7 @@ hr.steps-divider {
     justify-content: space-between;
 }
 
-#continueBtn:hover {
+.formBtn:hover {
     background: #00713D;
     transition: .25s;
 }
