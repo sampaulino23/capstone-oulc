@@ -67,6 +67,17 @@
 {
     text-decoration: underline;
     color: #ABABAB;
+    background: transparent;
+    border: none;
+}
+
+#backToStep1 {
+    color: #ABABAB;
+}
+
+#backToStep1:hover {
+    color: #000;
+    transition: 0.25s;
 }
 
 .home-href:hover, .btn-div-href:hover {

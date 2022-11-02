@@ -246,12 +246,11 @@
         backHomeHref.remove();
         const myDiv = document.getElementById("btnsDiv");
                 
-        var newHref = document.createElement('a');
+        var newHref = document.createElement('Button');
         var linkText = document.createTextNode("< Fill up IRF & FRF");
         newHref.appendChild(linkText);
         newHref.className = "btn-div-href";
         newHref.id = 'backToStep1';
-        newHref.href = "/";
         myDiv.appendChild(newHref);
 
         var newBtn = document.createElement('Button');
@@ -261,8 +260,10 @@
         newBtn.type = "submit"
         newBtn.appendChild(text);
         myDiv.appendChild(newBtn);
-
-
-
     }
+    /*
+    document.getElementById("submitRequestBtn").onclick = function() {
+        
+    };
+    */
 </script>
