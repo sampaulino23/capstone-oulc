@@ -239,6 +239,7 @@
                 {{/compare}} --}}
 
                 <!-- Tab panes -->
+
                 <div class="tab-content">
                     <div class="tab-pane active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
                         {{>summary}}
@@ -259,6 +260,9 @@
                         {{>feedback}}
                     </div>
                 </div>
+
+                <!-- For repository file upload. Need to change that will only be seen if status is cleared. For now, always show so we can test. --> 
+                <button class="" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
 
             </div>
         </div>
@@ -386,7 +390,7 @@
 
                         <div class="mb-3">
                             <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                            <input type="file" name="file" id="file" class="custom-file-input" required><br><br>
+                            <input type="file" name="file" id="file" accept="application/pdf" class="custom-file-input" required multiple><br><br>
                         </div>
 
                         <div class="modal-footer">
