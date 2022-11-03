@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const StagingContractSchema = mongoose.Schema({
+const StagingContractVersionSchema = mongoose.Schema({
     contract: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Contract',
@@ -28,5 +28,5 @@ const StagingContractSchema = mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('StagingContract', StagingContractSchema);
+module.exports = mongoose.model('StagingContractVersion', StagingContractVersionSchema);
 

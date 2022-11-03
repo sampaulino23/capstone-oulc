@@ -97,6 +97,7 @@ router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
+router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 
 
 passport.serializeUser((user_id, done) =>{

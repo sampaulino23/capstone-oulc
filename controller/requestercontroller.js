@@ -233,6 +233,22 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    uploadNewVersion: async (req, res) => {
+        try {
+
+            const file = req.file;
+
+            console.log(file);
+
+            console.log('upload new version');
+
+            res.redirect('back');
+
+        } catch (err) {
+
+        }
     }
 }
 
