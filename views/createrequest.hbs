@@ -191,12 +191,39 @@
                 </div>
             </form>
         </div>
+
+        <!-- View Data Privacy Modal -->
+        <div class="modal fade modal-lg" id="dataPrivacyModal" tabindex="-1" aria-labelledby="dataPrivacyModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title w-100" id="exampleModalLabel">Data Privacy Notice</h5>
+                        <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dataPrivacyNotice">
+                            <div>
+                                {{>dataprivacyform}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="submitRequestForm" class="submit-modal-btn" onclick="submitForm()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
 
 <script>
     const continueBtn = document.getElementById("continueBtn");
     const hrefLink = document.getElementById('backToHomeHref');
+    const form  = document.getElementById('requestForm');
 
     hrefLink.onclick = function() {
         if (hrefLink.textContent === "< Fill up IRF & FRF") {
@@ -210,14 +237,17 @@
         }
     }
 
-    continueBtn.onclick = function() {
-        const form  = document.getElementById('requestForm');
-        
+    function submitForm() {
+        form.submit();
+    }
 
+    continueBtn.onclick = function() {
         let allAreFilled = true;
 
         if (continueBtn.value === "Submission Ready") {
-            form.submit();
+            // $("#continueBtn").attr("data-bs-toggle",'modal');
+            // $("#continueBtn").attr("data-bs-target", '#dataPrivacyModal');
+            $('#dataPrivacyModal').modal('show');
         } else {
             continueBtn.value = "Step 1";
         }
@@ -225,7 +255,6 @@
         document.getElementById("requestForm").querySelectorAll("[required]").forEach(function(i) {
             if (!allAreFilled) {
                 // form.submit();
-                
                 return;
             }
 
