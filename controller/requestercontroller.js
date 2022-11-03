@@ -227,7 +227,37 @@ const requestercontroller = {
                     members: membersList
                 });
                 await conversation.save();
-                res.redirect('/requester');
+                res.redirect('/requester/requestreceipt/' + contractrequest._id);
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getRequestReceipt: async (req, res) => {
+        try {
+
+            var path = req.path.split('/')[2];
+
+            console.log(path);
+
+            const contractrequest = await ContractRequest.findOne({_id : path}).lean()
+            .populate({
+                path: 'requester',
+                populate: {
+                    path: 'department'
+                  } 
+            })
+            .populate({
+                path: 'contractType'
+            }).exec();
+
+            console.log (contractrequest);
+            res.render('requestreceipt', {
+                user_fullname:req.user.fullName,
+                user_role:req.user.roleName,
+                contractrequest: contractrequest
             });
 
         } catch (err) {

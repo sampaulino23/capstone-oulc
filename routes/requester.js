@@ -93,6 +93,7 @@ router.get('/templates', staffcontroller.getTemplates);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/createrequest', requestercontroller.getCreateRequest);
+router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
 router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
