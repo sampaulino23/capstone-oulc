@@ -187,7 +187,7 @@
                 </div>
                 <div id = "btnsDiv" class = "solo-row btn-div">
                     <a href = "/requester" id = "backToHomeHref" class = "btn-div-href">&#60; Back to Home</a>
-                    <button id = "continueBtn" class="formBtn">Continue</button>
+                    <button id = "continueBtn" class="formBtn" value = "Step 1">Continue</button>
                 </div>
             </form>
         </div>
@@ -195,10 +195,32 @@
 </html>
 
 <script>
-    document.getElementById("continueBtn").onclick = function() {
+    const continueBtn = document.getElementById("continueBtn");
+    const hrefLink = document.getElementById('backToHomeHref');
+
+    hrefLink.onclick = function() {
+        if (hrefLink.textContent === "< Fill up IRF & FRF") {
+            unlockChanges();
+            hrefLink.setAttribute("href", "#");
+            hrefLink.textContent = "< Back to Home";
+            continueBtn.innerText = "Continue";
+            continueBtn.value = "Step 1";
+        } else {
+            hrefLink.setAttribute("href", "/requester");
+        }
+    }
+
+    continueBtn.onclick = function() {
         const form  = document.getElementById('requestForm');
+        
 
         let allAreFilled = true;
+
+        if (continueBtn.value === "Submission Ready") {
+            form.submit();
+        } else {
+            continueBtn.value = "Step 1";
+        }
 
         document.getElementById("requestForm").querySelectorAll("[required]").forEach(function(i) {
             if (!allAreFilled) {
@@ -228,6 +250,9 @@
                 });
             } else {
                 event.preventDefault();
+                continueBtn.innerText = "Submit Request";
+                continueBtn.value = "Submission Ready"
+                hrefLink.textContent = "< Fill up IRF & FRF";
                 replaceBtn();
             }
     };
@@ -239,9 +264,11 @@
         $('#requestForm input').addClass("read-only");
         $('#requestForm select').addClass("read-only");
         $("#requestForm input:radio").attr("readonly",true);
+        $("#requestForm input:file").attr("disabled",true);
 
         const continueBtn = document.getElementById("continueBtn");
         const backHomeHref = document.getElementById("backToHomeHref");
+        /*
         continueBtn.remove();
         backHomeHref.remove();
         const myDiv = document.getElementById("btnsDiv");
@@ -251,6 +278,7 @@
         newHref.appendChild(linkText);
         newHref.className = "btn-div-href";
         newHref.id = 'backToStep1';
+        newHref.type = "button";
         myDiv.appendChild(newHref);
 
         var newBtn = document.createElement('Button');
@@ -258,12 +286,52 @@
         newBtn.className = "formBtn";
         newBtn.id = 'submitRequestBtn';
         newBtn.type = "submit"
+        newBtn.onclick = "unlockChanges()"
         newBtn.appendChild(text);
         myDiv.appendChild(newBtn);
+
+        document.getElementById("backToStep1").onclick = function() {
+            document.getElementById("step2").classList.remove("selected-step");
+            $('#requestForm input').prop("readonly", false);
+            $('#requestForm select').prop("readonly", false);
+            $('#requestForm input').removeClass("read-only");
+            $('#requestForm select').removeClass("read-only");
+            $("#requestForm input:radio").attr("readonly", false);
+            $("#requestForm input:file").attr("readonly", false);
+
+            const submitRequestBtn = document.getElementById("submitRequestBtn");
+            const backToStep1 = document.getElementById("backToStep1");
+            submitRequestBtn.remove();
+            backToStep1.remove();
+            const myDiv = document.getElementById("btnsDiv");
+                    
+            var homeHref = document.createElement('a');
+            var linkText = document.createTextNode("< Back to Home");
+            homeHref.appendChild(linkText);
+            homeHref.className = "btn-div-href";
+            homeHref.id = 'backToHomeHref';
+            homeHref.href = "/requester";
+            myDiv.appendChild(newHref);
+
+            var continueBtn = document.createElement('Button');
+            var btnText = document.createTextNode("Continue");
+            continueBtn.className = "formBtn";
+            continueBtn.id = 'submitRequestBtn';
+            continueBtn.type = "button"
+            continueBtn.appendChild(btnText);
+            myDiv.appendChild(continueBtn);
+        };
+        */
     }
-    /*
-    document.getElementById("submitRequestBtn").onclick = function() {
-        
-    };
-    */
+
+    function unlockChanges() {
+        document.getElementById("step2").classList.remove("selected-step");
+        $('#requestForm input').prop("readonly", false);
+        $('#requestForm select').prop("readonly", false);
+        $('#requestForm input').removeClass("read-only");
+        $('#requestForm select').removeClass("read-only");
+        $("#requestForm input:radio").attr("readonly", false);
+        $("#requestForm input:file").attr("disabled", false);
+    }
+    
 </script>
