@@ -93,11 +93,11 @@ router.get('/templates', staffcontroller.getTemplates);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/createrequest', requestercontroller.getCreateRequest);
-router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
 router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
+router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
 router.get('/getuploadnewversion', requestercontroller.getUploadNewVersion);
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 
@@ -108,8 +108,5 @@ passport.serializeUser((user_id, done) =>{
 passport.deserializeUser((user_id, done) =>{
     done(null, user_id);
 });
-
-
-
 
 module.exports = router;

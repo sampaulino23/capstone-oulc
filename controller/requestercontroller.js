@@ -125,6 +125,9 @@ const requestercontroller = {
 
             const files = req.files;
 
+            console.log(files);
+            console.log(req.files);
+
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
 
@@ -174,11 +177,11 @@ const requestercontroller = {
 
             await contractrequest.save(async function(){
                 console.log("INSIDE CREATE REQUEST SAVE");
-                console.log(contractrequest);
+                // console.log(contractrequest);
                 if (files.contractFiles != null) {
                     for (contractFile of files.contractFiles) {
-                        // console.log(contractFile);
-                        // console.log(contractFile.id);
+                        console.log(contractFile);
+                        console.log(contractFile.id);
     
                         // insert contract object to db
                         var newContract = new Contract({
@@ -203,8 +206,8 @@ const requestercontroller = {
     
                 if (files.refDocFiles != null) {
                     for (refDocFile of files.refDocFiles) {
-                        // console.log(refDocFile);
-                        // console.log(refDocFile.id);
+                        console.log(refDocFile);
+                        console.log(refDocFile.id);
     
                         // insert reference document object to db
                         var newReferenceDocument = new ReferenceDocument({

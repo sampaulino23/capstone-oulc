@@ -46,48 +46,47 @@
             <div id = "irf-frf-header">
                 1. Joint Initial and Final Review Form
             </div>
-
-            <form id = "requestForm" action="/requester/createcontractrequest" method="POST"  enctype="multipart/form-data">
-            <div class = "row">
-                <div class="col label-and-input mb-3">
-                    <label for="department" class="form-label">Department/Unit</label>
-                    <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly disabled>
+            <form id="requestForm" action="/requester/createcontractrequest" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col label-and-input mb-3">
+                        <label for="department" class="form-label">Department/Unit</label>
+                        <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly disabled>
+                    </div>
+                    <div class="col label-and-input mb-3">
+                        <label for="requestdate" class="form-label">Request Date</label>
+                        <input type="text" name="requestdate" class="text-input read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly disabled>
+                    </div>
                 </div>
-                <div class="col label-and-input mb-3">
-                    <label for="requestdate" class="form-label">Request Date</label>
-                    <input type="text" name="requestdate" class="text-input read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly disabled>
+                <div class = "row">
+                    <div class="col label-and-input mb-3">
+                        <label for="signatoryname" class="form-label">Name of Signatory*</label>
+                        <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
+                    </div>
+                    <div class="col label-and-input mb-3">
+                        <label for="signatorylevel" class="form-label">Signatory Level</label>                      
+                        <input type="number" name="signatorylevel" class="text-input read-only" id="signatorylevel" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class = "row">
-                <div class="col label-and-input mb-3">
-                    <label for="signatoryname" class="form-label">Name of Signatory*</label>
-                    <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
+                <div class = "row">
+                    <div class="col label-and-input mb-3">
+                        <label for="contactperson" class="form-label">Contact Person*</label>
+                        <input type="text" name="contactperson" class="text-input" id="contactperson" required>
+                    </div>
+                    <div class="col label-and-input mb-3">
+                        <label for="contactno" class="form-label">Contact Local No.*</label>
+                        <input type="tel" name="contactno" class="text-input" id="contactno" placeholder=""  minlength = "8" maxlength = "13" required>
+                    </div>
                 </div>
-                <div class="col label-and-input mb-3">
-                    <label for="signatorylevel" class="form-label">Signatory Level</label>                      
-                    <input type="number" name="signatorylevel" class="text-input read-only" id="signatorylevel" readonly>
+                <div class = "row">
+                    <div class="col label-and-input mb-3">
+                        <label for="thirdpartyname" class="form-label">Third Party Name</label>
+                        <input type="text" name="thirdpartyname" class="text-input" id="thirdpartyname" >
+                    </div>
+                    <div class="col label-and-input mb-3">
+                        <label for="thirdpartyemail" class="form-label">Third Party Email</label>
+                        <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail" >
+                    </div>
                 </div>
-            </div>
-            <div class = "row">
-                <div class="col label-and-input mb-3">
-                    <label for="contactperson" class="form-label">Contact Person*</label>
-                    <input type="text" name="contactperson" class="text-input" id="contactperson" required>
-                </div>
-                <div class="col label-and-input mb-3">
-                    <label for="contactno" class="form-label">Contact Local No.*</label>
-                    <input type="tel" name="contactno" class="text-input" id="contactno" placeholder=""  minlength = "8" maxlength = "13" required>
-                </div>
-            </div>
-            <div class = "row">
-                <div class="col label-and-input mb-3">
-                    <label for="thirdpartyname" class="form-label">Third Party Name</label>
-                    <input type="text" name="thirdpartyname" class="text-input" id="thirdpartyname" >
-                </div>
-                <div class="col label-and-input mb-3">
-                    <label for="thirdpartyemail" class="form-label">Third Party Email</label>
-                    <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail" >
-                </div>
-            </div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="documenttitle" class="form-label">Document Title*</label>
                     <input type="text" name="documenttitle" class="text-input" id="documenttitle" required>
@@ -143,14 +142,7 @@
                     <label for="subject" class="form-label">Subject Matter*</label>
                     <input type="text" name="subject" class="text-input" id="subject" required>
                 </div>
-                {{!-- <div class="mb-3">
-                    <label for="starteffectivity" class="form-label">*Effectivity Date From</label>
-                    <input type="date" name="starteffectivity" class="text-input" id="starteffectivity" >
-                </div>
-                <div class="mb-3">
-                    <label for="endeffectivity" class="form-label">*Until</label>
-                    <input type="date" name="endeffectivity" class="text-input" id="endeffectivity" >
-                </div> --}}
+                
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="daterange" class="form-label">Effectivity Date*</label>
@@ -178,45 +170,44 @@
                     </div>
                 </div>
                 <div class="solo-row mb-3">
-                    <label for="contractFiles" class="form-label">Upload Contract(s)*</label>
-                    <input type="file" name="contractFiles" accept="application/pdf" class="" id="contractFiles" required multiple>
+                    <label for="contractFiles" class="form-label">Upload Contract*</label>
+                    <input type="file" name="contractFiles" accept="application/pdf" class="form-control" id="contractFiles" required multiple>
                 </div>
                 <div class="solo-row mb-3">
-                    <label for="refDocFiles" class="form-label">Upload Reference Document(s)</label>
-                    <input type="file" name="refDocFiles" accept="application/pdf" class="" id="refDocFiles" multiple>
+                    <label for="refDocFiles" class="form-label">Upload Reference Document</label>
+                    <input type="file" name="refDocFiles" accept="application/pdf" class="form-control" id="refDocFiles" multiple>
                 </div>
                 <div id = "btnsDiv" class = "solo-row btn-div">
                     <a href = "/requester" id = "backToHomeHref" class = "btn-div-href">&#60; Back to Home</a>
-                    <button id = "continueBtn" class="formBtn" value = "Step 1">Continue</button>
+                    <button id="continueBtn" class="formBtn" value = "Step 1">Continue</button>
                 </div>
             </form>
-        </div>
-
-        <!-- View Data Privacy Modal -->
-        <div class="modal fade modal-lg" id="dataPrivacyModal" tabindex="-1" aria-labelledby="dataPrivacyModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100" id="exampleModalLabel">Data Privacy Notice</h5>
-                        <button type="button" class="header-close-btn" data-bs-dismiss="modal">
-                            &times;
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="dataPrivacyNotice">
-                            <div>
-                                {{>dataprivacyform}}
+            
+            <!-- View Data Privacy Modal -->
+            <div class="modal fade modal-lg" id="dataPrivacyModal" tabindex="-1" aria-labelledby="dataPrivacyModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Data Privacy Notice</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="dataPrivacyNotice">
+                                <div>
+                                    {{>dataprivacyform}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="submitRequestForm" class="submit-modal-btn" disabled>Submit</button>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                            <button id="submitRequestForm" class="submit-modal-btn" disabled>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </body>
 </html>
 
@@ -237,12 +228,12 @@
         }
     }
 
-    function submitForm() {
+    submitRequestForm.onclick = function() {
         form.submit();
     }
 
-    submitRequestForm.onclick = function() {
-        submitForm();
+    function submitForm() {
+        form.submit();
     }
 
     continueBtn.onclick = function() {
@@ -254,6 +245,7 @@
             $('#dataPrivacyModal').modal('show');
         } else {
             continueBtn.value = "Step 1";
+            //submitForm();
         }
 
         document.getElementById("requestForm").querySelectorAll("[required]").forEach(function(i) {
@@ -284,7 +276,7 @@
             } else {
                 event.preventDefault();
                 continueBtn.innerText = "Submit Request";
-                continueBtn.value = "Submission Ready"
+                continueBtn.value = "Submission Ready";
                 hrefLink.textContent = "< Fill up IRF & FRF";
                 replaceBtn();
             }
@@ -296,8 +288,9 @@
         $('#requestForm select').prop("readonly", true);
         $('#requestForm input').addClass("read-only");
         $('#requestForm select').addClass("read-only");
-        $("#requestForm input:radio").attr("readonly",true);
-        $("#requestForm input:file").attr("disabled",true);
+        $("#requestForm select").css("pointer-events", "none");
+        $("#requestForm input").css("pointer-events", "none");
+        $('#requestForm label').css("pointer-events", "none")
 
         const continueBtn = document.getElementById("continueBtn");
         const backHomeHref = document.getElementById("backToHomeHref");

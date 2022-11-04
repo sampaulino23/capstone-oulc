@@ -140,10 +140,10 @@ const uploadRequestDocs = multer( {
 } );
 
 // upload request documents
-router.post('/uploadrequestdocs', uploadRequestDocs.fields([
-  { name: 'contractFiles'},
-  { name: 'refDocFiles' }
-]), specificrequestcontroller.postUploadRequestDocuments);
+// router.post('/uploadrequestdocs', uploadRequestDocs.fields([
+//   { name: 'contractFiles'},
+//   { name: 'refDocFiles' }
+// ]), specificrequestcontroller.postUploadRequestDocuments);
 
 // view file on contract request
 router.get('/viewfile/:fileid', specificrequestcontroller.viewFile);
