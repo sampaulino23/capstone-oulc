@@ -24,19 +24,24 @@
         </div>
 
         <div class = "container">
-            <div id = "irf-frf-header">
-                Approval Request Sucessfully Submitted
+            <div class ="approval-header">
+                Approval Request Sucessfully Submitted<span><img class = "check-mark" src = "/img/check-mark.png"></span>
             </div>
+            <div>
+                Your contract approval request was succesfully submitted. The approval details are as follows: <br>
+                Document Tracking Number: <a href="/request/requester/{{contractrequest._id}}" style = "color: blue">{{contractrequest.trackingNumber}}</a><br>
+                Contact Person: {{contractrequest.contactPerson}}<br>
+                Department: {{contractrequest.requester.department.name}} ({{contractrequest.requester.department.abbrev}})<br>
+                Document Title: {{contractrequest.requestTitle}}<br>
+                Document Type: {{contractrequest.contractType.name}}<br> <br>
 
-            Your contract approval request was succesfully submitted. The approval details are as follows: <br>
-            Document Tracking Number: <a href="/request/requester/{{contractrequest._id}}" style = "color: blue">{{contractrequest.trackingNumber}}</a><br>
-            Contact Person: {{contractrequest.contactPerson}}<br>
-            Department: {{contractrequest.requester.department.name}} ({{contractrequest.requester.department.abbrev}})<br>
-            Document Title: {{contractrequest.requestTitle}}<br>
-            Document Type: {{contractrequest.contractType.name}}<br> <br>
-
-            Please give us a maximum of 7 working days lead time to process your request. Thank you!
-
+                Please give us a maximum of 7 working days lead time to process your request. Thank you!
+            </div><br>
+            <div id = "receiptBtnsDiv">
+                <a href= "/requester/createrequest" id = "anotherRequestBtn">Create Another Request</a>
+                <a href= "/" id = "goToHome">Go To Home</a>
+            </div>
+            
         </div>
     </body>
 </html>
