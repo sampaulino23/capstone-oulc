@@ -325,7 +325,36 @@ hr.steps-divider {
     outline: none;
 }
 
-.submit-modal-btn:hover {
+.checked:hover {
     background: #00713D;
     transition: .25s;
+}
+
+input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+    filter: grayscale(100%);
+    background: #FFFFFF;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 15px;
+    height: 15px;
+  }
+
+#checkbox {
+    display: inline-flex;
+    align-items: center;
+}
+
+#agreeConsent {
+    margin-right: 0.5em;
+}
+
+.checked {
+    background: #0C8039;
+}
+
+.disabled {
+    filter: opacity(50%);
+}
+
+.disabled:hover {
+    cursor: not-allowed;
 }

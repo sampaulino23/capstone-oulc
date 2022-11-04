@@ -341,7 +341,7 @@
 
 input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     filter: grayscale(100%);
-  }
+}
 
 .marked-complete-review-btn {
     background: #0C8039;
