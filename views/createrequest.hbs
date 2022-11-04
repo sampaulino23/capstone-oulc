@@ -60,7 +60,7 @@
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="signatoryname" class="form-label">Name of Signatory*</label>
-                        <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
+                        <input type="text" name="signatoryname" class="text-input" id="signatoryname" placeholder="Br. Bernard S. Oca FSC" required>
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="signatorylevel" class="form-label">Signatory Level</label>                      
@@ -70,26 +70,26 @@
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="contactperson" class="form-label">Contact Person*</label>
-                        <input type="text" name="contactperson" class="text-input" id="contactperson" required>
+                        <input type="text" name="contactperson" class="text-input" id="contactperson" placeholder="Juan Dela Cruz" required>
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="contactno" class="form-label">Contact Local No.*</label>
-                        <input type="tel" name="contactno" class="text-input" id="contactno" placeholder=""  minlength = "8" maxlength = "13" required>
+                        <input type="tel" name="contactno" class="text-input" id="contactno" placeholder="+639123456789"  minlength = "8" maxlength = "13" required>
                     </div>
                 </div>
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="thirdpartyname" class="form-label">Third Party Name</label>
-                        <input type="text" name="thirdpartyname" class="text-input" id="thirdpartyname" >
+                        <input type="text" name="thirdpartyname" class="text-input" id="thirdpartyname" placeholder="Juana Dela Cruz">
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="thirdpartyemail" class="form-label">Third Party Email</label>
-                        <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail" >
+                        <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail" placeholder="email@domain.com">
                     </div>
                 </div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="documenttitle" class="form-label">Document Title*</label>
-                    <input type="text" name="documenttitle" class="text-input" id="documenttitle" required>
+                    <input type="text" name="documenttitle" class="text-input" id="documenttitle" placeholder="MOA Between DLSU and Accenture" required>
                 </div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="documenttype" class="form-label">Document Type*</label>
@@ -130,17 +130,17 @@
                 <div class = "row">
                     <div class="col label-and-input break-text mb-3">
                         <label for="contractingparty" class="form-label">Name of Other Contracting Party*</label>
-                        <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
+                        <input type="text" name="contractingparty" class="text-input" id="contractingparty" placeholder="Accenture PH" required>
                     </div>
                     <div class="col label-and-input mb-3">
-                        <label for="amount" class="no-label-width">Amount Involved, if any</label>
-                        <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "₱" min = "0">
+                        <label for="amount" class="no-label-width">Amount Involved, if any (₱)</label>
+                        <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "XXXX.XX" min = "0">
                     </div>
                 </div>
                 
                 <div class="label-and-input solo-row mb-3">
                     <label for="subject" class="form-label">Subject Matter*</label>
-                    <input type="text" name="subject" class="text-input" id="subject" required>
+                    <input type="text" name="subject" class="text-input" id="subject" placeholder = "Signing of MOA between student Juan Dela Cruz and Accenture PH for T2 practicum" required>
                 </div>
                 
                 <div class = "row">
@@ -171,11 +171,11 @@
                 </div>
                 <div class="solo-row mb-3">
                     <label for="contractFiles" class="form-label">Upload Contract*</label>
-                    <input type="file" name="contractFiles" accept="application/pdf" class="form-control" id="contractFiles" required multiple>
+                    <input type="file" name="contractFiles" accept="application/pdf" class="" id="contractFiles" required multiple>
                 </div>
                 <div class="solo-row mb-3">
-                    <label for="refDocFiles" class="form-label">Upload Reference Document</label>
-                    <input type="file" name="refDocFiles" accept="application/pdf" class="form-control" id="refDocFiles" multiple>
+                    <label for="refDocFiles" class="form-label">Upload Reference Document(s)</label>
+                    <input type="file" name="refDocFiles" accept="application/pdf" class="" id="refDocFiles" multiple>
                 </div>
                 <div id = "btnsDiv" class = "solo-row btn-div">
                     <a href = "/requester" id = "backToHomeHref" class = "btn-div-href">&#60; Back to Home</a>
@@ -202,7 +202,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                            <button id="submitRequestForm" class="submit-modal-btn" disabled>Submit</button>
+                            <button id="submitRequestForm" class="submit-modal-btn disabled" disabled>Submit</button>
                         </div>
                     </div>
                 </div>
@@ -294,60 +294,6 @@
 
         const continueBtn = document.getElementById("continueBtn");
         const backHomeHref = document.getElementById("backToHomeHref");
-        /*
-        continueBtn.remove();
-        backHomeHref.remove();
-        const myDiv = document.getElementById("btnsDiv");
-                
-        var newHref = document.createElement('Button');
-        var linkText = document.createTextNode("< Fill up IRF & FRF");
-        newHref.appendChild(linkText);
-        newHref.className = "btn-div-href";
-        newHref.id = 'backToStep1';
-        newHref.type = "button";
-        myDiv.appendChild(newHref);
-
-        var newBtn = document.createElement('Button');
-        var text = document.createTextNode("Submit Request");
-        newBtn.className = "formBtn";
-        newBtn.id = 'submitRequestBtn';
-        newBtn.type = "submit"
-        newBtn.onclick = "unlockChanges()"
-        newBtn.appendChild(text);
-        myDiv.appendChild(newBtn);
-
-        document.getElementById("backToStep1").onclick = function() {
-            document.getElementById("step2").classList.remove("selected-step");
-            $('#requestForm input').prop("readonly", false);
-            $('#requestForm select').prop("readonly", false);
-            $('#requestForm input').removeClass("read-only");
-            $('#requestForm select').removeClass("read-only");
-            $("#requestForm input:radio").attr("readonly", false);
-            $("#requestForm input:file").attr("readonly", false);
-
-            const submitRequestBtn = document.getElementById("submitRequestBtn");
-            const backToStep1 = document.getElementById("backToStep1");
-            submitRequestBtn.remove();
-            backToStep1.remove();
-            const myDiv = document.getElementById("btnsDiv");
-                    
-            var homeHref = document.createElement('a');
-            var linkText = document.createTextNode("< Back to Home");
-            homeHref.appendChild(linkText);
-            homeHref.className = "btn-div-href";
-            homeHref.id = 'backToHomeHref';
-            homeHref.href = "/requester";
-            myDiv.appendChild(newHref);
-
-            var continueBtn = document.createElement('Button');
-            var btnText = document.createTextNode("Continue");
-            continueBtn.className = "formBtn";
-            continueBtn.id = 'submitRequestBtn';
-            continueBtn.type = "button"
-            continueBtn.appendChild(btnText);
-            myDiv.appendChild(continueBtn);
-        };
-        */
     }
 
     function unlockChanges() {
@@ -365,9 +311,13 @@
         if(consentCheckBox.checked){
             //Set the disabled property to FALSE and enable the button.
             document.getElementById("submitRequestForm").disabled = false;
+            document.getElementById("submitRequestForm").classList.remove("disabled");
+            document.getElementById("submitRequestForm").classList.add("checked");
         } else{
             //Otherwise, disable the submit button.
             document.getElementById("submitRequestForm").disabled = true;
+            document.getElementById("submitRequestForm").classList.remove("checked");
+            document.getElementById("submitRequestForm").classList.add("disabled");
         }
     }
     
