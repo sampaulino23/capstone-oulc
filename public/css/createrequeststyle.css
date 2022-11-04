@@ -168,6 +168,11 @@ hr.steps-divider {
     cursor: default;
 }
 
+.default-read-only {
+    background: #D9D9D9;
+    pointer-events: none;
+}
+
 .form-label {
     display: inline-block;
     min-width: 200px;
@@ -357,4 +362,12 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .disabled:hover {
     cursor: not-allowed;
+}
+/*
+input::placeholder {
+    color: #B0AEB0;
+}
+*/
+.placeholder-class::-webkit-input-placeholder {
+    color: transparent;
 }

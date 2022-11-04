@@ -50,11 +50,11 @@
                 <div class="row">
                     <div class="col label-and-input mb-3">
                         <label for="department" class="form-label">Department/Unit</label>
-                        <input type="text" name="department" class="text-input read-only" id="department" value="{{department}}" required readonly disabled>
+                        <input type="text" name="department" class="text-input read-only default-read-only" id="department" value="{{department}}" required readonly disabled>
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="requestdate" class="form-label">Request Date</label>
-                        <input type="text" name="requestdate" class="text-input read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly disabled>
+                        <input type="text" name="requestdate" class="text-input read-only default-read-only" id="requestdate" value="{{formatdate requestdate}}" required readonly disabled>
                     </div>
                 </div>
                 <div class = "row">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="signatorylevel" class="form-label">Signatory Level</label>                      
-                        <input type="number" name="signatorylevel" class="text-input read-only" id="signatorylevel" readonly>
+                        <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" readonly>
                     </div>
                 </div>
                 <div class = "row">
@@ -150,7 +150,7 @@
                     </div>
                     <div class="col label-and-input mb-3">
                         <label for="duration" class="form-label">Duration (days)</label>
-                        <input type="number" name="duration" class="text-input read-only" id="duration" readonly required>
+                        <input type="number" name="duration" class="text-input read-only default-read-only" id="duration" readonly required>
                     </div>
                 </div>
                 
@@ -284,26 +284,32 @@
 
     function replaceBtn() {
         document.getElementById("step2").classList.add("selected-step");
-        $('#requestForm input').prop("readonly", true);
-        $('#requestForm select').prop("readonly", true);
+
         $('#requestForm input').addClass("read-only");
         $('#requestForm select').addClass("read-only");
+
+        // $("#requestForm input:radio").css("pointer-events", "none");
+        // $("#requestForm input:file").css("pointer-events", "none");
+        $('#requestForm input').addClass('placeholder-class');
+
         $("#requestForm select").css("pointer-events", "none");
         $("#requestForm input").css("pointer-events", "none");
-        $('#requestForm label').css("pointer-events", "none")
-
-        const continueBtn = document.getElementById("continueBtn");
-        const backHomeHref = document.getElementById("backToHomeHref");
+        $('#requestForm label').css("pointer-events", "none");
     }
 
     function unlockChanges() {
         document.getElementById("step2").classList.remove("selected-step");
-        $('#requestForm input').prop("readonly", false);
-        $('#requestForm select').prop("readonly", false);
+
         $('#requestForm input').removeClass("read-only");
         $('#requestForm select').removeClass("read-only");
-        $("#requestForm input:radio").attr("readonly", false);
-        $("#requestForm input:file").attr("disabled", false);
+        
+        // $("#requestForm input:radio").css("pointer-events", "auto");
+        // $("#requestForm input:file").css("pointer-events", "auto");
+        $('#requestForm input').removeClass('placeholder-class');
+
+        $("#requestForm select").css("pointer-events", "auto");
+        $("#requestForm input").css("pointer-events", "auto");
+        $('#requestForm label').css("pointer-events", "auto");
     }
 
     function checkConsentBox(consentCheckBox){
