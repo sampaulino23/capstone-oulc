@@ -67,48 +67,50 @@
                     {{#compare user_role '==' 'Requester'}}
                     <button class="btn btn-primary" id="uploadNewVersion" data-bs-toggle="modal" data-bs-target="#uploadNewVersionModal{{@index}}">Upload New Version</button>
                     {{/compare}}
+
+                    <!-- UPLOAD NEW VERSION MODAL -->
+                    <div class="modal fade" id="uploadNewVersionModal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Upload New Version</h5>
+                                </div>
+                                <form action="/requester/uploadnewversion" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" class="form-control" id="resetPasswordUserId" name="userid" value="{{_id}}">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="oulcComments" class="form-label">OULC Comments</label>
+                                            <textarea class="form-control" id="oulcComments" name="oulcComments" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="thirdPartyResponse" class="form-label">3rd Party Response</label>
+                                            <textarea class="form-control" id="thirdPartyResponse" name="thirdPartyResponse" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="requestingPartyRemarks" class="form-label">Remarks/Response by Requesting Party</label>
+                                            <textarea class="form-control" id="requestingPartyRemarks" name="requestingPartyRemarks" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newVersionFile" class="form-label">File Upload</label>
+                                            <input class="form-control" type="file" id="newVersionFile" name="newVersionFile" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="confirm-btn">Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  END: UPLOAD NEW VERSION MODAL -->
                 </div>
                 <div id="fileView">
                 </div>
             </div>
 
-            <!-- UPLOAD NEW VERSION MODAL -->
-            <div class="modal fade" id="uploadNewVersionModal{{@index}}" tabindex="-1"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Upload New Version</h5>
-                        </div>
-                        <form action="/requester/uploadnewversion" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" class="form-control" id="resetPasswordUserId" name="userid" value="{{_id}}">
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="oulcComments" class="form-label">OULC Comments</label>
-                                    <textarea class="form-control" id="oulcComments" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="thirdPartyResponse" class="form-label">3rd Party Response</label>
-                                    <textarea class="form-control" id="thirdPartyResponse" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="requestingPartyRemarks" class="form-label">Remarks/Response by Requesting Party</label>
-                                    <textarea class="form-control" id="requestingPartyRemarks" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="newVersionFile" class="form-label">File Upload</label>
-                                    <input class="form-control" type="file" id="newVersionFile" name="newVersionFile" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="confirm-btn">Upload</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!--  END: UPLOAD NEW VERSION MODAL -->
+            
 
             <!-- RIGHT SIDE -->
             <div id = "right-col" class="col-6">

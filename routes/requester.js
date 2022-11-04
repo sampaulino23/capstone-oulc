@@ -98,6 +98,7 @@ router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
+router.get('/getuploadnewversion', requestercontroller.getUploadNewVersion);
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 
 

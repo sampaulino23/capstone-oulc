@@ -279,6 +279,22 @@ $(window).on('load', function() {
 
 $(document).ready(() => {
 
+    $('#uploadNewVersion').click(function () {
+        const fileid = $('#fileSelected').val();
+
+        $.ajax({
+            url: "/requester/getuploadnewversion",
+            method: "GET",
+            contentType: "application/json",
+            data: { fileid: fileid },
+            success: function (res) {
+                console.log('SUCCESS');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
     $('#fileSelected').change(function () {
         
         var fileid = $(this).val();

@@ -11,6 +11,7 @@ const crypto = require('crypto');
 const User = require('../models/User.js');
 const Contract = require('../models/Contract.js');
 const ContractVersion = require('../models/ContractVersion.js');
+const StagingContractVersion = require('../models/StagingContractVersion.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
@@ -265,6 +266,18 @@ const requestercontroller = {
         }
     },
 
+    getUploadNewVersion: async (req, res) => {
+        try {
+
+            const fileid = req.params.fileid;
+
+            console.log(fileid);
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     uploadNewVersion: async (req, res) => {
         try {
 
@@ -272,12 +285,10 @@ const requestercontroller = {
 
             console.log(file);
 
-            console.log('upload new version');
-
             res.redirect('back');
 
         } catch (err) {
-
+            console.log(err);
         }
     }
 }
