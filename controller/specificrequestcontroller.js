@@ -7,6 +7,7 @@ const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const Contract = require('../models/Contract.js');
 const ContractVersion = require('../models/ContractVersion.js');
+const StagingContractVersion = require('../models/StagingContractVersion.js');
 const VersionNote = require('../models/VersionNote.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
 const Feedback = require('../models/Feedback.js');
@@ -230,6 +231,7 @@ const specificrequestcontroller = {
 
             var latestversioncontracts = [];
             var contractversions = [];
+            var stagingcontractversions = [];
 
             for (contract of contracts) {
                 const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
@@ -239,7 +241,7 @@ const specificrequestcontroller = {
                     })
                     .exec();
                 
-                    latestversioncontracts.push(latestversioncontract);
+                latestversioncontracts.push(latestversioncontract);
 
                 const contractversion = await ContractVersion.find({contract: contract._id})
                     .lean()
@@ -261,6 +263,17 @@ const specificrequestcontroller = {
                 for (eachcontractversion of contractversion) {
                     contractversions.push(eachcontractversion);
                 }
+
+                const stagingcontractversion = await StagingContractVersion.findOne({contract: contract})
+                    .lean()
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .exec();
+
+                if (stagingcontractversion) {
+                    stagingcontractversions.push(stagingcontractversion);
+                }
             }
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
@@ -274,7 +287,8 @@ const specificrequestcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 conversation: conversation,
-                messages: messages
+                messages: messages,
+                stagingcontractversions: stagingcontractversions
             });
 
         } catch (err) {

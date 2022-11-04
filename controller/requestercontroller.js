@@ -22,6 +22,7 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const VersionNote = require('../models/VersionNote.js');
 
 const conn = mongoose.createConnection(url);
 
@@ -92,7 +93,7 @@ const requestercontroller = {
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
-                department: user.department.abbrev,
+                department: user.department.name,
                 requestdate: today,
                 contracttypes: contracttypes
             });
@@ -124,9 +125,6 @@ const requestercontroller = {
             }
 
             const files = req.files;
-
-            console.log(files);
-            console.log(req.files);
 
             const users = await User.find({roleName: "Staff", isActive: true}).lean()
                 .exec();
@@ -180,8 +178,8 @@ const requestercontroller = {
                 // console.log(contractrequest);
                 if (files.contractFiles != null) {
                     for (contractFile of files.contractFiles) {
-                        console.log(contractFile);
-                        console.log(contractFile.id);
+                        // console.log(contractFile);
+                        // console.log(contractFile.id);
     
                         // insert contract object to db
                         var newContract = new Contract({
@@ -272,9 +270,11 @@ const requestercontroller = {
     getUploadNewVersion: async (req, res) => {
         try {
 
-            const fileid = req.params.fileid;
+            const fileid = req.query.fileid;
 
-            console.log(fileid);
+            const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+
+            res.send({contractVersion: contractVersion._id});
 
         } catch (err) {
             console.log(err);
@@ -285,8 +285,36 @@ const requestercontroller = {
         try {
 
             const file = req.file;
-
             console.log(file);
+
+            const contractVersionId = req.body.contractVersionIdForNewVersion;
+            console.log(contractVersionId);
+
+            if (file != null) {
+
+                let versionNote = new VersionNote({
+                    oulcComments: req.body.oulcComments,
+                    thirdPartyResponse: req.body.thirdPartyResponse,
+                    requestingPartyRemarks: req.body.requestingPartyRemarks
+                });
+
+                const newVersionNote = await versionNote.save();
+    
+                await versionNote.save(async () => {
+                    const contractVersion = await ContractVersion.findById(contractVersionId).exec();
+
+                    let stagingContractVersion = new StagingContractVersion({
+                        contract: contractVersion.contract,
+                        uploadDate: file.uploadDate,
+                        file: file.id,
+                        filename: file.filename,
+                        version: parseInt(contractVersion.version) + 1,
+                        versionNote: newVersionNote._id
+                    });
+
+                    await stagingContractVersion.save();
+                });
+            }
 
             res.redirect('back');
 

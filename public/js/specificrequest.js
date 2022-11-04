@@ -288,6 +288,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { fileid: fileid },
             success: function (res) {
+                $('#contractVersionIdForNewVersion').val(res.contractVersion);
                 console.log('SUCCESS');
             },
             error: function (err) {
