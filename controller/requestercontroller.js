@@ -267,6 +267,31 @@ const requestercontroller = {
         }
     },
 
+    deleteStagingContractVersion: async (req, res) => {
+        try {
+
+            const stagingcontractversionid = req.body.deleteStagingContractVersion;
+            const fileid = req.params.id;
+
+            // delete staging contract version object
+            await StagingContractVersion.findByIdAndDelete(stagingcontractversionid).exec();
+
+            const cursor = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketRequestDocuments.delete(doc._id);
+                }
+            });
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     getUploadNewVersion: async (req, res) => {
         try {
 

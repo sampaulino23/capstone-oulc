@@ -100,7 +100,7 @@ router.post('/createcontractrequest', upload.fields([
 router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
 router.get('/getuploadnewversion', requestercontroller.getUploadNewVersion);
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
-
+router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagingContractVersion);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
