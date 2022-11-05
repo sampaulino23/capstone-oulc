@@ -400,6 +400,54 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    submitRevision: async (req, res) => {
+        try {
+            const contractRequestId = req.body.contractVersionIdForSubmitRevision;
+
+            const contracts = await Contract.find({contractRequest: contractRequestId}).exec();
+
+            var stagingcontractversions = [];
+
+            for (contract of contracts) {
+                const stagingcontractversion = await StagingContractVersion.findOne({contract: contract})
+                    .lean()
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .exec();
+
+                if (stagingcontractversion) {
+                    stagingcontractversions.push(stagingcontractversion);
+                }
+            }
+
+            for (stagingcontractversion of stagingcontractversions) {
+                let contractVersion = new ContractVersion({
+                    contract: stagingcontractversion.contract,
+                    version: stagingcontractversion.version,
+                    uploadDate: stagingcontractversion.uploadDate,
+                    file: stagingcontractversion.file,
+                    filename: stagingcontractversion.filename,
+                    isreviewed: false,
+                    versionNote: stagingcontractversion.versionNote
+                });
+
+                await contractVersion.save();
+
+                await StagingContractVersion.findByIdAndDelete(stagingcontractversion._id).exec();
+
+                // set contract's latest version field
+                await Contract.findByIdAndUpdate(stagingcontractversion.contract, {$set: { latestversion: stagingcontractversion.version}}).exec();
+
+            }
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
