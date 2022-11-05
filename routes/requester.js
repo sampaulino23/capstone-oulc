@@ -98,7 +98,7 @@ router.post('/createcontractrequest', upload.fields([
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
 router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
-router.get('/getuploadnewversion', requestercontroller.getUploadNewVersion);
+router.get('/checkstagingcontractversion', requestercontroller.checkStagingContractVersion);
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagingContractVersion);
 

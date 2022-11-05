@@ -292,14 +292,29 @@ const requestercontroller = {
         }
     },
 
-    getUploadNewVersion: async (req, res) => {
+    checkStagingContractVersion: async (req, res) => {
         try {
 
             const fileid = req.query.fileid;
 
             const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
 
-            res.send({contractVersion: contractVersion._id});
+            const stagingContractVersion = await StagingContractVersion.findOne({contract: contractVersion.contract}).exec();
+
+            if (stagingContractVersion) { // if there is a staging contract version
+                
+                res.send({
+                    hasStaging: true,
+                    contractVersion: contractVersion._id
+                });
+            } else { // if there is no staging contract version
+
+                res.send({
+                    hasStaging: false,
+                    contractVersion: contractVersion._id
+                })                
+            }
+
 
         } catch (err) {
             console.log(err);
@@ -310,10 +325,8 @@ const requestercontroller = {
         try {
 
             const file = req.file;
-            console.log(file);
 
             const contractVersionId = req.body.contractVersionIdForNewVersion;
-            console.log(contractVersionId);
 
             if (file != null) {
 

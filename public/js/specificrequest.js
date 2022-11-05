@@ -283,12 +283,23 @@ $(document).ready(() => {
         const fileid = $('#fileSelected').val();
 
         $.ajax({
-            url: "/requester/getuploadnewversion",
+            url: "/requester/checkstagingcontractversion",
             method: "GET",
             contentType: "application/json",
             data: { fileid: fileid },
             success: function (res) {
+
+                console.log(res.hasStaging);
+
+                if (res.hasStaging) {
+                    // show replace confirmation modal
+                    $('#pendingVersionConfirmationModal').modal('show');
+                } else {
+                    $('#uploadNewVersionModal').modal('show');
+                }
+
                 $('#contractVersionIdForNewVersion').val(res.contractVersion);
+
                 console.log('SUCCESS');
             },
             error: function (err) {
