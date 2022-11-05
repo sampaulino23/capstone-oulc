@@ -105,7 +105,7 @@ const specificrequestcontroller = {
                 return Math.floor((utc2 - utc1) / _MS_PER_DAY);
             }
 
-            var Difference_In_Days = dateDiffInDays(new Date(contractrequests[i].effectivityStartDate), new Date(contractrequests[i].effectivityEndDate));
+            var Difference_In_Days = dateDiffInDays(new Date(contractrequest.effectivityStartDate), new Date(contractrequest.effectivityEndDate));
 
             // To set number of days gap in contract request
             contractrequest.daysDuration = Difference_In_Days;
@@ -237,7 +237,7 @@ const specificrequestcontroller = {
                 return Math.floor((utc2 - utc1) / _MS_PER_DAY);
             }
 
-            var Difference_In_Days = dateDiffInDays(new Date(contractrequests[i].effectivityStartDate), new Date(contractrequests[i].effectivityEndDate));
+            var Difference_In_Days = dateDiffInDays(new Date(contractrequest.effectivityStartDate), new Date(contractrequest.effectivityEndDate));
 
             // To set number of days gap in contract request
             contractrequest.daysDuration = Difference_In_Days;
@@ -321,8 +321,22 @@ const specificrequestcontroller = {
     forLegalReview: async (req, res) => { //staff
         try {
             console.log("Inside For Legal Review");
-            var contractid = req.query.contractid;
-            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { statusCounter: 4} });
+            var contractrequestid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractrequestid }, { $set: { statusCounter: 4} });
+
+            const contracts = await Contract.find({contractRequest: contractrequestid}).exec();
+
+            // set isreviewed of all latestversioncontracts to false
+            for (contract of contracts) {
+                await ContractVersion.findOneAndUpdate({contract: contract._id, version: contract.latestversion}, {$set: {isreviewed: false}}, {useFindAndModify: false}).exec();
+            }
+
+            // set isreviewed of all referencedocuments to false
+            const referencedocuments = await ReferenceDocument.find({ contractRequest: contractrequestid});
+
+            for (referencedocument of referencedocuments) {
+                await ReferenceDocument.findByIdAndUpdate(referencedocument._id, {$set: {isreviewed: false}}, {useFindAndModify: false}).exec();
+            }
 
         } catch (err) {
             console.log(err);

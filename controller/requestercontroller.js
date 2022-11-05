@@ -441,6 +441,14 @@ const requestercontroller = {
                 // set contract's latest version field
                 await Contract.findByIdAndUpdate(stagingcontractversion.contract, {$set: { latestversion: stagingcontractversion.version}}).exec();
 
+                // change statusCounter of contract request
+                const contractRequest = await ContractRequest.findById(contractRequestId).exec();
+
+                if (contractRequest.statusCounter == 2) {
+                    await ContractRequest.findByIdAndUpdate(contractRequestId, {$set: {statusCounter: 3}}).exec();
+                } else if (contractRequest.statusCounter == 5) {
+                    await ContractRequest.findByIdAndUpdate(contractRequestId, {$set: {statusCounter: 6}}).exec();
+                }
             }
 
             res.redirect('back');

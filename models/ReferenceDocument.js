@@ -20,7 +20,6 @@ const ReferenceDocumentSchema = mongoose.Schema({
     isreviewed: {
         type: Boolean,
         required: true,
-        default: false
     }
     
 });
