@@ -158,16 +158,27 @@ const oulccontroller = {
 
                 // START OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
                 // To calculate the time difference of two dates
-                var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
-                // To calculate the no. of days between two dates
-                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+                // var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                // // To calculate the no. of days between two dates
+                // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-                if (Difference_In_Days < 0){
-                    Difference_In_Days = Math.floor(Difference_In_Days);
+                // if (Difference_In_Days < 0){
+                //     Difference_In_Days = Math.floor(Difference_In_Days);
+                // }
+                // else {
+                //     Difference_In_Days = Math.ceil(Difference_In_Days);
+                // }
+
+                function dateDiffInDays(a, b) {
+                    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                    // Discard the time and time-zone information.
+                    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+                  
+                    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
                 }
-                else {
-                    Difference_In_Days = Math.ceil(Difference_In_Days);
-                }
+
+                var Difference_In_Days = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
 
                 if (Difference_In_Days < 7) {
                     for (j=0; j<departments.length; j++) {
@@ -301,16 +312,27 @@ const oulccontroller = {
 
                 // START OF VIOLATION COUNT PER DEPARTMENT AND PER TYPE
                 // To calculate the time difference of two dates
-                var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
-                // To calculate the no. of days between two dates
-                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+                // var Difference_In_Time = contractrequests[i].effectivityStartDate.getTime() - contractrequests[i].requestDate.getTime();
+                // // To calculate the no. of days between two dates
+                // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-                if (Difference_In_Days < 0){
-                    Difference_In_Days = Math.floor(Difference_In_Days);
+                // if (Difference_In_Days < 0){
+                //     Difference_In_Days = Math.floor(Difference_In_Days);
+                // }
+                // else {
+                //     Difference_In_Days = Math.ceil(Difference_In_Days);
+                // }
+
+                function dateDiffInDays(a, b) {
+                    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                    // Discard the time and time-zone information.
+                    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+                  
+                    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
                 }
-                else {
-                    Difference_In_Days = Math.ceil(Difference_In_Days);
-                }
+
+                var Difference_In_Days = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
 
                 if (Difference_In_Days < 7) {
                     for (j=0; j<departments.length; j++) {
