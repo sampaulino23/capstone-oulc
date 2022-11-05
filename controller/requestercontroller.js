@@ -274,7 +274,9 @@ const requestercontroller = {
             const fileid = req.params.id;
 
             // delete staging contract version object
-            await StagingContractVersion.findByIdAndDelete(stagingcontractversionid).exec();
+            const stagingContractVersion = await StagingContractVersion.findByIdAndDelete(stagingcontractversionid).exec();
+
+            await VersionNote.findByIdAndDelete(stagingContractVersion.versionNote).exec();
 
             const cursor = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
             cursor.forEach((doc, err) => {
@@ -328,30 +330,69 @@ const requestercontroller = {
 
             const contractVersionId = req.body.contractVersionIdForNewVersion;
 
+            const contractVersion = await ContractVersion.findById(contractVersionId).exec();
+
+            const checkStagingContractVersion = await StagingContractVersion.findOne({contract: contractVersion.contract}).exec();
+
             if (file != null) {
 
-                let versionNote = new VersionNote({
-                    oulcComments: req.body.oulcComments,
-                    thirdPartyResponse: req.body.thirdPartyResponse,
-                    requestingPartyRemarks: req.body.requestingPartyRemarks
-                });
+                if (checkStagingContractVersion) { // if there is a staging contract version
 
-                const newVersionNote = await versionNote.save();
-    
-                await versionNote.save(async () => {
-                    const contractVersion = await ContractVersion.findById(contractVersionId).exec();
+                    // replace existing staging contract version
+                    let newVersionNote = {
+                        oulcComments: req.body.oulcComments,
+                        thirdPartyResponse: req.body.thirdPartyResponse,
+                        requestingPartyRemarks: req.body.requestingPartyRemarks
+                    };
 
-                    let stagingContractVersion = new StagingContractVersion({
+                    const existingVersionNote = await VersionNote.findOneAndReplace({_id: checkStagingContractVersion.versionNote}, newVersionNote).exec();
+
+                    let stagingContractVersion = {
                         contract: contractVersion.contract,
                         uploadDate: file.uploadDate,
                         file: file.id,
                         filename: file.filename,
                         version: parseInt(contractVersion.version) + 1,
-                        versionNote: newVersionNote._id
+                        versionNote: existingVersionNote._id
+                    };
+
+                    await StagingContractVersion.findOneAndReplace({_id: checkStagingContractVersion._id}, stagingContractVersion).exec();
+
+                    // delete replaced Gridfs file
+                    const cursor = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(checkStagingContractVersion.file)}, {limit: 1});
+                    cursor.forEach((doc, err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            gridfsBucketRequestDocuments.delete(doc._id);
+                        }
                     });
 
-                    await stagingContractVersion.save();
-                });
+                } else { // if there is no staging contract version
+                    
+                    // create new staging contract version
+                    let versionNote = new VersionNote({
+                        oulcComments: req.body.oulcComments,
+                        thirdPartyResponse: req.body.thirdPartyResponse,
+                        requestingPartyRemarks: req.body.requestingPartyRemarks
+                    });
+    
+                    const newVersionNote = await versionNote.save();
+        
+                    await versionNote.save(async () => {
+    
+                        let stagingContractVersion = new StagingContractVersion({
+                            contract: contractVersion.contract,
+                            uploadDate: file.uploadDate,
+                            file: file.id,
+                            filename: file.filename,
+                            version: parseInt(contractVersion.version) + 1,
+                            versionNote: newVersionNote._id
+                        });
+    
+                        await stagingContractVersion.save();
+                    });
+                }
             }
 
             res.redirect('back');
