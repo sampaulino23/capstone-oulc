@@ -334,6 +334,7 @@ $(document).ready(() => {
         fileView.append(embedPDFView);
         fileViewFull.append(embedPDFViewFull);
 
+
         $.ajax({
             url: "/getcontractversions",
             method: "GET",
@@ -346,7 +347,13 @@ $(document).ready(() => {
                 var rows = $('#contractVersionsTable tr');
                 $('#contractVersionsDiv').show();
 
+                $('#uploadNewVersion').prop('hidden', true);
+
                 if (res.isContract == true) {
+                    // show or hide 'upload new version' button depending on file selected
+                    $('#uploadNewVersion').prop('hidden', false);
+                    
+                    // manipulate contract versions information
                     rows.hide();
                     $('#notContractText').attr('hidden', true);
                     $('.version-note-card').hide();

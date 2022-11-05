@@ -58,22 +58,21 @@
                     <span class="file-selected input-group-text">File Selected:</span>  
                     <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
                         {{#each latestversioncontracts}}
-                            <option value="{{file}}">{{filename}}</option>
+                            <option class="contract-option" value="{{file}}">{{filename}}</option>
                         {{/each}}
                         {{#each referencedocuments}}
-                            <option value="{{file}}">{{filename}}</option>
+                            <option class="reference-document-option" value="{{file}}">{{filename}}</option>
                         {{/each}}
                     </select>
                     {{#compare user_role '==' 'Requester'}}
-                    {{!-- <button class="btn btn-primary" id="uploadNewVersion" data-bs-toggle="modal" data-bs-target="#uploadNewVersionModal">Upload New Version</button> --}}
+                    {{#compare contractrequest.status '==' 'For Revision'}}
                     <button class="btn btn-primary" id="uploadNewVersion">Upload New Version</button>
+                    {{/compare}}
                     {{/compare}}
                 </div>
                 <div id="fileView">
                 </div>
             </div>
-
-            
 
             <!-- RIGHT SIDE -->
             <div id = "right-col" class="col-6">
