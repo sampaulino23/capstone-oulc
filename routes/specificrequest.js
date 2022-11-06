@@ -107,6 +107,7 @@ router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 // requesting office start
 router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
 router.get('/requester/:id', specificrequestcontroller.getRequesterSpecificRequest);
+router.get('/cancelRequest', specificrequestcontroller.cancelRequest);
 // requesting office end
 
 // conn.once('open',() => {

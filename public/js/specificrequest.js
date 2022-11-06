@@ -433,6 +433,24 @@ $(document).ready(() => {
         });
 
     });
+
+    $('.cancelRequestBtn').click(function () {
+        $.ajax({
+            url: "/request/cancelRequest",
+            method: "GET",
+            contentType: "application/json",
+            data: { contractid: this.id },
+            success: setTimeout(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }, 350),
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    });
+
     $('#routeToAnotherAttorney').click(function () {
         
         const contractrequestid = $('#contractRequestId').val();

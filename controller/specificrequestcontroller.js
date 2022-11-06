@@ -398,6 +398,17 @@ const specificrequestcontroller = {
         }
     },
 
+    cancelRequest: async (req, res) => { //attorney
+        try {
+            console.log("Inside Mark as Cancelled");
+            var contractid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { statusCounter: 8} });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     routeToAnotherAttorney: async (req, res) => {
         try {
             const contractrequestid = req.query.contractrequestid;
