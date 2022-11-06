@@ -225,11 +225,12 @@
                     </div>
                 </div>
 
-                <!-- For repository file upload. Need to change that will only be seen if status is cleared and if requester. For now, always show so we can test. --> 
-                <button class="" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
+                {{#ifCond user_role '==' "Requester"}}
 
-                <!-- Change. Only show if user is a requester regardless of the status. --> 
+                <button class="" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
                 <button class="" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel</button>
+
+                {{/ifCond}}
 
             </div>
         </div>
