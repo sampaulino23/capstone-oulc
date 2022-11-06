@@ -36,7 +36,7 @@ conn.once('open', () => {
     });
 });
 
-var client = require('@draftable/compare-api').client('erkpQU-test', 'bbbe3883ab6c7505da79f85bd60bfdaf');
+var client = require('@draftable/compare-api').client('nZahgI-test', 'df477162e99840cc7e43197b8075eaca');
 var comparisons = client.comparisons;
 
 const specificrequestcontroller = {
@@ -328,14 +328,14 @@ const specificrequestcontroller = {
 
             // set isreviewed of all latestversioncontracts to false
             for (contract of contracts) {
-                await ContractVersion.findOneAndUpdate({contract: contract._id, version: contract.latestversion}, {$set: {isreviewed: false}}, {useFindAndModify: false}).exec();
+                await ContractVersion.findOneAndUpdate({contract: contract._id, version: contract.latestversion}, {$set: {isreviewed: false}}).exec();
             }
 
             // set isreviewed of all referencedocuments to false
             const referencedocuments = await ReferenceDocument.find({ contractRequest: contractrequestid});
 
             for (referencedocument of referencedocuments) {
-                await ReferenceDocument.findByIdAndUpdate(referencedocument._id, {$set: {isreviewed: false}}, {useFindAndModify: false}).exec();
+                await ReferenceDocument.findByIdAndUpdate(referencedocument._id, {$set: {isreviewed: false}}).exec();
             }
 
         } catch (err) {
@@ -413,6 +413,7 @@ const specificrequestcontroller = {
         try {
             const contractrequestid = req.query.contractrequestid;
             const routedattorney = req.query.routedattorney;
+            console.log ("INSIDE ROUTE TO ANOTHER ATTORNEY");
 
             await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } }).exec();
 
@@ -421,12 +422,14 @@ const specificrequestcontroller = {
 
             for (contract of contracts) {
                 await ContractVersion.findOneAndUpdate({ contract: contract._id,  version: contract.latestversion}, { $set: { isreviewed: false } }).exec();
+                console.log ("INSIDE CONTRACTS" + contract);
             }
 
             const referencedocuments = await ReferenceDocument.find({ contractRequest: contractrequestid }).exec();
 
             for (referencedocument of referencedocuments) {
                 await ReferenceDocument.findByIdAndUpdate(referencedocument._id, { $set: { isreviewed: false } }).exec();
+                console.log ("INSIDE REFERENCE DOCUMENTS" + referencedocument);
             }
 
         } catch (err) {
@@ -524,6 +527,8 @@ const specificrequestcontroller = {
 
     setReviewedDocuments: async (req, res) => {
         try {
+
+            console.log ("SET REVIEWED DOCUMENTS");
             const documentsattached = req.query.documentsattached;
 
             for (document of documentsattached) {
