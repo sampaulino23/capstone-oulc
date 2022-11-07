@@ -196,6 +196,10 @@
     font-size: 20px;
 }
 
+.discussion-header {
+    margin-bottom: 1em;
+}
+
 .version-header {
     display: inline-flex;
     align-items: center;
@@ -230,13 +234,13 @@
     margin-bottom: 20px;
 }
 
-.feedback-author, .version-feedback-author {
+.feedback-author, .version-feedback-author, .discussion-author {
     font-style: normal;
     font-weight: 700;
     font-size: 18px;
 }
 
-.feedback-date {
+.feedback-date, .discussion-date {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -252,7 +256,7 @@
     border-radius: 50%;
 }
 
-.pic-inner {
+.pic-inner, .disc-pic-inner {
     color: #000;
     display: table-cell;
     vertical-align: middle; 
@@ -265,7 +269,7 @@
     font-size: 20px;
 }
 
-#feedback-details-div {
+#feedback-details-div, #discussion-details-div {
     display: inline-flex;
     align-items: center;
 }

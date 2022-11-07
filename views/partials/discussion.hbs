@@ -133,7 +133,29 @@
     <!--<div>Chat Members: {{conversation.members}}</div>-->
     <div class = "discussion-header">Discussion Thread:</div>
     {{#each messages}}
-        <ul id="messages">{{sender}} : {{content}}</ul>
+    <div>
+        <div class = "content">
+            <ul id="messages">
+                <div id ="discussion-details-div">
+                    <div class = "profile-pic">
+                        <div id = "disc-pic-inner{{@index}}" class = "disc-pic-inner"></div>
+                    </div>
+                    <div id = "author-date-div">
+                        <div class = "discussion-author" id = "discussion-author{{@index}}">
+                            {{sender}}
+                        </div>
+                        <div class = "discussion-date">
+                            {{formatfeedbackdate date}}
+                        </div>
+                    </div>
+                </div>
+                <div class = "content">
+                    {{content}}
+                </div>
+            </ul>
+        </div>
+    </div>
+        
     {{/each}}
     <div id="messagebox"></div>
     <div id="form" >
@@ -185,3 +207,21 @@
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script> -->
+
+<script>
+    // get the initials of the feedback provider for the inner picture
+    var index = 0;
+    var discussionCount = document.getElementsByClassName("disc-pic-inner").length;
+    
+    for (i = 0; i < discussionCount; i++) {
+        var discussionAuthorID = "#discussion-author" + i;
+        var elementid = "disc-pic-inner" + i;
+
+        var feedbackAuthor = $(discussionAuthorID).text();
+        var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
+        var acronym = matches.join(''); // output will be JSON
+    
+        document.getElementById(elementid).innerHTML = acronym;
+
+    }
+</script>
