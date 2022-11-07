@@ -96,10 +96,7 @@
                 username: username,
                 message: message
             });
-
-            socket.off("chat-message").on("chat-message", function(data) {
-                addMessage(data.username, data.message);
-            });
+            document.getElementById("inputmessage").value = "";
 
             $.ajax({
                     url: "/sendmessage",
@@ -114,9 +111,11 @@
                     }
             });
 
-            document.getElementById("inputmessage").value = "";
+            });
 
-        });
+            socket.off("chat-message").on("chat-message", function(data) {
+                addMessage(data.username, data.message);
+            });
 
     });
 
