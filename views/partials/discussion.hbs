@@ -59,12 +59,7 @@
     }
 
     #messages > li {
-        padding: 0.5rem 1rem;
-    
-    }
-
-    #messages > li:nth-child(odd) {
-        background: #efefef;
+        background: transparent;
     }
 
     #message-box {
@@ -132,8 +127,8 @@
     <!--<div>Chat Members: {{conversation.members}}</div>-->
     <div class = "discussion-header">Discussion Thread:</div>
     {{#each messages}}
-    <div>
-        <ul id="messages">
+    <ul id="messages" class ="messages-ul-class" data-value="{{sender}}">
+        <li>
             <div id ="discussion-details-div">
                 <div class = "profile-pic">
                     <div id = "disc-pic-inner{{@index}}" class = "disc-pic-inner"></div>
@@ -150,9 +145,8 @@
             <div class = "content">
                 {{content}}
             </div>
-        </ul>
-    </div>
-        
+        </li>  
+    </ul>
     {{/each}}
     <div id="messagebox"></div>
     <div id="form" >
@@ -206,7 +200,7 @@
 </script> -->
 
 <script>
-    alert($('#username').val())
+    // alert($('#username').val())
     // get the initials of the feedback provider for the inner picture
     var index = 0;
     var discussionCount = document.getElementsByClassName("disc-pic-inner").length;
