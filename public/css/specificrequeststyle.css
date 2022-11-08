@@ -355,6 +355,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 }
 
 .marked-complete-review-btn {
+    
     background: #0C8039;
     color: #fff;
     cursor: pointer;
@@ -362,9 +363,15 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .marked-complete-review-btn:hover {
     background: #00713D;
-    color: #000;
 }
 
+.disabled-btn {
+    background: #D9D9D9;
+}
+
+.disabled-btn:hover {
+    cursor: not-allowed;
+}
 
 .info-nav-item {
     font-family: 'Poppins';

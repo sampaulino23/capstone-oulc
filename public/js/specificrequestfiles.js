@@ -59,6 +59,8 @@ $(document).ready(() => {
             if (role == 'Staff') {
                 // enable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", false);
+                document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
+                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
                 document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
@@ -103,6 +105,7 @@ $(document).ready(() => {
                 // enable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", false);
                 document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
+                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
                 document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
@@ -138,9 +141,9 @@ $(document).ready(() => {
     
             if (role == 'Staff') {
                 // disable for legal review button
-                document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
                 $("#forLegalReviewBtn").attr("disabled", true);
                 document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
+                document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
