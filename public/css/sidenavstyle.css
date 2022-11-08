@@ -27,8 +27,13 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    background: #FF8EC2 !important;
+    background: #00713D !important;
+    color: #fff !important;
+}
+
+.sidenav > a:hover > img {
     filter: invert(100%);
+    transition: 0.3s;
 }
 
 .sidenav .closebtn:hover {
