@@ -90,3 +90,8 @@
     position: absolute;
     bottom: 0;
 }
+
+.nav-link {
+    border-bottom: 1px solid #93939D;
+    height: 75px;
+}
