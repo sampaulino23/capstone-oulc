@@ -117,7 +117,7 @@ function viewAllRequests(){
     var rows = table.getElementsByTagName("tr");
 
     var totalRows = $('#table').find('tbody tr:has(td)').length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -165,7 +165,7 @@ function viewAllRequestsAtty(){
     var rows = table.getElementsByTagName("tr");
 
     var totalRows = $('#table').find('tbody tr:has(td)').length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -228,7 +228,7 @@ function viewPending(){
         }
     }
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -292,7 +292,7 @@ function viewToReview(){
         }
     }
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -358,7 +358,7 @@ function viewWaiting(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -424,7 +424,7 @@ function viewWaitingAtty(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -488,7 +488,7 @@ function viewForLegalReview(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -554,7 +554,7 @@ function viewForLegalReviewAtty(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -618,7 +618,7 @@ function viewCleared(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -683,7 +683,7 @@ function viewClearedAtty(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -748,7 +748,7 @@ function viewReroutedAtty(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
@@ -812,7 +812,7 @@ function viewCancelledAtty(){
     
 
     var totalRows = length;
-    var recordPerPage = 4;
+    var recordPerPage = 30;
     var totalPages = Math.ceil(totalRows / recordPerPage);
     var $pages = $('<div id="pages"></div>');
     for (i = 0; i < totalPages; i++) {
