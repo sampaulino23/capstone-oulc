@@ -119,6 +119,7 @@
         var scrollableDiv = document.getElementById("discussion-div");
 
         ul.id = 'messages';
+        ul.class = "messages-ul-class";
         ul.innerHTML = username + " : " + message;
         messagebox.appendChild(ul);
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;

@@ -357,9 +357,11 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 .marked-complete-review-btn {
     background: #0C8039;
     color: #fff;
+    cursor: pointer;
 }
 
 .marked-complete-review-btn:hover {
+    background: #00713D;
     color: #000;
 }
 
