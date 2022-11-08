@@ -46,6 +46,13 @@
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
+            {{#ifCond user_role '==' "Requester"}}
+                {{#compare contractrequest.status '==' "Cleared"}}
+                    <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
+                {{else}}
+                    <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
+                {{/compare}}
+            {{/ifCond}}
         </div>
     </div>
     
@@ -226,10 +233,7 @@
                 </div>
 
                 {{#ifCond user_role '==' "Requester"}}
-
-                <button class="" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
-                <button class="" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel</button>
-
+                <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/ifCond}}
 
             </div>
@@ -415,8 +419,8 @@
                 Are you sure you want to cancel this contract approval request?
             </div>
             <div class="modal-footer">
-                <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="mark-as-btn cancelRequestBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Yes</button>
+                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="mark-as-btn cancel-modal-btn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
             </div>
         </div>
     </div>
