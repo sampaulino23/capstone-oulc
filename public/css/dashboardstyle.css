@@ -173,6 +173,11 @@
     color: #000;
 }
 
+.no-hover-card {
+    border-left: 10px solid #93939D;
+    pointer-events: none;
+}
+
 .dashboard-img {
     text-align: center;
     margin-bottom: 5px;
