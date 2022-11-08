@@ -116,39 +116,45 @@
     function addMessage(username, message) {
         var ul = document.createElement("ul");
         var messagebox = document.getElementById("messagebox");
+        var scrollableDiv = document.getElementById("discussion-div");
+
         ul.id = 'messages';
         ul.innerHTML = username + " : " + message;
         messagebox.appendChild(ul);
-        window.scrollTo(0, document.body.scrollHeight);
+        scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
 </script>
 
 <div id = "discussion-div">
     <!--<div>Chat Members: {{conversation.members}}</div>-->
     <div class = "discussion-header">Discussion Thread:</div>
-    {{#each messages}}
-    <ul id="messages" class ="messages-ul-class" data-value="{{sender}}">
-        <li>
-            <div id ="discussion-details-div">
-                <div class = "profile-pic">
-                    <div id = "disc-pic-inner{{@index}}" class = "disc-pic-inner"></div>
-                </div>
-                <div id = "author-date-div">
-                    <div class = "discussion-author" id = "discussion-author{{@index}}">
-                        {{sender}}
+    <div id = "message-container">
+        {{#each messages}}
+        <ul id="messages" class ="messages-ul-class" data-value="{{sender}}">
+            <li>
+                <div id ="discussion-details-div">
+                    <div class = "profile-pic">
+                        <div id = "disc-pic-inner{{@index}}" class = "disc-pic-inner"></div>
                     </div>
-                    <div class = "discussion-date">
-                        {{formatfeedbackdate date}}
+                    <div id = "author-date-div">
+                        <div class = "discussion-author" id = "discussion-author{{@index}}">
+                            {{sender}}
+                        </div>
+                        <div class = "discussion-date">
+                            {{formatfeedbackdate date}}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class = "content">
-                {{content}}
-            </div>
-        </li>  
-    </ul>
-    {{/each}}
-    <div id="messagebox"></div>
+                <div class = "content">
+                    {{content}}
+                </div>
+            </li>  
+        </ul>
+        {{/each}}
+    </div>
+    <div id="messagebox">
+        
+    </div>
     <div id="form" >
         <input id="inputmessage" autocomplete="off" placeholder = "Type message here..." />
         <button class="send-btn" type="submit">Send</button>
@@ -200,7 +206,6 @@
 </script> -->
 
 <script>
-    // alert($('#username').val())
     // get the initials of the feedback provider for the inner picture
     var index = 0;
     var discussionCount = document.getElementsByClassName("disc-pic-inner").length;
@@ -215,9 +220,11 @@
     
         document.getElementById(elementid).innerHTML = acronym;
 
-        if (discussionAuthor != $('#username').val()) {
-            $(this).addClass("not-from-logged-user");
-        }
-
+    }
+    var loggedUser = $('#username').val()
+    const messageContainer = document.querySelector("#message-container");
+    const notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
+    for (i = 0; i < notLoggedUserList.length; i++) {
+        notLoggedUserList[i].classList.add('not-from-logged-user')
     }
 </script>

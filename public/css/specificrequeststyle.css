@@ -127,7 +127,7 @@
     background: rgba(217, 217, 217, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     overflow-y:auto;
-    max-height: 600px;
+    height: 600px;
 }
 
 #discussion-div {
@@ -235,8 +235,8 @@
 }
 
 .not-from-logged-user {
-    float: left;
-    background: #D9D9D9;
+    float: left !important;
+    background: #D9D9D9 !important;
 }
 
 .feedback-author, .version-feedback-author, .discussion-author {
