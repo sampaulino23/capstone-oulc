@@ -27,11 +27,14 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #00713D !important;
+    background: #FF8EC2 !important;
+    filter: invert(100%);
 }
 
 .sidenav .closebtn:hover {
-    color: #000 !important; 
+    color: #000 !important;
+    background: transparent !important;
+    
 }
 
 /* Position and style the close button (top right corner) */
