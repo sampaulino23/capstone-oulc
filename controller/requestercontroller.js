@@ -126,8 +126,11 @@ const requestercontroller = {
 
             const files = req.files;
 
-            const users = await User.find({roleName: "Staff", isActive: true}).lean()
-                .exec();
+            // const users = await User.find({roleName: "Staff", isActive: true}).lean()
+            //     .exec();
+
+            const users = await User.find({ $or : [{roleName: "Staff"}, {_id: "6318a6b4c0119ed0b4b6bb82"}], isActive: true}).lean()
+            .exec();
 
             const daterange = req.body.daterange;
 
