@@ -162,18 +162,15 @@
 
         var discussionDateDiv = document.createElement("div");
         discussionDateDiv.className = "discussion-date";
-        discussionDateDiv.innerText = "9:00:00PM";
+
+        var date = moment();
+        var currentDate = date.format("MMM D, YYYY h:mmA");
+        discussionDateDiv.innerText = currentDate;
 
         authorDateDiv.appendChild(discussionDateDiv);
 
-        
-
-
-
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
-
-
 </script>
 
 <div id = "discussion-div">
