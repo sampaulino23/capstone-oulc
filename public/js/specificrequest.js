@@ -400,6 +400,7 @@ $(document).ready(() => {
 
     });
     $('.forlegalreview').click(function () {
+        $(window).unbind('beforeunload');
         // alert(this.id);
         $.ajax({
             url: "/request/forlegalreview",
@@ -452,6 +453,7 @@ $(document).ready(() => {
     });
 
     $('#routeToAnotherAttorney').click(function () {
+        $(window).unbind('beforeunload');
         
         const contractrequestid = $('#contractRequestId').val();
 
