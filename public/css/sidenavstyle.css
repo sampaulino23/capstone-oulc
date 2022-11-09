@@ -29,6 +29,7 @@
 .sidenav a:hover {
     background: #00713D !important;
     color: #fff !important;
+    transition: 0.3s;
 }
 
 .sidenav > a:hover > img {
@@ -97,6 +98,11 @@
 #sidenav-logout {
     position: absolute;
     bottom: 0;
+}
+
+#sidenav-logout:hover {
+    background: transparent !important;
+    color: #00713D !important;
 }
 
 .nav-link {
