@@ -117,10 +117,13 @@
         var ul = document.createElement("ul");
         var messageContainer = document.getElementById("message-container");
         var scrollableDiv = document.getElementById("discussion-div");
-        var loggedUser = $('#username').val()
+        var loggedUser = $('#username').val();
 
         ul.id = 'messages';
-        ul.className = "messages-ul-class";
+        ul.className = "messages-ul-class not-from-logged-user";
+        if (loggedUser === username) {
+            ul.classList.remove("not-from-logged-user");
+        }
         ul.dataset.value = loggedUser;
         // ul.textContent = username + " : " + message;
         messageContainer.appendChild(ul);
@@ -270,11 +273,11 @@
 
     }
     
-    var loggedUser = $('#username').val()
+    var loggedUser = $('#username').val();
     const messageContainer = document.querySelector("#message-container");
     const notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
     for (i = 0; i < notLoggedUserList.length; i++) {
-        notLoggedUserList[i].classList.add('not-from-logged-user')
+        notLoggedUserList[i].classList.add('not-from-logged-user');
     }
 
     function getAcronym(username) {
