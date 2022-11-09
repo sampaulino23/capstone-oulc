@@ -158,7 +158,7 @@ const specificrequestcontroller = {
 
             const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
 
-            const attorneys = await User.find({role: roleAttorney,_id: { $ne: userid }}).lean().exec();
+            const attorneys = await User.find({role: roleAttorney,_id: { $ne: userid }, isActive: true}).lean().exec();
 
             res.render('specificrequest', {
                 user_fullname:req.user.fullName,
@@ -416,6 +416,7 @@ const specificrequestcontroller = {
             console.log ("INSIDE ROUTE TO ANOTHER ATTORNEY");
 
             await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } }).exec();
+            await Conversation.findOneAndUpdate({ contractRequest: contractrequestid} , { $addToSet: { members: routedattorney } }).exec();
 
             // Reset is-reviewed to false for all latest contracts and reference documents attached
             const contracts = await Contract.find({ contractRequest: contractrequestid }).exec();
