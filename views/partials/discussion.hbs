@@ -115,15 +115,65 @@
 
     function addMessage(username, message) {
         var ul = document.createElement("ul");
-        var messagebox = document.getElementById("messagebox");
+        var messageContainer = document.getElementById("message-container");
         var scrollableDiv = document.getElementById("discussion-div");
+        var loggedUser = $('#username').val()
 
         ul.id = 'messages';
-        ul.class = "messages-ul-class";
-        ul.innerHTML = username + " : " + message;
-        messagebox.appendChild(ul);
+        ul.className = "messages-ul-class";
+        ul.dataset.value = loggedUser;
+        // ul.textContent = username + " : " + message;
+        messageContainer.appendChild(ul);
+        
+        var li = document.createElement("li");
+        var discussionDiv = document.createElement("div");
+        discussionDiv.id = 'discussion-details-div';
+
+        var contentDiv = document.createElement("div");
+        contentDiv.className = "content";
+        contentDiv.innerText = message;
+
+        li.appendChild(discussionDiv);
+        li.appendChild(contentDiv);
+        ul.appendChild(li);
+
+        var profilePicDiv = document.createElement("div");
+        profilePicDiv.className = "profile-pic";
+        var discPicInnerDiv = document.createElement("div");
+        discPicInnerDiv.id = "disc-pic-inner";
+        discPicInnerDiv.className = "disc-pic-inner";
+        discPicInnerDiv.innerText = getAcronym(username);
+        
+        
+        profilePicDiv.appendChild(discPicInnerDiv);
+        discussionDiv.appendChild(profilePicDiv);
+
+
+        var authorDateDiv = document.createElement("div");
+        authorDateDiv.id = "author-date-div";
+        var discussionAuthorDiv = document.createElement("div");
+        discussionAuthorDiv.className = "discussion-author";
+        discussionAuthorDiv.id = "discussion-author";
+
+        discussionAuthorDiv.innerText = username;
+
+        authorDateDiv.appendChild(discussionAuthorDiv);
+        discussionDiv.appendChild(authorDateDiv);
+
+        var discussionDateDiv = document.createElement("div");
+        discussionDateDiv.className = "discussion-date";
+        discussionDateDiv.innerText = "9:00:00PM";
+
+        authorDateDiv.appendChild(discussionDateDiv);
+
+        
+
+
+
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
+
+
 </script>
 
 <div id = "discussion-div">
@@ -222,10 +272,17 @@
         document.getElementById(elementid).innerHTML = acronym;
 
     }
+    
     var loggedUser = $('#username').val()
     const messageContainer = document.querySelector("#message-container");
     const notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
     for (i = 0; i < notLoggedUserList.length; i++) {
         notLoggedUserList[i].classList.add('not-from-logged-user')
+    }
+
+    function getAcronym(username) {
+        var matches = username.match(/\b(\w)/g); // e.g. ['J','S','O','N']
+        var acronym = matches.join('');
+        return acronym;
     }
 </script>
