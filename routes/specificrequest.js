@@ -105,7 +105,9 @@ router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 //router.get('/sendmessage', specificrequestcontroller.sendMessage);
 
 // requesting office start
-router.post('/uploadRepositoryFile', upload.single('file'), specificrequestcontroller.postUploadRepositoryFile);
+router.post('/uploadRepositoryFile', upload.fields([
+  { name: 'signedContractFiles'}
+]), specificrequestcontroller.postUploadRepositoryFile);
 router.get('/requester/:id', specificrequestcontroller.getRequesterSpecificRequest);
 router.get('/cancelRequest', specificrequestcontroller.cancelRequest);
 // requesting office end

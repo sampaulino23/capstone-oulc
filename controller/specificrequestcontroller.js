@@ -21,6 +21,7 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
 
 const fs = require('fs');
+const { filename } = require('gotenberg-js-client');
 
     const conn = mongoose.createConnection(url);
 
@@ -441,23 +442,21 @@ const specificrequestcontroller = {
     postUploadRepositoryFile: async (req, res) => { // requesting office
         try {
 
-            console.log(req.file);
-            const filename = req.file.filename;
-            const file_id = mongoose.Types.ObjectId(req.file.id);
-            const fileuploaddate = req.file.uploadDate;
+            const files = req.files;
             const requestid = req.body.uploadRepositoryFileID;
 
-            const newRepositoryFile = new RepositoryFile({
-                name: filename,
-                requestid: mongoose.Types.ObjectId(requestid),
-                uploadDate: fileuploaddate,
-                file: file_id
-            });
+            if (files.signedContractFiles != null) {
+                for (signedContractFile of files.signedContractFiles) {
+                    let newRepositoryFile = new RepositoryFile({
+                        name: signedContractFile.filename,
+                        requestid: mongoose.Types.ObjectId(requestid),
+                        uploadDate: signedContractFile.uploadDate,
+                        file: signedContractFile.id
+                    })
 
-            newRepositoryFile.save();
-
-            console.log ("INSIDE UPLOAD SIGNED CONTRACT");
-            console.log (newRepositoryFile);
+                    await newRepositoryFile.save();
+                }
+            }
 
             res.redirect('back');
         } catch (err) {
