@@ -459,7 +459,40 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    getRepository: async (req, res) => {
+        try {
+
+            const user = req.user;
+
+            const contracttypes = await ContractType.find({}).lean().exec();
+
+            const contractrequests = await ContractRequest.find({requester: user._id}).select('_id').exec();
+
+            console.log(contractrequests);
+
+            const repositoryFiles = await RepositoryFile.find({requestid: { "$in": contractrequests}}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'contractType'
+                    } 
+            })
+            .sort({uploadDate: 1})
+            .exec();
+    
+            res.render('repository', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                contracttypes: contracttypes,
+                repositoryFiles: repositoryFiles
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
 }
 
 module.exports = requestercontroller;
