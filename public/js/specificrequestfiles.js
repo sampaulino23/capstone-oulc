@@ -105,7 +105,6 @@ $(document).ready(() => {
                 // enable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", false);
                 document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
-                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
                 document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
