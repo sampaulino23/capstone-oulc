@@ -49,7 +49,7 @@
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
             {{#ifCond user_role '==' "Requester"}}
                 {{#compare contractrequest.status '==' "Cleared"}}
-                    <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract</button>
+                    <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
                 {{else}}
                     <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/compare}}
@@ -428,7 +428,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="w-100 modal-title" id="exampleModalLabel">Upload Signed Contract</h5>
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Upload Signed Contract/s</h5>
             </div>
             <div class="modal-body">
                 <div class="custom-file mb-3">
@@ -437,8 +437,8 @@
                     <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="uploadRepositoryFileID">
 
                         <div class="mb-3">
-                            <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                            <input type="file" name="file" id="file" accept="application/pdf" class="custom-file-input" required multiple><br><br>
+                            <label for="signedContractFiles" class="modal-text form-label">File Upload</label><br>
+                            <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" required multiple><br><br>
                         </div>
 
                         <div class="modal-footer">
