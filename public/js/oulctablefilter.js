@@ -1265,7 +1265,7 @@ $(document).ready(function() {
     } else if (currentRole == 'Attorney') {
         viewForLegalReviewAtty();
     } else if (currentRole == 'Requester') {
-        viewPendingRequester();
+        viewWaitingRequester();
     }
 });
 
