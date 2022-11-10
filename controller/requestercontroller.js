@@ -342,13 +342,29 @@ const requestercontroller = {
                 if (checkStagingContractVersion) { // if there is a staging contract version
 
                     // replace existing staging contract version
-                    let newVersionNote = {
-                        oulcComments: req.body.oulcComments,
-                        thirdPartyResponse: req.body.thirdPartyResponse,
-                        requestingPartyRemarks: req.body.requestingPartyRemarks
+                    var versionNoteBeta = {
+
                     };
 
-                    const existingVersionNote = await VersionNote.findOneAndReplace({_id: checkStagingContractVersion.versionNote}, newVersionNote).exec();
+                    if (req.body.oulcComments) {
+                        versionNoteBeta.oulcComments = req.body.oulcComments;
+                    }
+                    if (req.body.thirdPartyResponse) {
+                        versionNoteBeta.thirdPartyResponse = req.body.thirdPartyResponse;
+                    }
+                    if (req.body.requestingPartyRemarks) {
+                        versionNoteBeta.requestingPartyRemarks = req.body.requestingPartyRemarks;
+                    }
+
+                    var newVersionNote = new VersionNote(versionNoteBeta);
+
+                    var newVersionNoteUpdated = {
+                        oulcComments: newVersionNote.oulcComments,
+                        thirdPartyResponse: newVersionNote.thirdPartyResponse,
+                        requestingPartyRemarks: newVersionNote.requestingPartyRemarks
+                    };
+
+                    const existingVersionNote = await VersionNote.findOneAndReplace({_id: checkStagingContractVersion.versionNote}, newVersionNoteUpdated).exec();
 
                     let stagingContractVersion = {
                         contract: contractVersion.contract,
@@ -374,11 +390,21 @@ const requestercontroller = {
                 } else { // if there is no staging contract version
                     
                     // create new staging contract version
-                    let versionNote = new VersionNote({
-                        oulcComments: req.body.oulcComments,
-                        thirdPartyResponse: req.body.thirdPartyResponse,
-                        requestingPartyRemarks: req.body.requestingPartyRemarks
-                    });
+                    var versionNoteBeta = {
+
+                    };
+
+                    if (req.body.oulcComments) {
+                        versionNoteBeta.oulcComments = req.body.oulcComments;
+                    }
+                    if (req.body.thirdPartyResponse) {
+                        versionNoteBeta.thirdPartyResponse = req.body.thirdPartyResponse;
+                    }
+                    if (req.body.requestingPartyRemarks) {
+                        versionNoteBeta.requestingPartyRemarks = req.body.requestingPartyRemarks;
+                    }
+
+                    var versionNote = new VersionNote(versionNoteBeta);
     
                     const newVersionNote = await versionNote.save();
         
