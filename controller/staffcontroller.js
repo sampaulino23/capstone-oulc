@@ -115,6 +115,7 @@ const staffcontroller = {
             console.log(err);
         }
     },
+    
     getTemplates: async (req, res) => {
         try {
 
