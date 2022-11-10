@@ -65,28 +65,28 @@
             </button>
             {{/compare}}
             {{#compare user.role.name '==' 'Requester'}}
-            <button class="nav-item" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                aria-controls="all" value="" onclick="viewAllRequests()">
+            <button class="nav-item" id="all-tab-requester" data-toggle="tab" href="#all" role="tab"
+                aria-controls="all" value="" onclick="viewAllRequestsRequester()">
                 All
             </button>
-            <button class="nav-item" id="waiting-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="For Revision" onclick="viewWaiting()">
+            <button class="nav-item" id="waiting-tab-requester" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Revision" onclick="viewWaitingRequester()">
                 For Revision
             </button>
-            <button class="nav-item selected" id="pending-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="activeusers" value="Pending" onclick="viewPending()">
+            <button class="nav-item selected" id="pending-tab-requester" data-toggle="tab" href="" role="tab"
+                aria-controls="activeusers" value="Pending" onclick="viewPendingRequester()">
                 Pending
             </button>
-            <button class="nav-item" id="forlegalreview-tab" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReview()">
+            <button class="nav-item" id="forlegalreview-tab-requester" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReviewRequester()">
                 For Legal Review
             </button>
-           <button class="nav-item" id="cleared-tab-atty" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="Cleared" onclick="viewClearedAtty()">
+           <button class="nav-item" id="cleared-tab-requester" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cleared" onclick="viewClearedRequester()">
                 Cleared
             </button>
-           <button class="nav-item" id="cancelled-tab-atty" data-toggle="tab" href="" role="tab"
-                aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledAtty()">
+           <button class="nav-item" id="cancelled-tab-requester" data-toggle="tab" href="" role="tab"
+                aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledRequester()">
                 Cancelled
             </button>
             {{/compare}}
