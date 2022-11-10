@@ -1,6 +1,17 @@
-$(document).ready(() => {
+$(window).on('load', function() {
+    checkReviewed();
+});
 
+function checkReviewed() {
+    if (document.getElementById("checkAll").checked === true) {
+        document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
+        document.getElementById("approveBtn").classList.remove("mark-btn");
+    }
+}
+
+$(document).ready(() => {
     $('.is-reviewed').change(function () {
+        checkReviewed();
 
         var currentval = $(this).val();
 
@@ -45,6 +56,8 @@ $(document).ready(() => {
                 // disable for approve button
                 $("#approveBtn").attr("disabled", true);
                 document.getElementById("approveBtn").style.cursor = "not-allowed";
+                document.getElementById("approveBtn").classList.remove("marked-complete-review-btn");
+                document.getElementById("approveBtn").classList.add("mark-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
@@ -71,6 +84,8 @@ $(document).ready(() => {
                 // enable for approve button
                 $("#approveBtn").attr("disabled", false);
                 document.getElementById("approveBtn").style.cursor = "pointer";
+                document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
+                document.getElementById("approveBtn").classList.remove("mark-btn");
     
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
@@ -116,6 +131,8 @@ $(document).ready(() => {
                 // enable for approve button
                 $("#approveBtn").attr("disabled", false);
                 document.getElementById("approveBtn").style.cursor = "pointer";
+                document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
+                document.getElementById("approveBtn").classList.remove("mark-btn");
     
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
@@ -152,6 +169,8 @@ $(document).ready(() => {
                 // disable for approve button
                 $("#approveBtn").attr("disabled", true);
                 document.getElementById("approveBtn").style.cursor = "not-allowed";
+                document.getElementById("approveBtn").classList.remove("marked-complete-review-btn");
+                document.getElementById("approveBtn").classList.add("mark-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
