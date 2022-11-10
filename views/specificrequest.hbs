@@ -48,7 +48,8 @@
             </div>
         </div>
         <div class="col-6">
-            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
+            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
+            <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add 3rd Party</button>
             {{#ifCond user_role '==' "Requester"}}
                 {{#compare contractrequest.status '==' "Cleared"}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
@@ -102,6 +103,10 @@
                         <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
                             type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
                     </li>
+                     <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
+                    </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
@@ -124,6 +129,10 @@
                     <li>
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
@@ -202,6 +211,10 @@
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
                     <li>
+                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
+                            type="button" role="tab" aria-controls="negotiation" onclick="selectFeedback()">Negotiation</button>
+                    </li>
+                    <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
@@ -229,6 +242,9 @@
                     </div>
                     <div class="tab-pane" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">
                         {{>discussion}}
+                    </div>
+                    <div class="tab-pane" id="negotiation" role="tabpanel" aria-labelledby="negotiation-tab">
+                        {{>negotiation}}
                     </div>
                     <div class="tab-pane" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
                         {{>feedback}}
@@ -469,6 +485,28 @@
                 <div id="fileViewFull">
 
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Third Party Modal -->
+<div class="modal fade modal-xl" id="add-third-party-modal" tabindex="-1" aria-labelledby="add-third-party-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100" id="exampleModalLabel">Add Third Party</h5>
+            </div>
+            <div class="modal-body">
+                <form action = "/request/addthirdparty" method = "POST">
+                    <div class = "reset-pass-text">Please enter 3rd party email address and we will send a negotiation link.</div>
+                    
+                    <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required>
+                    <input type="submit" class="loginbtn" value="Add Third Party">
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>

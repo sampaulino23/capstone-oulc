@@ -19,6 +19,7 @@ const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
+const ThirdParty = require('../models/Thirdparty.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
@@ -1083,6 +1084,52 @@ const specificrequestcontroller = {
 			console.log(err);
 		}
         console.log("Message was sent succesfully.");
+    },
+
+    postAddThirdParty: async (req, res) => { 
+
+        try{
+            var emailInput = req.body.email;
+            //const user = await User.findOne({email: emailInput}).exec();
+
+            var thirdparty = new ThirdParty({
+                fullName: "3rd Party",
+                email: emailInput
+            });
+
+            await thirdparty.save();
+
+             // code section below is for sending the password to the account's email address
+             const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "capstone.samantha@gmail.com",
+                    pass: "uapnxnyyyqqsfkax"
+                }
+            });
+
+            // change "to" field to your dummy email so you can see the password
+            const options = {
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                to: "migfranzbro@gmail.com", //change to user.email when done testing
+                subject: "Third Party Negotiation",
+                text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: "  
+                //" http://localhost:3000/negotiation/" + user._id 
+            }
+
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: " + info.response);
+            })
+
+            res.redirect('back');
+
+        }catch (err) {
+            console.log(err);
+        }
     },
 
 }

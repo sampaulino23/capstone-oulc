@@ -101,6 +101,9 @@ router.post('/comparerevisionhistory', specificrequestcontroller.compareRevision
 router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 // attorney end
 
+// add 3rd party
+router.post('/addthirdparty', specificrequestcontroller.postAddThirdParty);
+
 //send message
 //router.get('/sendmessage', specificrequestcontroller.sendMessage);
 
