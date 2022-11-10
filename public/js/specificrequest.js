@@ -107,7 +107,11 @@ $(window).on('load', function() {
 
         console.log(statusCounter);
 
-        if (statusListDisabled.includes(statusCounter)) {
+        // also disable checkbox if assignedAttorney is not the same as current user
+        const assignedAttorney = $('#assignedAttorneyId').val();
+        const currentUser = $('#currentUserId').val();
+
+        if (statusListDisabled.includes(statusCounter) || currentUser != assignedAttorney) {
             $('.is-reviewed').prop('disabled', true);
             $('#checkAll').prop('disabled', true);
             
