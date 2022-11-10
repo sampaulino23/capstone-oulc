@@ -786,9 +786,9 @@ const specificrequestcontroller = {
             // code below is old solution
             // const cursor = await gridfsBucketRequestDocuments.find({_id: {"$in": [mongoose.Types.ObjectId(beforecontractversion.file), mongoose.Types.ObjectId(latestcontractversion.file)]}});
 
-            const cursorRight = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(beforecontractversion.file)});
+            const cursorRight = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(latestcontractversion.file)});
 
-            const cursorLeft = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(latestcontractversion.file)});
+            const cursorLeft = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(beforecontractversion.file)});
 
             let documentRight, documentLeft;
 
@@ -874,8 +874,8 @@ const specificrequestcontroller = {
                             user_fullname:req.user.fullName,
                             user_role: req.user.roleName,
                             contractversions: contractversions,
-                            leftcontractversion: latestcontractversion._id.toString(),
-                            rightcontractversion: beforecontractversion._id.toString(),
+                            leftcontractversion: beforecontractversion._id.toString(),
+                            rightcontractversion: latestcontractversion._id.toString(),
                             draftable: viewerURL
                         });
                     });
