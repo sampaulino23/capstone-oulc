@@ -6,6 +6,11 @@ function checkReviewed() {
     if (document.getElementById("checkAll").checked === true) {
         document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
         document.getElementById("approveBtn").classList.remove("mark-btn");
+        document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
+        document.getElementById("forRevisionBtn").classList.remove("mark-btn");
+        document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
+        document.getElementById("forLegalReviewBtn").classList.remove("mark-btn");
+        
     }
 }
 
@@ -48,10 +53,13 @@ $(document).ready(() => {
                 $("#forLegalReviewBtn").attr("disabled", true);
                 document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
                 document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
+                document.getElementById("forLegalReviewBtn").classList.add("mark-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
                 document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+                document.getElementById("forRevisionBtn").classList.add("mark-btn");
+                document.getElementById("forRevisionBtn").classList.remove("mark-as-for-revision");
             } else if (role == 'Attorney') {
                 // disable for approve button
                 $("#approveBtn").attr("disabled", true);
@@ -62,6 +70,8 @@ $(document).ready(() => {
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
                 document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+                document.getElementById("forRevisionBtn").classList.add("mark-btn");
+                document.getElementById("forRevisionBtn").classList.remove("mark-as-for-revision");
     
             }
             
@@ -73,12 +83,14 @@ $(document).ready(() => {
                 // enable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", false);
                 document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
-                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
+                document.getElementById("forLegalReviewBtn").classList.remove("mark-btn");
                 document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.remove("mark-btn");
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             } else if (role == 'Attorney') {
                 // enable for approve button
@@ -90,6 +102,8 @@ $(document).ready(() => {
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.remove("mark-btn");
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             }
             
@@ -125,6 +139,8 @@ $(document).ready(() => {
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.remove("mark-btn");
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             } else if (role == 'Attorney') {
                 // enable for approve button
@@ -136,6 +152,8 @@ $(document).ready(() => {
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.remove("mark-btn");
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             }
 
@@ -160,10 +178,13 @@ $(document).ready(() => {
                 $("#forLegalReviewBtn").attr("disabled", true);
                 document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
                 document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
+                document.getElementById("forLegalReviewBtn").classList.add("mark-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
                 document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
+                document.getElementById("forRevisionBtn").classList.add("mark-btn");
+                document.getElementById("forRevisionBtn").classList.remove("mark-as-for-revision");
             } else if (role == 'Attorney') {
                 // disable for approve button
                 $("#approveBtn").attr("disabled", true);
@@ -174,12 +195,13 @@ $(document).ready(() => {
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
                 document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
-    
+                document.getElementById("forRevisionBtn").classList.add("mark-btn");
+                document.getElementById("forRevisionBtn").classList.remove("mark-as-for-revision");
             }
 
             // uncheck all checkboxes
             $(':checkbox').each(function() {
-                this.checked = false;       
+                this.checked = false;
             });
         }
     });

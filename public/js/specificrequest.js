@@ -209,7 +209,6 @@ $(window).on('load', function() {
                 // disable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", true);
                 document.getElementById("forLegalReviewBtn").style.cursor = "not-allowed";
-                document.getElementById("forLegalReviewBtn").classList.remove("marked-complete-review-btn");
     
                 // disable for revision button
                 $("#forRevisionBtn").attr("disabled", true);
@@ -233,7 +232,6 @@ $(window).on('load', function() {
                 // enable for legal review button
                 $("#forLegalReviewBtn").attr("disabled", false);
                 document.getElementById("forLegalReviewBtn").style.cursor = "pointer";
-                document.getElementById("forLegalReviewBtn").style.background = "#0C8039";
                 document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
