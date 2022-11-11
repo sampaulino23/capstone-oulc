@@ -504,7 +504,9 @@
                 <form action = "/request/addthirdparty" method = "POST">
                     <div class = "reset-pass-text">Please enter 3rd party email address and we will send a negotiation link.</div>
                     
-                    <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required>
+                    <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required><br>
+                    <input id = "name" name = "name" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeName}}" required><br>
+                    <input type="text" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
                     <input type="submit" class="loginbtn" value="Add Third Party">
                 </form>
             </div>

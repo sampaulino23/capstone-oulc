@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Contract Approval Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/specificrequeststyle.css">
+    <script src="/js/specificrequest.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="header">
+        Contract Approval Request Details - 3rd Party
+        
+        <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
+        <input type="hidden" id="username" value="{{user_fullname}}">
+        <input type="hidden" id="conversationid" value="{{conversation._id}}">
+        
+        
+        <div id = "status">
+            <div class = "status-text">Status:</div>
+            <div class = "status-text actual">{{contractrequest.status}}</div>
+            <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
+            <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
+            <input type="hidden" id="contractStatus" name="contractStatus" value="{{contractrequest.status}}">
+            <input type="hidden" id="assignedAttorneyId" name="assignedAttorneyId" value="{{contractrequest.assignedAttorney._id}}">
+            <input type="hidden" id="currentUserId" name="currentUserId" value="{{user._id}}">
+        </div>
+    </div>
+    <div class = "subheader-row">
+        <div class = "col-6">
+            <div id="subheader">
+                <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
+                <p class = "divider" style = "display: inline;"> > </p>
+                {{#compare user_role "==" "Requester"}}
+                <a href = "/request/requester/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                {{else}}
+                <a href = "/request/staff/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                {{/compare}}
+            </div>
+        </div>
+        <div class="col-6">
+            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
+            {{#ifCond user_role '==' "Requester"}}
+                {{#compare contractrequest.status '==' "Cleared"}}
+                    <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
+                {{else}}
+                    <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
+                {{/compare}}
+            {{/ifCond}}
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+            <!-- LEFT SIDE -->
+            <div class="left-col col-6">
+                <div class="input-group mb-3">
+                    <span class="file-selected input-group-text">File Selected:</span>  
+                    <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
+                        {{#each latestversioncontracts}}
+                            <option class="contract-option" value="{{file}}">{{filename}}</option>
+                        {{/each}}
+                        {{#each referencedocuments}}
+                            <option class="reference-document-option" value="{{file}}">{{filename}}</option>
+                        {{/each}}
+                    </select>
+                    {{#compare user_role '==' 'Requester'}}
+                    {{#compare contractrequest.status '==' 'For Revision'}}
+                    <button class="btn btn-primary" id="uploadNewVersion">Upload New Version</button>
+                    {{/compare}}
+                    {{/compare}}
+                </div>
+                <div id="fileView">
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div id = "right-col" class="col-6">
+                <!-- Nav tabs -->
+             
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li>
+                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
+                    </li>
+                    <li>
+                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
+                    </li>
+                     <li>
+                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+                        {{>summary}}
+                    </div>
+                    <div class="tab-pane" id="files" role="tabpanel" aria-labelledby="files-tab">
+                        {{>files}}
+                    </div>
+                    <div class="tab-pane" id="negotiation" role="tabpanel" aria-labelledby="negotiation-tab">
+                        {{>negotiation}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

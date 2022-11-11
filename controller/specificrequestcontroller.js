@@ -1090,10 +1090,12 @@ const specificrequestcontroller = {
 
         try{
             var emailInput = req.body.email;
+            var name = req.body.name;
+            var requestID = req.body.contractRequestId;
             //const user = await User.findOne({email: emailInput}).exec();
 
             var thirdparty = new ThirdParty({
-                fullName: "3rd Party",
+                fullName: name,
                 email: emailInput
             });
 
@@ -1113,8 +1115,8 @@ const specificrequestcontroller = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "migfranzbro@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
-                text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: "  
-                //" http://localhost:3000/negotiation/" + user._id 
+                text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: " + 
+                " http://localhost:3000/thirdparty/" + requestID 
             }
 
             transporter.sendMail (options, function (err, info) {
