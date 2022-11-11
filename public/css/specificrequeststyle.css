@@ -167,6 +167,7 @@
 }
 
 .text-input {
+    height:auto;
     padding: 10px 15px;
     margin-bottom: 5px;
     gap: 10px;
@@ -175,6 +176,9 @@
     border: none;
     width: 100%;
     cursor: default;
+    white-space: initial;
+    word-wrap: break-word;
+    resize: none;
 }
 
 .subject-matter {

@@ -2,16 +2,16 @@
 
 <div id = "summary-table">
     Document Number<br>
-    <input type="text" class = "text-input" value="{{contractrequest.trackingNumber}}" readonly>
+    <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.trackingNumber}}</textarea>
     <br>
     <div class="row">
         <div class="col-6">
             Request Date<br>
-            <input type="text" class = "text-input half" value="{{formatdate contractrequest.requestDate}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{formatdate contractrequest.requestDate}}</textarea>
         </div>
         <div class="col-6">
             Department/Unit<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.requester.department.name}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.requester.department.name}}</textarea>
         </div>
     </div>
     <div class="row">
@@ -20,72 +20,74 @@
         </div>
         <div class="row">
             <div class="col">
-                From: <input type="text" class = "text-input" value="{{formatdate contractrequest.effectivityStartDate}}" readonly>
+                From: <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{formatdate contractrequest.effectivityStartDate}}</textarea>
             </div>
             <div class="col">
-                To: <input type="text" class = "text-input" value="{{formatdate contractrequest.effectivityEndDate}}" readonly>
+                To: <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{formatdate contractrequest.effectivityEndDate}}</textarea>
             </div>
             <div class="col">
-                Duration: <input type="text" class = "text-input" value="{{contractrequest.daysDuration}} days" readonly>
+                Duration: <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.daysDuration}} days</textarea>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
             Name of Signatory<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.signatoryName}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.signatoryName}}</textarea>
         </div>
         <div class="col-6">
             Signatory Level<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.signatoryLevel}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.signatoryLevel}}</textarea>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
             Contact Person<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.requester.fullName}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.requester.fullName}}</textarea>
         </div>
         <div class="col-6">
             Contact Local No.<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.contactNum}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.contactNum}}</textarea>
         </div>
     </div>
     Template Used
-    <input type="text" class = "text-input half" value="{{contractrequest.templateUsed}}" readonly>
+    <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.templateUsed}}</textarea>
     <br>
     <div id ="changes-section-text">Changes in Sections/Paragraphs</div>
-    <input type="text" class = "changes-section text-input half" value="{{contractrequest.sectionChangeNotes}}" readonly>
+    <textarea name="textarea" class = "changes-section text-input"  readonly>{{contractrequest.sectionChangeNotes}}</textarea>
     <div class="row">
         <div class="col-6">
             Third Party Name<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.thirdPartyRepresentativeName}}" readonly>
+            <textarea name="textarea" class = "text-input"  readonly>{{contractrequest.thirdPartyRepresentativeName}}</textarea>
         </div>
         <div class="col-6">
             Third Party Email<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.thirdPartyRepresentativeEmail}}" readonly>
+            <textarea name="textarea" class = "text-input"  readonly>{{contractrequest.thirdPartyRepresentativeEmail}}</textarea>
         </div>
     </div>
     Name of Other Contracting Party
-    <input type="text" class = "text-input half" value="{{contractrequest.contractingParty}}" readonly>
+    <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.contractingParty}}</textarea>
     <div class="row">
         <div class="col-6">
             Amount Involved (If Any)<br>
-            <input type="text" class = "text-input half" value="{{numberWithComma contractrequest.amountInvolved}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{numberWithComma contractrequest.amountInvolved}}</textarea>
         </div>
         <div class="col-6">
             Type of Review<br>
-            <input type="text" class = "text-input half" value="{{contractrequest.reviewType}}" readonly>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.reviewType}}</textarea>
         </div>
     </div>
     Document Title
-    <input type="text" class = "text-input half" value="{{contractrequest.requestTitle}}" readonly>
+    <textarea name="textarea" class = "text-input"  readonly>{{contractrequest.requestTitle}}</textarea>
     Document Type
-    <input type="text" class = "text-input half" value="{{contractrequest.contractType.name}}" readonly>
+    <textarea name="textarea" class = "text-input" readonly>{{contractrequest.contractType.name}}</textarea>
     Subject Matter<br>
-    <!-- <input type="text" class = "subject-matter text-input" value="{{subjectMatter}}" readonly> !-->
-    <textarea name="textarea" class = "subject-matter" readonly>{{contractrequest.subjectMatter}}</textarea>
+    <textarea name="textarea" class = "text-input" readonly>{{contractrequest.subjectMatter}}</textarea>
 </div>
 
 <script>
-    
+    var textAreas = document.querySelectorAll("textarea");
+    textAreas.style.height = "5px";
+    textAreas.style.height = (25+element.scrollHeight)+"px";
+    var textAreasLength = textAreas.length;
 </script>
