@@ -237,15 +237,18 @@ $(window).on('load', function() {
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             } else if (role == 'Attorney') {
                 // enable for approve button
                 $("#approveBtn").attr("disabled", false);
                 document.getElementById("approveBtn").style.cursor = "pointer";
+                document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
     
                 // enable for revision button
                 $("#forRevisionBtn").attr("disabled", false);
                 document.getElementById("forRevisionBtn").style.cursor = "pointer";
+                document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
     
             }
             

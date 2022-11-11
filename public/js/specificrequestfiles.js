@@ -1,22 +1,6 @@
-$(window).on('load', function() {
-    checkReviewed();
-});
-
-function checkReviewed() {
-    if (document.getElementById("checkAll").checked === true) {
-        document.getElementById("approveBtn").classList.add("marked-complete-review-btn");
-        document.getElementById("approveBtn").classList.remove("mark-btn");
-        document.getElementById("forRevisionBtn").classList.add("mark-as-for-revision");
-        document.getElementById("forRevisionBtn").classList.remove("mark-btn");
-        document.getElementById("forLegalReviewBtn").classList.add("marked-complete-review-btn");
-        document.getElementById("forLegalReviewBtn").classList.remove("mark-btn");
-        
-    }
-}
-
 $(document).ready(() => {
     $('.is-reviewed').change(function () {
-        checkReviewed();
+        // checkReviewed();
 
         var currentval = $(this).val();
 
