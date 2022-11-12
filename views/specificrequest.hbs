@@ -19,7 +19,6 @@
 <body>
     <div id="header">
         Contract Approval Request Details
-        
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
         <input type="hidden" id="username" value="{{user_fullname}}">
         <input type="hidden" id="conversationid" value="{{conversation._id}}">
@@ -534,63 +533,46 @@
             statusTextDiv.prepend("Rerouted (");
             statusTextDiv.append(")");
         }
-            
-        /*if (userID == requestAssignedAttyID) {
-            alert("the same");
-        } else
-            alert("nope");*/
     });
-    
-
-    function selectSummary() {
-        document.getElementById("summary-tab").classList.add("selected");
-        document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("changes-tab").classList.remove("selected");
-        document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.remove("selected");
-        document.getElementById("feedback-tab").classList.remove("selected");
-    }
-    
-    function selectFiles() {
-        document.getElementById("summary-tab").classList.remove("selected");
-        document.getElementById("files-tab").classList.add("selected");
-        document.getElementById("changes-tab").classList.remove("selected");
-        document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.remove("selected");
-        document.getElementById("feedback-tab").classList.remove("selected");
-    }
-    function selectChanges() {
-        document.getElementById("summary-tab").classList.remove("selected");
-        document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("changes-tab").classList.add("selected");
-        document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.remove("selected");
-        document.getElementById("feedback-tab").classList.remove("selected");
-    }
-    function selectVersion() {
-        document.getElementById("summary-tab").classList.remove("selected");
-        document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("changes-tab").classList.remove("selected");
-        document.getElementById("version-tab").classList.add("selected");
-        document.getElementById("discussion-tab").classList.remove("selected");
-        document.getElementById("feedback-tab").classList.remove("selected");
-    }
-    function selectDiscussion() {
-        document.getElementById("summary-tab").classList.remove("selected");
-        document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("changes-tab").classList.remove("selected");
-        document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.add("selected");
-        document.getElementById("feedback-tab").classList.remove("selected");
-    }
-    function selectFeedback() {
-        document.getElementById("summary-tab").classList.remove("selected");
-        document.getElementById("files-tab").classList.remove("selected");
-        document.getElementById("changes-tab").classList.remove("selected");
-        document.getElementById("version-tab").classList.remove("selected");
-        document.getElementById("discussion-tab").classList.remove("selected");
-        document.getElementById("feedback-tab").classList.add("selected");
-    }
+        
+        function removeSelectedClass() {
+            var allTabs = document.querySelectorAll('[role="tab"]');
+            for (i = 0; i < allTabs.length; i++) {
+                allTabs[i].classList.remove("selected");
+            }
+        }
+        
+        function selectSummary() {
+            removeSelectedClass();
+            document.getElementById("summary-tab").classList.add("selected");
+        }
+        
+        function selectFiles() {
+            removeSelectedClass();
+            document.getElementById("files-tab").classList.add("selected");
+        }
+        function selectChanges() {
+            removeSelectedClass();
+            document.getElementById("changes-tab").classList.add("selected");
+        }
+        function selectVersion() {
+            removeSelectedClass();
+            document.getElementById("version-tab").classList.add("selected");
+        }
+        function selectDiscussion() {
+            removeSelectedClass();
+            document.getElementById("discussion-tab").classList.add("selected");
+        }
+        /*
+        function selectNegotiation() {
+            removeSelectedClass();
+            document.getElementById("negotiation-tab").classList.add("selected");
+        }
+        */
+        function selectFeedback() {
+            removeSelectedClass();
+            document.getElementById("feedback-tab").classList.add("selected");
+        }
 </script>
 
     
