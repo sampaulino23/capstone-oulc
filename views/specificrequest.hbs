@@ -27,7 +27,11 @@
         
         <div id = "status">
             <div class = "status-text">Status:</div>
+            {{#compare user_fullname "!=" "Chris Cruz"}}
+            <div class = "status-text actual">Rerouted ({{contractrequest.status}})</div>
+            {{else}}
             <div class = "status-text actual">{{contractrequest.status}}</div>
+            {{/compare}}
             <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
             <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
             <input type="hidden" id="contractStatus" name="contractStatus" value="{{contractrequest.status}}">
