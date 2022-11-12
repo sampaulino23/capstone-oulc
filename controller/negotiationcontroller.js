@@ -9,39 +9,26 @@ const Feedback = require('../models/Feedback.js');
 const Contract = require('../models/Contract.js');
 const ContractVersion = require('../models/ContractVersion.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
+const Conversation = require('../models/Conversation.js');
+const Message = require('../models/Message.js');
 const Status = require('../models/Status.js');
 const { ObjectId } = require('mongoose');
 
 const negotiationcontroller = {
-
-    getResetPassword: async (req, res) => {
-		try {
-            var userid = req.params.id;
-
-            console.log ("Reset Password Page");
-            console.log('userid: ' + userid);
-
-			const user = await User.find({_id : userid}).lean().exec();
-
-			res.render('resetpassword', {user: user, pagename: 'Reset Password', title: 'Reset Password'});
-		} catch(err) {
-			console.log(err);
-		}
-    },
 
     getThirdPartyNegotiation: async (req, res) => { 
         try {
 
             var path = req.path.split('/')[2];
             //var userid = req.user._id;
-            //var messages = null;
+            var messages = null;
 
-            /*const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
+            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
 
-            if (conversation) {
+            if (negotiation) {
                 console.log("INSIDE CONVERSATION");
-                messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
-            }*/
+                messages = await Message.find({conversationId: negotiation._id}).lean().exec(); 
+            }
             
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
@@ -161,8 +148,8 @@ const negotiationcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 //attorneys: attorneys,
-                //conversation: conversation,
-                //messages: messages
+                conversation: negotiation,
+                messages: messages
             });
 
         } catch (err) {

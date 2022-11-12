@@ -75,14 +75,14 @@
 
 <script src = "/socket.io/socket.io.js"></script>
 
-<!--<script>
+<script>
     $(document).ready( () => {
         var socket = io(); 
         
         $('.send-btn').click(function () {   
             //event.preventDefault();
             var message = document.getElementById("inputmessage").value;
-            var conversationid = document.getElementById("conversationid").value;
+            var conversationid = document.getElementById("negotiationid").value;
             var username = document.getElementById("username").value;
             //addMessage(username, message);
 
@@ -174,10 +174,10 @@
 
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
-</script>-->
+</script>
 
 <div id = "discussion-div">
-    <div>{{conversation._id}} : {{conversation.members}}</div>
+    <div>{{negotiation._id}} : {{negotiation.members}}</div>
     <div class = "discussion-header">Negotiation Thread:</div>
     <div id = "message-container">
         {{#each messages}}

@@ -11,6 +11,12 @@ const ConversationSchema = mongoose.Schema({
     members: [{
         type: String,
         required: true
+    }],
+
+    type: [{
+        type: String,
+        enum: ["conversation", "negotiation"],
+        required: true
     }]
 });
 

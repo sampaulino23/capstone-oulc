@@ -22,6 +22,7 @@
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
         <input type="hidden" id="username" value="{{user_fullname}}">
         <input type="hidden" id="conversationid" value="{{conversation._id}}">
+        <input type="hidden" id="negotiationid" value="{{negotiation._id}}">
         
         
         <div id = "status">
@@ -48,8 +49,12 @@
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
-            <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add 3rd Party</button>
             {{#ifCond user_role '==' "Requester"}}
+            
+                {{#compare contractrequest.status '==' "For Legal Review"}}
+                    <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add 3rd Party</button>
+                {{/compare}}
+
                 {{#compare contractrequest.status '==' "Cleared"}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
                 {{else}}
@@ -104,7 +109,7 @@
                     </li>
                      <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
+                            type="button" role="tab" aria-controls="feedback" onclick="selectNegotiation()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
@@ -130,8 +135,8 @@
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
                     <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
+                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
+                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
@@ -208,10 +213,6 @@
                     <li>
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
-                            type="button" role="tab" aria-controls="negotiation" onclick="selectFeedback()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
@@ -563,12 +564,10 @@
             removeSelectedClass();
             document.getElementById("discussion-tab").classList.add("selected");
         }
-        /*
         function selectNegotiation() {
             removeSelectedClass();
             document.getElementById("negotiation-tab").classList.add("selected");
         }
-        */
         function selectFeedback() {
             removeSelectedClass();
             document.getElementById("feedback-tab").classList.add("selected");

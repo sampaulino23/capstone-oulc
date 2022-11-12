@@ -51,11 +51,18 @@ const specificrequestcontroller = {
             var messages = null;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
+            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
 
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
             }
+
+            if (negotiation) {
+                console.log("INSIDE NEGOTIATION");
+                messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
+            }
+
             
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
@@ -175,6 +182,7 @@ const specificrequestcontroller = {
                 contractversions: contractversions,
                 attorneys: attorneys,
                 conversation: conversation,
+                negotiation: negotiation,
                 messages: messages
             });
 
@@ -191,7 +199,7 @@ const specificrequestcontroller = {
             var messages = null;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
-
+            
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
@@ -1092,14 +1100,30 @@ const specificrequestcontroller = {
             var emailInput = req.body.email;
             var name = req.body.name;
             var requestID = req.body.contractRequestId;
-            //const user = await User.findOne({email: emailInput}).exec();
+            //const thirdpartyrep = await ThirdParty.findOne({email: emailInput}).exec();
 
             var thirdparty = new ThirdParty({
                 fullName: name,
-                email: emailInput
+                email: emailInput,
             });
-
             await thirdparty.save();
+
+            const thirdpartyrep = await ThirdParty.findOne({email: emailInput}).lean()
+            .exec();
+
+            const atty = await User.findOne({_id: "6318a6b4c0119ed0b4b6bb82"}).lean()
+            .exec();
+
+            var membersList = [req.user._id];
+            membersList.push(atty._id);
+            membersList.push(thirdpartyrep._id);
+        
+            var negotiation = new Conversation({
+                contractRequest: requestID,
+                members: membersList,
+                type: "negotiation"
+            });
+            await negotiation.save();
 
              // code section below is for sending the password to the account's email address
              const transporter = nodemailer.createTransport({
