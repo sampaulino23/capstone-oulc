@@ -318,7 +318,7 @@
     font-size: 16px;
 }
 
-.full-size-btn, .upload-signed-btn {
+.full-size-btn, .upload-signed-btn, .submit-revision-btn {
     width: auto;
     padding:10px 12px;
     font-family: 'Poppins', sans-serif;
@@ -554,7 +554,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 }
 
 .mark-as-btn:hover, .mark-as-btn:active, .full-size-btn:hover, .full-size-btn:active, .upload-btn:hover, .upload-btn:active,
-.upload-signed-btn:hover, .upload-signed-btn:active {
+.upload-signed-btn:hover, .upload-signed-btn:active, .submit-revision-btn:hover {
     background: #00713D;
     transition: .25s;
 }
@@ -616,11 +616,18 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     background: #ff3939;
 }
 
-#routeAttorneyBtn {
+#routeAttorneyBtn{
     background: #0C8039;
 }
 
-#routeAttorneyBtn:hover {
+#uploadNewVersion {
+    outline: none;
+    border: none;
+    background: #0C8039;
+    color: #fff;
+}
+
+#routeAttorneyBtn:hover, #uploadNewVersion:hover {
     background: #00713D;
     transition: .25s;
 }

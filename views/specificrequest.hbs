@@ -76,9 +76,9 @@
                         {{/each}}
                     </select>
                     {{#compare user_role '==' 'Requester'}}
-                    {{#compare contractrequest.status '==' 'For Revision'}}
-                    <button class="btn btn-primary" id="uploadNewVersion">Upload New Version</button>
-                    {{/compare}}
+                        {{#compare contractrequest.status '==' 'For Revision'}}
+                        <button class="btn" id="uploadNewVersion">Upload New Version</button>
+                        {{/compare}}
                     {{/compare}}
                 </div>
                 <div id="fileView">
@@ -264,7 +264,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload New Version</h5>
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Upload New Version</h5>
             </div>
             <form action="/requester/uploadnewversion" method="POST" enctype="multipart/form-data">
                 <input type="hidden" class="form-control" id="contractVersionIdForNewVersion" name="contractVersionIdForNewVersion">
@@ -288,7 +288,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="confirm-btn">Upload</button>
+                    <button type="submit" class="mark-as-btn">Upload</button>
                 </div>
             </form>
         </div>
@@ -302,16 +302,17 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pending Version Found</h5>
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Pending Version Found</h5>
             </div>
             <input type="hidden" class="form-control" id="contractVersionIdForNewVersion" name="contractVersionIdForNewVersion">
-            <div class="modal-body">
-                <p>Uploading a new file will overwrite your pending version because the file you selected has a pending version that has not been submitted yet. (Navigate to the "Changes" tab for more details)</p>
-                <p>Would you like to continue?</p>
+            <div class="modal-body centered">
+                Uploading a new file will <b>overwrite</b> your pending changes. (Go to the "Changes" tab for more details)
+                <br><br>
+                Would you like to continue?
             </div>
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="confirm-btn" data-bs-toggle="modal" data-bs-target="#uploadNewVersionModal">Continue</button>
+                <button type="button" class="mark-as-btn" data-bs-toggle="modal" data-bs-target="#uploadNewVersionModal">Continue</button>
             </div>
         </div>
     </div>
