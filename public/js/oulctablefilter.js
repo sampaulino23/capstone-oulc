@@ -1329,7 +1329,7 @@ $(document).ready(function() {
         else if (!daysGap || daysGap.textContent >= 0 && !daysGap || daysGap.textContent <= 6) {
             cells[1].style.background = "#FFDB5B"
         }
-        if (!assignedAttyID || currentUserID != assignedAttyID.textContent) {
+        if (!assignedAttyID || currentUserID != assignedAttyID.textContent && currentRole == 'Attorney') {
             cells[7].textContent = "Rerouted";
         }
         
