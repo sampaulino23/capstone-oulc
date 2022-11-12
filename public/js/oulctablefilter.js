@@ -1317,6 +1317,7 @@ $(document).ready(function() {
     var rows = table.getElementsByTagName("tr");
     const currentRole = $('#currentRole').val();
     const currentUserID = $('#currentId').val();
+    // var loggedUser = document.getElementById('userrole').textContent;
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");

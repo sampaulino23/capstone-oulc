@@ -59,10 +59,17 @@
                 aria-controls="inactiveusers" value="Cleared" onclick="viewClearedAtty()">
                 Cleared
             </button>
+            {{#compare user_fullname "==" "Mike David"}}
             <button class="nav-item" id="rerouted-tab-atty" data-toggle="tab" href="" role="tab" 
                 aria-controls="inactiveusers" value="Rerouted" onclick="viewReroutedAtty()">
                 Rerouted
             </button>
+            {{else}}
+            <button class="nav-item" id="rerouted-tab-atty" style="display:none;" data-toggle="tab" href="" role="tab" 
+                aria-controls="inactiveusers" value="Rerouted" onclick="viewReroutedAtty()">
+                Rerouted
+            </button>
+            {{/compare}}
             <button class="nav-item" id="cancelled-tab-atty" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledAtty()">
                 Cancelled
