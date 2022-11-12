@@ -1315,19 +1315,24 @@ function searchTemplateTable() {
 $(document).ready(function() {
     var table = document.getElementById("myRequestTable");
     var rows = table.getElementsByTagName("tr");
+    const currentRole = $('#currentRole').val();
+    const currentUserID = $('#currentId').val();
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         var daysGap = cells[1] || null; // gets the 2nd `td` or nothing
+        var assignedAttyID = cells[8] || null; // gets the hidden attorney id or null
         if ( !daysGap || daysGap.textContent < 0) {
             cells[1].style.background = "#F66969" // make the whole row text color red
         }
         else if (!daysGap || daysGap.textContent >= 0 && !daysGap || daysGap.textContent <= 6) {
             cells[1].style.background = "#FFDB5B"
         }
+        if (!assignedAttyID || currentUserID != assignedAttyID.textContent) {
+            cells[7].textContent = "Rerouted";
+        }
+        
     }
-
-    const currentRole = $('#currentRole').val();
 
     if (currentRole == 'Staff') {
         viewPending();
