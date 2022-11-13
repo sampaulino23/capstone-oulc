@@ -13,6 +13,7 @@ const Conversation = require('../models/Conversation.js');
 const Message = require('../models/Message.js');
 const Status = require('../models/Status.js');
 const { ObjectId } = require('mongoose');
+const Thirdparty = require('../models/Thirdparty.js');
 
 const negotiationcontroller = {
 
@@ -20,14 +21,16 @@ const negotiationcontroller = {
         try {
 
             var path = req.path.split('/')[2];
-            //var userid = req.user._id;
-            var messages = null;
+            var userid = req.path.split('/')[3];
+            var messages2 = null;
 
-            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
+            const user = await Thirdparty.findOne({_id: userid}).lean().exec();
+
+            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
 
             if (negotiation) {
-                console.log("INSIDE CONVERSATION");
-                messages = await Message.find({conversationId: negotiation._id}).lean().exec(); 
+                console.log("INSIDE NEGOTIATION");
+                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
             }
             
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -141,15 +144,15 @@ const negotiationcontroller = {
             res.render('thirdpartynegotiation', {
                 //user_fullname:req.user.fullName,
                 //user_role:req.user.roleName,
-                //user: user,
+                user: user,
                 contractrequest: contractrequest,
                 feedback: feedback,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 //attorneys: attorneys,
-                conversation: negotiation,
-                messages: messages
+                negotiation: negotiation,
+                messages2: messages2
             });
 
         } catch (err) {

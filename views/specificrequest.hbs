@@ -20,7 +20,7 @@
     <div id="header">
         Contract Approval Request Details
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
-        <input type="hidden" id="username" value="{{user_fullname}}">
+        <input type="" id="username" value="{{user_fullname}}">
         <input type="hidden" id="conversationid" value="{{conversation._id}}">
         <input type="hidden" id="negotiationid" value="{{negotiation._id}}">
         
@@ -213,6 +213,10 @@
                     <li>
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
+                    </li>
+                     <li>
+                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
+                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"

@@ -13,11 +13,11 @@ const ConversationSchema = mongoose.Schema({
         required: true
     }],
 
-    type: [{
+    type: {
         type: String,
         enum: ["conversation", "negotiation"],
         required: true
-    }]
+    }
 });
 
 module.exports = mongoose.model('Conversation', ConversationSchema);

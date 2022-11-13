@@ -49,9 +49,10 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
+            var messages2 = null;
 
-            const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
+            const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
+            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
 
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
@@ -60,7 +61,7 @@ const specificrequestcontroller = {
 
             if (negotiation) {
                 console.log("INSIDE NEGOTIATION");
-                messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
+                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
             }
 
             
@@ -183,7 +184,8 @@ const specificrequestcontroller = {
                 attorneys: attorneys,
                 conversation: conversation,
                 negotiation: negotiation,
-                messages: messages
+                messages: messages,
+                messages2: messages2
             });
 
         } catch (err) {
@@ -197,12 +199,19 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
+            var messages2 = null;
 
-            const conversation = await Conversation.findOne({contractRequest: path, members: userid}).lean().exec();
+            const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
+            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
             
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
+            }
+
+            if (negotiation) {
+                console.log("INSIDE NEGOTIATION");
+                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
             }
             
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -322,7 +331,9 @@ const specificrequestcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 conversation: conversation,
+                negotiation: negotiation,
                 messages: messages,
+                messages2: messages2,
                 stagingcontractversions: stagingcontractversions
             });
 
@@ -1074,7 +1085,7 @@ const specificrequestcontroller = {
             //var name = req.user.fullName;
             //var requestid = req.query.requestid;
             var conversationid = req.query.conversationid;
-            var sender = req.user.fullName;
+            var sender = req.query.sender;
             //var user2 = req.query.requesterid;
 
             console.log(sender + ": " + message + " in conversation " + conversationid);
@@ -1140,7 +1151,7 @@ const specificrequestcontroller = {
                 to: "migfranzbro@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
                 text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: " + 
-                " http://localhost:3000/thirdparty/" + requestID 
+                " http://localhost:3000/thirdparty/" + requestID + "/" + thirdpartyrep._id
             }
 
             transporter.sendMail (options, function (err, info) {

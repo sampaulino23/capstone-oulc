@@ -19,10 +19,11 @@
 <body>
     <div id="header">
         Contract Approval Request Details - 3rd Party
+        Hi {{user.fullName}}
         
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
-        <input type="hidden" id="username" value="{{user_fullname}}">
-        <input type="hidden" id="conversationid" value="{{conversation._id}}">
+        <input type="hidden" id="username" value="{{user.fullName}}">
+        <input type="hidden" id="negotiationid" value="{{negotiation._id}}">
         
         
         <div id = "status">
@@ -98,8 +99,8 @@
                             type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
                     </li>
                      <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Negotiation</button>
+                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
+                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
                 </ul>
 

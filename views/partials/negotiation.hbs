@@ -79,9 +79,9 @@
     $(document).ready( () => {
         var socket = io(); 
         
-        $('.send-btn').click(function () {   
+        $('.send-btn2').click(function () {   
             //event.preventDefault();
-            var message = document.getElementById("inputmessage").value;
+            var message = document.getElementById("inputmessage2").value;
             var conversationid = document.getElementById("negotiationid").value;
             var username = document.getElementById("username").value;
             //addMessage(username, message);
@@ -90,13 +90,13 @@
                 username: username,
                 message: message
             });
-            document.getElementById("inputmessage").value = "";
+            document.getElementById("inputmessage2").value = "";
 
             $.ajax({
                     url: "/sendmessage",
                     method: "GET",
                    contentType: "application/json",
-                    data: {conversationid: conversationid, message: message},
+                    data: {conversationid: conversationid, message: message, sender: username},
                     success: function() {
                         console.log('SUCCESS');
                    },
@@ -108,12 +108,12 @@
             });
 
             socket.off("chat-message").on("chat-message", function(data) {
-                addMessage(data.username, data.message);
+                addMessage2(data.username, data.message);
             });
 
     });
 
-    function addMessage(username, message) {
+    function addMessage2(username, message) {
         var ul = document.createElement("ul");
         var messageContainer = document.getElementById("message-container");
         var scrollableDiv = document.getElementById("discussion-div");
@@ -180,7 +180,7 @@
     <div>{{negotiation._id}} : {{negotiation.members}}</div>
     <div class = "discussion-header">Negotiation Thread:</div>
     <div id = "message-container">
-        {{#each messages}}
+        {{#each messages2}}
         <ul id="messages" class ="messages-ul-class" data-value="{{sender}}">
             <li>
                 <div id ="discussion-details-div">
@@ -207,8 +207,8 @@
         
     </div>
     <div id="form" >
-        <input id="inputmessage" autocomplete="off" placeholder = "Type message here..." />
-        <button class="send-btn" type="submit">Send</button>
+        <input id="inputmessage2" autocomplete="off" placeholder = "Type message here..." />
+        <button class="send-btn2" type="submit">Send</button>
     </div>
 
 </div>

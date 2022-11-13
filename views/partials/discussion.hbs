@@ -96,7 +96,7 @@
                     url: "/sendmessage",
                     method: "GET",
                    contentType: "application/json",
-                    data: {conversationid: conversationid, message: message},
+                    data: {conversationid: conversationid, message: message, sender: username},
                     success: function() {
                         console.log('SUCCESS');
                    },

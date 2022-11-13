@@ -101,7 +101,7 @@ router.get('/forgotpassword', logincontroller.getForgotPassword);
 router.post('/forgotpasswordconfirmation', logincontroller.postForgotPassword);
 
 // render third party negotiation page
-router.get('/thirdparty/:id', negotiationcontroller.getThirdPartyNegotiation);
+router.get('/thirdparty/:id/:id', negotiationcontroller.getThirdPartyNegotiation);
 
 // set reviewed documents for a specific contract request
 router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocuments);
