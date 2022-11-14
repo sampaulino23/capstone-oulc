@@ -194,7 +194,7 @@
     cursor: default;
 }
 
-.feedback-header, .discussion-header, .version-header, .files-header {
+.feedback-header, .discussion-header, .version-header, .files-header{
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
