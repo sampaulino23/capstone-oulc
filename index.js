@@ -163,4 +163,11 @@ io.on("connection", function (socket) {
         io.emit('chat-message', data);
         console.log(data);
      });
+
+     socket.on('chat-message2', function(data){
+        //Send message to everyone
+        io.emit('chat-message2', data);
+        console.log(data);
+     });
 }); 
+

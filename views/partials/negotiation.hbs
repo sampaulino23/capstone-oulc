@@ -12,7 +12,7 @@
             var username = document.getElementById("username").value;
             //addMessage(username, message);
 
-            socket.emit("chat-message", {
+            socket.emit("chat-message2", {
                 username: username,
                 message: message
             });
@@ -33,7 +33,7 @@
 
             });
 
-            socket.off("chat-message").on("chat-message", function(data) {
+            socket.off("chat-message2").on("chat-message2", function(data) {
                 addMessage2(data.username, data.message);
             });
 
