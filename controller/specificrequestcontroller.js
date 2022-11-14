@@ -23,11 +23,12 @@ const ThirdParty = require('../models/Thirdparty.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
+const Template = require('../models/Template.js');
 
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket, gridfsBucketRequestDocuments;
+let gridfsBucket, gridfsBucketRequestDocuments, gridfsBucketTemplates;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
@@ -35,6 +36,9 @@ conn.once('open', () => {
     });
     gridfsBucketRequestDocuments = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'requestdocuments'
+    });
+    gridfsBucketTemplates = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'templates'
     });
 });
 
@@ -689,14 +693,46 @@ const specificrequestcontroller = {
             // console.log(fileLeft);
             // console.log(fileRight);
 
-            const contractversionleft = await ContractVersion.findOne({ file: fileLeft }).exec();
-            const contractversionright = await ContractVersion.findOne({ file: fileRight }).exec();
+            let contractversionleft;
 
-            const contractversions = await ContractVersion.find({ contract: contractversionleft.contract }).lean().exec();
+            contractversionleft = await ContractVersion.findOne({ file: fileLeft }).exec();
+            const contractversionright = await ContractVersion.findOne({ file: fileRight }).lean()
+                .populate({
+                    path: 'contract',
+                    populate: {
+                        path: 'contractRequest',
+                        populate: {
+                            path: 'contractType'
+                        }
+                    }
+                })
+                .exec();
+
+            const contractversions = await ContractVersion.find({ contract: contractversionright.contract }).lean().exec();
+
+            const templates = await Template.find({type: contractversionright.contract.contractRequest.contractType}).lean().exec();
+            console.log(templates);
+
+            let isTemplate = false;
 
             const cursorRight = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(fileRight)});
 
-            const cursorLeft = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(fileLeft)});
+            if (!contractversionleft) {
+                console.log('it is template');
+                isTemplate = true;
+                contractversionleft = await Template.findOne({pdfFileId: fileLeft}).lean().exec();
+            } else {
+                console.log('it is contract');
+                isTemplate = false;
+            }
+
+            let cursorLeft;
+
+            if (isTemplate) {
+                cursorLeft = await gridfsBucketTemplates.find({_id: mongoose.Types.ObjectId(fileLeft)});
+            } else {
+                cursorLeft = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(fileLeft)});
+            }
 
             let documentRight, documentLeft;
 
@@ -717,7 +753,14 @@ const specificrequestcontroller = {
 
             downStream.on('end', function() {
                 const writableStream2 = fs.createWriteStream('./left_compare.pdf');
-                const downStream2 = gridfsBucketRequestDocuments.openDownloadStream(documentLeft._id);
+
+                let downStream2;
+
+                if (isTemplate) { // if template is selected
+                    downStream2 = gridfsBucketTemplates.openDownloadStream(documentLeft._id);
+                } else {
+                    downStream2 = gridfsBucketRequestDocuments.openDownloadStream(documentLeft._id);
+                }
                 downStream2.pipe(writableStream2);
                 console.log('left');
 
@@ -760,6 +803,7 @@ const specificrequestcontroller = {
                             user_fullname: req.user.fullName,
                             user_role: req.user.roleName,
                             contractversions: contractversions,
+                            templates: templates,
                             leftcontractversion: contractversionleft._id.toString(),
                             rightcontractversion: contractversionright._id.toString(),
                             draftable: viewerURL
@@ -784,7 +828,17 @@ const specificrequestcontroller = {
             const contractfileid = req.body.contractFileId;
             // console.log(contractfileid);
 
-            const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).exec();
+            const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).lean()
+                .populate({
+                    path: 'contract',
+                    populate: {
+                        path: 'contractRequest',
+                        populate: {
+                            path: 'contractType'
+                        }
+                    }
+                })
+                .exec();
             // console.log(selectedcontractversion);
 
             const contract = await Contract.findById(selectedcontractversion.contract).exec();
@@ -792,6 +846,9 @@ const specificrequestcontroller = {
 
             const contractversions = await ContractVersion.find({ contract: selectedcontractversion.contract }).lean().exec();
             // console.log(contractversions);
+
+            const templates = await Template.find({ type: selectedcontractversion.contract.contractRequest.contractType}).lean().exec();
+            console.log(templates);
 
             const latestcontractversion = await ContractVersion.findOne({ version: contract.latestversion, contract: contract}).exec();
             // console.log(latestcontractversion);
@@ -896,6 +953,7 @@ const specificrequestcontroller = {
                             user_fullname:req.user.fullName,
                             user_role: req.user.roleName,
                             contractversions: contractversions,
+                            templates: templates,
                             leftcontractversion: beforecontractversion._id.toString(),
                             rightcontractversion: latestcontractversion._id.toString(),
                             draftable: viewerURL

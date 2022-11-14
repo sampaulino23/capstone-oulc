@@ -40,6 +40,13 @@
                             <option value="{{file}}">Version {{version}}</option>
                         {{/compare}}
                         {{/each}}
+                        {{#each templates}}
+                        {{#compare ../leftcontractversion "==" _id}}
+                            <option value="{{pdfFileId}}" selected>{{name}}</option>
+                        {{else}}
+                            <option value="{{pdfFileId}}">{{name}}</option>
+                        {{/compare}}
+                        {{/each}}
                     </select>
                     <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
                         {{#each contractversions}}
