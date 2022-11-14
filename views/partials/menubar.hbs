@@ -27,7 +27,6 @@
             <a href="/requester"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
         </div>
         {{/compare}}
-
         <ul>
         <li>
             <div class = "account-profile-pic" id = "accountName">
@@ -40,40 +39,25 @@
             </div>
         </li>
         <li><a href="/logout" class="btn2" id="logout">Log Out</a></li>
-        {{/if}}
-        <!--
-        
-        {{#if isAuthenticated}}
-            {{#if isSales}}
-            <li><a href="/" class = "" id = "salesorder">Orders</a></li> 
-            <li><a href="/sales/reports" class = "" id = "reports">Reports</a></li>
 
-            {{else if isInventory}}
-            <li><a href="/" class = "" id = "inventoryorder">Orders</a></li>
-            <li><a href="/inventory/products" class = "" id = "productsinventory">Products</a></li>
-
-            {{else if isPurchasing}}
-            <li><a href="/" class = "" id = "purchasingorder">Purchase Orders</a></li> 
-            <li><a href="/purchasing/products" class = "" id = "productspurchasing">Products</a></li>
-
-            {{else}}
-            <li><a href="/freezindelights" class = "" id = "home">Home</a></li> 
-            <li><a href="/" class = "" id = "shop">Shop</a></li> 
-            <li><a href="/cart" class = "" id = "cart">My Cart</a></li> 
-            <li><a href="/trackorder" class = "" id = "trackorder">Track Order</a></li>
-            <li><a href="{{{profileurl}}}" class = "" id = "prof">Profile</a></li>
-            {{/if}}
-            <li><a href="/logout" class = "btn2" id = "logout">Logout</a></li> 
         {{else}}
-            <li><a href="/freezindelights" class = "" id = "home">Home</a></li> 
-            <li><a href="/" class = "" id = "shop">Shop</a></li> 
-            <li><a href="/trackorder" class = "" id = "trackorder">Track Order</a></li>
-            <li><a href="/login/register" class = "btn2" id = "signup">Sign Up</a></li>
-            <li><a href="/login" class = "btn1" id = "login">Log In</a></li>
+        <div class="navbar-logo" style="pointer-events:none">
+            <a href="#"><img src="/img/dlsu_logo.png" style="width:60px; padding:0px; margin-right: 10px;"/>Office of the University Legal Counsel</a>
+        </div>
+        <ul>
+        <li>
+            <div class = "account-profile-pic" id = "accountName">
+                <div class="circle">
+                    <div id = "initials" class = "initials">
+                        
+                    </div>
+                </div>
+                <span id = "userrole">{{user.fullName}}</span>
+            </div>
+        </li>
+        <li style="visibility:hidden;"><a href="/" id=""></a></li>
         {{/if}}
-
-        -->
-    </ul>
+        </ul>
 </nav>
 
 <script>
@@ -81,63 +65,4 @@
     var loggedUser = document.getElementById('userrole').textContent;
     var initials = loggedUser.charAt(0)
     document.getElementById("initials").textContent = initials;
-
-
-    var pagename = document.getElementById('page-name').textContent;
-    if (pagename == "Shop") {
-        document.getElementById('shop').setAttribute("class", "active");
-    }
-    else if (pagename == "Products") {
-        document.getElementById('shop').setAttribute("class", "active");
-    }
-    else if (pagename == "Sales Order") {
-        document.getElementById('salesorder').setAttribute("class", "active");
-    }
-    else if (pagename == "Inventory Order") {
-        document.getElementById('inventoryorder').setAttribute("class", "active");
-    }
-    else if (pagename == "Products Inventory") {
-        document.getElementById('productsinventory').setAttribute("class", "active");
-    }
-    else if (pagename == "Purchasing Order") {
-        document.getElementById('purchasingorder').setAttribute("class", "active");
-    }
-    else if (pagename == "Products Purchasing") {
-        document.getElementById('productspurchasing').setAttribute("class", "active");
-    }
-    else if (pagename == "Freezin Delights") {
-        document.getElementById('home').setAttribute("class", "active");
-    }
-    else if (pagename == "Cart") {
-        document.getElementById('cart').setAttribute("class", "active");
-    }
-    else if (pagename == "Track Order") {
-        document.getElementById('trackorder').setAttribute("class", "active");
-    }
-    else if (pagename == "Log In") {
-        document.getElementById('login').setAttribute("class", "active");
-    }
-    else if (pagename == "Sign Up") {
-        document.getElementById('signup').setAttribute("class", "active");
-    }
-    else if (pagename == "Profile") {
-        document.getElementById('prof').setAttribute("class", "active");
-    }
-    else if (pagename == "Admin") {
-        document.getElementById('home').setAttribute("class", "active");
-    }
-    else if (pagename == "Reports") {
-        document.getElementById('reports').setAttribute("class", "active");
-    }
-    else if (pagename == "Customers") {
-        document.getElementById('all').setAttribute("class", "active");
-    }
-    else if (pagename == "Create Package") {
-        document.getElementById('prof').setAttribute("class", "active");
-    }
-    document.getElementById('page-name').style.color = "#FFEDE3";
-    document.getElementById('user').style.color = "#FFEDE3";
-    document.getElementById('page-name').style.cursor = "default";
-    document.getElementById('user').style.cursor = "default";
-
 </script>

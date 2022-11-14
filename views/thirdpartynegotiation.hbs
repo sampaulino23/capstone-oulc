@@ -41,13 +41,6 @@
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
-            {{#ifCond user_role '==' "Requester"}}
-                {{#compare contractrequest.status '==' "Cleared"}}
-                    <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
-                {{else}}
-                    <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
-                {{/compare}}
-            {{/ifCond}}
         </div>
     </div>
     
@@ -66,11 +59,6 @@
                             <option class="reference-document-option" value="{{file}}">{{filename}}</option>
                         {{/each}}
                     </select>
-                    {{#compare user_role '==' 'Requester'}}
-                    {{#compare contractrequest.status '==' 'For Revision'}}
-                    <button class="btn" id="uploadNewVersion">Upload New Version</button>
-                    {{/compare}}
-                    {{/compare}}
                 </div>
                 <div id="fileView">
                 </div>
@@ -80,14 +68,14 @@
             <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
              
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <ul class="nav nav-tabs" id="myTab" role="tablist" style="justify-content:flex-start;">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
+                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()" style="margin-right: 2em;">Summary</button>
                     </li>
-                    <li>
+                    <li style="display:none;">
                         <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
+                            type="button" role="tab" aria-controls="files" style="margin-right: 2em;" onclick="selectFiles()">Files</button>
                     </li>
                      <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
@@ -114,6 +102,52 @@
 
     </div>
 
+    <!-- View Full Size Template Modal -->
+    <div class="modal fade modal-xl" id="view-full-size-modal" tabindex="-1" aria-labelledby="view-full-size-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100" id="exampleModalLabel">View File Full Size</h5>
+                    <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="fileViewFull">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
+<script>
+    function removeSelectedClass() {
+        var allTabs = document.querySelectorAll('[role="tab"]');
+        for (i = 0; i < allTabs.length; i++) {
+            allTabs[i].classList.remove("selected");
+        }
+    }
+        
+    function selectSummary() {
+        removeSelectedClass();
+        document.getElementById("summary-tab").classList.add("selected");
+    }
+    
+    function selectFiles() {
+        removeSelectedClass();
+        document.getElementById("files-tab").classList.add("selected");
+    }
+
+    function selectNegotiation() {
+        removeSelectedClass();
+        document.getElementById("negotiation-tab").classList.add("selected");
+    }
+
+</script>
