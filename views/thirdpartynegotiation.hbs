@@ -18,8 +18,7 @@
 
 <body>
     <div id="header">
-        Contract Approval Request Details - 3rd Party
-        Hi {{user.fullName}}
+        Third Party Negotiation
         
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
         <input type="hidden" id="username" value="{{user.fullName}}">
@@ -38,15 +37,7 @@
     </div>
     <div class = "subheader-row">
         <div class = "col-6">
-            <div id="subheader">
-                <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
-                <p class = "divider" style = "display: inline;"> > </p>
-                {{#compare user_role "==" "Requester"}}
-                <a href = "/request/requester/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
-                {{else}}
-                <a href = "/request/staff/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
-                {{/compare}}
-            </div>
+            <div id="subheader"><span id = "selected" class = "full-user-name">Welcome, {{user.fullName}}!</span></div>
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
