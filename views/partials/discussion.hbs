@@ -185,14 +185,16 @@
 
 <script>
     // get the initials of the feedback provider for the inner picture
-    var index = 0;
-    var discussionCount = document.getElementsByClassName("disc-pic-inner").length;
-    
+    var discussionCount = document.getElementById("message-container").getElementsByClassName("disc-pic-inner").length;
+    // alert(discussionCount);
     for (i = 0; i < discussionCount; i++) {
         var discussionAuthorID = "#discussion-author" + i;
         var elementid = "disc-pic-inner" + i;
 
         var discussionAuthor = $(discussionAuthorID).text();
+        if (discussionAuthor === null) {
+            discussionAuthor = "Testing Name";
+        }
         var matches = discussionAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
         var acronym = matches.join(''); // output will be JSON
     
