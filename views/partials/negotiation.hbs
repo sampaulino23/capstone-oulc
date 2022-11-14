@@ -132,10 +132,13 @@
     <div id="messagebox2">
         
     </div>
-    <div id="form2">
-        <input id="inputmessage2" autocomplete="off" placeholder = "Type message here..." />
-        <button id = "negotiationSendBtn" class="send-btn" type="submit">Send</button>
+    <div>
+        <div id="form2">
+            <input id="inputmessage2" autocomplete="off" placeholder = "Type message here..." />
+            <button id = "negotiationSendBtn" class="send-btn" type="submit">Send</button>
+        </div>
     </div>
+    
 
 </div>
 
@@ -184,14 +187,18 @@
 
 <script>
     // get the initials of the feedback provider for the inner picture
-    var negotiationCount = document.getElementById("messageContainer2").getElementsByClassName("disc-pic-inner").length;
-    alert (negotiationCount);
+    var messageContainer2 = document.querySelector("#messageContainer2");
+    var negotiationCount = messageContainer2.getElementsByClassName("disc-pic-inner").length;
+
+    alert(negotiationCount);
+    
     for (i = 0; i < negotiationCount; i++) {
-        var discussionAuthorID = "#negotiation-author" + i;
+        var negotiationAuthorID = "#negotiation-author" + i;
         var elementid = "disc-pic-inner" + i;
 
-        var discussionAuthor = $(discussionAuthorID).text();
-        var matches = discussionAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
+        var negotiationAuthor = $(negotiationAuthorID).text();
+
+        var matches = negotiationAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
         var acronym = matches.join(''); // output will be JSON
     
         document.getElementById(elementid).innerHTML = acronym;
@@ -199,8 +206,7 @@
     }
     
     var loggedUser = $('#username').val();
-    const messageContainer = document.querySelector("#messageContainer2");
-    const notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
+    var notLoggedUserList = messageContainer2.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
     for (i = 0; i < notLoggedUserList.length; i++) {
         notLoggedUserList[i].classList.add('not-from-logged-user');
     }
@@ -210,4 +216,5 @@
         var acronym = matches.join('');
         return acronym;
     }
+    
 </script>

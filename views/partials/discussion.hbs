@@ -203,8 +203,8 @@
     }
     
     var loggedUser = $('#username').val();
-    const messageContainer = document.querySelector("#message-container");
-    const notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
+    var messageContainer = document.querySelector("#message-container");
+    var notLoggedUserList = messageContainer.querySelectorAll(`ul[data-value]:not(ul[data-value="${loggedUser}"])`);
     for (i = 0; i < notLoggedUserList.length; i++) {
         notLoggedUserList[i].classList.add('not-from-logged-user');
     }
