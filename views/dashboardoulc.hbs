@@ -7,6 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/dashboardstyle.css">
+        <script src="/js/requestsoulc.js" type="text/javascript"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script>
@@ -70,47 +71,111 @@
         
         <div class = "container">
             <div class= "card-row row">
-                <div class="indiv-cards col">
-                    <div class = "dashboard-item">Pending Documents</div>
-                    <div class = "sub-dashboard-header">{{pending.today}} today</div>
-                    <div class = "dashboard-item-body">{{pending.all}}</div>
-                    <div class = "dashboard-item-sub-body">Documents</div>
-                </div>
-                <div class="indiv-cards col">
-                    <div class = "dashboard-item">Cleared Documents</div>
-                    <div class = "sub-dashboard-header"><br></div>
-                    <div id = "clearedPercentage" class = "dashboard-item-body">{{cleared.percentage}}%</div>
-                    <div class = "dashboard-item-sub-body">{{cleared.count}}/{{requestCount}} Documents Cleared</div>
-                </div>
-                <div class="indiv-cards col">
+                {{#ifCond user_role '==' "Staff"}}
+                <a href="/staff/contractrequests" class="indiv-cards-requester col">
+                    <div class="">
+                        <div class = "dashboard-item">Pending Documents</div>
+                        <div class = "sub-dashboard-header">{{pending.today}} today</div>
+                        <div class = "dashboard-item-body">{{pending.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+                
+                {{#ifCond user_role '==' "Attorney"}}
+                <a href="/attorney/contractrequests" class="indiv-cards-requester col">
+                    <div class="">
+                        <div class = "dashboard-item">Pending Documents</div>
+                        <div class = "sub-dashboard-header">{{pending.today}} today</div>
+                        <div class = "dashboard-item-body">{{pending.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Staff"}}
+                <a href="/staff/contractrequests" class="indiv-cards-requester col">
+                    <div class="">
+                        <div class = "dashboard-item">Cleared Documents</div>
+                        <div class = "sub-dashboard-header"><br></div>
+                        <div id = "clearedPercentage" class = "dashboard-item-body">{{cleared.percentage}}%</div>
+                        <div class = "dashboard-item-sub-body">{{cleared.count}}/{{requestCount}} Documents Cleared</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Attorney"}}
+                <a href="/attorney/contractrequests" class="indiv-cards-requester col">
+                    <div class="">
+                        <div class = "dashboard-item">Cleared Documents</div>
+                        <div class = "sub-dashboard-header"><br></div>
+                        <div id = "clearedPercentage" class = "dashboard-item-body">{{cleared.percentage}}%</div>
+                        <div class = "dashboard-item-sub-body">{{cleared.count}}/{{requestCount}} Documents Cleared</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Staff"}}
+                <a href="/staff/contractrequests" class="indiv-cards-requester col" onclick="">
+                    <div class="">
+                        <div class = "dashboard-item">Waiting Documents</div>
+                        <div class = "sub-dashboard-header">{{waiting.today}} today</div>
+                        <div class = "dashboard-item-body">{{waiting.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Attorney"}}
+                <a href="/attorney/contractrequests" class="indiv-cards-requester col" onclick="">
+                    <div class="">
+                        <div class = "dashboard-item">Waiting Documents</div>
+                        <div class = "sub-dashboard-header">{{waiting.today}} today</div>
+                        <div class = "dashboard-item-body">{{waiting.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+            </div>
+            <div class= "card-row row">
+                {{#ifCond user_role '==' "Staff"}}
+                <a href="/staff/contractrequests" class="indiv-cards-requester col" onclick="">
+                    <div class="">
+                        <div class = "dashboard-item">To Review</div>
+                        <div class = "sub-dashboard-header">{{toreview.today}} today</div>
+                        <div class = "dashboard-item-body">{{toreview.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                {{#ifCond user_role '==' "Attorney"}}
+                <a href="/attorney/contractrequests" class="indiv-cards-requester col" onclick="">
+                    <div class="">
+                        <div class = "dashboard-item">To Review</div>
+                        <div class = "sub-dashboard-header">{{toreview.today}} today</div>
+                        <div class = "dashboard-item-body">{{toreview.all}}</div>
+                        <div class = "dashboard-item-sub-body">Documents</div>
+                    </div>
+                </a>
+                {{/ifCond}}
+
+                <div class="indiv-cards no-hover-dashboard col">
                     <div class = "dashboard-item">Status of Contracts</div>
                     <div id = "piechart" class = "chart"></div>
                 </div>
-            </div>
-            <div class= "card-row row">
-                <div class="indiv-cards col">
-                    <div class = "dashboard-item">Waiting Documents</div>
-                    <div class = "sub-dashboard-header">{{waiting.today}} today</div>
-                    <div class = "dashboard-item-body">{{waiting.all}}</div>
-                    <div class = "dashboard-item-sub-body">Documents</div>
-                </div>
-                <div class="indiv-cards col">
-                    <div class = "dashboard-item">To Review</div>
-                    <div class = "sub-dashboard-header">{{toreview.today}} today</div>
-                    <div class = "dashboard-item-body">{{toreview.all}}</div>
-                    <div class = "dashboard-item-sub-body">Documents</div>
-                </div>
-                <div class="indiv-cards col">
+                
+                <div class="indiv-cards no-hover-dashboard col">
                     <div class = "dashboard-item">Contract Request Per Type</div>
                     <div id = "columnchart" class = "chart"></div>
                 </div>
             </div>
             <div class= "card-row row">
-                <div class="indiv-cards col">
+                <div class="indiv-cards no-hover-dashboard col">
                     <div class = "dashboard-item">Violation Per Department</div>
                     <div id = "columnchart-violation-dept" class = "chart"></div>
                 </div>
-                <div class="indiv-cards col">
+                <div class="indiv-cards no-hover-dashboard col">
                     <div class = "dashboard-item">Violation Per Type</div>
                     <div id = "columnchart-violation-type" class = "chart"></div>
                 </div>

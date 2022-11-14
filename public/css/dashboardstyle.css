@@ -90,6 +90,7 @@
     font-size: 24px;
     line-height: 36px;
     margin-bottom: 10px;
+    color: #000;
 }
 
 .sub-dashboard-header {
@@ -176,6 +177,10 @@
 .no-hover-card {
     border-left: 10px solid #93939D;
     pointer-events: none;
+}
+
+.no-hover-dashboard {
+    border-left: 10px solid #93939D;
 }
 
 .dashboard-img {
