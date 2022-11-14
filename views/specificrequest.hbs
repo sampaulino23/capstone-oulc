@@ -343,7 +343,7 @@
 </div>
 
 <!-- For Revision Modal -->
-<div class="modal fade" id="forRevisionModal" tabindex="-1" aria-labelledby="forRevisionModal" aria-hidden="true">
+<div class="modal fade modal-lg" id="forRevisionModal" tabindex="-1" aria-labelledby="forRevisionModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -355,9 +355,9 @@
                     {{#compare user_role "==" "Staff"}}
                     <form action="/request/forrevision/staff" method="POST">
                     <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addStaffFeedbackID">
-                        <div class="input-feedback mb-3">
+                        <div class="input-feedback">
                             <label for="fullname" class="form-label">Enter Comments/Feedback:</label>
-                            <input type="text" class="form-control" id="addStaffFeedback" name="addStaffFeedback" required>
+                            <textarea rows="3" class="form-control" id="addStaffFeedback" name="addStaffFeedback" required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
@@ -371,7 +371,7 @@
                     <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addAttorneyFeedbackID">
                         <div class="input-feedback mb-3">
                             <label for="fullname" class="form-label">Enter Comments/Feedback:</label>
-                            <input type="text" class="form-control" id="addAttorneyFeedback" name="addAttorneyFeedback" required>
+                            <textarea rows="6" class="form-control" id="addAttorneyFeedback" name="addAttorneyFeedback" required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
@@ -459,14 +459,14 @@
                     <form action="/request/uploadRepositoryFile" method="POST" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="uploadRepositoryFileID">
 
-                        <div class="mb-3">
+                        <div class="">
                             <label for="signedContractFiles" class="modal-text form-label">File Upload</label><br>
                             <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" required multiple><br><br>
                         </div>
-
+                        
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="{{contractrequest._id}}">Upload</button>
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn" id="{{contractrequest._id}}">Upload</button>
                         </div>
                     </form>
                 </div>
