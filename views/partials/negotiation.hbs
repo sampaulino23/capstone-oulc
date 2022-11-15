@@ -186,8 +186,18 @@
 </script> -->
 
 <script>
+    $(document).ready(() => {
+        /* function to get all inner divs without acronyms and put acronym based on their dataset's initials */
+        for (i = 0; i < negotiationCount; i++) {
+            if (negotiations[i].innerText === "") {
+                negotiations[i].innerText = getAcronym(messagesDataValue[i].dataset.value);
+            }
+        }
+    });
     // get the initials of the feedback provider for the inner picture
     var messageContainer2 = document.querySelector("#messageContainer2");
+    var messagesDataValue = messageContainer2.querySelectorAll('ul[data-value]');
+    var negotiations = messageContainer2.getElementsByClassName("disc-pic-inner");
     var negotiationCount = messageContainer2.getElementsByClassName("disc-pic-inner").length;
     
     for (i = 0; i < negotiationCount; i++) {
