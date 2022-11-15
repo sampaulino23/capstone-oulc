@@ -181,6 +181,16 @@
     resize: none;
 }
 
+.third-party-modal {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    gap: 10px;
+    background: #FFFFFF;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    width: 100%;
+}
+
 .subject-matter {
     height:auto;
     width: 100%;

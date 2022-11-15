@@ -52,7 +52,7 @@
             {{#ifCond user_role '==' "Requester"}}
             
                 {{#compare contractrequest.status '==' "For Legal Review"}}
-                    <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add 3rd Party</button>
+                    <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
                 {{/compare}}
 
                 {{#compare contractrequest.status '==' "Cleared"}}
@@ -499,7 +499,7 @@
 </div>
 
 <!-- Add Third Party Modal -->
-<div class="modal fade modal-xl" id="add-third-party-modal" tabindex="-1" aria-labelledby="add-third-party-modal" aria-hidden="true">
+<div class="modal fade modal" id="add-third-party-modal" tabindex="-1" aria-labelledby="add-third-party-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -507,17 +507,19 @@
             </div>
             <div class="modal-body">
                 <form action = "/request/addthirdparty" method = "POST">
-                    <div class = "reset-pass-text">Please enter 3rd party email address and we will send a negotiation link.</div>
+                    <div class = "modal-text">Please enter the third party's email address and we will send a negotiation link.</div><br>
+                    Email
+                    <input type="email" id = "email" name = "email" class="third-party-modal" style="margin-bottom:10px;" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required><br>
                     
-                    <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required><br>
-                    <input id = "name" name = "name" class="emailbox" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeName}}" required><br>
-                    <input type="text" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
-                    <input type="submit" class="loginbtn" value="Add Third Party">
-                </form>
+                    Name
+                    <input id = "name" name = "name" class="third-party-modal" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeName}}" required><br>
+                    <input type="text" id="contractRequestId" name="contractRequestId" style="display:none;" value="{{contractrequest._id}}">
             </div>
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class ="mark-as-btn" value="Add Third Party">Add Third Party</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
