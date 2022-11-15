@@ -229,7 +229,8 @@ const requestercontroller = {
             
                 var conversation = new Conversation({
                     contractRequest: contractrequest._id,
-                    members: membersList
+                    members: membersList,
+                    type: "conversation"
                 });
                 await conversation.save();
                 res.redirect('/requester/requestreceipt/' + contractrequest._id);
