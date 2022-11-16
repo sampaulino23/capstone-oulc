@@ -52,7 +52,9 @@
             {{#ifCond user_role '==' "Requester"}}
             
                 {{#compare contractrequest.status '==' "For Legal Review"}}
-                    <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
+                    {{#unless withNegotiation}}
+                        <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
+                    {{/unless}}
                 {{/compare}}
 
                 {{#compare contractrequest.status '==' "Cleared"}}

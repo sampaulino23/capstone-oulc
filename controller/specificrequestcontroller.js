@@ -204,6 +204,7 @@ const specificrequestcontroller = {
             var userid = req.user._id;
             var messages = null;
             var messages2 = null;
+            var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
             const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
@@ -216,6 +217,7 @@ const specificrequestcontroller = {
             if (negotiation) {
                 console.log("INSIDE NEGOTIATION");
                 messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
+                withNegotiation = true;
             }
             
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -338,7 +340,8 @@ const specificrequestcontroller = {
                 negotiation: negotiation,
                 messages: messages,
                 messages2: messages2,
-                stagingcontractversions: stagingcontractversions
+                stagingcontractversions: stagingcontractversions,
+                withNegotiation: withNegotiation
             });
 
         } catch (err) {
