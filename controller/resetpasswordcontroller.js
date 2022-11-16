@@ -36,7 +36,7 @@ const resetpasswordcontroller = {
             const hash = await bcrypt.hash(password, salt);
             password = hash;
 
-            await User.findByIdAndUpdate(userid, {$set: {password: password, isDefaultPass: false}}).exec();
+            await User.findByIdAndUpdate(userid, {$set: {password: password}}).exec();
 
             console.log('new password: ' + password);
 

@@ -56,8 +56,7 @@ const admincontroller = {
                 role: role._id,
                 roleName: roleName,
                 isActive: true,
-                password: password,
-                isDefaultPass: true
+                password: password
             });
 
             // code section below is for sending the password to the account's email address
@@ -206,7 +205,7 @@ const admincontroller = {
 
             console.log('userid: ' + userid);
 
-            await User.findByIdAndUpdate(userid, { $set: { password: password, isDefaultPass: true } });
+            await User.findByIdAndUpdate(userid, { $set: { password: password } });
 
             console.log('new password: ' + password);
 

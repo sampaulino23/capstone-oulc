@@ -29,11 +29,7 @@ const UserSchema = mongoose.Schema({
     isActive: {
         type: Boolean,
         default: false
-    },
-    isDefaultPass: {
-        type: Boolean,
-        default: true
-    },
+    }
     
 });
 
