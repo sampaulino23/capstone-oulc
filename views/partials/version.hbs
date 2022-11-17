@@ -3,7 +3,7 @@
     <div class = "version-header">
         Contract Versions:
         {{#ifCond user_role '!=' "Requester"}}
-        <form method="POST" action="/request/revisionHistory" class = "revision-form">
+        <form method="POST" action="/request/revisionHistory" class = "revision-form" target="_blank">
             <input type="hidden" name="contractFileId" id="contractFileId" val="">
             <button type="submit" class="mark-as-btn" id="revisionHistory">View Revision History</button>
         </form>
