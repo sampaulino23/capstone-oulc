@@ -1,5 +1,5 @@
 <div id = "feedback-history">
-    <div class = "feedback-header">
+    {{!-- <div class = "feedback-header">
         Feedback History:
     </div>
     <br>
@@ -23,10 +23,49 @@
             {{content}}
         </div>
     </div>
+    {{/each}} --}}
+    {{#compare user_role '!=' 'Requester'}}
+    <div class="container comments-container">
+        {{#each latestversioncontracts}}
+        <div class="comment" id="cvId{{_id}}">
+            {{!-- <p id="fileSelectedForFeedback">File: </p> --}}
+            {{!-- <input type="hidden" id="fileIdSelectedForFeedback" value=""> --}}
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="pendingFeedbackTextArea" style="height: 100px">{{#compare comment.status '==' 'Pending'}}{{comment.content}}{{/compare}}</textarea>
+                <label for="pendingFeedbackTextArea">Comments</label>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    {{/compare}}
+    <div class = "feedback-header">
+        Feedback History:
+    </div>
+    {{#each comments}}
+    {{#compare status '==' 'Submitted'}}
+    <div id = "feedbackContainer" class = "feedback-container">
+        <div id ="feedback-details-div">
+            <div class = "profile-pic">
+                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+            </div>
+            <div id = "author-date-div">
+                <div class = "feedback-author" id = "feedback-author{{@index}}">
+                    {{user_id.fullName}}
+                </div>
+                <div class = "feedback-date">
+                    {{formatfeedbackdate submitDate}}
+                </div>
+            </div>
+        </div>
+        <div id = "feedbackDiv" class = "content">
+            {{content}}
+        </div>
+    </div>
+    {{/compare}}
     {{/each}}
 </div>
 
-<script>
+{{!-- <script>
     const feedbackContainerDiv = document.getElementById("feedbackDiv");
     var feedbackHistoryDiv = document.getElementById("feedback-history");
     
@@ -52,4 +91,4 @@
 
     }
     
-</script>
+</script> --}}

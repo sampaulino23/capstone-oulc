@@ -20,10 +20,12 @@ const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
+const Comment = require('../models/Comment.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
 const Template = require('../models/Template.js');
+const PendingFeedback = require('../models/Comment.js');
 
     const conn = mongoose.createConnection(url);
 
@@ -88,6 +90,12 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
+            const comments = await Comment.find({contractRequest: contractrequest}).lean()
+                .populate({
+                    path: 'user_id'
+                })
+                .exec();
+
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             if (req.user.roleName == "Staff") {
@@ -142,6 +150,12 @@ const specificrequestcontroller = {
                     .populate({
                         path: 'versionNote'
                     })
+                    .populate({
+                        path: 'comment',
+                        populate: {
+                            path: 'user_id'
+                        }
+                    })
                     .exec();
                 
                     latestversioncontracts.push(latestversioncontract);
@@ -182,6 +196,7 @@ const specificrequestcontroller = {
                 user: user,
                 contractrequest: contractrequest,
                 feedback: feedback,
+                comments: comments,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
@@ -239,6 +254,13 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
+            const comments = await Comment.find({contractRequest: contractrequest})
+                .lean()
+                .populate({
+                    path: 'user_id'
+                })
+                .exec();
+
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             contractrequest.status = statusList.statusRequester;
@@ -289,6 +311,12 @@ const specificrequestcontroller = {
                     .populate({
                         path: 'versionNote'
                     })
+                    .populate({
+                        path: 'comment',
+                        populate: {
+                            path: 'user_id'
+                        }
+                    })
                     .exec();
                 
                 latestversioncontracts.push(latestversioncontract);
@@ -333,6 +361,7 @@ const specificrequestcontroller = {
                 user_role:req.user.roleName,
                 contractrequest: contractrequest,
                 feedback: feedback,
+                comments: comments,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
@@ -411,6 +440,28 @@ const specificrequestcontroller = {
 
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
             await feedback.save();
+
+            const contracts = await Contract.find({contractRequest: contractRequestId}).lean().exec();
+
+            // var latestversioncontracts = [];
+
+            for (contract of contracts) {
+                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
+                    .lean()
+                    .populate({
+                        path: 'versionNote'
+                    })
+                    .populate({
+                        path: 'comment'
+                    })
+                    .exec();
+
+                const today = new Date();
+
+                await Comment.findByIdAndUpdate(latestversioncontract.comment._id, {$set: {submitDate: today, status: 'Submitted'}}).exec();
+                
+                // latestversioncontracts.push(latestversioncontract);
+            }
 
             res.redirect('back');
         } catch (err) {

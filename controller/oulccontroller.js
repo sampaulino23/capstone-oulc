@@ -11,6 +11,8 @@ const crypto = require('crypto');
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
+const ContractVersion = require('../models/ContractVersion.js');
+const Contract = require('../models/Contract.js');
 const Status = require('../models/Status.js');
 const Template = require('../models/Template.js');
 const Role = require('../models/Role.js');
@@ -19,6 +21,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
+const Comment = require('../models/Comment.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -47,7 +50,7 @@ function getStaffWaiting (month, day, year, contractrequests, waiting) {
     }
 }
 
-function getStaffToReview (month, day, year, contractrequests, toreview) {
+function getStaffTosew (month, day, year, contractrequests, toreview) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
         if (contractrequests[i].statusCounter == "3"){
@@ -911,42 +914,123 @@ const oulccontroller = {
 
     downloadRepositoryFile: async (req, res) => {
 
-        const fileid = req.params.fileid;
+        try {
+            const fileid = req.params.fileid;
+    
+            const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                }
+                const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
+    
+                res.setHeader('Content-Type', doc.contentType);
+                res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+    
+                downStream.pipe(res);
+            });
 
-        const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
-        cursor.forEach((doc, err) => {
-            if (err) {
-                console.log(err);
-            }
-            const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
-
-            res.setHeader('Content-Type', doc.contentType);
-            res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
-
-            downStream.pipe(res);
-        });
+        } catch (err) {
+            console.log(err);
+        }
 
     },
 
     deleteRepositoryFile: async (req, res) => {
-        console.log('Delete Repo File');
+        try {
+            console.log('Delete Repo File');
 
-        const repositoryfileid = req.body.deleteRepositoryFile;
-        const fileid = req.params.fileid;
-
-        // delete repositoryfile object
-        await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
-
-        const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
-        cursor.forEach((doc, err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                gridfsBucketRepo.delete(doc._id);
-            }
-        });
+            const repositoryfileid = req.body.deleteRepositoryFile;
+            const fileid = req.params.fileid;
+    
+            // delete repositoryfile object
+            await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+    
+            const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketRepo.delete(doc._id);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        
 
         res.redirect('back');
+    },
+
+    savePendingFeedback: async (req, res) => {
+        try {
+            console.log('Save Pending Feedback');
+
+            const comments = req.query.comments;
+
+            for (comment of comments) {
+                var contractversionid = comment.contractversionid.substring(4);
+                var findComment = await Comment.findOne({contractVersion: contractversionid}).exec();
+
+                if (findComment) {  // if comments is already there
+
+                    // console.log(findContractVersion.comment);
+                    // console.log(comment.content);
+
+                    var success = await Comment.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+
+                } else {    // if no comment
+                    console.log('no comment');
+
+                    let newComment = new Comment({
+                        contractVersion: contractversionid,
+                        user_id: req.user._id,
+                        content: comment.content,
+                        status: 'Pending'
+                    });
+    
+                    var insertComment = await newComment.save();
+                    // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
+                }
+
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    
+    getPendingFeedback: async (req, res) => {
+        try {
+
+            const fileid = req.query.fileid;
+            console.log(fileid);
+
+            const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+            console.log(contract);
+
+            const pendingFeedback = await PendingFeedback.findOne({contract: contractVersion.contract._id}).exec();
+            console.log(pendingFeedback);
+
+            if (pendingFeedback) { // if found
+                res.send({
+                    hasPendingFeedback: true,
+                    pendingFeedback: pendingFeedback
+                });
+
+                console.log('true');
+
+            } else { // if not found, create a new one
+                res.send({
+                    hasPendingFeedback: false
+                })
+
+                console.log('false');
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
