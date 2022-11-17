@@ -641,3 +641,8 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     background: #00713D;
     transition: .25s;
 }
+
+#feedbackDiv {
+    white-space: pre-line;
+    display: flex;
+}
