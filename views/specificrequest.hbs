@@ -51,11 +51,9 @@
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
             {{#ifCond user_role '==' "Requester"}}
             
-                {{#compare contractrequest.status '==' "For Legal Review"}}
-                    {{#unless withNegotiation}}
-                        <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
-                    {{/unless}}
-                {{/compare}}
+                {{#unless withNegotiation}}
+                    <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
+                {{/unless}}
 
                 {{#compare contractrequest.status '==' "Cleared"}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>

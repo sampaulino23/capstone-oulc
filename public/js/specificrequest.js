@@ -127,6 +127,18 @@ $(window).on('load', function() {
 
             isDisabled = true;
         }
+    } else if (role == 'Requester') {
+        // disable checkbox if status counter is within [1, 2, 3, 4, 8]
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [1, 2, 3, 7, 8];
+
+        console.log(statusCounter);
+
+        if (statusListDisabled.includes(statusCounter)) {
+            console.log('tanggal');
+
+            $('#addThirdPartyBtn').attr('hidden', true);
+        }
     }
 
     $.ajax({
