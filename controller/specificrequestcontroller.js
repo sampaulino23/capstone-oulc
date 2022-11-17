@@ -54,6 +54,7 @@ const specificrequestcontroller = {
             var userid = req.user._id;
             var messages = null;
             var messages2 = null;
+            var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
             const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
@@ -66,6 +67,7 @@ const specificrequestcontroller = {
             if (negotiation) {
                 console.log("INSIDE NEGOTIATION");
                 messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
+                withNegotiation = true;
             }
 
             
@@ -189,7 +191,8 @@ const specificrequestcontroller = {
                 conversation: conversation,
                 negotiation: negotiation,
                 messages: messages,
-                messages2: messages2
+                messages2: messages2,
+                withNegotiation: withNegotiation
             });
 
         } catch (err) {
@@ -1186,7 +1189,7 @@ const specificrequestcontroller = {
             const atty = await User.findOne({_id: "6318a6b4c0119ed0b4b6bb82"}).lean()
             .exec();
 
-            var membersList = [req.user._id];
+            var membersList = [req.user._id]; //this is requester, can be removed
             membersList.push(atty._id);
             membersList.push(thirdpartyrep._id);
         

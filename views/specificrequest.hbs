@@ -134,10 +134,12 @@
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
+                    {{#if withNegotiation}}
                     <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
-                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
+                        type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
+                    {{/if}}
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>

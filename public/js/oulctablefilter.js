@@ -1357,7 +1357,7 @@ function searchRepositoryTable() {
         td = tr[i].getElementsByTagName("td")[0]; // for column one
         td1 = tr[i].getElementsByTagName("td")[1]; // for column two
         td2 = tr[i].getElementsByTagName("td")[2];
-        td4 = tr[i].getElementsByTagName("td")[4]; //tags hidden column
+        td4 = tr[i].getElementsByTagName("td")[5]; //tags hidden column
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) ||
