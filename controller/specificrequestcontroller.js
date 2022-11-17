@@ -1158,7 +1158,8 @@ const specificrequestcontroller = {
             let newMessage = new Message({
                 conversationId: conversationid,
                 sender: sender,
-                content: message
+                content: message,
+                date: Date.now()
             }); 
 
             await newMessage.save();
