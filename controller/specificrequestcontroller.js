@@ -1190,7 +1190,7 @@ const specificrequestcontroller = {
             const atty = await User.findOne({_id: "6318a6b4c0119ed0b4b6bb82"}).lean()
             .exec();
 
-            var membersList = [req.user._id]; //this is requester, can be removed
+            var membersList = []; 
             membersList.push(atty._id);
             membersList.push(thirdpartyrep._id);
         
