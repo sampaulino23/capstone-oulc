@@ -272,8 +272,12 @@
                 <input type="hidden" class="form-control" id="contractVersionIdForNewVersion" name="contractVersionIdForNewVersion">
                 <div class="modal-body">
                     <div class="mb-3">
+                        {{#each feedback}}
+                        {{#if @last}}
                         <label for="oulcComments" class="form-label">OULC Comments</label>
-                        <textarea class="form-control" id="oulcComments" name="oulcComments" rows="3"></textarea>
+                        <textarea class="form-control" id="oulcComments" name="oulcComments" rows="3">{{content}}</textarea>
+                        {{/if}}
+                        {{/each}}
                     </div>
                     <div class="mb-3">
                         <label for="thirdPartyResponse" class="form-label">3rd Party Response</label>
