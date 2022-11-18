@@ -911,42 +911,54 @@ const oulccontroller = {
 
     downloadRepositoryFile: async (req, res) => {
 
-        const fileid = req.params.fileid;
+        try {
+            const fileid = req.params.fileid;
+    
+            const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                }
+                const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
+    
+                res.setHeader('Content-Type', doc.contentType);
+                res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+    
+                downStream.pipe(res);
+            });
 
-        const cursor = gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)});
-        cursor.forEach((doc, err) => {
-            if (err) {
-                console.log(err);
-            }
-            const downStream = gridfsBucketRepo.openDownloadStream(doc._id);
-
-            res.setHeader('Content-Type', doc.contentType);
-            res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
-
-            downStream.pipe(res);
-        });
+        } catch (err) {
+            console.log(err);
+        }
 
     },
 
     deleteRepositoryFile: async (req, res) => {
-        console.log('Delete Repo File');
 
-        const repositoryfileid = req.body.deleteRepositoryFile;
-        const fileid = req.params.fileid;
+        try {
+            console.log('Delete Repo File');
+    
+            const repositoryfileid = req.body.deleteRepositoryFile;
+            const fileid = req.params.fileid;
+    
+            // delete repositoryfile object
+            await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+    
+            const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketRepo.delete(doc._id);
+                }
+            });
+    
+            res.redirect('back');
 
-        // delete repositoryfile object
-        await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+        } catch (err) {
+            console.log(err);
 
-        const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
-        cursor.forEach((doc, err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                gridfsBucketRepo.delete(doc._id);
-            }
-        });
-
-        res.redirect('back');
+        }
     }
 
 }
