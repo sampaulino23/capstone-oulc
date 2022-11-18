@@ -54,33 +54,39 @@ mongoose.connect(url, {
 const logincontroller = {
 
     getLogin: async function (req, res) {
-        
-        if (!req.user) {
-            res.render('login', {
-                pagename: 'Log In',
-                title: 'Log In'
-            });
-        }
-        else {
-            if (req.user.roleName == "Staff"){
-                res.redirect('/staff');
-            }
-            else if (req.user.roleName == "Attorney") {
-                res.redirect('/attorney');
-            }
-            else if (req.user.roleName == "Administrator") {
-                res.redirect('/admin/usermanagement');
-            }
-            else if (req.user.roleName == "Requester") {
-                res.redirect('/requester');
-            }
-            else {
+
+        try {
+            if (!req.user) {
                 res.render('login', {
                     pagename: 'Log In',
                     title: 'Log In'
                 });
             }
+            else {
+                if (req.user.roleName == "Staff"){
+                    res.redirect('/staff');
+                }
+                else if (req.user.roleName == "Attorney") {
+                    res.redirect('/attorney');
+                }
+                else if (req.user.roleName == "Administrator") {
+                    res.redirect('/admin/usermanagement');
+                }
+                else if (req.user.roleName == "Requester") {
+                    res.redirect('/requester');
+                }
+                else {
+                    res.render('login', {
+                        pagename: 'Log In',
+                        title: 'Log In'
+                    });
+                }
+            }
+
+        } catch (err) {
+            console.log(err);
         }
+        
     },
 
     getError: function (req, res) {
@@ -148,36 +154,42 @@ const logincontroller = {
 
     postInsert: async (req, res, next) => {
 
-        const role = await Role.findOne({name: "Administrator"}).exec();
-        console.log(role._id);
-
-        var user = new User({
-            fullName: "Samantha Paulino",
-            email: "admin@oulc.com",
-            password: "pass1234",
-            role: role._id,
-            isActive: true,
-        });
-
-        // hash the password
-        bcrypt.genSalt(10, (err, salt) =>
-            bcrypt.hash(user.password, salt, (err, hash) => {
-                if (err) throw err;
-                user.password = hash;
-                console.log(user.password);
-            })
-        );
-
-        MongoClient.connect(url, function (err, client) {
-            if (err) throw err;
-            var db = client.db('test');
-
-            db.collection('users').insertOne(user, function (err, result) {
-                if (err) throw err;
-                client.close();
-                res.redirect('back');
+        try {
+            const role = await Role.findOne({name: "Administrator"}).exec();
+            console.log(role._id);
+    
+            var user = new User({
+                fullName: "Samantha Paulino",
+                email: "admin@oulc.com",
+                password: "pass1234",
+                role: role._id,
+                isActive: true,
             });
-        });
+    
+            // hash the password
+            bcrypt.genSalt(10, (err, salt) =>
+                bcrypt.hash(user.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    user.password = hash;
+                    console.log(user.password);
+                })
+            );
+    
+            MongoClient.connect(url, function (err, client) {
+                if (err) throw err;
+                var db = client.db('test');
+    
+                db.collection('users').insertOne(user, function (err, result) {
+                    if (err) throw err;
+                    client.close();
+                    res.redirect('back');
+                });
+            });
+            
+        } catch (err) {
+            console.log(err);
+
+        }
 
     },
 
