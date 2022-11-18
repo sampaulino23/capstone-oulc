@@ -1213,7 +1213,7 @@ const specificrequestcontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "migfranzbro@gmail.com", //change to user.email when done testing
+                to: "capstone.samantha@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
                 text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: " + 
                 " http://localhost:3000/thirdparty/" + requestID + "/" + thirdpartyrep._id
