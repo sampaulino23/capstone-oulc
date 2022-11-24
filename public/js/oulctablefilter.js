@@ -375,8 +375,8 @@ function viewPendingRequester(){
     document.getElementById("waiting-tab-requester").classList.remove("selected");
     document.getElementById("pending-tab-requester").classList.add("selected");
     document.getElementById("forlegalreview-tab-requester").classList.remove("selected");
-    document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("cancelled-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-requester").classList.remove("selected");
+    document.getElementById("cancelled-tab-requester").classList.remove("selected");
 }
 
 function viewToReview(){ 
