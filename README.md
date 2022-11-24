@@ -7,7 +7,10 @@ A contract management system for De La Salle University - Office of the Universi
    ```
    npm install
    ```
-4. Run the server by using the command: `npm start`
+4. Run the server by using the command:
+   ```
+   npm start
+   ```
     * Navigate to `http://localhost:3000/` in the browser to view the app.
 5. To stop the server from running, use Ctrl+C (Windows) or Command+C (Mac)
 
