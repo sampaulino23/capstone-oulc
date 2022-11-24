@@ -15,7 +15,9 @@ A contract management system for De La Salle University - Office of the Universi
    * Refer to the installation guide through this [link](https://www.mongodb.com/docs/database-tools/installation/installation/)
 
 ### Importing the data
-`mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" ./databackup/test`
+```
+mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" ./databackup/test
+```
 
 ## Dependencies
 * ajax
