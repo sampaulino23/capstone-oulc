@@ -1215,7 +1215,7 @@ const specificrequestcontroller = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "capstone.samantha@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
-                text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: " + 
+                text: "Hi! There is a contract request for approval that needs negotiation with the third party representative. The OULC would like to have a discussion with you regarding a contract. Godbless: " + 
                 " http://localhost:3000/thirdparty/" + requestID + "/" + thirdpartyrep._id
             }
 
