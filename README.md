@@ -1,23 +1,23 @@
 # OULC Contract Management System
 A contract management system for De La Salle University - Office of the University Legal Counsel.
 
-### Local setup and executing the program
+## Local setup and executing the program
 1. Navigate to the directory
 2. Install the dependencies by using the command: `npm install`
 3. Run the server by using the command: `npm start`
     * Navigate to `http://localhost:3000/` in the browser to view the app.
 4. To stop the server from running, use Ctrl+C (Windows) or Command+C (Mac)
 
-### Database setup
+## Database setup
 
-#### Prerequisites
+### Prerequisites
 [Mongodb Database Tools](https://www.mongodb.com/try/download/database-tools)
    * Refer to the installation guide through this [link](https://www.mongodb.com/docs/database-tools/installation/installation/)
 
-#### Importing the data
+### Importing the data
 `mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" ./databackup/test`
 
-### Dependencies
+## Dependencies
 * ajax
 * assert
 * axios
@@ -36,7 +36,7 @@ A contract management system for De La Salle University - Office of the Universi
 * path
 * socket.io
 
-### Project Members
+## Project Members
 * Brosoto, Mig
 * Murillo, Martin
 * Paulino, Samantha
