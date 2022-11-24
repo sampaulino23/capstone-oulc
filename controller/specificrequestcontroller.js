@@ -210,7 +210,7 @@ const specificrequestcontroller = {
             var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
+            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
             
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
