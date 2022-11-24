@@ -235,13 +235,16 @@ const oulccontroller = {
 
     getDashboardDate: async (req, res) => {
         try {
-            var startdate = req.body.startdate;
-            var enddate = req.body.enddate;
+            var startdate = new Date(req.body.startdate);
+            var enddate = new Date(req.body.enddate);
+
+            var updatedstartdate = startdate.setUTCHours(0,0,0,0);
+            var updatedenddate = enddate.setUTCHours(23,59,59,999);
 
             console.log(startdate + " until " + enddate);
 
             //const contractrequests = await ContractRequest.find({requestDate: dateToday}).lean()
-            const contractrequests = await ContractRequest.find({requestDate: {$gte: new Date(startdate).toISOString(), $lte: new Date(enddate).toISOString()}}).lean()
+            const contractrequests = await ContractRequest.find({requestDate: {$gte: updatedstartdate, $lte: updatedenddate}}).lean()
                 .populate({
                     path: 'requester',
                     populate: {
@@ -256,6 +259,8 @@ const oulccontroller = {
                 })
                 .sort()
                 .exec();
+
+            console.log(contractrequests.length);
 
             const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
             const contractTypes = await ContractType.find({}).lean().exec();
