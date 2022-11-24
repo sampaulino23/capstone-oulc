@@ -4,9 +4,9 @@ A contract management system for De La Salle University - Office of the Universi
 ## Local setup and executing the program
 1. Navigate to the directory
 2. Install the dependencies by using the command: 
-```
-npm install
-```
+   ```
+   npm install
+   ```
 4. Run the server by using the command: `npm start`
     * Navigate to `http://localhost:3000/` in the browser to view the app.
 5. To stop the server from running, use Ctrl+C (Windows) or Command+C (Mac)
