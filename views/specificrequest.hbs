@@ -58,7 +58,7 @@
                 {{#compare contractrequest.status '==' "Cleared"}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
                 {{else}}
-                    <button style="margin-right: 10px;" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
+                    <button style="margin-right: 10px;" id = "cancelBtn" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/compare}}
             {{/ifCond}}
         </div>
@@ -537,11 +537,16 @@
         var requestAssignedAttyID = $("#assignedAttorneyId").val();
         const role = $('#currentRole').val();
         var statusTextDiv = $("#statusTextDiv");
+        var statusTextVal = $('#contractStatus').val();
 
         if (role == "Attorney" && userID != requestAssignedAttyID) {
             statusTextDiv.prepend("Rerouted (");
             statusTextDiv.append(")");
         }
+        if (statusTextVal == "Cancelled") {
+            document.getElementById("cancelBtn").style.display = "none";
+        }
+
     });
         
         function removeSelectedClass() {
