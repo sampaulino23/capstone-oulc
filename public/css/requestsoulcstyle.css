@@ -141,3 +141,21 @@
     margin-top: 5px;
     background-color: #fff;
 }
+
+table.sortable th::after, th.sorttable_sorted::after, th.sorttable_sorted_reverse::after {
+    content: " ";
+    display: none;
+}
+
+#sorttable_sortfwdind, #sorttable_sortrevind {
+    font-size: 24px;
+}
+
+.sorttable_sorted, .sorttable_sorted_reverse {
+    border-top: solid #0C8039 4px;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE";
+    font-size: 24px;
+}

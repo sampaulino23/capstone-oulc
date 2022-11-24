@@ -1318,6 +1318,9 @@ $(document).ready(function() {
     const currentRole = $('#currentRole').val();
     const currentUserID = $('#currentId').val();
     // var loggedUser = document.getElementById('userrole').textContent;
+    $("th.default").each(function(){
+        sorttable.innerSortFunction.apply(this, []);
+    });
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");

@@ -274,4 +274,4 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 table.sortable th::after, th.sorttable_sorted::after, th.sorttable_sorted_reverse::after {
     content: " ";
     display: none;
-  }
+}
