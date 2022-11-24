@@ -137,7 +137,7 @@ const requestercontroller = {
             let startDate = new Date(daterange.substring(0, 10));
             let endDate = new Date(daterange.substring(13));
 
-            const datenow = new Date(req.body.requestdate);
+            const datenow = new Date();
 
             var month = ('0' + (datenow.getMonth() + 1)).slice(-2);
             var day = ('0' + (datenow.getDate())).slice(-2);
