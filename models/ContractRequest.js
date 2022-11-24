@@ -72,12 +72,10 @@ const ContractRequestSchema = mongoose.Schema({
         type: String,
     },
     thirdPartyRepresentativeName: {
-        type: String,
-        required: true
+        type: String
     },
     thirdPartyRepresentativeEmail: {
-        type: String,
-        required: true
+        type: String
     },
     contractingParty: {
         type: String,
