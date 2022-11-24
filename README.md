@@ -22,7 +22,7 @@ A contract management system for De La Salle University - Office of the Universi
 
 ### Importing the data
 ```
-mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" ./capstonebackup/test
+mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" -d test ./capstonebackup/test
 ```
 
 ## Dependencies
