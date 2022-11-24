@@ -124,7 +124,7 @@ const logincontroller = {
                 // change "to" field to your dummy email so you can see the password
                 const options = {
                     from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                    to: "maria_samantha_paulino@dlsu.edu.ph", //change to user.email when done testing
+                    to: "capstone.samantha@gmail.com", //change to user.email when done testing
                     subject: "Reset password",
                     text: "Hi " + user.fullName + ". Forgot your password? We received a request to reset the password for your account. To reset your password, click on the link below: " + 
                     " http://localhost:3000/resetpassword/" + user._id 
