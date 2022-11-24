@@ -8,11 +8,14 @@ A contract management system for De La Salle University - Office of the Universi
     * Navigate to `http://localhost:3000/` in the browser to view the app.
 4. To stop the server from running, use Ctrl+C (Windows) or Command+C (Mac)
 
-### Importing data into the database
+### Database setup
 
 #### Prerequisites
 [Mongodb Database Tools](https://www.mongodb.com/try/download/database-tools)
-Refer to the installation guide through this [link](https://www.mongodb.com/docs/database-tools/installation/installation/)
+   * Refer to the installation guide through this [link](https://www.mongodb.com/docs/database-tools/installation/installation/)
+
+#### Importing the data
+`mongorestore --uri "mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryWrites=true&w=majority" ./databackup/test
 
 ### Dependencies
 * ajax
