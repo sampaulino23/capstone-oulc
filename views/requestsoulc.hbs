@@ -148,6 +148,7 @@
                                 <th style="width: 8%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
                                 <!-- For tab -->
                                 <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">Atty</th> 
+                                <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">Document No.</th>
                             </tr>
                         </thead>
                         <tbody id="myRequestTable">
@@ -161,7 +162,7 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contractType.name}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requestTitle}}</td>
                                 {{#compare ../user.role.name '!=' 'Requester'}}
-                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requester.department.abbrev}}</td>                          
                                 {{else}}
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{trackingNumber}}</td>
                                 {{/compare}}
@@ -169,6 +170,7 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
                                 <!-- For tab -->
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedAttorney._id}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none">{{trackingNumber}}</td>
                             </tr>
 
                             {{/each}}
