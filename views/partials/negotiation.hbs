@@ -96,4 +96,14 @@
 
 <script>
 
+    var user_role = "{{user_role}}";
+    var trashIconList;
+    
+    if (user_role == "Attorney" || user_role == "Staff"){
+        trashIconList = document.getElementsByClassName("bi-trash");
+        for (var i = 0; i < trashIconList.length; i++ ) {
+            trashIconList[i].style.display = "none";
+        }
+    }
+
 </script>

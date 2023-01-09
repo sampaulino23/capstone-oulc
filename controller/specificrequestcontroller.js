@@ -57,6 +57,7 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
+            var withNegotiationFiles = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
 
@@ -172,6 +173,10 @@ const specificrequestcontroller = {
                 }
             }).exec();
 
+            if (negotiationfiles.length != 0) {
+                withNegotiationFiles = true;
+            }
+
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
             const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
@@ -192,7 +197,8 @@ const specificrequestcontroller = {
                 attorneys: attorneys,
                 conversation: conversation,
                 messages: messages,
-                negotiationfiles: negotiationfiles
+                negotiationfiles: negotiationfiles,
+                withNegotiationFiles: withNegotiationFiles
             });
 
         } catch (err) {
