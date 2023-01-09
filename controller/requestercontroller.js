@@ -23,6 +23,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
+const NegotiationFile = require('../models/NegotiationFile.js');
 
 const conn = mongoose.createConnection(url);
 
@@ -30,9 +31,9 @@ const conn = mongoose.createConnection(url);
 let gridfsBucket, gridfsBucketRequestDocuments;
 
 conn.once('open', () => {
-    // gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
-    //     bucketName: 'repository'
-    // });
+    gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'negotiation'
+    });
     gridfsBucketRequestDocuments = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'requestdocuments'
     });
@@ -520,6 +521,56 @@ const requestercontroller = {
             console.log(err);
         }
     },
+
+    postDeleteNegotiationFile: async (req, res) => {
+        try {
+
+            const negotiationfileid = req.body.deleteNegotiationFile;
+
+            // delete template object
+            const negotiationFile = await NegotiationFile.findByIdAndDelete(negotiationfileid).exec();
+
+            if (negotiationFile) {
+
+                // delete pdf file in gridfs
+                const cursor2 = await gridfsBucket.find({_id: mongoose.Types.ObjectId(negotiationFile.file)}, {limit: 1});
+                cursor2.forEach((doc, err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        gridfsBucket.delete(doc._id);
+                    }
+                });
+            }
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getDownloadNegotiationFile: async (req, res) => {
+        try {
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucket.find({_id: mongoose.Types.ObjectId(fileid)});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                }
+                const downStream = gridfsBucket.openDownloadStream(doc._id);
+
+                res.setHeader('Content-Type', doc.contentType);
+                res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
+                downStream.pipe(res);
+            });
+
+        } catch (err) {
+            console.log(err);
+        } 
+    }
 }
 
 module.exports = requestercontroller;

@@ -8,15 +8,17 @@
 </script>
 
 <div id = "negotiation-div">
+    {{#ifCond user_role '==' "Requester"}}
     <button class="upload-negotiation-btn" data-bs-toggle="modal" data-bs-target="#uploadNegotiationFile">Upload Negotiation File</button>
+    {{/ifCond}}
 
     <table id="table" class="sortable table table-hover"
         style="width: 100%; font-size: 16px; background:#D9D9D9;">
         <thead class="table-headers">
             <tr>
-                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
-                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
-                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
+                <th style="width: 2%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Filename</th>
+                <th style="width: 1%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
             </tr>
             
         </thead>
@@ -24,12 +26,38 @@
              {{#each negotiationfiles}}
             <tr id="{{_id}}" class="negotiation-file-row">
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{requestid.requester.fullName}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{name}}</td>
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
-                    {{!-- <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a> --}}
-                    {{!-- <a href="/requestdocuments/downloadcontractversion/{{file}}" class="delete-contract-version text-body"><i class="bi bi-delete" style="cursor: pointer;"></i></a> --}}
+                    <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteNegotiationFile{{@index}}" style ="cursor: pointer;"></i>
+                    <a href="/requester/downloadNegotiationFile/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
                 </td>
             </tr>
+
+            <!-- Delete Template Modal -->
+            <div class="modal fade" id="deleteNegotiationFile{{@index}}" tabindex="-1" aria-labelledby="deleteNegotiationFile{{@index}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="w-100 modal-title" id="exampleModalLabel">Delete Negotiation File</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" style = "text-align: center;">
+                            <div class="">
+                                <form action="/requester/deletenegotiationfile" method="POST">
+                                <div class="mb-3">
+                                    <input type="hidden" class="form-control" value="{{_id}}" name="deleteNegotiationFile">
+                                    Are you sure you want to delete negotiation file<br>"{{name}}"?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="upload-btn-modal deleteNegotiationFile" id="confirmDeleteNegotiationFile">Delete</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{/each}}
         </tbody>
     </table>

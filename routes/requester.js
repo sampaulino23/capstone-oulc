@@ -102,6 +102,8 @@ router.get('/checkstagingcontractversion', requestercontroller.checkStagingContr
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagingContractVersion);
 router.post('/submitrevision', requestercontroller.submitRevision);
+router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
+router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
