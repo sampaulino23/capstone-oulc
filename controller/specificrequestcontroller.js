@@ -18,6 +18,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const NegotiationFile = require('../models/NegotiationFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
 
@@ -28,7 +29,7 @@ const Template = require('../models/Template.js');
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket, gridfsBucketRequestDocuments, gridfsBucketTemplates;
+let gridfsBucket, gridfsBucketRequestDocuments, gridfsBucketTemplates, gridfsBucketNegotiations;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
@@ -39,6 +40,9 @@ conn.once('open', () => {
     });
     gridfsBucketTemplates = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'templates'
+    });
+    gridfsBucketNegotiations = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'negotiations'
     });
 });
 
@@ -463,6 +467,31 @@ const specificrequestcontroller = {
                     })
 
                     await newRepositoryFile.save();
+                }
+            }
+
+            res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUploadNegotiationFile: async (req, res) => { // requesting office
+        try {
+
+            const files = req.files;
+            const requestid = req.body.uploadNegotiationFileID;
+
+            if (files.negotiationFiles != null) {
+                for (negotiationFile of files.negotiationFiles) {
+                    let newNegotiationFile = new NegotiationFile({
+                        name: negotiationFile.filename,
+                        requestid: mongoose.Types.ObjectId(requestid),
+                        uploadDate: negotiationFile.uploadDate,
+                        file: negotiationFile.id
+                    })
+
+                    await newNegotiationFile.save();
                 }
             }
 

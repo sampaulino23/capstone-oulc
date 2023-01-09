@@ -8,8 +8,70 @@
 </script>
 
 <div id = "negotiation-div">
-    negotiation
+    <button class="upload-negotiation-btn" data-bs-toggle="modal" data-bs-target="#uploadNegotiationFile">Upload Negotiation File</button>
 
+    <table id="table" class="sortable table table-hover"
+        style="width: 100%; font-size: 16px; background:#D9D9D9;">
+        <thead class="table-headers">
+            <tr>
+                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
+                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
+            </tr>
+            
+        </thead>
+        <tbody id="negotiationFilesTable">
+            {{!-- {{#each contractversions}}
+            <tr id="{{_id}}" class="contract-version-row">
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                </td>
+            </tr>
+            {{/each}} --}}
+             {{#each negotiationFiles}}
+            <tr id="{{_id}}" class="negotiation-file-row">
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{contract.contractRequest.requester.fullName}}</td>
+                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                    <a href="/requestdocuments/downloadcontractversion/{{file}}" class="delete-contract-version text-body"><i class="bi bi-delete" style="cursor: pointer;"></i></a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Upload Signed Contract Modal -->
+<div class="modal fade" id="uploadNegotiationFile" tabindex="-1" aria-labelledby="uploadNegotiationFile" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Upload Negotiation File/s</h5>
+            </div>
+            <div class="modal-body">
+                <div class="custom-file mb-3">
+
+                    <form action="/request/uploadNegotiationFile" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="uploadNegotiationFileID">
+
+                        <div class="">
+                            <label for="negotiationFiles" class="modal-text form-label">File Upload</label><br>
+                            <input class="form-control" type="file" name="negotiationFiles" id="negotiationFiles" accept="application/pdf" required multiple><br><br>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn" id="{{contractrequest._id}}">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>            
+
+        </div>
+    </div>
 </div>
 
 
