@@ -164,6 +164,14 @@ const specificrequestcontroller = {
                 }
             }
 
+            const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'requester'
+                }
+            }).exec();
+
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
             const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
@@ -183,7 +191,8 @@ const specificrequestcontroller = {
                 contractversions: contractversions,
                 attorneys: attorneys,
                 conversation: conversation,
-                messages: messages
+                messages: messages,
+                negotiationfiles: negotiationfiles
             });
 
         } catch (err) {
@@ -311,6 +320,14 @@ const specificrequestcontroller = {
                 }
             }
 
+            const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'requester'
+                }
+            }).exec();
+
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
             res.render('specificrequest', {
@@ -323,7 +340,8 @@ const specificrequestcontroller = {
                 contractversions: contractversions,
                 conversation: conversation,
                 messages: messages,
-                stagingcontractversions: stagingcontractversions
+                stagingcontractversions: stagingcontractversions,
+                negotiationfiles: negotiationfiles
             });
 
         } catch (err) {
