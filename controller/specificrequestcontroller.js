@@ -53,24 +53,14 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
-            var messages2 = null;
-            var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
 
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
             }
 
-            if (negotiation) {
-                console.log("INSIDE NEGOTIATION");
-                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
-                withNegotiation = true;
-            }
-
-            
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
                     path: 'requester',
@@ -189,10 +179,7 @@ const specificrequestcontroller = {
                 contractversions: contractversions,
                 attorneys: attorneys,
                 conversation: conversation,
-                negotiation: negotiation,
-                messages: messages,
-                messages2: messages2,
-                withNegotiation: withNegotiation
+                messages: messages
             });
 
         } catch (err) {
@@ -206,21 +193,12 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
-            var messages2 = null;
-            var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, type: "negotiation"}).lean().exec();
-            
+        
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
-            }
-
-            if (negotiation) {
-                console.log("INSIDE NEGOTIATION");
-                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
-                withNegotiation = true;
             }
             
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -340,11 +318,8 @@ const specificrequestcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 conversation: conversation,
-                negotiation: negotiation,
                 messages: messages,
-                messages2: messages2,
-                stagingcontractversions: stagingcontractversions,
-                withNegotiation: withNegotiation
+                stagingcontractversions: stagingcontractversions
             });
 
         } catch (err) {
@@ -1187,20 +1162,6 @@ const specificrequestcontroller = {
             const thirdpartyrep = await ThirdParty.findOne({email: emailInput}).lean()
             .exec();
 
-            const atty = await User.findOne({_id: "6318a6b4c0119ed0b4b6bb82"}).lean()
-            .exec();
-
-            var membersList = []; 
-            membersList.push(atty._id);
-            membersList.push(thirdpartyrep._id);
-        
-            var negotiation = new Conversation({
-                contractRequest: requestID,
-                members: membersList,
-                type: "negotiation"
-            });
-            await negotiation.save();
-
              // code section below is for sending the password to the account's email address
              const transporter = nodemailer.createTransport({
                 service: "gmail",
@@ -1215,8 +1176,7 @@ const specificrequestcontroller = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "capstone.samantha@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
-                text: "Hi! There is a contract request for approval that needs negotiation with the third party representative. The OULC would like to have a discussion with you regarding a contract. Godbless: " + 
-                " http://localhost:3000/thirdparty/" + requestID + "/" + thirdpartyrep._id
+                text: "Hi! There is a contract request for approval that needs negotiation with the third party representative. The OULC would like to have a discussion with you regarding a contract. Godbless!"
             }
 
             transporter.sendMail (options, function (err, info) {

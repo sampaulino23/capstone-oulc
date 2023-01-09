@@ -51,7 +51,7 @@
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
             {{#ifCond user_role '==' "Requester"}}
             
-                {{#unless withNegotiation}}
+                {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
                     <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
                 {{/unless}}
 
@@ -134,12 +134,12 @@
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
-                    {{#if withNegotiation}}
+                    {{!-- {{#if withNegotiation}}
                     <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
                         type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
-                    {{/if}}
+                    {{/if}} --}}
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
