@@ -93,30 +93,6 @@
             <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
                 {{#ifCond user_role '==' "Attorney"}}
-                {{#ifCond contractrequest.status '==' "Pending"}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li>
-                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
-                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
-                    </li>
-                     <li>
-                        <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="negotiation" onclick="selectDiscussion()">Discussion</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
-                    </li>
-                </ul>
-                {{else}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -134,22 +110,18 @@
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
-                    {{!-- {{#if withNegotiation}}
                     <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
                         type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
-                    {{/if}} --}}
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{/ifCond}}
                 {{/ifCond}}
 
                 {{#ifCond user_role '==' "Staff"}}
-                {{#ifCond contractrequest.status '==' "Pending"}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -172,30 +144,6 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{else}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li>
-                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
-                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
-                            type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
-                    </li>
-                </ul>
-                {{/ifCond}}
                 {{/ifCond}}
 
                 {{#ifCond user_role '==' "Requester"}}
@@ -223,10 +171,6 @@
                 </ul>
                 {{/ifCond}}
                 
-                {{!-- {{#compare contractrequest.status "!=" "Pending"}}
-                
-                {{/compare}} --}}
-
                 <!-- Tab panes -->
 
                 <div class="tab-content">
