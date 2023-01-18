@@ -393,8 +393,42 @@ const specificrequestcontroller = {
 
             console.log("Inside For Revision Office Staff");
 
+            const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId });
+            const documenttype = await ContractType.findOne({ _id: contractrequest.contractType});
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
             await feedback.save();
+
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "capstone.samantha@gmail.com",
+                    pass: "uapnxnyyyqqsfkax"
+                }
+            });
+
+            // change "to" field to your dummy email so you can see the password
+            const options = {
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                to: "migfranzbro@gmail.com", //change to user.email when done testing
+                subject: "Contract Request for Revision",
+                text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
+                + contractrequest.trackingNumber
+                + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
+                + "\nContract Request Details: \n" 
+                + "\nTitle: " + contractrequest.requestTitle + "\n"
+                + "Request Date: " + contractrequest.requestDate + "\n"
+                + "Document Type: " + documenttype.name + "\n"
+                + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
+            }
+
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: " + info.response);
+            })       
 
             res.redirect('back');
         } catch (err) {
