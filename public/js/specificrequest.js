@@ -425,6 +425,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "forlegalreview");
                 console.log('SUCCESS');
                 location.reload();
             }, 350),
@@ -442,6 +443,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "cleared");
                 console.log('SUCCESS');
                 location.reload();
             }, 350),
@@ -485,6 +487,7 @@ $(document).ready(() => {
                 routedattorney: routedattorney
             },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "rerouted");
                 console.log('SUCCESS');
                 location.reload();
             }, 100),
@@ -493,6 +496,10 @@ $(document).ready(() => {
             }
         });
 
+    });
+
+    $('.forrevision').click(function () {
+        sessionStorage.setItem("action", "forrevision");
     });
 
     // $('.forrevision').click(function () {

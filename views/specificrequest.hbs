@@ -16,7 +16,7 @@
     <script src="/js/specificrequest.js" type="text/javascript"></script>
 </head>
 
-<body>
+<body onload="checkAction()">
     <div id="header">
         Contract Approval Request Details
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
@@ -206,6 +206,20 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- ACTION TOAST -->
+    <div class="toast-container" style="position: absolute; top: 10px; right: 10px;">
+        <div class="toast" id="action-toast">
+            <div class="toast-header">
+                <strong class="me-auto"><i class="bell-fill"></i> Action Done </strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                The request has been successfully <span id="action-done"></span>.
+            </div>
+        </div>
     </div>
 
 </body>
@@ -534,6 +548,34 @@
         function selectFeedback() {
             removeSelectedClass();
             document.getElementById("feedback-tab").classList.add("selected");
+        }
+
+        function checkAction() {
+            var action = sessionStorage.getItem("action");
+            alert (action);
+
+            if (action != null) {
+
+                if (action == "forlegalreview") {
+                    document.getElementById("action-done").innerHTML = "marked as for legal review"
+                }
+                else if (action == "forrevision") {
+                    document.getElementById("action-done").innerHTML = "marked as for revision"
+                }
+                else if (action == "cleared") {
+                    document.getElementById("action-done").innerHTML = "marked as cleared"
+                }
+                else if (action == "rerouted") {
+                    document.getElementById("action-done").innerHTML = "rerouted to another attorney"
+                }
+
+                $("#action-toast").toast({
+                    delay: 5000
+                });
+                // Show toast  
+                $("#action-toast").toast("show");
+                sessionStorage.clear();
+            }                
         }
 </script>
 
