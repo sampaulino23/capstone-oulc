@@ -1352,7 +1352,7 @@ $(document).ready(function() {
 /* REPOSITORY TABLE */
 //Search Filter 
 function searchRepositoryTable() {
-    var input, filter, table, tr, td, td2, i;
+    var input, filter, table, tr, td, td2, td3, td4, i;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
       table = document.getElementById("myRepositoryTable");
@@ -1362,11 +1362,12 @@ function searchRepositoryTable() {
         td = tr[i].getElementsByTagName("td")[0]; // for column one
         td1 = tr[i].getElementsByTagName("td")[1]; // for column two
         td2 = tr[i].getElementsByTagName("td")[2];
-        td4 = tr[i].getElementsByTagName("td")[5]; //tags hidden column
+        td3 = tr[i].getElementsByTagName("td")[3];
+        td4 = tr[i].getElementsByTagName("td")[4]; //tags hidden column
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) ||
-          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1) || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -1384,7 +1385,7 @@ function repositoryFilterContractType(){ //for contract type dropdown
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        contracttype = cells[1] || null; // gets the 2nd `td` or nothing
+        contracttype = cells[2] || null; // gets the 2nd `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if (filter === "All" || !contracttype || (filter === contracttype.textContent)) {
             row.style.display = ""; // shows this row
