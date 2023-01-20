@@ -33,6 +33,25 @@ $(document).ready(() => {
         }
     });
 
+    $("#contractingparty-ojt").change(function() {
+        if ($("#contractingparty-ojt").val() == "Others") {
+            $("#contractingparty").prop('hidden', false);
+        } else {
+            $("#contractingparty").prop('hidden', true);
+        }
+    })
+
+    $("#documenttype").change(function() {
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA" || 
+        $("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
+            $("#contractingparty-ojt-div").prop('hidden', false);
+            $("#contractingparty").prop('hidden', true);
+        } else {
+            $("#contractingparty-ojt-div").prop('hidden', true);
+            $("#contractingparty").prop('hidden', false);
+        }
+    })
+
     $(".amtdate").change(function() { 
         var amount = document.getElementById("amount").value;
         var duration = document.getElementById("duration").value;
