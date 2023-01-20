@@ -40,7 +40,7 @@ conn.once('open', () => {
 });
 
 const requestercontroller = {
-
+    
     getHome: async (req, res) => {
         try {
 
@@ -88,15 +88,39 @@ const requestercontroller = {
                 .exec();
 
             var today = new Date();
+            var activeCompanies = [];
+        
+            const contractrequests = await ContractRequest.find({
+                $and: [
+                    {effectivityStartDate: { $lte: today}},
+                    {effectivityEndDate: { $gte: today}},
+                    {contractType: "63ca41be60b5247c900bb91c"}
+                ]
+            }).lean().sort({}).exec();
+            const contracttypes = await ContractType.find({}).lean().sort({ code:1 }).exec();
 
-            const contracttypes = await ContractType.find({}).lean().exec();
+            // console.log(contractrequests);
+
+            //push company name to array
+            for (i = 0; i < contractrequests.length; i++) {
+                activeCompanies.push(contractrequests[i].contractingParty);
+            }
+
+            //convert company names to a format where first letter is uppercase and remaining are lowercase
+            activeCompanies = activeCompanies.map(function(v) {
+                return v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+            });
+
+            //remove duplicates
+            var uniqueActiveCompanies = [...new Set(activeCompanies)]
 
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 department: user.department.name,
                 requestdate: today,
-                contracttypes: contracttypes
+                contracttypes: contracttypes,
+                activeCompanies: uniqueActiveCompanies
             });
 
         } catch (err) {

@@ -99,6 +99,19 @@
                         {{/each}}
                     </select>
                 </div>
+
+                <div class = "row">
+                    <div class="col label-and-input break-text mb-3">
+                        <label for="contractingparty" class="form-label">Name of Other Contracting Party*</label>
+                        <select class="text-input" aria-label="Contracting Party" name="contractingparty" id="contractingparty">
+                        {{#each activeCompanies}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                        <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="label-and-input radio-btns mb-3">
                     <label for="templateused" class="form-label">Template Used*</label>
                     <div>
@@ -128,10 +141,10 @@
                     </div>
                 </div>
                 <div class = "row">
-                    <div class="col label-and-input break-text mb-3">
+                    {{!-- <div class="col label-and-input break-text mb-3">
                         <label for="contractingparty" class="form-label">Name of Other Contracting Party*</label>
                         <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
-                    </div>
+                    </div> --}}
                     <div class="col label-and-input mb-3">
                         <label for="amount" class="no-label-width">Amount Involved, if any (₱)</label>
                         <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "XXXX.XX" min = "0">
