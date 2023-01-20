@@ -40,7 +40,7 @@ conn.once('open', () => {
 });
 
 const requestercontroller = {
-    
+
     getHome: async (req, res) => {
         try {
 
@@ -94,7 +94,8 @@ const requestercontroller = {
                 $and: [
                     {effectivityStartDate: { $lte: today}},
                     {effectivityEndDate: { $gte: today}},
-                    {contractType: "63ca41be60b5247c900bb91c"}
+                    {contractType: "63ca41be60b5247c900bb91c"},
+                    {statusCounter: "7"}
                 ]
             }).lean().sort({}).exec();
             const contracttypes = await ContractType.find({}).lean().sort({ code:1 }).exec();
