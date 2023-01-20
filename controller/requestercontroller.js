@@ -114,6 +114,7 @@ const requestercontroller = {
 
             //remove duplicates
             var uniqueActiveCompanies = [...new Set(activeCompanies)]
+            uniqueActiveCompanies.sort();
 
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
@@ -175,6 +176,17 @@ const requestercontroller = {
 
             var trackingNumber = '' + year + month + day + base32 + '-' + contracttype.code;
 
+            var contractingparty;
+
+            if ((contracttype.code == "B" || contracttype.code == "B1") && req.body.contractingpartyojt != "Others") {
+                contractingparty = req.body.contractingpartyojt;
+                // console.log ("IF: " + contractingparty);
+            }
+            else {
+                contractingparty = req.body.contractingparty;
+                // console.log ("ELSE: " + contractingparty);
+            }
+
             var contractrequest = new ContractRequest({
                 requester: req.user._id,
                 contractType: req.body.documenttype, 
@@ -193,7 +205,7 @@ const requestercontroller = {
                 sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
                 thirdPartyRepresentativeName: req.body.thirdpartyname,
                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
-                contractingParty: req.body.contractingparty,
+                contractingParty: contractingparty,
                 amountInvolved: req.body.amount,
                 assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });

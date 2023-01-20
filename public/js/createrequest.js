@@ -33,22 +33,27 @@ $(document).ready(() => {
         }
     });
 
-    $("#contractingparty-ojt").change(function() {
-        if ($("#contractingparty-ojt").val() == "Others") {
-            $("#contractingparty").prop('hidden', false);
+    $("#contractingpartyojt").change(function() {
+        if ($("#contractingpartyojt").val() == "Others") {
+            $("#contractingparty-div").prop('hidden', false);
+            $("#contractingparty").prop('required',true);
         } else {
-            $("#contractingparty").prop('hidden', true);
+            $("#contractingparty-div").prop('hidden', true);
+            $("#contractingparty").prop('required',false);
         }
     })
 
     $("#documenttype").change(function() {
         if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA" || 
         $("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
-            $("#contractingparty-ojt-div").prop('hidden', false);
-            $("#contractingparty").prop('hidden', true);
+            $("#contractingpartyojt-div").prop('hidden', false);
+            $("#contractingparty").prop('required',false);
+            $("#contractingparty-div").prop('hidden', true);
+            // $("#contractingparty").removeAttr('required');​​​​​
         } else {
-            $("#contractingparty-ojt-div").prop('hidden', true);
-            $("#contractingparty").prop('hidden', false);
+            $("#contractingpartyojt-div").prop('hidden', true);
+            $("#contractingparty-div").prop('hidden', false);
+            $("#contractingparty").prop('required',true);
         }
     })
 
