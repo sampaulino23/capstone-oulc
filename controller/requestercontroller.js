@@ -199,10 +199,10 @@ const requestercontroller = {
                 contactPerson: req.body.contactperson,
                 contactNum: req.body.contactno,
                 reviewType: req.body.reviewtype,
-                signatoryLevel: req.body.signatorylevel, //Test only. Automate
+                signatoryLevel: req.body.signatorylevel, 
                 signatoryName: req.body.signatoryname,
                 templateUsed: req.body.templateused,
-                sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
+                sectionChangeNotes: req.body.sectionchanges, 
                 thirdPartyRepresentativeName: req.body.thirdpartyname,
                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
                 contractingParty: contractingparty,
