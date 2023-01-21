@@ -519,12 +519,26 @@ const specificrequestcontroller = {
                 for (signedContractFile of files.signedContractFiles) {
                     let newRepositoryFile = new RepositoryFile({
                         name: signedContractFile.filename,
+                        type: "others",
                         requestid: mongoose.Types.ObjectId(requestid),
                         uploadDate: signedContractFile.uploadDate,
                         file: signedContractFile.id
                     })
-
                     await newRepositoryFile.save();
+                }
+            }
+
+            if (files.signedInstitutionalFiles != null) {
+                for (signedInstitutionalFile of files.signedInstitutionalFiles) {
+                    let newInstitutionalFile = new RepositoryFile({
+                        name: signedInstitutionalFile.filename,
+                        type: "institutional",
+                        tags: ["Institutional MOA"], 
+                        requestid: mongoose.Types.ObjectId(requestid),
+                        uploadDate: signedInstitutionalFile.uploadDate,
+                        file: signedInstitutionalFile.id
+                    })
+                    await newInstitutionalFile.save();
                 }
             }
 

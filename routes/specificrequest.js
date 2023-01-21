@@ -133,7 +133,8 @@ router.post('/addthirdparty', specificrequestcontroller.postAddThirdParty);
 
 // requesting office start
 router.post('/uploadRepositoryFile', upload.fields([
-  { name: 'signedContractFiles'}
+  { name: 'signedContractFiles'},
+  { name: 'signedInstitutionalFiles' }
 ]), specificrequestcontroller.postUploadRepositoryFile);
 router.post('/uploadNegotiationFile', negotiationUpload.fields([
   { name: 'negotiationFiles'}
