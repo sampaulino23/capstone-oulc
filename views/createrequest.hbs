@@ -46,6 +46,7 @@
             <div id = "irf-frf-header">
                 1. Joint Initial and Final Review Form
             </div>
+            <div class = "steps-subheader">Requester & Signatory Details</div>
             <form id="requestForm" action="/requester/createcontractrequest" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col label-and-input mb-3">
@@ -67,6 +68,7 @@
                         <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" value = "5" readonly>
                     </div>
                 </div>
+                <div class = "steps-subheader">Third Party Details</div>
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="contactperson" class="form-label">Contact Person*</label>
@@ -87,6 +89,7 @@
                         <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail">
                     </div>
                 </div>
+                <div class = "steps-subheader">Approval Request Details</div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="documenttitle" class="form-label">Document Title*</label>
                     <input type="text" name="documenttitle" class="text-input" id="documenttitle" placeholder="e.g. MOA Between DLSU and Accenture" required>
@@ -131,7 +134,7 @@
                 <div class = "row"> 
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
                         <div class="col label-and-input break-text mb-3" id = "contractingparty-active-div">
-                            <label for="contractingpartyojt" class="form-label">Name of Other Contracting Party*</label>
+                            <label for="contractingpartyojt" class="form-label">Name of Contracting Party*</label>
                             <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
                             {{#each activeCompanies}}
                             <option value="{{this}}">{{this}}</option>
@@ -141,7 +144,7 @@
                         </div>
                     </div>
                     <div class="col label-and-input break-text mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
-                        <label for="contractingparty" class="form-label">Name of Other Contracting Party*</label>
+                        <label for="contractingparty" class="form-label">Name of Contracting Party*</label>
                         <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
                     </div>
                 
