@@ -152,7 +152,7 @@
 }
 
 .datefilter:hover, .datefilter:active {
-    color: #000;
+    background: #00713D;
     transition: .25s;
 }
 
