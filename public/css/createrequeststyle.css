@@ -405,3 +405,9 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     border-bottom: solid #00713D 2px;
     margin-bottom: 10px;
 }
+
+.signatory-change-note {
+    font-size: 14px;
+    color: #00713D;
+    display:none;
+}

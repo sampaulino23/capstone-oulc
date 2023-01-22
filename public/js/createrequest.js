@@ -97,7 +97,7 @@ $(document).ready(() => {
         if(amount > 1000000){
             $('#signatorylevel').val(1);
         }
+
+        $(".signatory-change-note").css("display", "block");
     });
-
 });
-

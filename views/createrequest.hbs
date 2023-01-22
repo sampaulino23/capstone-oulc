@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/css/createrequeststyle.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="/js/createrequest.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         {{!-- Daterange picker files --}}
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -46,7 +47,7 @@
             <div id = "irf-frf-header">
                 1. Joint Initial and Final Review Form
             </div>
-            <div class = "steps-subheader">Requester & Signatory Details</div>
+            <div class = "steps-subheader mb-3">Requester & Signatory Details</div>
             <form id="requestForm" action="/requester/createcontractrequest" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col label-and-input mb-3">
@@ -64,7 +65,7 @@
                         <input type="text" name="contactperson" class="text-input" id="contactperson" required>
                     </div>
                     <div class="col label-and-input mb-3">
-                        <label for="contactno" class="form-label">Local No.*</label>
+                        <label for="contactno" class="form-label">Contact No.*</label>
                         <input type="tel" name="contactno" class="text-input" id="contactno" minlength = "8" maxlength = "13" required>
                     </div>
                 </div>
@@ -74,12 +75,16 @@
                         <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
                     </div>
                     <div class="col label-and-input mb-3">
-                        <label for="signatorylevel" class="form-label">Signatory Level</label>                      
+                        <label for="signatorylevel" class="form-label">Signatory Level
+                            <i class="fa fa-question-circle" aria-hidden="true" title = "The signatory level automatically changes based on type,&#013;scope, duration, & amount of the contract"></i>
+                        </label>                      
                         <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" value = "5" readonly>
                     </div>
+                    <span class ="signatory-change-note mb-3">Note: Signatory level has been changed. Please double check on the name of the signatory.</span>
                 </div>
+                
 
-                <div class = "steps-subheader">Company Details</div>
+                <div class = "steps-subheader mb-3">Company Details</div>
                     <div class = "row">
                         <div class="label-and-input mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
                         <label for="contractingparty" class="form-label">Company Name*</label>
@@ -97,7 +102,7 @@
                         <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail">
                     </div>
                 </div>
-                <div class = "steps-subheader">Approval Request Details</div>
+                <div class = "steps-subheader mb-3">Approval Request Details</div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="documenttitle" class="form-label">Document Title*</label>
                     <input type="text" name="documenttitle" class="text-input" id="documenttitle" placeholder="e.g. MOA Between DLSU and Accenture" required>
@@ -188,7 +193,7 @@
                         </label>
                     </div>
                 </div>
-                <div class = "steps-subheader">File Attachments</div>
+                <div class = "steps-subheader mb-3">File Attachments</i></div>
                 <div class="solo-row mb-3">
                     <label for="contractFiles" class="form-label">Upload Contract*</label>
                     <input type="file" name="contractFiles" accept="application/pdf" class="" id="contractFiles" required multiple>
