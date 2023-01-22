@@ -345,7 +345,7 @@
     float: right;
 }
 
-.upload-signed-btn {
+.upload-signed-btn, .cancelRequest {
     margin-right: 1em;
 }
 
@@ -643,4 +643,9 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 #feedbackDiv {
     white-space: pre-line;
     display: flex;
+}
+
+.editable {
+    background: #fff;
+    cursor:text;
 }

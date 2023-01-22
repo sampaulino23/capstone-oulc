@@ -55,6 +55,7 @@
     box-sizing: border-box;
     padding:30px 40px;
     color:#000;
+    overflow-x: hidden;
 }
 
 .home-href, .home-href:visited, .home-href:link, .home-href:active
