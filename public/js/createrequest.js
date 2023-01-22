@@ -50,6 +50,12 @@ $(document).ready(() => {
             $("#contractingparty").prop('required',false);
             $("#contractingparty-div").prop('hidden', true);
             // $("#contractingparty").removeAttr('required');​​​​​
+            if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
+                $("#company-other").prop('hidden', true);
+            }
+            else {
+                $("#company-other").prop('hidden', false);
+            }
         } else {
             $("#contractingpartyojt-div").prop('hidden', true);
             $("#contractingparty-div").prop('hidden', false);

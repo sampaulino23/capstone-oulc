@@ -296,6 +296,12 @@ $(window).on('load', function() {
 
 $(document).ready(() => {
 
+    var contractTypeCode = $("#signedInstitutionalFile-div").attr("class"); // show file upload for institutional moa if type selected involves institutional moa
+    if (contractTypeCode != "B1") {
+        $("#signedInstitutionalFile-div").prop('hidden', true);
+        $("#signedInstitutionalFiles").prop('required',false);
+    } 
+    
     $('#uploadNewVersion').click(function () {
         const fileid = $('#fileSelected').val();
 
