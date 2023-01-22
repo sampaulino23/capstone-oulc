@@ -508,6 +508,10 @@ $(document).ready(() => {
         sessionStorage.setItem("action", "forrevision");
     });
 
+    $('.submit-revised').click(function () {
+        sessionStorage.setItem("action", "submit-revised");
+    });
+
     // $('.forrevision').click(function () {
     //     alert(this.id);
     //     $.ajax({
