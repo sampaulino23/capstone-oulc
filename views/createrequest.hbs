@@ -85,9 +85,9 @@
                 
 
                 <div class = "steps-subheader mb-3">Company Details</div>
-                <div class = "row"> 
+                <div class = "row">
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
-                        <div class="col label-and-input break-text mb-3" id = "contractingparty-active-div">
+                        <div class="col label-and-input break-text" id = "contractingparty-active-div">
                             <label for="contractingpartyojt" class="form-label">Company Name*</label>
                             <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
                             {{#each activeCompanies}}
@@ -98,9 +98,10 @@
                         </div>
                     </div>
                     <div class="col label-and-input mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
-                        <label for="contractingparty" class="form-label">Company Name*</label>
+                        <label for="contractingparty" class="break-text form-label">Company Name*</label>
                         <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
                     </div>
+                    <span class ="company-list-note mb-3">Note: Companies that are listed above have valid, existing institutional MOAs.</span>
                 </div>
 
                 <div class = "row">

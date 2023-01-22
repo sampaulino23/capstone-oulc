@@ -406,8 +406,10 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-bottom: 10px;
 }
 
-.signatory-change-note {
+.signatory-change-note, .company-list-note {
     font-size: 14px;
     color: #00713D;
     display:none;
+    margin-left:200px;
+    margin-top: -10px;
 }

@@ -37,9 +37,11 @@ $(document).ready(() => {
         if ($("#contractingpartyojt").val() == "Others") {
             $("#contractingparty-div").prop('hidden', false);
             $("#contractingparty").prop('required',true);
+            $(".company-list-note").css("display", "none");
         } else {
             $("#contractingparty-div").prop('hidden', true);
             $("#contractingparty").prop('required',false);
+            $(".company-list-note").css("display", "block");
         }
     })
 
@@ -49,17 +51,21 @@ $(document).ready(() => {
             $("#contractingpartyojt-div").prop('hidden', false);
             $("#contractingparty").prop('required',false);
             $("#contractingparty-div").prop('hidden', true);
+            $(".company-list-note").css("display", "block");
             // $("#contractingparty").removeAttr('required');​​​​​
             if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
                 $("#company-other").prop('hidden', true);
+                $(".company-list-note").css("display", "block");
             }
             else {
                 $("#company-other").prop('hidden', false);
+                $(".company-list-note").css("display", "block");
             }
         } else {
             $("#contractingpartyojt-div").prop('hidden', true);
             $("#contractingparty-div").prop('hidden', false);
             $("#contractingparty").prop('required',true);
+            $(".company-list-note").css("display", "none");
         }
     })
 
