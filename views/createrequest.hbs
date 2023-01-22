@@ -60,6 +60,16 @@
                 </div>
                 <div class = "row">
                     <div class="col label-and-input mb-3">
+                        <label for="contactperson" class="form-label">Requester Name*</label>
+                        <input type="text" name="contactperson" class="text-input" id="contactperson" required>
+                    </div>
+                    <div class="col label-and-input mb-3">
+                        <label for="contactno" class="form-label">Local No.*</label>
+                        <input type="tel" name="contactno" class="text-input" id="contactno" minlength = "8" maxlength = "13" required>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col label-and-input mb-3">
                         <label for="signatoryname" class="form-label">Name of Signatory*</label>
                         <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
                     </div>
@@ -68,24 +78,22 @@
                         <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" value = "5" readonly>
                     </div>
                 </div>
-                <div class = "steps-subheader">Third Party Details</div>
-                <div class = "row">
-                    <div class="col label-and-input mb-3">
-                        <label for="contactperson" class="form-label">Contact Person*</label>
-                        <input type="text" name="contactperson" class="text-input" id="contactperson" required>
-                    </div>
-                    <div class="col label-and-input mb-3">
-                        <label for="contactno" class="form-label">Contact Local No.*</label>
-                        <input type="tel" name="contactno" class="text-input" id="contactno" minlength = "8" maxlength = "13" required>
+
+                <div class = "steps-subheader">Company Details</div>
+                    <div class = "row">
+                        <div class="label-and-input mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
+                        <label for="contractingparty" class="form-label">Company Name*</label>
+                        <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
                     </div>
                 </div>
+                
                 <div class = "row">
                     <div class="col label-and-input mb-3">
-                        <label for="thirdpartyname" class="form-label">Third Party Name</label>
+                        <label for="thirdpartyname" class="form-label">Contact Person</label>
                         <input type="text" name="thirdpartyname" class="text-input" id="thirdpartyname">
                     </div>
-                    <div class="col label-and-input mb-3">
-                        <label for="thirdpartyemail" class="form-label">Third Party Email</label>
+                    <div class="col label-and-input break-text mb-3">
+                        <label for="thirdpartyemail" class="form-label">Contact Person Email</label>
                         <input type="email" name="thirdpartyemail" class="text-input" id="thirdpartyemail">
                     </div>
                 </div>
@@ -101,6 +109,10 @@
                         <option value="{{_id}}">{{name}}</option>
                         {{/each}}
                     </select>
+                </div>
+                <div class="label-and-input solo-row mb-3">
+                    <label for="subject" class="form-label">Subject Matter*</label>
+                    <input type="text" name="subject" class="text-input" id="subject" placeholder = "e.g. Signing of MOA between student Juan Dela Cruz and Accenture PH for T2 practicum" required>
                 </div>
                 <div class="label-and-input radio-btns mb-3">
                     <label for="templateused" class="form-label">Template Used*</label>
@@ -134,7 +146,7 @@
                 <div class = "row"> 
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
                         <div class="col label-and-input break-text mb-3" id = "contractingparty-active-div">
-                            <label for="contractingpartyojt" class="form-label">Name of Contracting Party*</label>
+                            <label for="contractingpartyojt" class="form-label">Contracting Party Name*</label>
                             <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
                             {{#each activeCompanies}}
                             <option value="{{this}}">{{this}}</option>
@@ -143,22 +155,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col label-and-input break-text mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
-                        <label for="contractingparty" class="form-label">Name of Contracting Party*</label>
-                        <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
-                    </div>
-                
-                    <div class="col label-and-input mb-3">
-                        <label for="amount" class="no-label-width">Amount Involved, if any (₱)</label>
-                        <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "XXXX.XX" min = "0">
-                    </div>
                 </div>
                 
-                <div class="label-and-input solo-row mb-3">
-                    <label for="subject" class="form-label">Subject Matter*</label>
-                    <input type="text" name="subject" class="text-input" id="subject" placeholder = "e.g. Signing of MOA between student Juan Dela Cruz and Accenture PH for T2 practicum" required>
+                <div class="col label-and-input mb-3">
+                    <label for="amount" class="break-text form-label">Amount Involved, if any (₱)</label>
+                    <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "XXXX.XX" min = "0">
                 </div>
-                
+
                 <div class = "row">
                     <div class="col label-and-input mb-3">
                         <label for="daterange" class="form-label">Effectivity Date*</label>
@@ -185,6 +188,7 @@
                         </label>
                     </div>
                 </div>
+                <div class = "steps-subheader">File Attachments</div>
                 <div class="solo-row mb-3">
                     <label for="contractFiles" class="form-label">Upload Contract*</label>
                     <input type="file" name="contractFiles" accept="application/pdf" class="" id="contractFiles" required multiple>
