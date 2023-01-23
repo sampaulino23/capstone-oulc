@@ -24,9 +24,13 @@
                     {{/compare}}
                 </div>
             </div>
-
-            <div>
-
+            
+            <div style = "color: black">
+                    {{#each faqs}}
+                        Question: {{question}} <br>
+                        Answer: {{answer}} <br>
+                        <br>
+                    {{/each}}
             </div>
 
         </div>
@@ -126,4 +130,5 @@
             replaceIconList[i].style.display = "none";
         }
     }
+
 </script>

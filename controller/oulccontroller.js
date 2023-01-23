@@ -970,15 +970,12 @@ const oulccontroller = {
     getFAQs: async (req, res) => {
         try {
 
-            // const contracttypes = await ContractType.find({}).lean().exec();
-            // const templates = await Template.find({}).lean()
-            //     .populate({
-            //         path: 'type'
-            //     }).exec();
+            const faqs = await Faq.find({}).lean().sort({date: 1}).exec();
     
             res.render('faqs', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
+                faqs: faqs
                 // contracttypes: contracttypes,
                 // templates: templates
             });
