@@ -90,6 +90,7 @@ const upload = multer( {
 
 router.get('/', requestercontroller.getHome);
 router.get('/templates', staffcontroller.getTemplates);
+router.get('/FAQs', staffcontroller.getFAQs);
 router.get('/repository', requestercontroller.getRepository);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/createrequest', requestercontroller.getCreateRequest);

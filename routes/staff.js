@@ -100,6 +100,7 @@ router.get('/', oulccontroller.getDashboard);
 router.post('/dashboard', oulccontroller.getDashboardDate);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
+router.get('/FAQs', staffcontroller.getFAQs);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
