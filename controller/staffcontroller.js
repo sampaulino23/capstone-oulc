@@ -135,27 +135,6 @@ const staffcontroller = {
         } catch (err) {
             console.log(err);
         }
-    },
-
-    getFAQs: async (req, res) => {
-        try {
-
-            // const contracttypes = await ContractType.find({}).lean().exec();
-            // const templates = await Template.find({}).lean()
-            //     .populate({
-            //         path: 'type'
-            //     }).exec();
-    
-            res.render('faqs', {
-                user_fullname:req.user.fullName,
-                user_role: req.user.roleName,
-                // contracttypes: contracttypes,
-                // templates: templates
-            });
-
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     

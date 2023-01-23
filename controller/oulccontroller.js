@@ -19,6 +19,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
+const Faq = require('../models/Faq.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -963,6 +964,44 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
 
+        }
+    },
+
+    getFAQs: async (req, res) => {
+        try {
+
+            // const contracttypes = await ContractType.find({}).lean().exec();
+            // const templates = await Template.find({}).lean()
+            //     .populate({
+            //         path: 'type'
+            //     }).exec();
+    
+            res.render('faqs', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                // contracttypes: contracttypes,
+                // templates: templates
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postAddFAQs: async (req, res) => {
+        try {
+            var FAQ = new Faq({
+                question: req.body.questionFAQ,
+                answer: req.body.answerFAQ,
+                date: Date.now()
+            });
+
+            await FAQ.save(function(){
+                res.redirect('back');
+            });
+            
+        } catch (err) {
+            console.log(err);
         }
     }
 
