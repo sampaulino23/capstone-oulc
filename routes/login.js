@@ -111,4 +111,8 @@ router.get('/removetag', oulccontroller.removeTag);
 // Messages
 router.get('/sendmessage', specificrequestcontroller.sendMessage);
 
+// For changes to feedback
+router.get('/savependingfeedbackchanges', oulccontroller.savePendingFeedback);
+router.get('/getpendingfeedbacks', oulccontroller.getPendingFeedbacks);
+
 module.exports = router;

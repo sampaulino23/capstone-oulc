@@ -48,9 +48,108 @@ $(window).bind('beforeunload', function() {
             console.log(err);
         }
     });
+
+    // for feedback
+    const role = $('#currentRole').val();
+
+    if (role == 'Staff') {
+        // disable checkbox if status counter is within [2, 4, 5, 6, 7, 8]
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [2, 4, 5, 6, 7, 8];
+
+        console.log(statusCounter);
+
+        if (!(statusListDisabled.includes(statusCounter))) {
+            var comments = [];
+
+            $('div.comments-container>div').each(function(){
+                var contractversionid = $(this).attr('id');
+                var content = $(this).find('#pendingFeedbackTextArea').val();
+        
+                let comment = {
+                    contractversionid: contractversionid,
+                    content: content
+                }
+        
+                comments.push(comment);
+            });
+        
+            $.ajax({
+                url: "/savependingfeedbackchanges",
+                method: "GET",
+                contentType: "application/json",
+                data: {comments: comments},
+                success: function() {
+                    console.log('SUCCESS');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+    } else if (role == 'Attorney') {
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [1, 2, 3, 5, 7, 8];
+
+        console.log(statusCounter);
+
+        // also disable checkbox if assignedAttorney is not the same as current user
+        const assignedAttorney = $('#assignedAttorneyId').val();
+        const currentUser = $('#currentUserId').val();
+
+        if (!(statusListDisabled.includes(statusCounter) || currentUser != assignedAttorney)) {
+            var comments = [];
+
+            $('div.comments-container>div').each(function(){
+                var contractversionid = $(this).attr('id');
+                var content = $(this).find('#pendingFeedbackTextArea').val();
+        
+                let comment = {
+                    contractversionid: contractversionid,
+                    content: content
+                }
+        
+                comments.push(comment);
+            });
+        
+            $.ajax({
+                url: "/savependingfeedbackchanges",
+                method: "GET",
+                contentType: "application/json",
+                data: {comments: comments},
+                success: function() {
+                    console.log('SUCCESS');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+    }
+
+    // const fileid = $('#fileIdSelectedForFeedback').val();
+    // const content = $('#pendingFeedbackTextArea').val();
+
+    // $.ajax({
+    //     url: "/savependingfeedbackchanges",
+    //     method: "GET",
+    //     contentType: "application/json",
+    //     data: {
+    //         fileid: fileid,
+    //         content: content
+    //     },
+    //     success: function() {
+    //         console.log('SUCCESS');
+    //     },
+    //     error: function(err) {
+    //         console.log(err);
+    //     }
+    // });
 });
 
 $(window).on('load', function() {
+
+    console.log('LOAD BOI');
 
     var fileidSelected = $('#fileSelected').find(":selected").val();
 
@@ -73,6 +172,39 @@ $(window).on('load', function() {
     embedPDFViewFull.setAttribute('width', '100%');
     embedPDFViewFull.setAttribute('height', '800px');
     fileViewFull.append(embedPDFViewFull);
+
+    // change file selected text under feedback tab
+    $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
+    $('#fileIdSelectedForFeedback').val(fileidSelected);
+
+    function checkPendingFeedbacks() {
+        var pendingFeedbacksFileIds = [];
+
+        $('.pending-feedback').each(function() {
+            pendingFeedbacksFileIds.push($(this).attr('id'));
+        });
+    }
+
+    checkPendingFeedbacks();
+    console.log(pendingFeedbacksFileIds);
+
+    $.ajax({
+        url: "/getpendingfeedbacks",
+        method: "GET",
+        contentType: "application/json",
+        data: {
+            pendingFeedbacksFileIds: pendingFeedbacksFileIds,
+        },
+        success: function(res) {
+            // if (res.hasPendingFeedback) {
+            //     $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
+            // }
+            console.log('SUCCESS');
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 
     // get current role
     const role = $('#currentRole').val();
@@ -357,6 +489,32 @@ $(document).ready(() => {
         fileView.append(embedPDFView);
         fileViewFull.append(embedPDFViewFull);
 
+        // // change file selected text under feedback tab
+        // $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
+        // $('#fileIdSelectedForFeedback').val($('#fileSelected option:selected').val());
+
+        // $.ajax({
+        //     url: "/getpendingfeedback",
+        //     method: "GET",
+        //     contentType: "application/json",
+        //     data: {
+        //         fileid: fileid,
+        //     },
+        //     success: function(res) {
+
+        //         console.log(res.hasPendingFeedback);
+
+        //         if (res.hasPendingFeedback) {
+        //             $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
+        //         } else {
+        //             $('#pendingFeedbackTextArea').val('');
+        //         }
+        //         console.log('SUCCESS');
+        //     },
+        //     error: function(err) {
+        //         console.log(err);
+        //     }
+        // });
 
         $.ajax({
             url: "/getcontractversions",

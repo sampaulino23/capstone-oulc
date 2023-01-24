@@ -11,6 +11,8 @@ const crypto = require('crypto');
 const User = require('../models/User.js');
 const ContractRequest = require('../models/ContractRequest.js');
 const ContractType = require('../models/ContractType.js');
+const ContractVersion = require('../models/ContractVersion.js');
+const Contract = require('../models/Contract.js');
 const Status = require('../models/Status.js');
 const Template = require('../models/Template.js');
 const Role = require('../models/Role.js');
@@ -19,6 +21,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
+const PendingFeedback  = require('../models/PendingFeedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 
@@ -52,7 +55,7 @@ function getStaffWaiting (month, day, year, contractrequests, waiting) {
     }
 }
 
-function getStaffToReview (month, day, year, contractrequests, toreview) {
+function getStaffTosew (month, day, year, contractrequests, toreview) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
         if (contractrequests[i].statusCounter == "3"){
@@ -209,7 +212,7 @@ const oulccontroller = {
             if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
-                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+                // getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
             else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
@@ -944,6 +947,77 @@ const oulccontroller = {
     },
 
     deleteRepositoryFile: async (req, res) => {
+        try {
+            console.log('Delete Repo File');
+
+            const repositoryfileid = req.body.deleteRepositoryFile;
+            const fileid = req.params.fileid;
+    
+            // delete repositoryfile object
+            await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+    
+            const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketRepo.delete(doc._id);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        
+
+        res.redirect('back');
+    },
+
+    savePendingFeedback: async (req, res) => {
+        try {
+            console.log('SAVE PENDING FEEDBACK');
+
+            const comments = req.query.comments;
+
+            console.log(comments);
+
+            for (comment of comments) {
+                var contractversionid = comment.contractversionid.substring(4);
+
+                console.log(contractversionid);
+
+                var findComment = await PendingFeedback.findOne({contractVersion: contractversionid}).exec();
+
+                if (findComment) {  // if comments is already there
+                    console.log('has existing comment');
+
+                    // console.log(findContractVersion.comment);
+                    // console.log(comment.content);
+
+                    var success = await PendingFeedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+
+                } else {    // if no comment
+                    console.log('no comment');
+
+                    let newComment = new PendingFeedback({
+                        contractVersion: contractversionid,
+                        user_id: req.user._id,
+                        content: comment.content,
+                        status: 'Pending'
+                    });
+    
+                    var insertComment = await newComment.save();
+                    // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
+                }
+
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+
+    deleteRepositoryFile: async (req, res) => {
 
         try {
             console.log('Delete Repo File');
@@ -1001,6 +1075,41 @@ const oulccontroller = {
                 res.redirect('back');
             });
             
+        } catch (err) {
+            console.log(err);
+        }
+    },
+            
+    getPendingFeedbacks: async (req, res) => {
+        try {
+
+            console.log("GET PENDING FEEDBACKS");
+
+            const pendingFeedbacksFileIds = req.query.pendingFeedbacksFileIds;
+            console.log(pendingFeedbacksFileIds);
+
+            // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+            // console.log(contract);
+
+            // const pendingFeedback = await PendingFeedback.findOne({contract: contractVersion.contract._id}).exec();
+            // console.log(pendingFeedback);
+
+            // if (pendingFeedback) { // if found
+            //     res.send({
+            //         hasPendingFeedback: true,
+            //         pendingFeedback: pendingFeedback
+            //     });
+
+            //     console.log('true');
+
+            // } else { // if not found, create a new one
+            //     res.send({
+            //         hasPendingFeedback: false
+            //     })
+
+            //     console.log('false');
+            // }
+
         } catch (err) {
             console.log(err);
         }
@@ -1070,6 +1179,7 @@ const oulccontroller = {
                     res.redirect('back');
                 });
             }
+            
         } catch (err) {
             console.log(err);
         }

@@ -29,6 +29,10 @@ const ContractVersionSchema = mongoose.Schema({
     versionNote: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'VersionNote',
+    },
+    comment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
     }
 });
 
