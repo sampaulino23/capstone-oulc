@@ -149,6 +149,8 @@ $(window).bind('beforeunload', function() {
 
 $(window).on('load', function() {
 
+    console.log('LOAD BOI');
+
     var fileidSelected = $('#fileSelected').find(":selected").val();
 
     // change contractFileId for revision history feature
@@ -171,27 +173,38 @@ $(window).on('load', function() {
     embedPDFViewFull.setAttribute('height', '800px');
     fileViewFull.append(embedPDFViewFull);
 
-    // // change file selected text under feedback tab
-    // $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
-    // $('#fileIdSelectedForFeedback').val(fileidSelected);
+    // change file selected text under feedback tab
+    $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
+    $('#fileIdSelectedForFeedback').val(fileidSelected);
 
-    // $.ajax({
-    //     url: "/getpendingfeedback",
-    //     method: "GET",
-    //     contentType: "application/json",
-    //     data: {
-    //         fileid: fileidSelected,
-    //     },
-    //     success: function(res) {
-    //         if (res.hasPendingFeedback) {
-    //             $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
-    //         }
-    //         console.log('SUCCESS');
-    //     },
-    //     error: function(err) {
-    //         console.log(err);
-    //     }
-    // });
+    function checkPendingFeedbacks() {
+        var pendingFeedbacksFileIds = [];
+
+        $('.pending-feedback').each(function() {
+            pendingFeedbacksFileIds.push($(this).attr('id'));
+        });
+    }
+
+    checkPendingFeedbacks();
+    console.log(pendingFeedbacksFileIds);
+
+    $.ajax({
+        url: "/getpendingfeedbacks",
+        method: "GET",
+        contentType: "application/json",
+        data: {
+            pendingFeedbacksFileIds: pendingFeedbacksFileIds,
+        },
+        success: function(res) {
+            // if (res.hasPendingFeedback) {
+            //     $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
+            // }
+            console.log('SUCCESS');
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 
     // get current role
     const role = $('#currentRole').val();

@@ -20,12 +20,12 @@ const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
-const Comment = require('../models/Comment.js');
+const Comment = require('../models/PendingFeedback.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
 const Template = require('../models/Template.js');
-const PendingFeedback = require('../models/Comment.js');
+const PendingFeedback = require('../models/PendingFeedback.js');
 
     const conn = mongoose.createConnection(url);
 

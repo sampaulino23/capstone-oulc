@@ -27,12 +27,13 @@
     {{#compare user_role '!=' 'Requester'}}
     <div class="container comments-container">
         {{#each latestversioncontracts}}
-        <div class="comment" id="cvId{{_id}}">
+        <div class="pending-feedback" id="cvId{{_id}}">
+            <p>{{filename}}</p>
             {{!-- <p id="fileSelectedForFeedback">File: </p> --}}
             {{!-- <input type="hidden" id="fileIdSelectedForFeedback" value=""> --}}
             <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="pendingFeedbackTextArea" style="height: 100px">{{#compare comment.status '==' 'Pending'}}{{comment.content}}{{/compare}}</textarea>
-                <label for="pendingFeedbackTextArea">Comments</label>
+                <label for="pendingFeedbackTextArea"></label>
             </div>
         </div>
         {{/each}}

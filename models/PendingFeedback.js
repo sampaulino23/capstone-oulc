@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const CommentSchema = mongoose.Schema({
+const PendingFeedbackSchema = mongoose.Schema({
     contractVersion: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ContractVersion',
@@ -27,4 +27,4 @@ const CommentSchema = mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('PendingFeedback', PendingFeedbackSchema);

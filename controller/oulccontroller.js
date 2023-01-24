@@ -21,7 +21,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
-const Comment = require('../models/Comment.js');
+const PendingFeedback  = require('../models/PendingFeedback.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -207,7 +207,7 @@ const oulccontroller = {
             if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
-                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+                // getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
             else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
@@ -964,25 +964,31 @@ const oulccontroller = {
 
     savePendingFeedback: async (req, res) => {
         try {
-            console.log('Save Pending Feedback');
+            console.log('SAVE PENDING FEEDBACK');
 
             const comments = req.query.comments;
 
+            console.log(comments);
+
             for (comment of comments) {
                 var contractversionid = comment.contractversionid.substring(4);
-                var findComment = await Comment.findOne({contractVersion: contractversionid}).exec();
+
+                console.log(contractversionid);
+
+                var findComment = await PendingFeedback.findOne({contractVersion: contractversionid}).exec();
 
                 if (findComment) {  // if comments is already there
+                    console.log('has existing comment');
 
                     // console.log(findContractVersion.comment);
                     // console.log(comment.content);
 
-                    var success = await Comment.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+                    var success = await PendingFeedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
 
                 } else {    // if no comment
                     console.log('no comment');
 
-                    let newComment = new Comment({
+                    let newComment = new PendingFeedback({
                         contractVersion: contractversionid,
                         user_id: req.user._id,
                         content: comment.content,
@@ -1000,33 +1006,35 @@ const oulccontroller = {
         }
     },
     
-    getPendingFeedback: async (req, res) => {
+    getPendingFeedbacks: async (req, res) => {
         try {
 
-            const fileid = req.query.fileid;
-            console.log(fileid);
+            console.log("GET PENDING FEEDBACKS");
 
-            const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
-            console.log(contract);
+            const pendingFeedbacksFileIds = req.query.pendingFeedbacksFileIds;
+            console.log(pendingFeedbacksFileIds);
 
-            const pendingFeedback = await PendingFeedback.findOne({contract: contractVersion.contract._id}).exec();
-            console.log(pendingFeedback);
+            // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+            // console.log(contract);
 
-            if (pendingFeedback) { // if found
-                res.send({
-                    hasPendingFeedback: true,
-                    pendingFeedback: pendingFeedback
-                });
+            // const pendingFeedback = await PendingFeedback.findOne({contract: contractVersion.contract._id}).exec();
+            // console.log(pendingFeedback);
 
-                console.log('true');
+            // if (pendingFeedback) { // if found
+            //     res.send({
+            //         hasPendingFeedback: true,
+            //         pendingFeedback: pendingFeedback
+            //     });
 
-            } else { // if not found, create a new one
-                res.send({
-                    hasPendingFeedback: false
-                })
+            //     console.log('true');
 
-                console.log('false');
-            }
+            // } else { // if not found, create a new one
+            //     res.send({
+            //         hasPendingFeedback: false
+            //     })
+
+            //     console.log('false');
+            // }
 
         } catch (err) {
             console.log(err);
