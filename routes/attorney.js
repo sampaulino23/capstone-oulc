@@ -89,6 +89,7 @@ router.get('/', oulccontroller.getDashboard);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
 router.get('/FAQs', oulccontroller.getFAQs);
+router.get('/policy', oulccontroller.getPolicy);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);

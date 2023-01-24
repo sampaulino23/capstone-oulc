@@ -38,7 +38,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myPolicyTable" style = "word-break: break-word;">
-                                        {{#each templates}}
+                                        {{#each policyFiles}}
                                         <tr style="cursor: pointer;" id="{{_id}}" onclick="">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
@@ -51,7 +51,11 @@
                                                         <ul class="dropdown-menu">
                                                             <li class = "bi-replace"><button class="dropdown-item get-edit-user" type="button"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#replaceTemplateModal{{@index}}">Replace</button>
+                                                                    data-bs-target="#replaceTemplateModal{{@index}}">View Revision History</button>
+                                                            </li>
+                                                            <li class = "bi-replace"><button class="dropdown-item get-edit-user" type="button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#replaceTemplateModal{{@index}}">Uploade Policy</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -79,6 +83,29 @@
                 </div>
             </div>
     </body>
+    
+    <!-- Upload Policy Modal -->
+    <div class="modal fade" id="uploadPolicyModal" tabindex="-1" aria-labelledby="uploadPolicyModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="w-100 modal-title" id="exampleModalLabel">Upload New Policy</h5>
+                    <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <form action="/staff/uploadpolicy" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                            <label for="file" class="modal-text custom-file-label">File Upload</label><br>
+                            <input type="file" name="file" id="file" class="custom-file-input" accept="application/pdf" required><br><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="upload-btn-modal" id="uploadPolicyBtn">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </html>
 <script>
     $(document).ready(() => {

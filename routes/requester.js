@@ -92,6 +92,7 @@ router.get('/', requestercontroller.getHome);
 router.get('/templates', staffcontroller.getTemplates);
 router.get('/FAQs', oulccontroller.getFAQs);
 router.get('/repository', requestercontroller.getRepository);
+router.get('/policy', oulccontroller.getPolicy);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/createrequest', requestercontroller.getCreateRequest);
 router.post('/createcontractrequest', upload.fields([

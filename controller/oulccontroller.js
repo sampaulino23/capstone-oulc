@@ -20,6 +20,7 @@ const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
 const Faq = require('../models/Faq.js');
+const Policy = require('../models/Policy.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -33,6 +34,9 @@ conn.once('open', () => {
     });
     gridfsBucketRepo = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'repository'
+    })
+    gridfsBucketPolicy = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'policy'
     })
 });
 
@@ -1035,15 +1039,37 @@ const oulccontroller = {
     getPolicy: async (req, res) => {
         try {
 
-            // const faqs = await Faq.find({}).lean().sort({date: 1}).exec();
+            const policyFiles = await Policy.find({}).lean()
+            .sort({uploadDate: 1})
+            .exec();
     
             res.render('policy', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
-                // contracttypes: contracttypes,
-                // templates: templates
+                policyFiles: policyFiles
             });
 
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUploadPolicy: async (req, res) => {
+        try {
+            if (req.file != null) {
+                const filename = req.file.filename;
+                const file_id = mongoose.Types.ObjectId(req.file.id);
+                const fileuploaddate = req.file.uploadDate;
+            
+                const newPolicy = new Policy({
+                    name: filename,
+                    file: file_id,
+                    uploadDate: fileuploaddate
+                });
+                newPolicy.save(function(){
+                    res.redirect('back');
+                });
+            }
         } catch (err) {
             console.log(err);
         }
