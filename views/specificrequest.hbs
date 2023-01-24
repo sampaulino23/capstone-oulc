@@ -16,7 +16,7 @@
     <script src="/js/specificrequest.js" type="text/javascript"></script>
 </head>
 
-<body>
+<body onload="checkAction()">
     <div id="header">
         Contract Approval Request Details
         <!--<input type="hidden" id="requestid" value="{{contractrequest._id}}">-->
@@ -51,16 +51,15 @@
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
             {{#ifCond user_role '==' "Requester"}}
             
-                {{#compare contractrequest.status '==' "For Legal Review"}}
-                    {{#unless withNegotiation}}
-                        <button style="margin-right: 10px;" class="full-size-btn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
-                    {{/unless}}
-                {{/compare}}
+                {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
+                    <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
+                {{/unless}}
 
                 {{#compare contractrequest.status '==' "Cleared"}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
+                    <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#reportIssueModal">Report Issue</button>
                 {{else}}
-                    <button style="margin-right: 10px;" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
+                    <button id = "cancelBtn" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/compare}}
             {{/ifCond}}
         </div>
@@ -95,30 +94,6 @@
             <div id = "right-col" class="col-6">
                 <!-- Nav tabs -->
                 {{#ifCond user_role '==' "Attorney"}}
-                {{#ifCond contractrequest.status '==' "Pending"}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li>
-                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
-                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
-                    </li>
-                     <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectNegotiation()">Negotiation</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
-                    </li>
-                </ul>
-                {{else}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -136,20 +111,20 @@
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
+                    {{#if withNegotiationFiles}}
                     <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
-                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
+                        type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
+                    {{/if}}
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{/ifCond}}
                 {{/ifCond}}
 
                 {{#ifCond user_role '==' "Staff"}}
-                {{#ifCond contractrequest.status '==' "Pending"}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li>
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
@@ -172,30 +147,6 @@
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
                     </li>
                 </ul>
-                {{else}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li>
-                        <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
-                            type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                            type="button" role="tab" aria-controls="files" onclick="selectFiles()">Files</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
-                            type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
-                            type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
-                    </li>
-                    <li>
-                        <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
-                    </li>
-                </ul>
-                {{/ifCond}}
                 {{/ifCond}}
 
                 {{#ifCond user_role '==' "Requester"}}
@@ -216,9 +167,9 @@
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
                     </li>
-                     <li>
+                    <li>
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
-                            type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
+                        type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
@@ -227,10 +178,6 @@
                 </ul>
                 {{/ifCond}}
                 
-                {{!-- {{#compare contractrequest.status "!=" "Pending"}}
-                
-                {{/compare}} --}}
-
                 <!-- Tab panes -->
 
                 <div class="tab-content">
@@ -262,6 +209,20 @@
 
     </div>
 
+    <!-- ACTION TOAST -->
+    <div class="toast-container" style="position: fixed; top: 10px; right: 10px;">
+        <div class="toast" id="action-toast">
+            <div class="toast-header">
+                <strong class="me-auto"><i class="bell-fill"></i> Action Done </strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                The request has been successfully <span id="action-done"></span>.
+            </div>
+        </div>
+    </div>
+
 </body>
 
 <!-- UPLOAD NEW VERSION MODAL -->
@@ -276,8 +237,12 @@
                 <input type="hidden" class="form-control" id="contractVersionIdForNewVersion" name="contractVersionIdForNewVersion">
                 <div class="modal-body">
                     <div class="mb-3">
+                        {{#each feedback}}
+                        {{#if @last}}
                         <label for="oulcComments" class="form-label">OULC Comments</label>
-                        <textarea class="form-control" id="oulcComments" name="oulcComments" rows="3"></textarea>
+                        <textarea class="form-control" id="oulcComments" name="oulcComments" rows="3">{{content}}</textarea>
+                        {{/if}}
+                        {{/each}}
                     </div>
                     <div class="mb-3">
                         <label for="thirdPartyResponse" class="form-label">3rd Party Response</label>
@@ -389,7 +354,7 @@
 
 <!-- Route to Another Attorney Modal -->
 <div class="modal fade" id="routeAttorneyModal" tabindex="-1" aria-labelledby="routeAttorneyModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="w-100 modal-title" id="exampleModalLabel">Route to Another Attorney</h5>
@@ -442,7 +407,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="mark-as-btn cancel-modal-btn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                <button type="submit" class="mark-as-btn cancel-modal-btn cancelRequestBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
             </div>
         </div>
     </div>
@@ -450,7 +415,7 @@
 
 <!-- Upload Signed Contract Modal -->
 <div class="modal fade" id="uploadRepositoryFile" tabindex="-1" aria-labelledby="uploadRepositoryFile" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="w-100 modal-title" id="exampleModalLabel">Upload Signed Contract/s</h5>
@@ -464,6 +429,11 @@
                         <div class="">
                             <label for="signedContractFiles" class="modal-text form-label">File Upload</label><br>
                             <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" required multiple><br><br>
+                        </div>
+
+                        <div class="{{contractrequest.contractType.code}}" id = "signedInstitutionalFile-div">
+                            <label for="signedInstitutionalFiles" class="modal-text form-label">File Upload (Institutional MOA) </label><br>
+                            <input class="form-control" type="file" name="signedInstitutionalFiles" id="signedInstitutionalFiles" accept="application/pdf" required multiple><br><br>
                         </div>
                         
                         <div class="modal-footer">
@@ -519,14 +489,47 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class ="mark-as-btn" value="Add Third Party">Add Third Party</button>
+                <button type="submit" class ="mark-as-btn" value="Add Third Party">Send Link</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 
-    
+<!-- Report Issue Modal -->
+<div class="modal fade" id="reportIssueModal" tabindex="-1" aria-labelledby="reportIssueModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Report Issue</h5>
+            </div>
+            <div class="modal-body">
+                <div class="custom-file mb-3">
+
+                    <form action="/" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="">
+                        <div class="">
+                            <label for="" class="modal-text form-label">Title</label><br>
+                            <input type="text" name="" class="text-input editable" id="" required>
+                        </div><br>
+                        <div class="">
+                            <label for="signedContractFiles" class="modal-text form-label">File Upload</label><br>
+                            <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" required multiple><br><br>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn" id="{{contractrequest._id}}">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>            
+
+        </div>
+    </div>
+</div>
+
+
 </html>
 
 
@@ -537,11 +540,16 @@
         var requestAssignedAttyID = $("#assignedAttorneyId").val();
         const role = $('#currentRole').val();
         var statusTextDiv = $("#statusTextDiv");
+        var statusTextVal = $('#contractStatus').val();
 
         if (role == "Attorney" && userID != requestAssignedAttyID) {
             statusTextDiv.prepend("Rerouted (");
             statusTextDiv.append(")");
         }
+        if (statusTextVal == "Cancelled") {
+            document.getElementById("cancelBtn").style.display = "none";
+        }
+
     });
         
         function removeSelectedClass() {
@@ -579,6 +587,37 @@
         function selectFeedback() {
             removeSelectedClass();
             document.getElementById("feedback-tab").classList.add("selected");
+        }
+
+        function checkAction() {
+            var action = sessionStorage.getItem("action");
+            // alert (action);
+
+            if (action != null) {
+
+                if (action == "forlegalreview") {
+                    document.getElementById("action-done").innerHTML = "marked as for legal review"
+                }
+                else if (action == "forrevision") {
+                    document.getElementById("action-done").innerHTML = "marked as for revision"
+                }
+                else if (action == "cleared") {
+                    document.getElementById("action-done").innerHTML = "marked as cleared"
+                }
+                else if (action == "rerouted") {
+                    document.getElementById("action-done").innerHTML = "rerouted to another attorney"
+                }
+                else if (action == "submit-revised") {
+                    document.getElementById("action-done").innerHTML = "marked as revised"
+                }
+
+                $("#action-toast").toast({
+                    delay: 5000
+                });
+                // Show toast  
+                $("#action-toast").toast("show");
+                sessionStorage.clear();
+            }                
         }
 </script>
 

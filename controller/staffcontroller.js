@@ -135,7 +135,7 @@ const staffcontroller = {
         } catch (err) {
             console.log(err);
         }
-    },
+    }
 
     
 }

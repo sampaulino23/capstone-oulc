@@ -56,7 +56,6 @@ router.use(function(req,res,next){
 // multer to accept images
 const multer = require('multer');
 const specificrequestcontroller = require('../controller/specificrequestcontroller');
-const negotiationcontroller = require('../controller/negotiationcontroller');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -99,9 +98,6 @@ router.get('/forgotpassword', logincontroller.getForgotPassword);
 
 // render sendresetpassword page
 router.post('/forgotpasswordconfirmation', logincontroller.postForgotPassword);
-
-// render third party negotiation page
-router.get('/thirdparty/:id/:id', negotiationcontroller.getThirdPartyNegotiation);
 
 // set reviewed documents for a specific contract request
 router.get('/setrevieweddocuments', specificrequestcontroller.setReviewedDocuments);

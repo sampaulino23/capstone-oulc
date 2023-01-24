@@ -5,6 +5,11 @@ const RepositoryFileSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        enum: ["others", "institutional"],
+        required: true
+    },
     requestid: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

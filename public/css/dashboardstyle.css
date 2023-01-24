@@ -18,6 +18,7 @@
     margin-right: 20px;
     margin-bottom: 15px;
     border-style: none;
+    font-family: 'Poppins', sans-serif;
 }
 
 .nav-item {
@@ -66,9 +67,8 @@
 .indiv-cards {
     font-family: 'Poppins';
     font-style: normal;
-    color: #000;
     width: 400px;
-    height: 240px;
+    max-height: 240px;
     background: #D9D9D9;
     border-left: 10px solid #00713D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -86,6 +86,7 @@
 }
 
 .dashboard-item {
+    font-family: 'Work Sans', sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 36px;
@@ -151,7 +152,7 @@
 }
 
 .datefilter:hover, .datefilter:active {
-    color: #000;
+    background: #00713D;
     transition: .25s;
 }
 
@@ -160,7 +161,7 @@
     font-style: normal;
     color: #000;
     width: 400px;
-    height: 240px;
+    height: auto;
     background: #D9D9D9;
     border-left: 10px solid #00713D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -188,10 +189,14 @@
     margin-bottom: 5px;
 }
 
+.dashboard-img-file {
+    width: 60px;
+}
+
 .dashboard-title {
     text-align: center;
     color: #000;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -199,7 +204,7 @@
 
 .item-description {
     text-align: center;
-    color: #93939D;
+    color: #828282;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -222,6 +227,7 @@
 }
 
 .dashboard-item-container {
+    height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }

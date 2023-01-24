@@ -61,6 +61,9 @@ conn.once('open',() => {
 
   gfsRequestDocs = Grid(conn, mongoose.mongo);
   gfsRequestDocs.collection('requestdocuments');
+
+  gfsNegotiation = Grid(conn, mongoose.mongo);
+  gfsNegotiation.collection('negotiation');
 });
 
 const storage = new GridFsStorage({
@@ -81,7 +84,28 @@ const storage = new GridFsStorage({
     });
   }
 });
+
+const negotiationStorage = new GridFsStorage({
+  db: promise,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = file.originalname;
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'negotiation'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
 const upload = multer({ storage });
+const negotiationUpload = multer({ storage : negotiationStorage });
 
 router.use(require('connect-flash')());
 
@@ -109,8 +133,12 @@ router.post('/addthirdparty', specificrequestcontroller.postAddThirdParty);
 
 // requesting office start
 router.post('/uploadRepositoryFile', upload.fields([
-  { name: 'signedContractFiles'}
+  { name: 'signedContractFiles'},
+  { name: 'signedInstitutionalFiles' }
 ]), specificrequestcontroller.postUploadRepositoryFile);
+router.post('/uploadNegotiationFile', negotiationUpload.fields([
+  { name: 'negotiationFiles'}
+]), specificrequestcontroller.postUploadNegotiationFile);
 router.get('/requester/:id', specificrequestcontroller.getRequesterSpecificRequest);
 router.get('/cancelRequest', specificrequestcontroller.cancelRequest);
 // requesting office end

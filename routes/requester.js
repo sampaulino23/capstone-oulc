@@ -90,7 +90,9 @@ const upload = multer( {
 
 router.get('/', requestercontroller.getHome);
 router.get('/templates', staffcontroller.getTemplates);
+router.get('/FAQs', oulccontroller.getFAQs);
 router.get('/repository', requestercontroller.getRepository);
+router.get('/policy', oulccontroller.getPolicy);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/createrequest', requestercontroller.getCreateRequest);
 router.post('/createcontractrequest', upload.fields([
@@ -102,6 +104,8 @@ router.get('/checkstagingcontractversion', requestercontroller.checkStagingContr
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagingContractVersion);
 router.post('/submitrevision', requestercontroller.submitRevision);
+router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
+router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);

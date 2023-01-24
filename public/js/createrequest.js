@@ -33,6 +33,42 @@ $(document).ready(() => {
         }
     });
 
+    $("#contractingpartyojt").change(function() {
+        if ($("#contractingpartyojt").val() == "Others") {
+            $("#contractingparty-div").prop('hidden', false);
+            $("#contractingparty").prop('required',true);
+            $(".company-list-note").css("display", "none");
+        } else {
+            $("#contractingparty-div").prop('hidden', true);
+            $("#contractingparty").prop('required',false);
+            $(".company-list-note").css("display", "block");
+        }
+    })
+
+    $("#documenttype").change(function() {
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA" || 
+        $("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
+            $("#contractingpartyojt-div").prop('hidden', false);
+            $("#contractingparty").prop('required',false);
+            $("#contractingparty-div").prop('hidden', true);
+            $(".company-list-note").css("display", "block");
+            // $("#contractingparty").removeAttr('required');​​​​​
+            if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
+                $("#company-other").prop('hidden', true);
+                $(".company-list-note").css("display", "block");
+            }
+            else {
+                $("#company-other").prop('hidden', false);
+                $(".company-list-note").css("display", "block");
+            }
+        } else {
+            $("#contractingpartyojt-div").prop('hidden', true);
+            $("#contractingparty-div").prop('hidden', false);
+            $("#contractingparty").prop('required',true);
+            $(".company-list-note").css("display", "none");
+        }
+    })
+
     $(".amtdate").change(function() { 
         var amount = document.getElementById("amount").value;
         var duration = document.getElementById("duration").value;
@@ -67,7 +103,7 @@ $(document).ready(() => {
         if(amount > 1000000){
             $('#signatorylevel').val(1);
         }
+
+        $(".signatory-change-note").css("display", "block");
     });
-
 });
-

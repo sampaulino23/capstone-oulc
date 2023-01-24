@@ -91,7 +91,7 @@
 }
 
 .create-btn:hover, .create-btn:active {
-    color: #000;
+    background: rgba(0, 113, 61, 1);
     transition: .25s;
 }
 

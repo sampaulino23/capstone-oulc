@@ -23,6 +23,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
+const NegotiationFile = require('../models/NegotiationFile.js');
 
 const conn = mongoose.createConnection(url);
 
@@ -30,9 +31,9 @@ const conn = mongoose.createConnection(url);
 let gridfsBucket, gridfsBucketRequestDocuments;
 
 conn.once('open', () => {
-    // gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
-    //     bucketName: 'repository'
-    // });
+    gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'negotiation'
+    });
     gridfsBucketRequestDocuments = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'requestdocuments'
     });
@@ -87,15 +88,41 @@ const requestercontroller = {
                 .exec();
 
             var today = new Date();
+            var activeCompanies = [];
+        
+            const contractrequests = await ContractRequest.find({
+                $and: [
+                    {effectivityStartDate: { $lte: today}},
+                    {effectivityEndDate: { $gte: today}},
+                    {contractType: "63ca41be60b5247c900bb91c"},
+                    {statusCounter: "7"}
+                ]
+            }).lean().sort({}).exec();
+            const contracttypes = await ContractType.find({}).lean().sort({ code:1 }).exec();
 
-            const contracttypes = await ContractType.find({}).lean().exec();
+            // console.log(contractrequests);
+
+            //push company name to array
+            for (i = 0; i < contractrequests.length; i++) {
+                activeCompanies.push(contractrequests[i].contractingParty);
+            }
+
+            //convert company names to a format where first letter is uppercase and remaining are lowercase
+            activeCompanies = activeCompanies.map(function(v) {
+                return v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+            });
+
+            //remove duplicates
+            var uniqueActiveCompanies = [...new Set(activeCompanies)]
+            uniqueActiveCompanies.sort();
 
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 department: user.department.name,
                 requestdate: today,
-                contracttypes: contracttypes
+                contracttypes: contracttypes,
+                activeCompanies: uniqueActiveCompanies
             });
 
         } catch (err) {
@@ -149,6 +176,17 @@ const requestercontroller = {
 
             var trackingNumber = '' + year + month + day + base32 + '-' + contracttype.code;
 
+            var contractingparty;
+
+            if ((contracttype.code == "B" || contracttype.code == "B1") && req.body.contractingpartyojt != "Others") {
+                contractingparty = req.body.contractingpartyojt;
+                // console.log ("IF: " + contractingparty);
+            }
+            else {
+                contractingparty = req.body.contractingparty;
+                // console.log ("ELSE: " + contractingparty);
+            }
+
             var contractrequest = new ContractRequest({
                 requester: req.user._id,
                 contractType: req.body.documenttype, 
@@ -161,13 +199,13 @@ const requestercontroller = {
                 contactPerson: req.body.contactperson,
                 contactNum: req.body.contactno,
                 reviewType: req.body.reviewtype,
-                signatoryLevel: req.body.signatorylevel, //Test only. Automate
+                signatoryLevel: req.body.signatorylevel, 
                 signatoryName: req.body.signatoryname,
                 templateUsed: req.body.templateused,
-                sectionChangeNotes: req.body.sectionchanges, //Test only. Input field to be changed
+                sectionChangeNotes: req.body.sectionchanges, 
                 thirdPartyRepresentativeName: req.body.thirdpartyname,
                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
-                contractingParty: req.body.contractingparty,
+                contractingParty: contractingparty,
                 amountInvolved: req.body.amount,
                 assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });
@@ -520,6 +558,56 @@ const requestercontroller = {
             console.log(err);
         }
     },
+
+    postDeleteNegotiationFile: async (req, res) => {
+        try {
+
+            const negotiationfileid = req.body.deleteNegotiationFile;
+
+            // delete template object
+            const negotiationFile = await NegotiationFile.findByIdAndDelete(negotiationfileid).exec();
+
+            if (negotiationFile) {
+
+                // delete pdf file in gridfs
+                const cursor2 = await gridfsBucket.find({_id: mongoose.Types.ObjectId(negotiationFile.file)}, {limit: 1});
+                cursor2.forEach((doc, err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        gridfsBucket.delete(doc._id);
+                    }
+                });
+            }
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getDownloadNegotiationFile: async (req, res) => {
+        try {
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucket.find({_id: mongoose.Types.ObjectId(fileid)});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                }
+                const downStream = gridfsBucket.openDownloadStream(doc._id);
+
+                res.setHeader('Content-Type', doc.contentType);
+                res.setHeader('Content-Disposition', `attachment; filename=${doc.filename}`);
+
+                downStream.pipe(res);
+            });
+
+        } catch (err) {
+            console.log(err);
+        } 
+    }
 }
 
 module.exports = requestercontroller;

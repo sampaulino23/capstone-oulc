@@ -22,6 +22,8 @@ const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
 const PendingFeedback  = require('../models/PendingFeedback.js');
+const Faq = require('../models/Faq.js');
+const Policy = require('../models/Policy.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -35,6 +37,9 @@ conn.once('open', () => {
     });
     gridfsBucketRepo = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'repository'
+    })
+    gridfsBucketPolicy = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'policy'
     })
 });
 
@@ -238,13 +243,16 @@ const oulccontroller = {
 
     getDashboardDate: async (req, res) => {
         try {
-            var startdate = req.body.startdate;
-            var enddate = req.body.enddate;
+            var startdate = new Date(req.body.startdate);
+            var enddate = new Date(req.body.enddate);
+
+            var updatedstartdate = startdate.setUTCHours(0,0,0,0);
+            var updatedenddate = enddate.setUTCHours(23,59,59,999);
 
             console.log(startdate + " until " + enddate);
 
             //const contractrequests = await ContractRequest.find({requestDate: dateToday}).lean()
-            const contractrequests = await ContractRequest.find({requestDate: {$gte: new Date(startdate).toISOString(), $lte: new Date(enddate).toISOString()}}).lean()
+            const contractrequests = await ContractRequest.find({requestDate: {$gte: updatedstartdate, $lte: updatedenddate}}).lean()
                 .populate({
                     path: 'requester',
                     populate: {
@@ -259,6 +267,8 @@ const oulccontroller = {
                 })
                 .sort()
                 .exec();
+
+            console.log(contractrequests.length);
 
             const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
             const contractTypes = await ContractType.find({}).lean().exec();
@@ -1004,8 +1014,72 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+
     },
+
+    deleteRepositoryFile: async (req, res) => {
+
+        try {
+            console.log('Delete Repo File');
     
+            const repositoryfileid = req.body.deleteRepositoryFile;
+            const fileid = req.params.fileid;
+    
+            // delete repositoryfile object
+            await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
+    
+            const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketRepo.delete(doc._id);
+                }
+            });
+    
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    },
+
+    getFAQs: async (req, res) => {
+        try {
+
+            const faqs = await Faq.find({}).lean().sort({date: 1}).exec();
+    
+            res.render('faqs', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                faqs: faqs
+                // contracttypes: contracttypes,
+                // templates: templates
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postAddFAQs: async (req, res) => {
+        try {
+            var FAQ = new Faq({
+                question: req.body.questionFAQ,
+                answer: req.body.answerFAQ,
+                date: Date.now()
+            });
+
+            await FAQ.save(function(){
+                res.redirect('back');
+            });
+            
+        } catch (err) {
+            console.log(err);
+        }
+    },
+            
     getPendingFeedbacks: async (req, res) => {
         try {
 
@@ -1036,6 +1110,76 @@ const oulccontroller = {
             //     console.log('false');
             // }
 
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postDeleteFAQ: async (req, res) => {
+        try {
+
+            const faqid = req.body.deleteFAQ;
+
+            // delete faq object
+            await Faq.findByIdAndDelete(faqid).exec();
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUpdateFAQ: async (req, res) => {
+        try {
+
+            const faqid = req.body.updateFAQ;
+
+            // update faq object
+            await Faq.findOneAndUpdate({ _id: faqid }, { $set: { question: req.body.updateQuestionFAQ, answer: req.body.updateAnswerFAQ } });
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getPolicy: async (req, res) => {
+        try {
+
+            const policyFiles = await Policy.find({}).lean()
+            .sort({uploadDate: 1})
+            .exec();
+    
+            res.render('policy', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                policyFiles: policyFiles
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUploadPolicy: async (req, res) => {
+        try {
+            if (req.file != null) {
+                const filename = req.file.filename;
+                const file_id = mongoose.Types.ObjectId(req.file.id);
+                const fileuploaddate = req.file.uploadDate;
+            
+                const newPolicy = new Policy({
+                    name: filename,
+                    file: file_id,
+                    uploadDate: fileuploaddate
+                });
+                newPolicy.save(function(){
+                    res.redirect('back');
+                });
+            }
+            
         } catch (err) {
             console.log(err);
         }

@@ -18,12 +18,14 @@ function searchRequestTable() {
         td5 = tr[i].getElementsByTagName("td")[5]; 
         td6 = tr[i].getElementsByTagName("td")[6]; 
         td7 = tr[i].getElementsByTagName("td")[7]; 
+        td9 = tr[i].getElementsByTagName("td")[9]; 
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) 
           || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1)
           || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) || (td5.innerHTML.toUpperCase().indexOf(filter) > -1) 
-          || (td6.innerHTML.toUpperCase().indexOf(filter) > -1) || (td7.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+          || (td6.innerHTML.toUpperCase().indexOf(filter) > -1) || (td7.innerHTML.toUpperCase().indexOf(filter) > -1) 
+          || (td9.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -375,8 +377,8 @@ function viewPendingRequester(){
     document.getElementById("waiting-tab-requester").classList.remove("selected");
     document.getElementById("pending-tab-requester").classList.add("selected");
     document.getElementById("forlegalreview-tab-requester").classList.remove("selected");
-    document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("cancelled-tab-atty").classList.remove("selected");
+    document.getElementById("cleared-tab-requester").classList.remove("selected");
+    document.getElementById("cancelled-tab-requester").classList.remove("selected");
 }
 
 function viewToReview(){ 
@@ -1318,6 +1320,9 @@ $(document).ready(function() {
     const currentRole = $('#currentRole').val();
     const currentUserID = $('#currentId').val();
     // var loggedUser = document.getElementById('userrole').textContent;
+    $("th.default").each(function(){
+        sorttable.innerSortFunction.apply(this, []);
+    });
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
@@ -1347,7 +1352,7 @@ $(document).ready(function() {
 /* REPOSITORY TABLE */
 //Search Filter 
 function searchRepositoryTable() {
-    var input, filter, table, tr, td, td2, i;
+    var input, filter, table, tr, td, td2, td3, td4, i;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
       table = document.getElementById("myRepositoryTable");
@@ -1357,11 +1362,12 @@ function searchRepositoryTable() {
         td = tr[i].getElementsByTagName("td")[0]; // for column one
         td1 = tr[i].getElementsByTagName("td")[1]; // for column two
         td2 = tr[i].getElementsByTagName("td")[2];
+        td3 = tr[i].getElementsByTagName("td")[3];
         td4 = tr[i].getElementsByTagName("td")[4]; //tags hidden column
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) ||
-          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+          (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1) || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -1379,7 +1385,7 @@ function repositoryFilterContractType(){ //for contract type dropdown
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        contracttype = cells[1] || null; // gets the 2nd `td` or nothing
+        contracttype = cells[2] || null; // gets the 2nd `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if (filter === "All" || !contracttype || (filter === contracttype.textContent)) {
             row.style.display = ""; // shows this row

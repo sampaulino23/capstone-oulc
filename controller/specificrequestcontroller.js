@@ -18,6 +18,7 @@ const Role = require('../models/Role.js');
 const Department = require('../models/Department.js');
 const { ObjectId } = require('mongoose');
 const RepositoryFile = require('../models/RepositoryFile.js');
+const NegotiationFile = require('../models/NegotiationFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
 const Comment = require('../models/PendingFeedback.js');
@@ -30,7 +31,7 @@ const PendingFeedback = require('../models/PendingFeedback.js');
     const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket, gridfsBucketRequestDocuments, gridfsBucketTemplates;
+let gridfsBucket, gridfsBucketRequestDocuments, gridfsBucketTemplates, gridfsBucketNegotiations;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
@@ -42,9 +43,12 @@ conn.once('open', () => {
     gridfsBucketTemplates = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'templates'
     });
+    gridfsBucketNegotiations = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'negotiations'
+    });
 });
 
-var client = require('@draftable/compare-api').client('nZahgI-test', 'df477162e99840cc7e43197b8075eaca');
+var client = require('@draftable/compare-api').client('JflCrb-test', 'ea42b274e485e04e9aa58ae65f40434a');
 var comparisons = client.comparisons;
 
 const specificrequestcontroller = {
@@ -55,22 +59,15 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
-            var messages2 = null;
+            var withNegotiationFiles = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
 
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
             }
 
-            if (negotiation) {
-                console.log("INSIDE NEGOTIATION");
-                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
-            }
-
-            
             const contractrequest = await ContractRequest.findById(path).lean()
                 .populate({
                     path: 'requester',
@@ -182,6 +179,18 @@ const specificrequestcontroller = {
                 }
             }
 
+            const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'requester'
+                }
+            }).exec();
+
+            if (negotiationfiles.length != 0) {
+                withNegotiationFiles = true;
+            }
+
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
             const roleAttorney = await Role.findOne({name: 'Attorney'}).exec();
@@ -202,9 +211,9 @@ const specificrequestcontroller = {
                 contractversions: contractversions,
                 attorneys: attorneys,
                 conversation: conversation,
-                negotiation: negotiation,
                 messages: messages,
-                messages2: messages2
+                negotiationfiles: negotiationfiles,
+                withNegotiationFiles: withNegotiationFiles
             });
 
         } catch (err) {
@@ -218,21 +227,12 @@ const specificrequestcontroller = {
             var path = req.path.split('/')[2];
             var userid = req.user._id;
             var messages = null;
-            var messages2 = null;
-            var withNegotiation = false;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
-            const negotiation = await Conversation.findOne({contractRequest: path, members: userid, type: "negotiation"}).lean().exec();
-            
+        
             if (conversation) {
                 console.log("INSIDE CONVERSATION");
                 messages = await Message.find({conversationId: conversation._id}).lean().exec(); 
-            }
-
-            if (negotiation) {
-                console.log("INSIDE NEGOTIATION");
-                messages2 = await Message.find({conversationId: negotiation._id}).lean().exec(); 
-                withNegotiation = true;
             }
             
             const contractrequest = await ContractRequest.findById(path).lean()
@@ -354,6 +354,14 @@ const specificrequestcontroller = {
                 }
             }
 
+            const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
+            .populate({
+                path: 'requestid',
+                populate: {
+                    path: 'requester'
+                }
+            }).exec();
+
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
             res.render('specificrequest', {
@@ -366,11 +374,9 @@ const specificrequestcontroller = {
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
                 conversation: conversation,
-                negotiation: negotiation,
                 messages: messages,
-                messages2: messages2,
                 stagingcontractversions: stagingcontractversions,
-                withNegotiation: withNegotiation
+                negotiationfiles: negotiationfiles
             });
 
         } catch (err) {
@@ -416,8 +422,44 @@ const specificrequestcontroller = {
 
             console.log("Inside For Revision Office Staff");
 
+            const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId }); //for email
+            const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
             await feedback.save();
+
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "capstone.samantha@gmail.com",
+                    pass: "uapnxnyyyqqsfkax"
+                }
+            });
+
+            // change "to" field to your dummy email so you can see the password
+            const options = {
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                to: "migfranzbro@gmail.com", //change to tester/user email 
+                subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
+                text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
+                + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
+                + "\nContract Request Details: \n" 
+                + "\nTitle: " + contractrequest.requestTitle + "\n"
+                + "Request Date: " + contractrequest.requestDate + "\n"
+                + "Document Type: " + documenttype.name + "\n"
+                + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
+                + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
+                + "\nRegards," 
+                + "\nOffice of the University Legal Counsel" 
+            }
+
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: " + info.response);
+            })       
 
             res.redirect('back');
         } catch (err) {
@@ -438,6 +480,8 @@ const specificrequestcontroller = {
 
             console.log("Inside For Revision Attorney");
 
+            const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId }); //for email
+            const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
             await feedback.save();
 
@@ -463,6 +507,40 @@ const specificrequestcontroller = {
                 // latestversioncontracts.push(latestversioncontract);
             }
 
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "capstone.samantha@gmail.com",
+                    pass: "uapnxnyyyqqsfkax"
+                }
+            });
+
+            // change "to" field to your dummy email so you can see the password
+            const options = {
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                to: "migfranzbro@gmail.com", //change to tester/user email 
+                subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
+                text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
+                + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
+                + "\nContract Request Details: \n" 
+                + "\nTitle: " + contractrequest.requestTitle + "\n"
+                + "Request Date: " + contractrequest.requestDate + "\n"
+                + "Document Type: " + documenttype.name + "\n"
+                + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
+                + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
+                + "\nRegards," 
+                + "\nOffice of the University Legal Counsel" 
+            }
+
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: " + info.response);
+            })       
+
             res.redirect('back');
         } catch (err) {
             console.log(err);
@@ -473,7 +551,44 @@ const specificrequestcontroller = {
         try {
             console.log("Inside Mark as Cleared");
             var contractid = req.query.contractid;
+
+            const contractrequest =  await ContractRequest.findOne({ _id: contractid }); //for email
+            const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
             await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { statusCounter: 7} });
+
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                user: "capstone.samantha@gmail.com",
+                pass: "uapnxnyyyqqsfkax"
+                            }
+                });
+            
+            // change "to" field to your dummy email so you can see the password
+            const options = {
+                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                to: "migfranzbro@gmail.com", //change to tester/user email 
+                subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - Approved",
+                text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
+                + contractrequest.trackingNumber + " has been approved and marked as Completed. Please upload signed contract/s.\n"
+                + "\nContract Request Details: \n" 
+                + "\nTitle: " + contractrequest.requestTitle + "\n"
+                + "Request Date: " + contractrequest.requestDate + "\n"
+                + "Document Type: " + documenttype.name + "\n"
+                + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
+                + "\nRegards," 
+                + "\nOffice of the University Legal Counsel \n" 
+                + "\nLog-in now to view request: http://localhost:3000" 
+                }
+            
+            transporter.sendMail (options, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                    console.log("Sent: " + info.response);
+            })     
 
         } catch (err) {
             console.log(err);
@@ -530,12 +645,51 @@ const specificrequestcontroller = {
                 for (signedContractFile of files.signedContractFiles) {
                     let newRepositoryFile = new RepositoryFile({
                         name: signedContractFile.filename,
+                        type: "others",
                         requestid: mongoose.Types.ObjectId(requestid),
                         uploadDate: signedContractFile.uploadDate,
                         file: signedContractFile.id
                     })
-
                     await newRepositoryFile.save();
+                }
+            }
+
+            if (files.signedInstitutionalFiles != null) {
+                for (signedInstitutionalFile of files.signedInstitutionalFiles) {
+                    let newInstitutionalFile = new RepositoryFile({
+                        name: signedInstitutionalFile.filename,
+                        type: "institutional",
+                        tags: ["Institutional MOA"], 
+                        requestid: mongoose.Types.ObjectId(requestid),
+                        uploadDate: signedInstitutionalFile.uploadDate,
+                        file: signedInstitutionalFile.id
+                    })
+                    await newInstitutionalFile.save();
+                }
+            }
+
+            res.redirect('back');
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postUploadNegotiationFile: async (req, res) => { // requesting office
+        try {
+
+            const files = req.files;
+            const requestid = req.body.uploadNegotiationFileID;
+
+            if (files.negotiationFiles != null) {
+                for (negotiationFile of files.negotiationFiles) {
+                    let newNegotiationFile = new NegotiationFile({
+                        name: negotiationFile.filename,
+                        requestid: mongoose.Types.ObjectId(requestid),
+                        uploadDate: negotiationFile.uploadDate,
+                        file: negotiationFile.id
+                    })
+
+                    await newNegotiationFile.save();
                 }
             }
 
@@ -1206,7 +1360,8 @@ const specificrequestcontroller = {
             let newMessage = new Message({
                 conversationId: conversationid,
                 sender: sender,
-                content: message
+                content: message,
+                date: Date.now()
             }); 
 
             await newMessage.save();
@@ -1234,20 +1389,6 @@ const specificrequestcontroller = {
             const thirdpartyrep = await ThirdParty.findOne({email: emailInput}).lean()
             .exec();
 
-            const atty = await User.findOne({_id: "6318a6b4c0119ed0b4b6bb82"}).lean()
-            .exec();
-
-            var membersList = [req.user._id];
-            membersList.push(atty._id);
-            membersList.push(thirdpartyrep._id);
-        
-            var negotiation = new Conversation({
-                contractRequest: requestID,
-                members: membersList,
-                type: "negotiation"
-            });
-            await negotiation.save();
-
              // code section below is for sending the password to the account's email address
              const transporter = nodemailer.createTransport({
                 service: "gmail",
@@ -1260,10 +1401,9 @@ const specificrequestcontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "migfranzbro@gmail.com", //change to user.email when done testing
+                to: "capstone.samantha@gmail.com", //change to user.email when done testing
                 subject: "Third Party Negotiation",
-                text: "Hi, we would like to invite you to negotiate with us regarding a contract, godbless: " + 
-                " http://localhost:3000/thirdparty/" + requestID + "/" + thirdpartyrep._id
+                text: "Hi! There is a contract request for approval that needs negotiation with the third party representative. The OULC would like to have a discussion with you regarding a contract. Godbless!"
             }
 
             transporter.sendMail (options, function (err, info) {

@@ -13,7 +13,7 @@ a:hover, a:visited, a:link, a:active
     color: #fff;
 }
 
-nav{
+nav {
     font-family: 'Work Sans', sans-serif;
     background: #00713D;
     height: 80px;
@@ -111,7 +111,7 @@ dl, ol, ul {
     left: 121px;
     top: 10px;
     position: absolute;
-    font-family: 'Work Sans';
+    font-family: 'Work Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
@@ -120,7 +120,7 @@ dl, ol, ul {
 
 #accountName {
     color: #FFFFFF;
-    font-family: 'Work Sans';
+    font-family: 'Work Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 15px;

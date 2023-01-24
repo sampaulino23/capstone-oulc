@@ -259,6 +259,18 @@ $(window).on('load', function() {
 
             isDisabled = true;
         }
+    } else if (role == 'Requester') {
+        // disable checkbox if status counter is within [1, 2, 3, 4, 8]
+        const statusCounter = parseInt($('#statusCounter').val());
+        const statusListDisabled = [1, 2, 3, 7, 8];
+
+        console.log(statusCounter);
+
+        if (statusListDisabled.includes(statusCounter)) {
+            console.log('tanggal');
+
+            $('#addThirdPartyBtn').attr('hidden', true);
+        }
     }
 
     $.ajax({
@@ -416,6 +428,12 @@ $(window).on('load', function() {
 
 $(document).ready(() => {
 
+    var contractTypeCode = $("#signedInstitutionalFile-div").attr("class"); // show file upload for institutional moa if type selected involves institutional moa
+    if (contractTypeCode != "B1") {
+        $("#signedInstitutionalFile-div").prop('hidden', true);
+        $("#signedInstitutionalFiles").prop('required',false);
+    } 
+    
     $('#uploadNewVersion').click(function () {
         const fileid = $('#fileSelected').val();
 
@@ -571,6 +589,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "forlegalreview");
                 console.log('SUCCESS');
                 location.reload();
             }, 350),
@@ -588,6 +607,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "cleared");
                 console.log('SUCCESS');
                 location.reload();
             }, 350),
@@ -631,6 +651,7 @@ $(document).ready(() => {
                 routedattorney: routedattorney
             },
             success: setTimeout(function () {
+                sessionStorage.setItem("action", "rerouted");
                 console.log('SUCCESS');
                 location.reload();
             }, 100),
@@ -639,6 +660,14 @@ $(document).ready(() => {
             }
         });
 
+    });
+
+    $('.forrevision').click(function () {
+        sessionStorage.setItem("action", "forrevision");
+    });
+
+    $('.submit-revised').click(function () {
+        sessionStorage.setItem("action", "submit-revised");
     });
 
     // $('.forrevision').click(function () {

@@ -61,6 +61,7 @@ let gfs;
 conn.once('open',() => {
   gfs = Grid(conn, mongoose.mongo);
   gfs.collection('templates');
+  gfs.collection('policy');
 });
 
 const storage = new GridFsStorage({
@@ -94,12 +95,39 @@ const upload = multer({
 },
 });
 
+const policyStorage = new GridFsStorage({
+  db: promise,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = file.originalname;
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'policy'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
+const policyUpload = multer({ storage : policyStorage });
+
 router.use(require('connect-flash')());
 
 router.get('/', oulccontroller.getDashboard);
 router.post('/dashboard', oulccontroller.getDashboardDate);
 router.get('/contractrequests', staffcontroller.getRequests);
 router.get('/templates', staffcontroller.getTemplates);
+router.get('/FAQs', oulccontroller.getFAQs);
+router.post('/addFAQs', oulccontroller.postAddFAQs);
+router.post('/deleteFAQ', oulccontroller.postDeleteFAQ);
+router.post('/updateFAQ', oulccontroller.postUpdateFAQ);
+router.get('/policy', oulccontroller.getPolicy);
+router.post('/uploadpolicy', policyUpload.single('file'), oulccontroller.postUploadPolicy);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);

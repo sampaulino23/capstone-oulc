@@ -145,7 +145,7 @@
 
 .mark-btn {
     width: 100%;
-    padding:12px 87px;
+    padding: 8px 15px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -310,7 +310,7 @@
 }
 
 #request-btns {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .file-selected {
@@ -345,7 +345,7 @@
     float: right;
 }
 
-.upload-signed-btn {
+.upload-signed-btn, .cancelRequest {
     margin-right: 1em;
 }
 
@@ -370,7 +370,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .marked-complete-review-btn {
     width: 100%;
-    padding:12px 87px;
+    padding:8px 15px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -386,10 +386,10 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 }
 
 .mark-as-for-revision {
+    width: 100%;
     background: #F66969;
     color: #fff;
-    width: 100%;
-    padding:12px 87px;
+    padding: 8px 15px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -524,7 +524,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     display: flex;
     flex-direction: row;
     margin-right: 20px;
-    padding: 12px 20px;
+    padding: 12px 15px;
     background: rgba(139, 139, 139, 0.6);
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
     color: #fff;
@@ -542,7 +542,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     letter-spacing: 1px;
     display: flex;
     flex-direction: row;
-    padding: 12px 20px;
+    padding: 12px 15px;
     background: #0C8039;
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
     color: #fff;
@@ -555,7 +555,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     letter-spacing: 1px;
     display: flex;
     flex-direction: row;
-    padding: 12px 20px;
+    padding: 12px 15px;
     background: #F66969;
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,.25);
     color: #fff;
@@ -640,4 +640,14 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 #routeAttorneyBtn:hover, #uploadNewVersion:hover {
     background: #00713D;
     transition: .25s;
+}
+
+#feedbackDiv {
+    white-space: pre-line;
+    display: flex;
+}
+
+.editable {
+    background: #fff;
+    cursor:text;
 }

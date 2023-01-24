@@ -55,6 +55,7 @@
     box-sizing: border-box;
     padding:30px 40px;
     color:#000;
+    overflow-x: hidden;
 }
 
 .home-href, .home-href:visited, .home-href:link, .home-href:active
@@ -397,4 +398,19 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 #receiptBtnsDiv {
     display: flex;
     justify-content: flex-end;
+}
+
+.steps-subheader {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: solid #00713D 2px;
+    margin-bottom: 10px;
+}
+
+.signatory-change-note, .company-list-note {
+    font-size: 14px;
+    color: #00713D;
+    display:none;
+    margin-left:200px;
+    margin-top: -10px;
 }
