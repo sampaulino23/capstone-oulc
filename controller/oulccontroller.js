@@ -1030,6 +1030,23 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getPolicy: async (req, res) => {
+        try {
+
+            // const faqs = await Faq.find({}).lean().sort({date: 1}).exec();
+    
+            res.render('policy', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                // contracttypes: contracttypes,
+                // templates: templates
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
