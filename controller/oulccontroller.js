@@ -1015,6 +1015,21 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    postUpdateFAQ: async (req, res) => {
+        try {
+
+            const faqid = req.body.updateFAQ;
+
+            // update faq object
+            await Faq.findOneAndUpdate({ _id: faqid }, { $set: { question: req.body.updateQuestionFAQ, answer: req.body.updateAnswerFAQ } });
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
