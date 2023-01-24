@@ -1000,6 +1000,21 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    postDeleteFAQ: async (req, res) => {
+        try {
+
+            const faqid = req.body.deleteFAQ;
+
+            // delete faq object
+            await Faq.findByIdAndDelete(faqid).exec();
+
+            res.redirect('back');
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
