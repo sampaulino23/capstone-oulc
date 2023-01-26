@@ -1091,40 +1091,43 @@ const oulccontroller = {
 
             var pendingFeedbacksOfLatestVersionContracts = [];
 
-            for (pendingFeedbackFileId of pendingFeedbacksFileIds) {
-
-                var contractVersionId = pendingFeedbackFileId.substring(4);
-
-                var pendingFeedback = await PendingFeedback.findOne({contractVersion: contractVersionId}).exec();
-                // console.log(pendingFeedback);
-
-                if (pendingFeedback) { // if found
-                    // res.send({
-                    //     hasPendingFeedback: true,
-                    //     pendingFeedback: pendingFeedback
-                    // });
-
-                    // console.log('true');
-
-                } else { // if not found, create a new one
-                    // res.send({
-                    //     hasPendingFeedback: false,
-                    //     pendingFeedback: false
-                    // })
-
-                    // console.log('false');
+            if (pendingFeedbacksFileIds) {
+                
+                for (pendingFeedbackFileId of pendingFeedbacksFileIds) {
+    
+                    var contractVersionId = pendingFeedbackFileId.substring(4);
+    
+                    var pendingFeedback = await PendingFeedback.findOne({contractVersion: contractVersionId}).exec();
+                    // console.log(pendingFeedback);
+    
+                    if (pendingFeedback) { // if found
+                        // res.send({
+                        //     hasPendingFeedback: true,
+                        //     pendingFeedback: pendingFeedback
+                        // });
+    
+                        // console.log('true');
+    
+                    } else { // if not found, create a new one
+                        // res.send({
+                        //     hasPendingFeedback: false,
+                        //     pendingFeedback: false
+                        // })
+    
+                        // console.log('false');
+                    }
+    
+                    pendingFeedbacksOfLatestVersionContracts.push(pendingFeedback);
+    
                 }
-
-                pendingFeedbacksOfLatestVersionContracts.push(pendingFeedback);
-
+    
+                console.log(pendingFeedbacksOfLatestVersionContracts);
+    
+                res.send({pendingFeedbacks: pendingFeedbacksOfLatestVersionContracts});
+    
+                // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+                // console.log(contract);
             }
-
-            console.log(pendingFeedbacksOfLatestVersionContracts);
-
-            res.send({pendingFeedbacks: pendingFeedbacksOfLatestVersionContracts});
-
-            // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
-            // console.log(contract);
 
         } catch (err) {
             console.log(err);
