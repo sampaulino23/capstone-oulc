@@ -75,20 +75,33 @@
                         <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
                     </div>
                     <div class="col label-and-input mb-3">
-                        <label for="signatorylevel" class="form-label">Signatory Level
+                        <a data-bs-toggle="modal" data-bs-target="#signatoryPolicyModal" href="#signatoryPolicyModal"><label for="signatorylevel" class="form-label"  id = "signatoryLabel">Signatory Level
                             <i class="fa fa-question-circle" aria-hidden="true" title = "The signatory level automatically changes based on type,&#013;scope, duration, & amount of the contract"></i>
-                        </label>                      
+                        </label></a>
                         <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" value = "5" readonly>
                     </div>
                     <span class ="signatory-change-note mb-3">Note: Signatory level has been changed. Please double check on the name of the signatory.</span>
                 </div>
                 
 
-                <div class = "steps-subheader mb-3">Company Details</div>
+                <div class = "steps-subheader mb-3">Document & Contracting Party Details</div>
+                <div class="label-and-input solo-row mb-3">
+                    <label for="documenttype" class="form-label">Document Type*</label>
+                    <select class="text-input" aria-label="Document Type" name="documenttype" id="documenttype">
+                        {{#each contracttypes}}
+                        <option value="{{_id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <span id = "torReminder" class ="tor-reminder mb-3">Note: For multiple TORs, please submit all the necessary files all at once in a single request.</span>
+                <div class="label-and-input solo-row mb-3">
+                    <label for="documenttitle" class="form-label">Document Title*</label>
+                    <input type="text" name="documenttitle" class="text-input" id="documenttitle" placeholder="e.g. MOA Between DLSU and Accenture" required>
+                </div>
                 <div class = "row">
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
                         <div class="col label-and-input break-text" id = "contractingparty-active-div">
-                            <label for="contractingpartyojt" class="form-label">Company Name*</label>
+                            <label for="contractingpartyojt" class="form-label">Contracting Party Name*</label>
                             <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
                             {{#each activeCompanies}}
                             <option value="{{this}}">{{this}}</option>
@@ -98,7 +111,7 @@
                         </div>
                     </div>
                     <div class="col label-and-input mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
-                        <label for="contractingparty" class="break-text form-label">Company Name*</label>
+                        <label for="contractingparty" class="break-text form-label">Contracting Party Name*</label>
                         <input type="text" name="contractingparty" class="text-input" id="contractingparty" required>
                     </div>
                     <span class ="company-list-note mb-3">Note: Companies that are listed above have valid, existing institutional MOAs.</span>
@@ -115,18 +128,6 @@
                     </div>
                 </div>
                 <div class = "steps-subheader mb-3">Approval Request Details</div>
-                <div class="label-and-input solo-row mb-3">
-                    <label for="documenttitle" class="form-label">Document Title*</label>
-                    <input type="text" name="documenttitle" class="text-input" id="documenttitle" placeholder="e.g. MOA Between DLSU and Accenture" required>
-                </div>
-                <div class="label-and-input solo-row mb-3">
-                    <label for="documenttype" class="form-label">Document Type*</label>
-                    <select class="text-input" aria-label="Document Type" name="documenttype" id="documenttype">
-                        {{#each contracttypes}}
-                        <option value="{{_id}}">{{name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
                 <div class="label-and-input solo-row mb-3">
                     <label for="subject" class="form-label">Subject Matter*</label>
                     <input type="text" name="subject" class="text-input" id="subject" placeholder = "e.g. Signing of MOA between student Juan Dela Cruz and Accenture PH for T2 practicum" required>
@@ -226,6 +227,75 @@
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
                             <button id="submitRequestForm" class="submit-modal-btn disabled" disabled>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signatory Policy Modal -->
+            <div class="modal fade modal-lg" id="signatoryPolicyModal" tabindex="-1" aria-labelledby="signatoryPolicyModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Signatory Policy</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="signatoryPolicy">
+                                <div>
+                                    <div class="table-guidelines">The automation of signatory levels follow the guidelines below:</div><br>
+                                    <div id = "policyModalHeader">TABLE 2: Duration of Contract</div><br>
+                                    <table id = "policyModalTable" style="width:100%">
+                                    <tr>
+                                        <th>Duration of Contract</th>
+                                        <th>Authorized Signatory</th>
+                                    </tr>
+                                    <tr>
+                                        <td>More than 3 years</td>
+                                        <td>Level 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>More than 1 year to 3 years</td>
+                                        <td>Level 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Up to 1 year</td>
+                                        <td>Level 5</td>
+                                    </tr>
+                                    </table>
+                                </div>
+                                <div><br><br>
+                                    <div id = "policyModalHeader">TABLE 3: Amount of Contract</div><br>
+                                    <table id = "policyModalTable" style="width:100%">
+                                    <tr>
+                                        <th>Amount of Contract</th>
+                                        <th>Authorized Signatory</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Above 1 Million</td>
+                                        <td>Level 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Above 500,000 to 1 Million</td>
+                                        <td>Level 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Above 100,000 to 500,000</td>
+                                        <td>Level 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>100,000 and below</td>
+                                        <td>Level 5</td>
+                                    </tr>
+                                    </table>
+                                </div><br>
+                                <div>Last Updated: Jan. 27, 2023</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

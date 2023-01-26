@@ -407,10 +407,40 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-bottom: 10px;
 }
 
-.signatory-change-note, .company-list-note {
+.signatory-change-note, .company-list-note, .tor-reminder {
     font-size: 14px;
     color: #00713D;
     display:none;
     margin-left:200px;
     margin-top: -10px;
+}
+
+#torReminder {
+    display: block;
+}
+
+#signatoryLabel {
+    color: #000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#signatoryLabel:hover {
+    color:#00713D;
+    transition: 0.25s;
+}
+
+#policyModalHeader {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 18px;
+}
+
+tr, td, th {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.table-guidelines {
+    text-align: center;
 }

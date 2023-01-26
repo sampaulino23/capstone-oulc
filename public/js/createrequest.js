@@ -67,6 +67,13 @@ $(document).ready(() => {
             $("#contractingparty").prop('required',true);
             $(".company-list-note").css("display", "none");
         }
+
+        if ($("#documenttype").find('option:selected').text() == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work") {
+            $(".tor-reminder").css("display", "block");
+        }
+        else {
+            $(".tor-reminder").css("display", "none");
+        }
     })
 
     $(".amtdate").change(function() { 
