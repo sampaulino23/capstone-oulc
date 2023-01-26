@@ -427,6 +427,17 @@ const specificrequestcontroller = {
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
             // await feedback.save();
 
+            // set status of pendingFeedbacks to 'Submitted'
+            const contracts = await Contract.find({contractRequest: contractrequest}).lean().exec();
+
+            for (contract of contracts) {
+                var latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).exec();
+                    
+                var pendingFeedback = await PendingFeedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
+
+                console.log(pendingFeedback);
+            }
+
             // code section below is for sending the password to the account's email address
             const transporter = nodemailer.createTransport({
                 service: "gmail",

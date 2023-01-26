@@ -1,5 +1,5 @@
 <div id = "feedback-history">
-    {{!-- <div class = "feedback-header">
+    {{!--<div class = "feedback-header">
         Feedback History:
     </div>
     <br>
@@ -23,7 +23,7 @@
             <span>{{content}}</span>
         </div>
     </div>
-    {{/each}} --}}
+    {{/each}}--}}
     {{#compare user_role '!=' 'Requester'}}
     <div class="container comments-container">
         {{#each latestversioncontracts}}
@@ -42,7 +42,8 @@
     <div class = "feedback-header">
         Feedback History:
     </div>
-    {{#each comments}}
+    {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
+    {{#each feedbacks}}
     {{#compare status '==' 'Submitted'}}
     <div id = "feedbackContainer" class = "feedback-container">
         <div id ="feedback-details-div">
