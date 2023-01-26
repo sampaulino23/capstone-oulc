@@ -414,18 +414,18 @@ const specificrequestcontroller = {
 
             var contractRequestId = req.body.addStaffFeedbackID;
 
-            var feedback = new Feedback({
-                contractRequest: req.body.addStaffFeedbackID,
-                user_id: req.user._id,
-                content: req.body.addStaffFeedback
-            });
+            // var feedback = new Feedback({
+            //     contractRequest: req.body.addStaffFeedbackID,
+            //     user_id: req.user._id,
+            //     content: req.body.addStaffFeedback
+            // });
 
             console.log("Inside For Revision Office Staff");
 
             const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId }); //for email
             const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 2 } });
-            await feedback.save();
+            // await feedback.save();
 
             // code section below is for sending the password to the account's email address
             const transporter = nodemailer.createTransport({

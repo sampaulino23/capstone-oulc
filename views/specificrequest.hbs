@@ -322,6 +322,7 @@
             <div class="modal-footer">
                 {{#compare user_role "==" "Staff"}}
                     <form action="/request/forrevision/staff" method="POST">
+                        <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addStaffFeedbackID">
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
@@ -330,6 +331,7 @@
                 {{/compare}}
                 {{#compare user_role "==" "Attorney"}}
                     <form action="/request/forrevision/attorney" method="POST">
+                        <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="addAttorneyFeedbackID">
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
