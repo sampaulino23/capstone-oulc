@@ -314,10 +314,30 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="w-100 modal-title" id="exampleModalLabel">Revision Feedback Form</h5>
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Confirm Mark as For Revision</h5>
             </div>
-
-            <div class="modal-body">
+            <div class="modal-body centered">
+                Are you sure you want to mark the request as for revision?
+            </div>
+            <div class="modal-footer">
+                {{#compare user_role "==" "Staff"}}
+                    <form action="/request/forrevision/staff" method="POST">
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                        </div>
+                    </form>
+                {{/compare}}
+                {{#compare user_role "==" "Attorney"}}
+                    <form action="/request/forrevision/attorney" method="POST">
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mark-as-btn forrevision" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                        </div>
+                    </form>
+                {{/compare}}
+            </div>
+            {{!-- <div class="modal-body">
                 <div class="custom-file mb-3">
                     {{#compare user_role "==" "Staff"}}
                     <form action="/request/forrevision/staff" method="POST">
@@ -347,7 +367,7 @@
                     </form>
                     {{/compare}}
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
