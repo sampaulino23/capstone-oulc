@@ -978,6 +978,7 @@ const oulccontroller = {
 
             const comments = req.query.comments;
 
+            console.log('comments: ');
             console.log(comments);
 
             for (comment of comments) {
@@ -1088,27 +1089,42 @@ const oulccontroller = {
             const pendingFeedbacksFileIds = req.query.pendingFeedbacksFileIds;
             console.log(pendingFeedbacksFileIds);
 
+            var pendingFeedbacksOfLatestVersionContracts = [];
+
+            for (pendingFeedbackFileId of pendingFeedbacksFileIds) {
+
+                var contractVersionId = pendingFeedbackFileId.substring(4);
+
+                var pendingFeedback = await PendingFeedback.findOne({contractVersion: contractVersionId}).exec();
+                // console.log(pendingFeedback);
+
+                if (pendingFeedback) { // if found
+                    // res.send({
+                    //     hasPendingFeedback: true,
+                    //     pendingFeedback: pendingFeedback
+                    // });
+
+                    // console.log('true');
+
+                } else { // if not found, create a new one
+                    // res.send({
+                    //     hasPendingFeedback: false,
+                    //     pendingFeedback: false
+                    // })
+
+                    // console.log('false');
+                }
+
+                pendingFeedbacksOfLatestVersionContracts.push(pendingFeedback);
+
+            }
+
+            console.log(pendingFeedbacksOfLatestVersionContracts);
+
+            res.send({pendingFeedbacks: pendingFeedbacksOfLatestVersionContracts});
+
             // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
             // console.log(contract);
-
-            // const pendingFeedback = await PendingFeedback.findOne({contract: contractVersion.contract._id}).exec();
-            // console.log(pendingFeedback);
-
-            // if (pendingFeedback) { // if found
-            //     res.send({
-            //         hasPendingFeedback: true,
-            //         pendingFeedback: pendingFeedback
-            //     });
-
-            //     console.log('true');
-
-            // } else { // if not found, create a new one
-            //     res.send({
-            //         hasPendingFeedback: false
-            //     })
-
-            //     console.log('false');
-            // }
 
         } catch (err) {
             console.log(err);

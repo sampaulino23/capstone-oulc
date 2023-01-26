@@ -62,9 +62,11 @@ $(window).bind('beforeunload', function() {
         if (!(statusListDisabled.includes(statusCounter))) {
             var comments = [];
 
-            $('div.comments-container>div').each(function(){
+            $('div.comments-container>div.pending-feedback').each(function(){
                 var contractversionid = $(this).attr('id');
-                var content = $(this).find('#pendingFeedbackTextArea').val();
+                console.log(contractversionid);
+                var content = $(this).find('.pending-feedback-textarea').val();
+                console.log(content);
         
                 let comment = {
                     contractversionid: contractversionid,
@@ -80,7 +82,7 @@ $(window).bind('beforeunload', function() {
                 contentType: "application/json",
                 data: {comments: comments},
                 success: function() {
-                    console.log('SUCCESS');
+                    console.log('SAVE PENDING FEEDBACK SUCCESS');
                 },
                 error: function(err) {
                     console.log(err);
@@ -198,7 +200,17 @@ $(window).on('load', function() {
             // if (res.hasPendingFeedback) {
             //     $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
             // }
-            console.log('SUCCESS');
+            console.log(res.pendingFeedbacks);
+
+            for (pendingFeedback of res.pendingFeedbacks) {
+                var cvId = 'cvId' + pendingFeedback.contractVersion;
+                console.log(cvId);
+
+                $('#' + cvId).find('textarea.pending-feedback-textarea').val(pendingFeedback.content);
+                // $('.pending-feedback-textarea').val(pendingFeedback.content);
+            }
+
+            console.log('GET PENDING FEEDBACKS SUCCESS');
         },
         error: function(err) {
             console.log(err);
