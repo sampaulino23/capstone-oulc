@@ -149,8 +149,6 @@ $(window).bind('beforeunload', function() {
 
 $(window).on('load', function() {
 
-    console.log('LOAD BOI');
-
     var fileidSelected = $('#fileSelected').find(":selected").val();
 
     // change contractFileId for revision history feature
@@ -177,8 +175,9 @@ $(window).on('load', function() {
     $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
     $('#fileIdSelectedForFeedback').val(fileidSelected);
 
+    var pendingFeedbacksFileIds = [];
+
     function checkPendingFeedbacks() {
-        var pendingFeedbacksFileIds = [];
 
         $('.pending-feedback').each(function() {
             pendingFeedbacksFileIds.push($(this).attr('id'));
