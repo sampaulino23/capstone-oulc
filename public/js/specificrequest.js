@@ -443,7 +443,15 @@ $(document).ready(() => {
     if (contractTypeCode != "B1") {
         $("#signedInstitutionalFile-div").prop('hidden', true);
         $("#signedInstitutionalFiles").prop('required',false);
-    } 
+    }
+
+    if ($("#statusTextDiv").text() == "Cleared" || $("#statusTextDiv").text() == "Cancelled") {
+        document.getElementById("approveBtn").style.display = "none";
+        // hide for revision button
+        document.getElementById("forRevisionBtn").style.display = "none";
+        // hide for route attorney button
+        document.getElementById("routeAttorneyBtn").style.display = "none";
+    }
     
     $('#uploadNewVersion').click(function () {
         const fileid = $('#fileSelected').val();
