@@ -39,10 +39,11 @@
         {{/each}}
     </div>
     {{/compare}}
-    <div class = "feedback-header">
-        Feedback History:
-    </div>
     {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
+    {{#compare user_role '==' 'Requester'}}
+    <div class = "feedback-header">
+        Current Feedbacks:
+    </div>
     {{#each feedbacks}}
     {{#compare status '==' 'Submitted'}}
     <div id = "feedbackContainer" class = "feedback-container">
@@ -59,12 +60,14 @@
                 </div>
             </div>
         </div>
+        <p><b>Filename: </b>{{contractVersion.filename}}</p>
         <div id = "feedbackDiv" class = "content">
-            {{content}}
+            <b>Comment: </b>{{content}}
         </div>
     </div>
     {{/compare}}
     {{/each}}
+    {{/compare}}
 </div>
 
 {{!-- <script>
