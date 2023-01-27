@@ -13,6 +13,12 @@ a:hover, a:visited, a:link, a:active
     color: #fff;
 }
 
+.dropdown-item:visited
+{
+    text-decoration: none;
+    color: black;
+}
+
 nav {
     font-family: 'Work Sans', sans-serif;
     background: #00713D;

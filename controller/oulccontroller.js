@@ -24,6 +24,7 @@ const Conversation = require('../models/Conversation.js');
 const PendingFeedback  = require('../models/PendingFeedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
+const Notification = require('../models/Notification.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);

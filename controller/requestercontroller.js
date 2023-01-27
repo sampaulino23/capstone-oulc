@@ -24,6 +24,7 @@ const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
+const Notification = require('../models/Notification.js');
 
 const conn = mongoose.createConnection(url);
 
@@ -47,6 +48,7 @@ const requestercontroller = {
             var violationcount = 0;
 
             const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
+            const notifications = await Notification.find({}).lean().exec();
 
             for (i = 0; i < contractrequests.length; i++) {
                 // To calculate the time difference of two dates
@@ -69,7 +71,8 @@ const requestercontroller = {
             res.render('requesterhome', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
-                violationcount: violationcount
+                violationcount: violationcount,
+                notifications: notifications
             });
 
         } catch (err) {
