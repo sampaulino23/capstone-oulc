@@ -128,25 +128,6 @@ $(window).bind('beforeunload', function() {
             });
         }
     }
-
-    // const fileid = $('#fileIdSelectedForFeedback').val();
-    // const content = $('#pendingFeedbackTextArea').val();
-
-    // $.ajax({
-    //     url: "/savependingfeedbackchanges",
-    //     method: "GET",
-    //     contentType: "application/json",
-    //     data: {
-    //         fileid: fileid,
-    //         content: content
-    //     },
-    //     success: function() {
-    //         console.log('SUCCESS');
-    //     },
-    //     error: function(err) {
-    //         console.log(err);
-    //     }
-    // });
 });
 
 $(window).on('load', function() {
@@ -242,6 +223,9 @@ $(window).on('load', function() {
             document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
 
             isDisabled = true;
+
+            // disable feedback textarea
+            $('textarea.pending-feedback-textarea').prop('disabled', true);
         }
     } else if (role == 'Attorney') {
         // disable checkbox if status counter is within [1, 2, 3, 5, 7, 8]
@@ -267,8 +251,10 @@ $(window).on('load', function() {
             $('#routeAttorneyBtn').prop('disabled', true);
             document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
 
-
             isDisabled = true;
+
+            // disable feedback textarea
+            $('textarea.pending-feedback-textarea').prop('disabled', true);
         }
     } else if (role == 'Requester') {
         // disable checkbox if status counter is within [1, 2, 3, 4, 8]
@@ -507,33 +493,6 @@ $(document).ready(() => {
 
         fileView.append(embedPDFView);
         fileViewFull.append(embedPDFViewFull);
-
-        // // change file selected text under feedback tab
-        // $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
-        // $('#fileIdSelectedForFeedback').val($('#fileSelected option:selected').val());
-
-        // $.ajax({
-        //     url: "/getpendingfeedback",
-        //     method: "GET",
-        //     contentType: "application/json",
-        //     data: {
-        //         fileid: fileid,
-        //     },
-        //     success: function(res) {
-
-        //         console.log(res.hasPendingFeedback);
-
-        //         if (res.hasPendingFeedback) {
-        //             $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
-        //         } else {
-        //             $('#pendingFeedbackTextArea').val('');
-        //         }
-        //         console.log('SUCCESS');
-        //     },
-        //     error: function(err) {
-        //         console.log(err);
-        //     }
-        // });
 
         $.ajax({
             url: "/getcontractversions",

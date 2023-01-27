@@ -10,7 +10,6 @@ const ContractVersion = require('../models/ContractVersion.js');
 const StagingContractVersion = require('../models/StagingContractVersion.js');
 const VersionNote = require('../models/VersionNote.js');
 const ReferenceDocument = require('../models/ReferenceDocument.js');
-const Feedback = require('../models/Feedback.js');
 const Message = require('../models/Message.js');
 const ContractType = require('../models/ContractType.js');
 const Status = require('../models/Status.js');
@@ -22,6 +21,7 @@ const NegotiationFile = require('../models/NegotiationFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
 const Comment = require('../models/PendingFeedback.js');
+const FeedbackSet = require('../models/FeedbackSet.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
@@ -129,13 +129,6 @@ const specificrequestcontroller = {
             // To set number of days gap in contract request
             contractrequest.daysDuration = Difference_In_Days;
 
-            const feedback = await Feedback.find({contractRequest : path}).lean()
-                .populate({
-                    path: 'user_id'
-                })
-                .sort({date: -1})
-                .exec();
-
             const contracts = await Contract.find({contractRequest: path}).lean().exec();
 
             var latestversioncontracts = [];
@@ -180,12 +173,12 @@ const specificrequestcontroller = {
             }
 
             const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
-            .populate({
-                path: 'requestid',
-                populate: {
-                    path: 'requester'
-                }
-            }).exec();
+                .populate({
+                    path: 'requestid',
+                    populate: {
+                        path: 'requester'
+                    }
+                }).exec();
 
             if (negotiationfiles.length != 0) {
                 withNegotiationFiles = true;
@@ -204,7 +197,6 @@ const specificrequestcontroller = {
                 user_role:req.user.roleName,
                 user: user,
                 contractrequest: contractrequest,
-                feedback: feedback,
                 comments: comments,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
@@ -254,15 +246,6 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            const comments = await Comment.find({contractRequest: contractrequest})
-                .lean()
-                .populate({
-                    path: 'user_id'
-                })
-                .exec();
-
-            // const feedbacks = await PendingFeedback.find({})
-
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             contractrequest.status = statusList.statusRequester;
@@ -293,13 +276,6 @@ const specificrequestcontroller = {
 
             // To set number of days gap in contract request
             contractrequest.daysDuration = Difference_In_Days;
-
-            const feedback = await Feedback.find({contractRequest : path}).lean()
-                .populate({
-                    path: 'user_id'
-                })
-                .sort({date: -1})
-                .exec();
 
             const contracts = await Contract.find({contractRequest: path}).lean().exec();
 
@@ -385,7 +361,6 @@ const specificrequestcontroller = {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 contractrequest: contractrequest,
-                feedback: feedback,
                 feedbacks: feedbacks,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
