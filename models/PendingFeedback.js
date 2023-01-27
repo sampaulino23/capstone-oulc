@@ -23,6 +23,10 @@ const PendingFeedbackSchema = mongoose.Schema({
     submitDate: {
         type: Date,
         default: Date.now(),
+    },
+    feedbackCounter: {
+        type: Number,
+        default: 1
     }
     
 });
