@@ -261,6 +261,8 @@ const specificrequestcontroller = {
                 })
                 .exec();
 
+            // const feedbacks = await PendingFeedback.find({})
+
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             contractrequest.status = statusList.statusRequester;
@@ -304,6 +306,7 @@ const specificrequestcontroller = {
             var latestversioncontracts = [];
             var contractversions = [];
             var stagingcontractversions = [];
+            var feedbacks = [];
 
             for (contract of contracts) {
                 const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
@@ -318,6 +321,20 @@ const specificrequestcontroller = {
                         }
                     })
                     .exec();
+
+                var pendingFeedback = await PendingFeedback.findOne({contractVersion: latestversioncontract})
+                    .lean()
+                    .populate({
+                        path: 'user_id'
+                    })
+                    .populate({
+                        path: 'contractVersion'
+                    })
+                    .exec();
+
+                console.log(pendingFeedback);
+
+                feedbacks.push(pendingFeedback);
                 
                 latestversioncontracts.push(latestversioncontract);
 
@@ -369,7 +386,7 @@ const specificrequestcontroller = {
                 user_role:req.user.roleName,
                 contractrequest: contractrequest,
                 feedback: feedback,
-                comments: comments,
+                feedbacks: feedbacks,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
