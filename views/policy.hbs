@@ -7,18 +7,21 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-        <script src="/js/oulctablefilter.js" type="text/javascript"></script>
+        <script src="/js/policy.js" type="text/javascript"></script>
         <link rel="stylesheet" href="/css/templatesoulcstyle.css">
     </head>
     <body>
         <div id="header">OULC Policies and Procedures</div>
         <div class="container">
-            <div id = "addnewpolicy-bar">
+            <div class="row" id="addnewpolicy-bar">
                 {{#compare user_role "!=" "Requester"}}
-                <div class="">
+                <div>
                     <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
                 </div>
                 {{/compare}}
+                <div>
+                    <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
+                </div>
             </div>
         </div>
 
