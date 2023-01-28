@@ -407,7 +407,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-bottom: 10px;
 }
 
-.signatory-change-note, .company-list-note, .tor-reminder {
+.signatory-change-note, .company-list-note, .tor-reminder, .student-ojt-reminder, .institutional-moa-reminder {
     font-size: 14px;
     color: #00713D;
     display:none;

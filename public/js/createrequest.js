@@ -74,6 +74,20 @@ $(document).ready(() => {
         else {
             $(".tor-reminder").css("display", "none");
         }
+
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
+            $(".student-ojt-reminder").css("display", "block");
+        }
+        else {
+            $(".student-ojt-reminder").css("display", "none");
+        }
+
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
+            $(".institutional-moa-reminder").css("display", "block");
+        }
+        else {
+            $(".institutional-moa-reminder").css("display", "none");
+        }
     })
 
     $(".amtdate").change(function() { 
