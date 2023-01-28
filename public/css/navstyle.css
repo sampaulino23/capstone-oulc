@@ -158,3 +158,22 @@ dl, ol, ul {
     font-weight: 700;
     font-size: 20px;
 }
+
+#notifBtn {
+    border: none;
+    outline: none;
+    background: none;
+    color: #fff;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+#notifBtn:hover {
+    color: #000;
+    transition: .25s;
+}
+
+.dropdown-item:hover {
+    color: #00713D !important;
+    transition: .25s;
+}
