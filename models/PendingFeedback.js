@@ -6,11 +6,6 @@ const PendingFeedbackSchema = mongoose.Schema({
         ref: 'ContractVersion',
         required: true
     },
-    feedbackSet: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'FeedbackSet',
-        required: true
-    },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

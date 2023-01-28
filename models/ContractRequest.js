@@ -41,6 +41,10 @@ const ContractRequestSchema = mongoose.Schema({
         required: true,
         default: 1
     },
+    feedbackCounter: {
+        type: Number,
+        default: 0
+    },
     contactPerson: {
         type: String,
         required: true

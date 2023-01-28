@@ -15,7 +15,11 @@ const FeedbackSetSchema = mongoose.Schema({
         type: Number,
         default: 1,
         required: true
-    }
+    },
+    feedbacks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PendingFeedback'
+    }]
     
 });
 
