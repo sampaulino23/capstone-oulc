@@ -19,5 +19,45 @@ $(document).ready(() => {
                 }
             }
         }
-    })
+    }),
+    $('tr').click(function () {
+        
+        var policyid = $(this).attr('id');
+
+        $.ajax({
+            url: "/staff/viewpolicy",
+            method: "GET",
+            contentType: "application/json",
+            data: { policyid: policyid },
+            success: function (res) {
+
+                const policyView = $('#policyView');
+                const policyViewFullSize = $('#policyViewFullSize');
+
+                policyView.empty();
+                policyViewFullSize.empty();
+
+                const embedPDFView = document.createElement('embed');
+                embedPDFView.setAttribute('src', `/staff/policy/${res.fileid}`);
+                embedPDFView.setAttribute('width', '100%');
+                embedPDFView.setAttribute('height', '600px');
+
+                const embedPDFViewFullSize = document.createElement('embed');
+                embedPDFViewFullSize.setAttribute('src', `/staff/policy/${res.fileid}`);
+                embedPDFViewFullSize.setAttribute('width', '100%');
+                embedPDFViewFullSize.setAttribute('height', '800px');
+
+                policyView.append(embedPDFView);
+                policyViewFullSize.append(embedPDFViewFullSize)
+
+                $(".full-size-btn").css("display", "block");
+
+                console.log('POLICY VIEW SUCCESS');
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+    });
 });

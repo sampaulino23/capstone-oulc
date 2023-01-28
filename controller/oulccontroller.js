@@ -31,7 +31,7 @@ const FeedbackSet = require('../models/FeedbackSet.js');
 const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
-let gridfsBucket, gridfsBucketRepo;
+let gridfsBucket, gridfsBucketRepo, gridfsBucketPolicy;
 
 conn.once('open', () => {
     gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
@@ -1229,6 +1229,44 @@ const oulccontroller = {
                 });
             }
             
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    viewPolicy: async (req, res) => {
+        try {
+
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    const readstream = gridfsBucketPolicy.openDownloadStream(doc._id);
+                    readstream.pipe(res);
+                } else {
+                    res.status(404).json({
+                        err: 'No file exist'
+                    });
+                }
+            })
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    viewPolicyOnClick: async (req, res) => {
+        try {
+            const policyid = req.query.policyid;
+            const policy = await Policy.findById(policyid).exec();
+    
+            res.send({
+                fileid: policy.file.toString()
+            })
         } catch (err) {
             console.log(err);
         }

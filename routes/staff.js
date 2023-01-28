@@ -136,6 +136,8 @@ router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:fileid', oulccontroller.viewTemplate);
 router.get('/repository', oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
+router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
+router.get('/policy/:fileid', oulccontroller.viewPolicy);
 
 //router.post('/addtag', oulccontroller.addTag);
 
