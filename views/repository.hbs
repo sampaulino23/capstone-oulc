@@ -40,7 +40,7 @@
                                         <th style="width: 18%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Name</th>
                                         <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Document Number</th>
                                         <th style="width: 30%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
-                                        <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                                        <!-- <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th> -->
                                         <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Effective Until</th>
                                         <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Tags</th>
                                         <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
@@ -51,9 +51,9 @@
                                     <tr style="cursor: pointer;" id="{{_id}}" onclick="window.location.href='/staff/viewFile/{{_id}}'">
                                         <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
                                         <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{requestid.trackingNumber}}</td>
-                                        <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{requestid.contractType.name}}</td>
-                                        <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
-                                        <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate requestid.effectivityEndDate}}</td>
+                                        <td id = "contractType" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{requestid.contractType.name}}</td>
+                                        <!-- <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td> -->
+                                        <td id = "endEffectivityDate" class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate requestid.effectivityEndDate}}</td>
                                         <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{tags}}</td>
                                         <td id = "" class="action-cell text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; cursor: default;">
                                             <div id="actions">
@@ -106,5 +106,36 @@
         $('.action-cell').click(function(event){
             event.stopPropagation();
         });
+        
+        var table = document.getElementById("myRepositoryTable");
+        var rows = table.getElementsByTagName("tr");
+
+        for (let row of rows) { // `for...of` loops through the NodeList
+            cells = row.getElementsByTagName("td");
+            var effectivityEndDate = cells[3] || null; // gets the 5th `td` or nothing
+            var docuType = cells[1] || null;
+            var docuTypeText = docuType.textContent;
+            const date = new Date();
+
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            var currentDate = `${month}/${day}/${year}`;
+
+            var date1 = new Date(currentDate);
+            var date2 = new Date(effectivityEndDate.textContent);
+
+            var Difference_In_Time = date2.getTime() - date1.getTime();
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+            if (!effectivityEndDate || Difference_In_Days > 0 && docuTypeText.includes("-B1")) {
+                cells[3].style.background = "#8dc3a2";
+                effectivityEndDate.append(" (Active)");
+            }
+            else if (!effectivityEndDate || Difference_In_Days < 0 && docuTypeText.includes("-B1")) {
+                cells[3].style.background = "#F66969";
+                effectivityEndDate.append(" (Inactive)");
+            }
+        }
     });
 </script>
