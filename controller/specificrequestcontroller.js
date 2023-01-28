@@ -421,14 +421,32 @@ const specificrequestcontroller = {
 
             // set status of pendingFeedbacks to 'Submitted'
             const contracts = await Contract.find({contractRequest: contractrequest}).lean().exec();
+            var feedbacks = [];
 
             for (contract of contracts) {
                 var latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).exec();
                     
                 var pendingFeedback = await PendingFeedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
 
-                console.log(pendingFeedback);
+                if (pendingFeedback) {
+                    console.log(pendingFeedback);
+    
+                    feedbacks.push(pendingFeedback._id);
+                }
             }
+
+            // add feedbackSet object
+            var newFeedbackSet = new FeedbackSet({
+                contractRequest: contractrequest,
+                counter: contractrequest.feedbackCounter + 1,
+                feedbacks: feedbacks
+            });
+
+            console.log(newFeedbackSet);
+            newFeedbackSet.save();
+
+            // change feedbackCounter of contractRequest
+            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
 
             // code section below is for sending the password to the account's email address
             const transporter = nodemailer.createTransport({

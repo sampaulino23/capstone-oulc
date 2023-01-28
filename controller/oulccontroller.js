@@ -25,6 +25,7 @@ const PendingFeedback  = require('../models/PendingFeedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 const Notification = require('../models/Notification.js');
+const FeedbackSet = require('../models/FeedbackSet.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -979,38 +980,66 @@ const oulccontroller = {
 
             const comments = req.query.comments;
 
-            console.log('comments: ');
             console.log(comments);
 
-            for (comment of comments) {
-                var contractversionid = comment.contractversionid.substring(4);
+            // TODO: Add FeedbackSet object first then create the PendingFeedback objects
+            // TODO: Consider the null and PendingFeedbacks with no inputs
 
-                console.log(contractversionid);
+            // if there is at least 1 single comment
+            if (comments[0]) {
 
-                var findComment = await PendingFeedback.findOne({contractVersion: contractversionid}).exec();
+                // find contractRequest Id of the comment
+                var cvid = comments[0].contractversionid.substring(4);
+                var contractVersion = await ContractVersion.findById(cvid)
+                    .lean()
+                    .populate({
+                        path: 'contract'
+                    })
+                    .exec();
+                
+                var contractRequest = await ContractRequest.findById(contractVersion.contract.contractRequest).exec();
 
-                if (findComment) {  // if comments is already there
-                    console.log('has existing comment');
+                // create FeedbackSet object
+                // var newFeedbackSet = new FeedbackSet({
+                //     contractRequest: contractRequest,
+                //     counter: contractRequest.feedbackCounter + 1,
+                // })
 
-                    // console.log(findContractVersion.comment);
-                    // console.log(comment.content);
+                // cycle through all comments and create a feedback object for each one
+                for (comment of comments) {
 
-                    var success = await PendingFeedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+                    // if feedback is not empty
+                    if (comment) {
 
-                } else {    // if no comment
-                    console.log('no comment');
-
-                    let newComment = new PendingFeedback({
-                        contractVersion: contractversionid,
-                        user_id: req.user._id,
-                        content: comment.content,
-                        status: 'Pending'
-                    });
+                        var contractversionid = comment.contractversionid.substring(4);
+        
+                        var findComment = await PendingFeedback.findOne({contractVersion: contractversionid}).exec();
+        
+                        if (findComment) {  // if comments is already there
+                            console.log('has existing comment');
+        
+                            // console.log(findContractVersion.comment);
+                            // console.log(comment.content);
+        
+                            var success = await PendingFeedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+        
+                        } else {    // if no comment
+                            console.log('no comment');
+        
+                            let newComment = new PendingFeedback({
+                                contractVersion: contractversionid,
+                                // feedbackSet: newFeedbackSet,
+                                user_id: req.user._id,
+                                content: comment.content,
+                                status: 'Pending'
+                            });
+            
+                            var insertComment = await newComment.save();
+                            // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
+                        }
+                    }
     
-                    var insertComment = await newComment.save();
-                    // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
                 }
-
             }
 
         } catch (err) {
