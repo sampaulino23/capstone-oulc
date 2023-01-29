@@ -10,7 +10,7 @@
 a:hover, a:visited, a:link, a:active
 {
     text-decoration: none;
-    color: #fff;
+    color: black;
 }
 
 .dropdown-item:visited
@@ -173,7 +173,3 @@ dl, ol, ul {
     transition: .25s;
 }
 
-.dropdown-item:hover {
-    color: #00713D !important;
-    transition: .25s;
-}

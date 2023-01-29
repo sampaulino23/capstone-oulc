@@ -116,6 +116,7 @@ const oulccontroller = {
 
             const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
             const contractTypes = await ContractType.find({}).lean().exec();
+            const pendingnearstart = await ContractRequest.find({statusCounter: 1}).lean().exec(); //for notifs
                 
             var dateToday = new Date();
             var month = dateToday.getMonth(); //this starts with 0
@@ -123,12 +124,12 @@ const oulccontroller = {
             var year = dateToday.getFullYear();
             console.log(dateToday);
 
-            let pending = {all:0, today:0, percentage: 0};
+            let pending = {all:0, today:0, percentage: 0, nearstartcount: 0};
             let waiting = {all:0, today:0};
             let toreview = {all:0, today:0};
             let clearedCard = {count: 0, percentage: 0};
             let initialReview = {count: 0, percentage: 0};
-            let legalReview = {count: 0, percentage: 0};
+            let legalReview = {count: 0, percentage: 0, nearstartcount: 0};
 
             //set violation count per department as 0 initially
             for (y=0; y<departments.length; y++) {
@@ -140,6 +141,19 @@ const oulccontroller = {
             }
         
             for (i=0; i<contractrequests.length; i++) {
+                function dateDiffInDays(a, b) {
+                    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                    // Discard the time and time-zone information.
+                    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+                  
+                    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+                }
+
+                var Difference_In_Days_Start = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
+
+                // To set number of days gap in contract request
+                contractrequests[i].daysGap = Difference_In_Days_Start;
 
                 // START OF REQUEST COUNT PER STATUS
                 if (contractrequests[i].statusCounter == "1"){
@@ -147,12 +161,20 @@ const oulccontroller = {
                     if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
                         pending.today++;
                     }
+                    if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                        pending.nearstartcount++;
+                    }
                 }
                 else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
                     initialReview.count++;
                 }
                 else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
                     legalReview.count++;
+                    if(contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6"){
+                        if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                            legalReview.nearstartcount++;
+                        }
+                    }
                 }
                 else if (contractrequests[i].statusCounter == "7"){
                     clearedCard.count++;

@@ -48,7 +48,14 @@ const requestercontroller = {
             var violationcount = 0;
 
             const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
-            const notifications = await Notification.find({}).lean().exec();
+            const notifications = await Notification.find({}).lean().exec(); //notifs model (initial only)
+            const forrevisionrequests = await ContractRequest.find({statusCounter: 6}).lean().exec(); // for notifs/alerts
+
+            var forrevisioncount;
+
+            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
+                forrevisioncount++;
+            }
 
             for (i = 0; i < contractrequests.length; i++) {
                 // To calculate the time difference of two dates
@@ -72,7 +79,8 @@ const requestercontroller = {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 violationcount: violationcount,
-                notifications: notifications
+                notifications: notifications,
+                forrevisioncount: forrevisioncount
             });
 
         } catch (err) {
