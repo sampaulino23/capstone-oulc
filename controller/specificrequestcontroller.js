@@ -192,6 +192,17 @@ const specificrequestcontroller = {
 
             const user = await User.findById(req.user).lean().exec();
 
+            // TODO: Show Feedback History for specific request (repeat for Requester Side)
+            // const feedbackSets = await FeedbackSet.find({contractRequest: contractrequest})
+            //     .lean()
+            //     .populate({
+            //         path: 'feedba',
+            //         populate({
+            //             path: 'user_id'
+            //         })
+            //     })
+            //     .exec();
+
             res.render('specificrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,

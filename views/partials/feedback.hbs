@@ -39,7 +39,6 @@
         {{/each}}
     </div>
     {{/compare}}
-    {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
     {{#compare user_role '==' 'Requester'}}
     <div class = "feedback-header">
         Current Feedbacks:
@@ -68,6 +67,32 @@
     {{/compare}}
     {{/each}}
     {{/compare}}
+    {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
+    {{!-- <div class="feedback-header">
+        Feedback History:
+    </div>
+    {{#each feedbacksets}}
+    {{#each feedbacksets.feedbacks}}
+    <div id="feedbackHistoryContainer" class="feedback-container">
+        <div id="feedbackHistoryDetails">
+            <div class="profile-pic">
+                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+            </div>
+            <div id = "author-date-div">
+                <div class = "feedback-author" id = "feedback-author{{@index}}">
+                    {{user_id.fullName}}
+                </div>
+                <div class = "feedback-date">
+                    {{formatfeedbackdate submitDate}}
+                </div>
+            </div>
+        </div>
+        <div id="feedbackHistoryContentDiv" class="content">
+            <span>{{content}}</span>
+        </div>
+    </div>
+    {{/each}}
+    {{/each}} --}}
 </div>
 
 {{!-- <script>
