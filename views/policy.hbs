@@ -58,13 +58,46 @@
                                                             </li>
                                                             <li class = "bi-replace"><button class="dropdown-item get-edit-user" type="button"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#replaceTemplateModal{{@index}}">Upload Policy</button>
+                                                                    data-bs-target="#updatePolicyModal{{@index}}">Upload Policy</button>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <!-- Update Policy Modal -->
+                                        <div class="modal fade" id="updatePolicyModal{{@index}}" tabindex="-1" aria-labelledby="updatePolicyModal{{@index}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="w-100 modal-title" id="exampleModalLabel">Update Policy</h5>
+                                                        <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="custom-file">
+                                                            <form action="/staff/updatepolicy" method="POST" enctype="multipart/form-data">
+                                                                <div class="mb-3">
+                                                                    <input type="hidden" class="form-control" value="{{_id}}" id="updatePolicyVersion" name="updatePolicyVersion">
+                                                                    <input type="hidden" class="form-control" id="updatePolicyUserId" name="updatePolicyUserId" value="{{../user_id}}">
+
+                                                                    <label for="updatePolicyRevisionNotes" class="form-label">Revision Notes</label>
+                                                                    <textarea rows="3" class="form-control" id="updatePolicyRevisionNotes" name="updatePolicyRevisionNotes"></textarea>
+                                                                    
+                                                                    <label for="updatePolicyFile" class="modal-text form-label">File Upload</label>
+                                                                    <input type="file" name="updatePolicyFile" id="updatePolicyFile" class="form-control" required>
+                                                                </div>
+                                                                <div class="modal-footer" style="margin-top: 10px;">
+                                                                    <br>
+                                                                    <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" class="upload-btn-modal update-policy" id="confirmUpdatePolicy">Submit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- Delete Policy Modal -->
                                         <div class="modal fade" id="deletePolicyModal{{@index}}" tabindex="-1" aria-labelledby="deletePolicyModal{{@index}}" aria-hidden="true">

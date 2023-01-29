@@ -1172,7 +1172,7 @@ const oulccontroller = {
     getPolicy: async (req, res) => {
         try {
 
-            const policies = await Policy.find({}).lean()
+            const policies = await Policy.find({})
                 .exec();
 
             var policyVersions = [];
@@ -1187,6 +1187,8 @@ const oulccontroller = {
 
                 policyVersions.push(policyVersion);
             }
+
+            console.log(policyVersions);
     
             res.render('policy', {
                 user_id: req.user._id,
@@ -1299,6 +1301,45 @@ const oulccontroller = {
 
         res.redirect('back');
     },
+
+    postUpdatePolicy: async (req, res) => {
+        try {
+
+            console.log('POST UPDATE POLICY');
+
+            const originalPolicyVersionId = req.body.updatePolicyVersion;
+            const file = req.file;
+            const revisionNotes = req.body.updatePolicyRevisionNotes;
+            const updatedBy = req.body.updatePolicyUserId;
+
+            const originalPolicyVersion = await PolicyVersion.findById(originalPolicyVersionId)
+                .populate({
+                    path: 'policy'
+                })
+                .exec();
+
+            // add new policyVersion object
+            let newPolicyVersion = new PolicyVersion({
+                policy: mongoose.Types.ObjectId(originalPolicyVersion.policy._id),
+                filename: file.filename,
+                file: file.id,
+                uploadDate: file.uploadDate,
+                uploadBy: updatedBy,
+                versionNote: revisionNotes,
+                version: originalPolicyVersion.policy.latestVersion + 1
+            });
+
+            newPolicyVersion.save();
+
+            // update latestVersion of Policy object
+            await Policy.findByIdAndUpdate(originalPolicyVersion.policy._id, {$inc: {latestVersion: 1}}).exec();
+
+            res.redirect('back');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 }
 

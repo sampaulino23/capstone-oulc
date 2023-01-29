@@ -114,7 +114,16 @@ const policyStorage = new GridFsStorage({
   }
 });
 
-const policyUpload = multer({ storage : policyStorage });
+const policyUpload = multer({
+  storage : policyStorage,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if(ext !== '.pdf' && ext !== '.doc' && ext !== '.docx') {
+        return callback('Only .PDF .DOC .DOCX are allowed')
+    }
+    callback(null, true)
+},
+});
 
 router.use(require('connect-flash')());
 
@@ -139,6 +148,7 @@ router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
 router.get('/policy/:fileid', oulccontroller.viewPolicy);
 router.post('/deletepolicy', oulccontroller.postDeletePolicy);
+router.post('/updatepolicy', policyUpload.single('updatePolicyFile'), oulccontroller.postUpdatePolicy);
 
 //router.post('/addtag', oulccontroller.addTag);
 
