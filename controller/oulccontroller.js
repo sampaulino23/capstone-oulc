@@ -1280,10 +1280,12 @@ const oulccontroller = {
 
     postDeletePolicy: async (req, res) => {
         try {
-            const policyid = req.body.deletePolicy;
-            const policy = await Policy.findByIdAndDelete(policyid).exec();
+            const policyVersionId = req.body.deletePolicy;
+            const policyVersion = await PolicyVersion.findByIdAndDelete(policyVersionId).exec();
+
+            await Policy.findByIdAndDelete(policyVersion.policy).exec();
     
-            const cursor = await gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(policy.file)}, {limit: 1});
+            const cursor = await gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(policyVersion.file)}, {limit: 1});
             cursor.forEach((doc, err) => {
                 if (err) {
                     console.log(err);
