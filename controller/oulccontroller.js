@@ -24,6 +24,7 @@ const Conversation = require('../models/Conversation.js');
 const PendingFeedback  = require('../models/PendingFeedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
+const PolicyVersion = require('../models/PolicyVersion.js');
 const Notification = require('../models/Notification.js');
 const FeedbackSet = require('../models/FeedbackSet.js');
 
@@ -1171,14 +1172,27 @@ const oulccontroller = {
     getPolicy: async (req, res) => {
         try {
 
-            const policyFiles = await Policy.find({}).lean()
-            .sort({uploadDate: 1})
-            .exec();
+            const policies = await Policy.find({}).lean()
+                .exec();
+
+            var policyVersions = [];
+
+            for (policy of policies) {
+                const policyVersion = await PolicyVersion.findOne({policy: policy._id, version: policy.latestVersion })
+                    .lean()
+                    .populate({
+                        path: 'uploadBy'
+                    })
+                    .exec();
+
+                policyVersions.push(policyVersion);
+            }
     
             res.render('policy', {
-                user_fullname:req.user.fullName,
+                user_id: req.user._id,
+                user_fullname: req.user.fullName,
                 user_role: req.user.roleName,
-                policyFiles: policyFiles
+                policyVersions: policyVersions
             });
 
         } catch (err) {
@@ -1192,15 +1206,33 @@ const oulccontroller = {
                 const filename = req.file.filename;
                 const file_id = mongoose.Types.ObjectId(req.file.id);
                 const fileuploaddate = req.file.uploadDate;
+                const user_id = req.body.uploadPolicyUser;
+
+                console.log(user_id);
             
-                const newPolicy = new Policy({
-                    name: filename,
-                    file: file_id,
-                    uploadDate: fileuploaddate
+                let newPolicy = new Policy({
+                    latestVersion: 1
                 });
-                newPolicy.save(function(){
+
+                let policy = await newPolicy.save();
+
+                console.log(policy);
+
+                let newPolicyVersion = new PolicyVersion({
+                    policy: policy._id,
+                    filename: filename,
+                    file: file_id,
+                    uploadDate: fileuploaddate,
+                    uploadBy: user_id,
+                    version: 1
+                });
+
+                console.log(newPolicyVersion);
+
+                newPolicyVersion.save(function(){
                     res.redirect('back');
                 });
+                
             }
             
         } catch (err) {
@@ -1236,10 +1268,10 @@ const oulccontroller = {
     viewPolicyOnClick: async (req, res) => {
         try {
             const policyid = req.query.policyid;
-            const policy = await Policy.findById(policyid).exec();
+            const policyVersion = await PolicyVersion.findById(policyid).exec();
     
             res.send({
-                fileid: policy.file.toString()
+                fileid: policyVersion.file.toString()
             })
         } catch (err) {
             console.log(err);

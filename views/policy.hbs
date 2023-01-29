@@ -41,9 +41,9 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myPolicyTable" style = "word-break: break-word;">
-                                        {{#each policyFiles}}
+                                        {{#each policyVersions}}
                                         <tr style="cursor: pointer;" id="{{_id}}" onclick="">
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{name}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{filename}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
                                             <td id = "" class="action-cell text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; cursor: default;">
                                                 <div id="actions">
@@ -123,8 +123,9 @@
                 </div>
                 <form action="/staff/uploadpolicy" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
-                            <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                            <input type="file" name="file" id="file" class="custom-file-input" accept="application/pdf" required><br><br>
+                        <input type="hidden" id="uploadPolicyUser" name="uploadPolicyUser" value="{{user_id}}">
+                        <label for="file" class="modal-text custom-file-label">File Upload</label><br>
+                        <input type="file" name="file" id="file" class="custom-file-input" accept="application/pdf" required><br><br>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
