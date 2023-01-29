@@ -23,6 +23,10 @@ const PolicyVersionSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
+    version: {
+        type: Number,
+        required: true
+    },
     versionNote: {
         type: String,
     }
