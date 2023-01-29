@@ -138,6 +138,7 @@ router.get('/repository', oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
 router.get('/policy/:fileid', oulccontroller.viewPolicy);
+router.post('/deletepolicy', oulccontroller.postDeletePolicy);
 
 //router.post('/addtag', oulccontroller.addTag);
 

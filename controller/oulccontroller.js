@@ -948,32 +948,6 @@ const oulccontroller = {
 
     },
 
-    deleteRepositoryFile: async (req, res) => {
-        try {
-            console.log('Delete Repo File');
-
-            const repositoryfileid = req.body.deleteRepositoryFile;
-            const fileid = req.params.fileid;
-    
-            // delete repositoryfile object
-            await RepositoryFile.findByIdAndDelete(repositoryfileid).exec();
-    
-            const cursor = await gridfsBucketRepo.find({_id: mongoose.Types.ObjectId(fileid)}, {limit: 1});
-            cursor.forEach((doc, err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    gridfsBucketRepo.delete(doc._id);
-                }
-            });
-        } catch (err) {
-            console.log(err);
-        }
-        
-
-        res.redirect('back');
-    },
-
     savePendingFeedback: async (req, res) => {
         try {
             console.log('SAVE PENDING FEEDBACK');
@@ -1270,7 +1244,27 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    postDeletePolicy: async (req, res) => {
+        try {
+            const policyid = req.body.deletePolicy;
+            const policy = await Policy.findByIdAndDelete(policyid).exec();
+    
+            const cursor = await gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(policy.file)}, {limit: 1});
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    gridfsBucketPolicy.delete(doc._id);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+        res.redirect('back');
+    },
 
 }
 
