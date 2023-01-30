@@ -102,15 +102,14 @@
                 </div>
                 <div class = "row">
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
-                        <div class="col label-and-input break-text" id = "contractingparty-active-div">
-                            <label for="contractingpartyojt" class="form-label">Contracting Party Name*</label>
-                            <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
-                            {{#each activeCompanies}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                            <option id = "company-other" value="Others">Others</option>
-                            </select>
-                        </div>
+                        <label for="contractingpartyojt" class="form-label">Contracting Party Name*</label>
+                        <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
+                        <option value="none" selected disabled hidden>Select an Option</option>
+                        {{#each activeCompanies}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                        <option id = "company-other" value="Others" hidden>Others</option>
+                        </select>
                     </div>
                     <div class="col label-and-input mb-3" id = "contractingparty-div"> <!-- Show this for contracting party if type selected is not OJT/Internship -->
                         <label for="contractingparty" class="break-text form-label">Contracting Party Name*</label>

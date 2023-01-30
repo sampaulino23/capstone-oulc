@@ -46,28 +46,25 @@ $(document).ready(() => {
     })
 
     $("#documenttype").change(function() {
-        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA" || 
-        $("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
-            $("#contractingpartyojt-div").prop('hidden', false);
-            $("#contractingparty").prop('required',false);
-            $("#contractingparty-div").prop('hidden', true);
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
+            $("#contractingpartyojt-div").prop('hidden', false); // div part with dropdown
+            $("#contractingparty").prop('required',false); // original input field of the div will not be required anymore
+            $("#contractingparty-div").prop('hidden', true); // original div
             $(".company-list-note").css("display", "block");
             // $("#contractingparty").removeAttr('required');​​​​​
-            if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
-                $("#company-other").prop('hidden', true);
-                $(".company-list-note").css("display", "block");
-            }
-            else {
-                $("#company-other").prop('hidden', false);
-                $(".company-list-note").css("display", "block");
-            }
+            $("#company-other").prop('hidden', true);
+            $(".company-list-note").css("display", "block");
+            $(".student-ojt-reminder").css("display", "block");
         } else {
+            $("#company-other").prop('hidden', false);
+            $(".company-list-note").css("display", "block");
             $("#contractingpartyojt-div").prop('hidden', true);
             $("#contractingparty-div").prop('hidden', false);
             $("#contractingparty").prop('required',true);
             $(".company-list-note").css("display", "none");
+            $(".student-ojt-reminder").css("display", "none");
         }
-
+        
         if ($("#documenttype").find('option:selected').text() == "MOA/TOR/Contracts for purchases, services, venue, and other piece of work") {
             $(".tor-reminder").css("display", "block");
         }
@@ -75,15 +72,9 @@ $(document).ready(() => {
             $(".tor-reminder").css("display", "none");
         }
 
-        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA") {
-            $(".student-ojt-reminder").css("display", "block");
-        }
-        else {
-            $(".student-ojt-reminder").css("display", "none");
-        }
-
         if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
             $(".institutional-moa-reminder").css("display", "block");
+            
         }
         else {
             $(".institutional-moa-reminder").css("display", "none");

@@ -57,7 +57,11 @@ nav ul li a{
 nav a.active, nav a:hover:not(.logo), nav a:hover:not(.btn2){
     background: none;
     transition: .25s;
-    color: #000000;
+    color: #000000 !important;
+}
+
+.btn2 {
+    color: #fff !important;
 }
 
 #check{
@@ -173,3 +177,6 @@ dl, ol, ul {
     transition: .25s;
 }
 
+.navbar-link {
+    color: #fff !important;
+}
