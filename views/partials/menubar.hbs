@@ -47,7 +47,7 @@
                     <ul id="dropdown-menu" class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Sample Notif 1</a></li><hr>
                         {{#compare user_role "==" "Requester"}}
-                        <li id="dropdown-item"><a class="dropdown-item" href="/requester/contractrequests">{{forrevisioncount}} of your requests are For Revision</a><hr></li>
+                        <li id="dropdown-item"><a class="dropdown-item" href="/requester/contractrequests"><b class="notifcount">{{forrevisioncount}}</b> of your requests are For Revision</a><hr></li>
                         {{/compare}}
                         {{#compare user_role "==" "Attorney"}}
                         <li><a class="dropdown-item" href="/attorney/contractrequests">{{legalReview.nearstartcount}} requests For Review are nearing the start date</a><hr></li>
