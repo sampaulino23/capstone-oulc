@@ -105,7 +105,7 @@ const requestercontroller = {
                 $and: [
                     {effectivityStartDate: { $lte: today}},
                     {effectivityEndDate: { $gte: today}},
-                    {contractType: "63ca41be60b5247c900bb91c"},
+                    {contractType: "63d785ba00692399c6c91c8e"}, //needs to be updated if db is updated
                     {statusCounter: "7"}
                 ]
             }).lean().sort({}).exec();
@@ -189,7 +189,7 @@ const requestercontroller = {
 
             var contractingparty;
 
-            if ((contracttype.code == "B" || contracttype.code == "B1") && req.body.contractingpartyojt != "Others") {
+            if (contracttype.code == "B") {
                 contractingparty = req.body.contractingpartyojt;
                 // console.log ("IF: " + contractingparty);
             }
