@@ -63,6 +63,9 @@ const logincontroller = {
                 });
             }
             else {
+                req.session.pending_nearstartcount = 0; //set count to 0 at start
+                req.session.toreview_nearstartcount = 0; //set count to 0 at start
+                req.session.legalReview_nearstartcount = 0; //set count to 0 at start
                 if (req.user.roleName == "Staff"){
                     res.redirect('/staff');
                 }
@@ -222,6 +225,9 @@ const logincontroller = {
                                 }
                                 else{
                                     console.log("credentials are correct");
+                                    req.session.pending_nearstartcount = 0; //set count to 0 at start
+                                    req.session.toreview_nearstartcount = 0; //set count to 0 at start
+                                    req.session.legalReview_nearstartcount = 0; //set count to 0 at start
                                     // console.log (userlogged.role.name);
                                     if (userlogged.role.name == "Staff"){
                                         res.redirect('/staff');

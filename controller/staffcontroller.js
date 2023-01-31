@@ -140,10 +140,13 @@ const staffcontroller = {
                 user: user,
                 contracttypes: contracttypes,
                 contractrequests: contractrequests,
-                forrevisioncount: forrevisioncount,
-                pending: pending,
-                toreview: toreview,
-                legalReview: legalReview
+                forrevisioncount: forrevisioncount, //to be removed
+                pending: pending, //to be removed
+                toreview: toreview, //to be removed
+                legalReview: legalReview, //to be removed
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
             });
 
         } catch (err) {

@@ -98,6 +98,7 @@ const oulccontroller = {
 
     getDashboard: async (req, res) => {
         try {
+            console.log("DASHBOARD PENDING NEAR START COUNT (START OF FUNCTION): " + req.session.pending_nearstartcount);
             const contractrequests = await ContractRequest.find({}).lean()
                 .populate({
                     path: 'requester',
@@ -162,6 +163,7 @@ const oulccontroller = {
                     }
                     if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
                         pending.nearstartcount++;
+                        req.session.pending_nearstartcount = pending.nearstartcount; //assign notif count
                     }
                 }
                 else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
@@ -169,6 +171,7 @@ const oulccontroller = {
                     if(contractrequests[i].statusCounter == "3"){
                         if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
                             toreview.nearstartcount++;
+                            req.session.toreview_nearstartcount = toreview.nearstartcount; //assign notif count
                         }
                     }
                 }
@@ -177,6 +180,7 @@ const oulccontroller = {
                     if(contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6"){
                         if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
                             legalReview.nearstartcount++;
+                            req.session.legalReview_nearstartcount = legalReview.nearstartcount; //assign notif count
                         }
                     }
                 }
@@ -250,6 +254,7 @@ const oulccontroller = {
                
             }
             
+            console.log("DASHBOARD PENDING NEAR START COUNT (END OF FUNCTION): " + req.session.pending_nearstartcount);
     
             res.render('dashboardoulc', {
                 user_fullname:req.user.fullName,
@@ -260,6 +265,9 @@ const oulccontroller = {
                 cleared: clearedCard,
                 initialReview: initialReview,
                 legalReview: legalReview,
+                pending_nearstartcount: req.session.pending_nearstartcount,
+                toreview_nearstartcount: req.session.toreview_nearstartcount,
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount,
                 requestCount: contractrequests.length,
                 departments: departments,
                 contractTypes: contractTypes
