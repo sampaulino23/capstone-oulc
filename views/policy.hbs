@@ -13,20 +13,19 @@
     <body>
         <div id="header">OULC Policies and Procedures</div>
         <div class="container">
-            <div class="row" id="addnewpolicy-bar">
-                {{#compare user_role "!=" "Requester"}}
-                <div class = "col-6">
-                    <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
-                </div>
-                {{/compare}}
-                <div class = "col-6">
-                    <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
-                </div>
-            </div>
-        </div>
-
-        <div class="row"> 
+            <div class="row"> 
                 <!-- LEFT SIDE -->
+                <div class="row" id = "upload-btn-header">
+                    {{#compare user_role "!=" "Requester"}}
+                    <div class = "col-6">
+                        <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
+                    </div>
+                    {{/compare}}
+                    <div class = "col-6">
+                        <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
+                    </div>
+                </div>
+                
                 <div class="col-6">
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
@@ -144,6 +143,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </body>
     
     <!-- Upload Policy Modal -->
