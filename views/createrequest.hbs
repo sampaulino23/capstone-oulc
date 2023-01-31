@@ -104,7 +104,7 @@
                     <div id = "contractingpartyojt-div" class = "col label-and-input break-text mb-3" hidden> <!-- Contracting Party Input if Type is OJT/Internship -->
                         <label for="contractingpartyojt" class="form-label">Contracting Party Name*</label>
                         <select class="text-input" aria-label="Contracting Party" name="contractingpartyojt" id="contractingpartyojt">
-                        <option value="none" selected disabled hidden>Select an Option</option>
+                        <option value="none" id = "optionNone" selected disabled hidden>Select an Option</option>
                         {{#each activeCompanies}}
                         <option value="{{this}}">{{this}}</option>
                         {{/each}}
