@@ -55,6 +55,7 @@ $(document).ready(() => {
             $("#company-other").prop('hidden', true);
             $(".company-list-note").css("display", "block");
             $(".student-ojt-reminder").css("display", "block");
+            $("#optionNone").prop('selected', true);
         } else {
             $("#company-other").prop('hidden', false);
             $(".company-list-note").css("display", "block");
@@ -75,7 +76,7 @@ $(document).ready(() => {
         if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
             $(".institutional-moa-reminder").css("display", "block");
             $("#contractingpartyojt-div").prop('hidden', false);
-            $("#optionNone").prop('selected', true);
+            $("#company-other").prop('selected', true);
         }
         else {
             $(".institutional-moa-reminder").css("display", "none");

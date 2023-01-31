@@ -15,11 +15,11 @@
         <div class="container">
             <div class="row" id="addnewpolicy-bar">
                 {{#compare user_role "!=" "Requester"}}
-                <div>
+                <div class = "col-6">
                     <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
                 </div>
                 {{/compare}}
-                <div>
+                <div class = "col-6">
                     <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
                 </div>
             </div>
