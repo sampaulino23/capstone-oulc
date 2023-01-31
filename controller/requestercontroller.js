@@ -637,6 +637,77 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         } 
+    },
+
+    getViolationReport: async (req, res) => {
+        try {
+            var months = [{ name: "January", violation: 0 }, { name: "Febuary", violation: 0 }, { name: "March", violation: 0 }, { name: "April", violation: 0 }, { name: "May", violation: 0 }, { name: "June", violation: 0 },
+            { name: "July", violation: 0 }, { name: "August", violation: 0 }, { name: "September", violation: 0 }, { name: "October", violation: 0 }, { name: "November", violation: 0 }, { name: "December", violation: 0 }];
+
+            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
+
+            function dateDiffInDays(a, b) {
+                const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                // Discard the time and time-zone information.
+                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+              
+                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+
+            for (i = 0; i < contractrequests.length; i++) {
+                var Difference_In_Days_Start = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
+
+                if (Difference_In_Days_Start < 7) {
+                    var month = contractrequests[i].requestDate.toLocaleString('default', { month: 'numeric' });
+                    if (month == 1) {
+                        months[0].violation++;
+                    }
+                    else if (month == 2) {
+                        months[1].violation++;
+                    }
+                    else if (month == 3) {
+                        months[2].violation++;
+                    }
+                    else if (month == 4) {
+                        months[3].violation++;
+                    }
+                    else if (month == 5) {
+                        months[4].violation++;
+                    }
+                    else if (month == 6) {
+                        months[5].violation++;
+                    }
+                    else if (month == 7) {
+                        months[6].violation++;
+                    }
+                    else if (month == 8) {
+                        months[7].violation++;
+                    }
+                    else if (month == 9) {
+                        months[8].violation++;
+                    }
+                    else if (month == 10) {
+                        months[9].violation++;
+                    }
+                    else if (month == 11) {
+                        months[10].violation++;
+                    }
+                    else if (month == 12) {
+                        months[11].violation++;
+                    }
+                }
+            }
+
+            res.render('violationreport', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                months: months
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
