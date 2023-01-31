@@ -49,13 +49,14 @@ const requestercontroller = {
 
             const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
             const notifications = await Notification.find({}).lean().exec(); //notifs model (initial only)
-            const forrevisionrequests = await ContractRequest.find({statusCounter: 6}).lean().exec(); // for notifs/alerts
 
+            //For revision count - notifs/alerts
+            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
             var forrevisioncount;
-
             for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
                 forrevisioncount++;
             }
+            //
 
             for (i = 0; i < contractrequests.length; i++) {
                 // To calculate the time difference of two dates
@@ -127,13 +128,22 @@ const requestercontroller = {
             var uniqueActiveCompanies = [...new Set(activeCompanies)]
             uniqueActiveCompanies.sort();
 
+            //For revision count - notifs/alerts
+            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
+            var forrevisioncount;
+            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
+                forrevisioncount++;
+            }
+            //
+
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 department: user.department.name,
                 requestdate: today,
                 contracttypes: contracttypes,
-                activeCompanies: uniqueActiveCompanies
+                activeCompanies: uniqueActiveCompanies,
+                forrevisioncount: forrevisioncount
             });
 
         } catch (err) {
@@ -557,12 +567,21 @@ const requestercontroller = {
             })
             .sort({uploadDate: 1})
             .exec();
+
+            //For revision count - notifs/alerts
+            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
+            var forrevisioncount;
+            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
+                forrevisioncount++;
+            }
+            //
     
             res.render('repository', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
-                repositoryFiles: repositoryFiles
+                repositoryFiles: repositoryFiles,
+                forrevisioncount: forrevisioncount
             });
 
         } catch (err) {

@@ -116,7 +116,6 @@ const oulccontroller = {
 
             const departments = await Department.find({  abbrev: { $not: { $eq: "OULC"}  }}).lean().sort({abbrev: 1}).exec();
             const contractTypes = await ContractType.find({}).lean().exec();
-            const pendingnearstart = await ContractRequest.find({statusCounter: 1}).lean().exec(); //for notifs
                 
             var dateToday = new Date();
             var month = dateToday.getMonth(); //this starts with 0
@@ -126,7 +125,7 @@ const oulccontroller = {
 
             let pending = {all:0, today:0, percentage: 0, nearstartcount: 0};
             let waiting = {all:0, today:0};
-            let toreview = {all:0, today:0};
+            let toreview = {all:0, today:0, nearstartcount: 0};
             let clearedCard = {count: 0, percentage: 0};
             let initialReview = {count: 0, percentage: 0};
             let legalReview = {count: 0, percentage: 0, nearstartcount: 0};
@@ -167,6 +166,11 @@ const oulccontroller = {
                 }
                 else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
                     initialReview.count++;
+                    if(contractrequests[i].statusCounter == "3"){
+                        if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                            toreview.nearstartcount++;
+                        }
+                    }
                 }
                 else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
                     legalReview.count++;
