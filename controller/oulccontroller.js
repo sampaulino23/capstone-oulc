@@ -58,7 +58,7 @@ function getStaffWaiting (month, day, year, contractrequests, waiting) {
     }
 }
 
-function getStaffTosew (month, day, year, contractrequests, toreview) {
+function getStaffToReview (month, day, year, contractrequests, toreview) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
         if (contractrequests[i].statusCounter == "3"){
@@ -245,7 +245,7 @@ const oulccontroller = {
             if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
                 getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
-                // getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
             }
             else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
