@@ -11,6 +11,10 @@
     color: #000000;
 }
 
+.header-faq {
+    margin-left: 0px !important;
+}
+
 .container{
     font-family: 'Poppins', sans-serif; 
     font-size: 18px;
@@ -263,4 +267,17 @@
 
 #upload-btn-header {
     margin-bottom: 1.5em;
+}
+
+.add-faq {
+    margin-top: 40px;
+}
+
+#faqs-bar {
+    text-align: right;
+}
+
+.faq-header-div {
+    align-items: center;
+    margin-bottom: 0.5em;
 }
