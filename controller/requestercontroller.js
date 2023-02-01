@@ -129,22 +129,13 @@ const requestercontroller = {
             var uniqueActiveCompanies = [...new Set(activeCompanies)]
             uniqueActiveCompanies.sort();
 
-            //For revision count - notifs/alerts
-            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
-            var forrevisioncount;
-            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
-                forrevisioncount++;
-            }
-            //
-
             res.render('createrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 department: user.department.name,
                 requestdate: today,
                 contracttypes: contracttypes,
-                activeCompanies: uniqueActiveCompanies,
-                forrevisioncount: forrevisioncount
+                activeCompanies: uniqueActiveCompanies
             });
 
         } catch (err) {
@@ -568,21 +559,12 @@ const requestercontroller = {
             })
             .sort({uploadDate: 1})
             .exec();
-
-            //For revision count - notifs/alerts
-            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
-            var forrevisioncount;
-            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
-                forrevisioncount++;
-            }
-            //
     
             res.render('repository', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
-                repositoryFiles: repositoryFiles,
-                forrevisioncount: forrevisioncount
+                repositoryFiles: repositoryFiles
             });
 
         } catch (err) {

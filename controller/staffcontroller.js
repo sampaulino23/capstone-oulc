@@ -48,14 +48,8 @@ const staffcontroller = {
 
             // console.log('length: ' + contractrequests.length);
 
-            let pending = {nearstartcount: 0};
-            let toreview = {nearstartcount: 0};
-            let legalReview  = {nearstartcount: 0};
-
             for (i = 0; i < contractrequests.length; i++) {
                 const statusList = await Status.findOne({counter: contractrequests[i].statusCounter}).exec();
-
-                //var Difference_In_Days_Start = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
             
                 if (req.user.roleName == "Staff") {
                     contractrequests[i].status = statusList.statusStaff;
@@ -100,22 +94,6 @@ const staffcontroller = {
                 // To set number of days gap in contract request
                 contractrequests[i].daysGap = Difference_In_Days;
 
-                if (contractrequests[i].statusCounter == "1"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        pending.nearstartcount++;
-                    }
-                }
-                if (contractrequests[i].statusCounter == "3"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        toreview.nearstartcount++;
-                    }
-                }
-                if(contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        legalReview.nearstartcount++;
-                    }
-                }
-
             }
 
             const contracttypes = await ContractType.find({}).lean().exec();
@@ -141,9 +119,6 @@ const staffcontroller = {
                 contracttypes: contracttypes,
                 contractrequests: contractrequests,
                 forrevisioncount: forrevisioncount, //to be removed
-                pending: pending, //to be removed
-                toreview: toreview, //to be removed
-                legalReview: legalReview, //to be removed
                 pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
                 toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
                 legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
@@ -163,57 +138,12 @@ const staffcontroller = {
                     path: 'type'
                 }).exec();
 
-            //For revision count - notifs/alerts
-            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
-            var forrevisioncount;
-            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
-                forrevisioncount++;
-            }
-            //
-            let pending = {nearstartcount: 0};
-            let toreview = {nearstartcount: 0};
-            let legalReview  = {nearstartcount: 0};
-
-            const contractrequests = await ContractRequest.find().lean().exec();
-            for (i = 0; i < contractrequests.length; i++) {
-                function dateDiffInDays(a, b) {
-                    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-                    // Discard the time and time-zone information.
-                    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-                    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-                  
-                    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-                }
-
-                Difference_In_Days = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
-                
-                if (contractrequests[i].statusCounter == "1"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        pending.nearstartcount++;
-                    }
-                }
-                if (contractrequests[i].statusCounter == "3"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        toreview.nearstartcount++;
-                    }
-                }
-                if(contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6"){
-                    if(Difference_In_Days == 0 || Difference_In_Days < 7){
-                        legalReview.nearstartcount++;
-                    }
-                }
-
-            }
-
             res.render('templatesoulc', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 templates: templates,
-                forrevisioncount: forrevisioncount,
-                pending: pending,
-                toreview: toreview,
-                legalReview: legalReview
+                forrevisioncount: forrevisioncount
             });
 
         } catch (err) {
