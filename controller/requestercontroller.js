@@ -53,10 +53,12 @@ const requestercontroller = {
 
             //For revision count - notifs/alerts
             const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
-            var forrevisioncount;
-            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
-                forrevisioncount++;
+            let forrevision = {count: 0};
+            for (i = 0; i < forrevisionrequests.length; i++){
+                forrevision.count++;
+                req.session.forrevision_count = forrevision.count; //assign notif count
             }
+            console.log(req.session.forrevision_count);
             //
 
             for (i = 0; i < contractrequests.length; i++) {
@@ -82,7 +84,7 @@ const requestercontroller = {
                 user_role:req.user.roleName,
                 violationcount: violationcount,
                 notifications: notifications,
-                forrevisioncount: forrevisioncount
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -135,7 +137,8 @@ const requestercontroller = {
                 department: user.department.name,
                 requestdate: today,
                 contracttypes: contracttypes,
-                activeCompanies: uniqueActiveCompanies
+                activeCompanies: uniqueActiveCompanies,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -314,7 +317,8 @@ const requestercontroller = {
             res.render('requestreceipt', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
-                contractrequest: contractrequest
+                contractrequest: contractrequest,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -564,7 +568,8 @@ const requestercontroller = {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
-                repositoryFiles: repositoryFiles
+                repositoryFiles: repositoryFiles,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -685,7 +690,8 @@ const requestercontroller = {
             res.render('violationreport', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
-                months: months
+                months: months,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -704,7 +710,8 @@ const requestercontroller = {
             res.render('issuelog', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
-                issues: issues
+                issues: issues,
+                forrevision_count: req.session.forrevision_count
                 //faqs: faqs
                 // contracttypes: contracttypes,
                 // templates: templates
