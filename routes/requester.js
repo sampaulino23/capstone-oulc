@@ -107,6 +107,7 @@ router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagi
 router.post('/submitrevision', requestercontroller.submitRevision);
 router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
 router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
+router.get('/issuelog', requestercontroller.getIssueLog);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);

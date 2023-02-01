@@ -708,6 +708,25 @@ const requestercontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getIssueLog: async (req, res) => {
+        try {
+
+            //const issues = await Issue.find({}).lean().sort({date: 1}).exec();
+    
+            res.render('issuelog', {
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                //faqs: faqs
+                // contracttypes: contracttypes,
+                // templates: templates
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 }
 
