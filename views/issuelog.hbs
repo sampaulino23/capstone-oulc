@@ -41,14 +41,14 @@
                                         </tr>
                                     </thead>
                                     <tbody id="myIssueTable" style = "word-break: break-word;">
-                                        <!--{{#each issues}}-->
+                                        {{#each issues}}
                                         <tr style="cursor: pointer;" id="" onclick="">
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">Sample Issue No</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">Date</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{requestNumber}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{summary}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">sample</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">sample</td>
                                         </tr>
-                                        <!--{{/each}}-->
+                                        {{/each}}
                                     </tbody>
                                 </table>
                             </div>

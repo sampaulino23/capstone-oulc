@@ -25,6 +25,7 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
 const Notification = require('../models/Notification.js');
+const { type } = require('os');
 
 const conn = mongoose.createConnection(url);
 
@@ -714,10 +715,14 @@ const requestercontroller = {
         try {
 
             //const issues = await Issue.find({}).lean().sort({date: 1}).exec();
-    
+            var issues = [], b = {requestNumber: 20, summary: "SAMPLE1"}, c = {requestNumber: 30, summary: "SAMPLE2"};
+            issues.push(b);
+            issues.push(c);
+            
             res.render('issuelog', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
+                issues: issues
                 //faqs: faqs
                 // contracttypes: contracttypes,
                 // templates: templates
