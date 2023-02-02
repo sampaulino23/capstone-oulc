@@ -52,8 +52,11 @@
                         <li id="dropdown-item2"><a class="dropdown-item" href="/attorney/contractrequests"><b id="notif">{{legalReview_nearstartcount}}</b> requests For Review are nearing the start date</a><hr></li>
                         {{/compare}}
                         {{#compare user_role "==" "Staff"}}
-                        <li id="dropdown-item3"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}</b> Pending requests are nearing the start date</a><hr></li>
-                        <li id="dropdown-item4"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}</b> requests To Review are nearing the start date</a><hr></li>
+                            
+                            <li id="dropdown-item3"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}</b> Pending requests are nearing the start date</a><hr></li>
+                            {{#ifCond toreview_nearstartcount '!=' "0"}}
+                            <li id="dropdown-item4"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}</b> requests To Review are nearing the start date</a><hr></li>
+                            {{/ifCond}}
                         {{/compare}}
                     </ul>
                 </div>
