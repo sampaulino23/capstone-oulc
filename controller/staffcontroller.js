@@ -103,14 +103,6 @@ const staffcontroller = {
                                 path: 'role'
                             })
                             .exec();
-
-            //For revision count - notifs/alerts
-            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
-            var forrevisioncount;
-            for (forrevisioncount = 0; forrevisioncount < forrevisionrequests.length; forrevisioncount++){
-                forrevisioncount++;
-            }
-            //
             
             res.render('requestsoulc', {
                 user_fullname:req.user.fullName,
@@ -118,10 +110,10 @@ const staffcontroller = {
                 user: user,
                 contracttypes: contracttypes,
                 contractrequests: contractrequests,
-                forrevisioncount: forrevisioncount, //to be removed
                 pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
                 toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
-                legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount, //new notif implementation
+                forrevision_count: req.session.forrevision_count //new notif implementation
             });
 
         } catch (err) {
@@ -143,7 +135,11 @@ const staffcontroller = {
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 templates: templates,
-                forrevisioncount: forrevisioncount
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount, //new notif implementation
+                forrevision_count: req.session.forrevision_count //new notif implementation
+                
             });
 
         } catch (err) {

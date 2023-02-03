@@ -863,7 +863,10 @@ const oulccontroller = {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
-                repositoryFiles: repositoryFiles
+                repositoryFiles: repositoryFiles,
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
             });
 
         } catch (err) {
@@ -911,7 +914,10 @@ const oulccontroller = {
             res.render('specificrepositoryfile', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
-                repositoryFile: repositoryFile
+                repositoryFile: repositoryFile,
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
 
             });
 
@@ -1093,7 +1099,11 @@ const oulccontroller = {
             res.render('faqs', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
-                faqs: faqs
+                faqs: faqs,
+                forrevision_count: req.session.forrevision_count,
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount //new notif implementation
                 // contracttypes: contracttypes,
                 // templates: templates
             });
@@ -1228,7 +1238,11 @@ const oulccontroller = {
                 user_id: req.user._id,
                 user_fullname: req.user.fullName,
                 user_role: req.user.roleName,
-                policyVersions: policyVersions
+                policyVersions: policyVersions,
+                pending_nearstartcount: req.session.pending_nearstartcount, //new notif implementation
+                toreview_nearstartcount: req.session.toreview_nearstartcount, //new notif implementation
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount, //new notif implementation
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -1369,6 +1383,18 @@ const oulccontroller = {
             await Policy.findByIdAndUpdate(originalPolicyVersion.policy._id, {$inc: {latestVersion: 1}}).exec();
 
             res.redirect('back');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getPolicyVersions: async (req, res) => {
+        try {
+
+            console.log('policy versions');
+
+            res.render('revisionhistorypolicy');
             
         } catch (err) {
             console.log(err);
