@@ -1387,6 +1387,18 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getPolicyVersions: async (req, res) => {
+        try {
+
+            console.log('policy versions');
+
+            res.render('revisionhistorypolicy');
+            
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }
