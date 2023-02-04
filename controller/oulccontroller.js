@@ -1392,9 +1392,25 @@ const oulccontroller = {
     getPolicyVersions: async (req, res) => {
         try {
 
-            console.log('policy versions');
+            const policyid = req.params.id;
 
-            res.render('revisionhistorypolicy');
+            // const policyVersion = await PolicyVersion.findById(policyVersionId).exec();
+            const policy = await Policy.findById(policyid)
+                .lean()
+                .exec();
+                
+            const policyVersions = await PolicyVersion.find({policy: policy})
+                .populate({
+                    path: 'uploadBy'
+                })
+                .lean()
+                .sort({version: -1})
+                .exec();
+
+            res.render('revisionhistorypolicy', {
+                policy: policy,
+                policyVersions: policyVersions
+            });
             
         } catch (err) {
             console.log(err);

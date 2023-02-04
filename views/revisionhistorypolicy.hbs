@@ -13,5 +13,77 @@
     <link rel="stylesheet" href="/css/specificrequeststyle.css">
 </head>
 <body>
-    <p>Hello Revision History</p>
+    <div id="header">OULC Policies and Procedures</div>
+    <div class="subheader-row">
+        <div class="col-6">
+            <div id="subheader">
+                <a href="/attorney/policy" class="approval-request-href">All Policies</a>
+                <p class="divider" style="display: inline;"> > </p>
+                <a href="/attorney/policyversions/{{policy._id}}">{{policy._id}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- LEFT SIDE -->
+            <div class="left-col col-6">
+                <div id="fileView">
+                    
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="right-col col-6">
+                <h5 id="notContractText" hidden="true">File selected is not a contract.</h5>
+                <div class="files-div" id="contractVersionsDiv">
+                    <div class = "version-header">
+                        Revision Versions:
+                        <form method="POST" action="/attorney/comparepolicyversions" class="revision-form" target="_blank">
+                            {{!-- <input type="hidden" name="contractFileId" id="contractFileId" val=""> --}}
+                            <button type="submit" class="mark-as-btn" id="policyRevisionHistory">Compare Versions</button>
+                        </form>
+                    </div><br>
+                    <table class="sortable table table-hover"
+                        style="width: 100%; font-size: 16px; background:#D9D9D9;">
+                        <thead class="table-headers">
+                            <tr>
+                                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Version</th>
+                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Upload Date</th>
+                                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Uploaded By</th>
+                                <th style="width: 12%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="policyVersionsTable">
+                            {{#each policyVersions}}
+                            <tr id="{{_id}}" class="policy-version-row">
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{version}}.0</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{uploadBy.fullName}}</td>
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                                    <a href="/requestdocuments/downloadcontractversion/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                    <br><div class="version-header">Version Notes:</div><br>
+                    {{#each policyVersions}}
+                    <div class="card version-note-card" id="versionNote{{_id}}">
+                        <p><b>File: </b>{{filename}} (Version {{version}}.0)</p>
+                        <hr>
+                        {{#compare version '==' 1}}
+                        <p class="card-text">No comments for this version</p>
+                        {{else}}
+                        <div class="version-comments">
+                            <p class="card-text">{{versionNote}}</p>
+                        </div>
+                        {{/compare}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
