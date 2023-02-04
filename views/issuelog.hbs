@@ -18,7 +18,7 @@
                 <div class="row" id = "upload-btn-header">
                     {{#compare user_role "==" "Requester"}}
                     <div class = "col-6">
-                        <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Create New Issue</button>
+                        <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
                     </div>
                     {{/compare}}
                     <div class = "col-6">
@@ -71,23 +71,32 @@
         </div>
     </body>
     
-    <!-- Upload Policy Modal -->
-    <div class="modal fade" id="uploadPolicyModal" tabindex="-1" aria-labelledby="uploadPolicyModal" aria-hidden="true">
+    <!-- Create Issue Modal -->
+    <div class="modal fade" id="createIssueModal" tabindex="-1" aria-labelledby="createIssueModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="w-100 modal-title" id="exampleModalLabel">Create New Issue</h5>
                     <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
                 </div>
-                <form action="/staff/uploadpolicy" method="POST" enctype="multipart/form-data">
+                <form action="/requester/createissue" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
-                        <input type="hidden" id="uploadPolicyUser" name="uploadPolicyUser" value="{{user_id}}">
-                        <label for="file" class="modal-text custom-file-label">File Upload</label><br>
-                        <input type="file" name="file" id="file" class="custom-file-input" accept="application/pdf" required><br><br>
+                        <input type="hidden" id="requesterid" name="requesterid" value="{{user_id}}">
+                        <label for="issueTitle" class="form-label">Title</label>
+                        <input class="form-control" id="issueTitle" name="issueTitle" required></input>
+                        
+                        <label for="issueType" class = "modal-text">Type / Nature of Concern</label><br>
+                        <select name="issueType" id="issueType" class="dropdown" required>
+                            <option>Type 1</option>
+                            <option>Type 2</option>
+                        </select>
+
+                        <label for="issueSummary" class="form-label">Summary</label>
+                        <textarea class="form-control" id="issueSummary" name="issueSummary" required></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="upload-btn-modal" id="uploadPolicyBtn">Upload</button>
+                        <button type="submit" class="upload-btn-modal" id="createIssueBtn">Submit</button>
                     </div>
                 </form>
             </div>

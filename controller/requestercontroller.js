@@ -24,6 +24,7 @@ const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
+const Issue = require('../models/Issue.js');
 const { type } = require('os');
 
 const conn = mongoose.createConnection(url);
@@ -705,20 +706,41 @@ const requestercontroller = {
             issues.push(c);
             
             res.render('issuelog', {
+                user_id: req.user._id,
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 issues: issues,
                 forrevision_count: req.session.forrevision_count
-                //faqs: faqs
-                // contracttypes: contracttypes,
-                // templates: templates
             });
 
         } catch (err) {
             console.log(err);
         }
+    },
 
-    }
+    postCreateIssue: async (req, res) => {
+        try {
+            
+            var issue = new Issue({
+                title: req.body.issueTitle,
+                type: req.body.issueType,
+                summary: req.body.issueSummary,
+                trackingNumber: "000",
+                requester: req.body.requesterid,
+                date: Date.now()
+            });
+
+            await issue.save(function(){
+                res.redirect('back');
+            });
+            
+            console.log("Issue created");
+            //res.redirect('back');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    },
 }
 
 module.exports = requestercontroller;

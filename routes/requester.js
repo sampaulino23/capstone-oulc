@@ -108,6 +108,7 @@ router.post('/submitrevision', requestercontroller.submitRevision);
 router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
 router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
 router.get('/issuelog', requestercontroller.getIssueLog);
+router.post('/createissue', requestercontroller.postCreateIssue);
 
 passport.serializeUser((user_id, done) =>{
     done(null, user_id);
