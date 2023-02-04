@@ -860,7 +860,7 @@ const oulccontroller = {
             .exec();
     
             res.render('repository', {
-                user_fullname:req.user.fullName,
+                user_fullname: req.user.fullName,
                 user_role: req.user.roleName,
                 contracttypes: contracttypes,
                 repositoryFiles: repositoryFiles,
@@ -1232,8 +1232,6 @@ const oulccontroller = {
                 policyVersions.push(policyVersion);
             }
 
-            console.log(policyVersions);
-    
             res.render('policy', {
                 user_id: req.user._id,
                 user_fullname: req.user.fullName,
@@ -1393,12 +1391,15 @@ const oulccontroller = {
         try {
 
             const policyid = req.params.id;
-
-            // const policyVersion = await PolicyVersion.findById(policyVersionId).exec();
+            
             const policy = await Policy.findById(policyid)
                 .lean()
                 .exec();
-                
+
+            const latestPolicyVersion = await PolicyVersion.findOne({policy: policy, version: policy.latestVersion})
+                .lean()
+                .exec();
+
             const policyVersions = await PolicyVersion.find({policy: policy})
                 .populate({
                     path: 'uploadBy'
@@ -1408,6 +1409,9 @@ const oulccontroller = {
                 .exec();
 
             res.render('revisionhistorypolicy', {
+                user_fullname: req.user.fullName,
+                user_role: req.user.roleName,
+                latestPolicyVersion: latestPolicyVersion,
                 policy: policy,
                 policyVersions: policyVersions
             });
