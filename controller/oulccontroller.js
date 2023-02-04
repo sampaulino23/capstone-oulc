@@ -1419,6 +1419,20 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    comparePolicyVersions: async (req, res) => {
+        try {
+
+            console.log('Compare Policy Versions');
+
+            res.render('comparepolicyversions', {
+
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }

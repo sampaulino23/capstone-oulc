@@ -102,6 +102,7 @@ router.get('/downloadrepositoryfile/:fileid', oulccontroller.downloadRepositoryF
 router.post('/deleterepositoryfile/:fileid', oulccontroller.deleteRepositoryFile);
 router.get('/repositoryfile/:fileid', oulccontroller.viewRepositoryFile);
 router.get('/policyversions/:id', oulccontroller.getPolicyVersions);
+router.post('/comparepolicyversions', oulccontroller.comparePolicyVersions);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);
