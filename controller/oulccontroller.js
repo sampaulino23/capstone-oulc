@@ -25,7 +25,6 @@ const PendingFeedback  = require('../models/PendingFeedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 const PolicyVersion = require('../models/PolicyVersion.js');
-const Notification = require('../models/Notification.js');
 const FeedbackSet = require('../models/FeedbackSet.js');
 
 // Create mongo connection

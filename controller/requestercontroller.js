@@ -24,7 +24,6 @@ const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
-const Notification = require('../models/Notification.js');
 const { type } = require('os');
 
 const conn = mongoose.createConnection(url);
@@ -49,7 +48,6 @@ const requestercontroller = {
             var violationcount = 0;
 
             const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
-            const notifications = await Notification.find({}).lean().exec(); //notifs model (initial only)
 
             //For revision count - notifs/alerts
             const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
@@ -83,7 +81,6 @@ const requestercontroller = {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
                 violationcount: violationcount,
-                notifications: notifications,
                 forrevision_count: req.session.forrevision_count
             });
 
