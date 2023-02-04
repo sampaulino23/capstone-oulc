@@ -1121,28 +1121,6 @@ const specificrequestcontroller = {
             }
             console.log(documentLeft);
 
-            // code below is for bothdocuments implementation
-            // const bothdocuments = await cursor.toArray();
-
-            // for (document of bothdocuments) {
-            //     if (beforecontractversion.file.toString() == document._id.toString()) {
-            //         const writableStream = fs.createWriteStream('./right_compare.pdf');
-            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
-            //         downStream.pipe(writableStream);
-
-            //         console.log('right');
-            //     } else if (latestcontractversion.file.toString() == document._id.toString()) {
-            //         const writableStream = fs.createWriteStream('./left_compare.pdf');
-            //         const downStream = gridfsBucketRequestDocuments.openDownloadStream(document._id);
-            //         downStream.pipe(writableStream);
-
-            //         console.log('left');
-            //     }
-            // }
-
-            // code belows in the optimized implementation
-            // const bothdocuments = await cursor.toArray();
-
             const writableStream = fs.createWriteStream('./right_compare.pdf');
             const downStream = gridfsBucketRequestDocuments.openDownloadStream(documentRight._id);
             downStream.pipe(writableStream);

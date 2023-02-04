@@ -40,7 +40,7 @@
                     <div class = "version-header">
                         Revision Versions:
                         <form method="POST" action="/attorney/comparepolicyversions" class="revision-form" target="_blank">
-                            {{!-- <input type="hidden" name="contractFileId" id="contractFileId" val=""> --}}
+                            <input type="hidden" name="policyIdForComparing" id="policyIdForComparing" value="{{policy._id}}">
                             <button type="submit" class="mark-as-btn" id="policyRevisionHistory">Compare Versions</button>
                         </form>
                     </div><br>

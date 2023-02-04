@@ -17,6 +17,55 @@
     <div id="header">
         Compare Policy Versions
     </div>
+
+    <div class="subheader-row">
+        <div class="col-6">
+            <div id="subheader">
+                <a href="/attorney/policy" class="approval-request-href">All Policies</a>
+                <p class="divider" style="display: inline;"> > </p>
+                <a href="/attorney/policyversions/{{policy._id}}">{{policy._id}}</a>
+                <p class="divider" style="display: inline;"> > </p>
+                <a href="/">Compare Versions</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="">
+            <form action="/attorney/customcomparepolicyversions" method="POST">
+                <div class="input-group mb-3">
+                    <span class="file-selected input-group-text">Policy Version</span>
+                    <select class="form-select" name="fileSelectedLeft" id="fileSelectedLeft" aria-label="file-selected">
+                        {{#each policyVersions}}
+                        {{#compare ../leftPolicyVersion "==" _id}}
+                            <option value="{{file}}" selected>Version {{version}}</option>
+                        {{else}}
+                            <option value="{{file}}">Version {{version}}</option>
+                        {{/compare}}
+                        {{/each}}
+                    </select>
+                    <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
+                        {{#each policyVersions}}
+                        {{#compare ../rightPolicyVersion "==" _id}}
+                            <option value="{{file}}" selected>Version {{version}}</option>
+                        {{else}}
+                            <option value="{{file}}">Version {{version}}</option>
+                        {{/compare}}
+                        {{/each}}
+                    </select>
+                    <button id="compare-btn" class="mark-as-btn" type="submit">Compare</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="comparisonView">
+            <iframe src="{{draftable}}"
+            style="width: 100%; height: 1000px; border: 1px solid #e0e0e0;"
+            allowfullscreen />
+        </div>
+    </div>
+        
+    </div>
 </body>
 
 </html>

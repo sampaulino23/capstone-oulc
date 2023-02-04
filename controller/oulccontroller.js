@@ -93,6 +93,9 @@ function getAttorneyToReview (month, day, year, contractrequests, toreview, logg
     }
 }
 
+var client = require('@draftable/compare-api').client('JflCrb-test', 'ea42b274e485e04e9aa58ae65f40434a');
+var comparisons = client.comparisons;
+
 const oulccontroller = {
 
     getDashboard: async (req, res) => {
@@ -1425,7 +1428,102 @@ const oulccontroller = {
 
             console.log('Compare Policy Versions');
 
-            res.render('comparepolicyversions', {
+            const policyid = req.body.policyIdForComparing;
+
+            const policy = await Policy.findById(policyid).lean().exec();
+            const policyVersions = await PolicyVersion.find({policy: policy})
+                .lean()
+                .exec();
+
+            console.log(policyid);
+
+            const latestPolicyVersion = await PolicyVersion.findOne({policy: policy, version: policy.latestVersion})
+                .lean()
+                .exec();
+
+            if (policy.latestversion <= 1) {
+                var versionbefore = policy.latestVersion;
+            } else {
+                var versionbefore = policy.latestVersion - 1;
+            }
+
+            console.log(versionbefore);
+
+            const beforePolicyVersion = await PolicyVersion.findOne({ policy: policy, version: versionbefore})
+                .lean()
+                .exec();
+
+            const cursorRight = await gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(latestPolicyVersion.file)});
+            const cursorLeft = await gridfsBucketPolicy.find({_id: mongoose.Types.ObjectId(beforePolicyVersion.file)});
+
+            let documentRight, documentLeft;
+
+            if (await cursorRight.hasNext()) {
+                documentRight = await cursorRight.next();
+            }
+            console.log(documentRight);
+
+            if (await cursorLeft.hasNext()) {
+                documentLeft = await cursorLeft.next();
+            }
+            console.log(documentLeft);
+
+            const writableStream = fs.createWriteStream('./right_compare.pdf');
+            const downStream = gridfsBucketPolicy.openDownloadStream(documentRight._id);
+            downStream.pipe(writableStream);
+            console.log('right');
+
+            downStream.on('end', function() {
+                const writableStream2 = fs.createWriteStream('./left_compare.pdf');
+                const downStream2 = gridfsBucketPolicy.openDownloadStream(documentLeft._id);
+                downStream2.pipe(writableStream2);
+                console.log('left');
+
+                downStream2.on('end', function(){
+                    var identifier = comparisons.generateIdentifier();
+    
+                    comparisons.create({
+                        identifier: identifier,
+                        left: {
+                            source: fs.readFileSync('./left_compare.pdf'),
+                            fileType: 'pdf',
+                        },
+                        right: {
+                            source: fs.readFileSync('./right_compare.pdf'),
+                            fileType: 'pdf',
+                        },
+                        publiclyAccessible: true
+                    }).then(function(comparison) {
+                        console.log("Comparison created: %s", comparison);
+                        // Generate a signed viewer URL to access the private comparison. The expiry
+                        // time defaults to 30 minutes if the valid_until parameter is not provided.
+                        const viewerURL = comparisons.signedViewerURL(comparison.identifier);
+                        console.log("Viewer URL (expires in 30 mins): %s", viewerURL);
+    
+                        fs.unlink('left_compare.pdf', (err) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log('left success');
+                        });
+                        
+                        fs.unlink('right_compare.pdf', (err) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log('right success');
+                        });
+
+                        res.render('comparepolicyversions', {
+                            user_fullname: req.user.fullName,
+                            user_role: req.user.roleName,
+                            leftPolicyVersion: leftPolicyVersion,
+                            rightPolicyVersion: rightPolicyVersion,
+                            policy: policy,
+                            policyVersions: policyVersions
+                        });
+                    });
+                });
 
             });
 
@@ -1433,7 +1531,6 @@ const oulccontroller = {
             console.log(err);
         }
     }
-
 }
 
 module.exports = oulccontroller;
