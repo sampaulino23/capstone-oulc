@@ -954,9 +954,6 @@ const specificrequestcontroller = {
             const fileLeft = req.body.fileSelectedLeft;
             const fileRight = req.body.fileSelectedRight;
 
-            // console.log(fileLeft);
-            // console.log(fileRight);
-
             let contractversionleft;
 
             contractversionleft = await ContractVersion.findOne({ file: fileLeft }).exec();
@@ -1003,12 +1000,10 @@ const specificrequestcontroller = {
             if (await cursorRight.hasNext()) {
                 documentRight = await cursorRight.next();
             }
-            // console.log(documentRight);
 
             if (await cursorLeft.hasNext()) {
                 documentLeft = await cursorLeft.next();
             }
-            // console.log(documentLeft);
 
             const writableStream = fs.createWriteStream('./right_compare.pdf');
             const downStream = gridfsBucketRequestDocuments.openDownloadStream(documentRight._id);
@@ -1085,11 +1080,7 @@ const specificrequestcontroller = {
     getRevisionHistory: async (req, res) => { //staff
         try {
 
-            // var path = req.path.split('/')[2];
-            // console.log(path);
-
             const contractfileid = req.body.contractFileId;
-            // console.log(contractfileid);
 
             const selectedcontractversion = await ContractVersion.findOne({ file: contractfileid }).lean()
                 .populate({
@@ -1102,19 +1093,15 @@ const specificrequestcontroller = {
                     }
                 })
                 .exec();
-            // console.log(selectedcontractversion);
 
             const contract = await Contract.findById(selectedcontractversion.contract).exec();
-            // console.log(contract);
 
             const contractversions = await ContractVersion.find({ contract: selectedcontractversion.contract }).lean().exec();
-            // console.log(contractversions);
 
             const templates = await Template.find({ type: selectedcontractversion.contract.contractRequest.contractType}).lean().exec();
             console.log(templates);
 
             const latestcontractversion = await ContractVersion.findOne({ version: contract.latestversion, contract: contract}).exec();
-            // console.log(latestcontractversion);
 
             if (contract.latestversion <= 1) {
                 var versionbefore = contract.latestversion;
@@ -1123,7 +1110,6 @@ const specificrequestcontroller = {
             }
 
             const beforecontractversion = await ContractVersion.findOne({ version: versionbefore, contract: contract}).exec();
-            // console.log(beforecontractversion);
 
             const cursorRight = await gridfsBucketRequestDocuments.find({_id: mongoose.Types.ObjectId(latestcontractversion.file)});
 

@@ -3,11 +3,7 @@
 
 <script>
     $(document).ready( () => {
-        $('.negotiation-file-row').click(() => {
-            console.log('Hello Negotiation');
-
-            const fileid = $(this).attr('id');
-        })
+        
     });
 </script>
 
@@ -54,27 +50,6 @@
                     </div>
                 </div>
             </div>
-
-            {{!-- <div class="modal fade modal-xl" id="viewNegotiationModal{{index}}" tabindex="-1" aria-labelledby="viewNegotiationModal{{index}}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title w-100">View Negotiation File</h5>
-                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
-                                &times;
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="negotiationFileView">
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             <!-- Delete Template Modal -->
             <div class="modal fade" id="deleteNegotiationFile{{@index}}" tabindex="-1" aria-labelledby="deleteNegotiationFile{{@index}}" aria-hidden="true">
