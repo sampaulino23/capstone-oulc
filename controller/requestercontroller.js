@@ -761,6 +761,31 @@ const requestercontroller = {
             console.log(err);
         }
     },
+
+    viewNegotiationFile: async (req, res) => {
+        try {
+
+            const fileid = req.params.fileid;
+
+            const cursor = gridfsBucket.find({_id: mongoose.Types.ObjectId(fileid)});
+
+            cursor.forEach((doc, err) => {
+                if (err) {
+                    console.log(err);
+                } else if (doc.contentType === 'application/pdf') {
+                    const readstream = gridfsBucket.openDownloadStream(doc._id);
+                    readstream.pipe(res);
+                } else {
+                    res.status(404).json({
+                        err: 'No file exist'
+                    });
+                }
+            })
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = requestercontroller;
