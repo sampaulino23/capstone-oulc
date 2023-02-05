@@ -508,24 +508,36 @@ const requestercontroller = {
                 if (stagingcontractversion) {
                     stagingcontractversions.push(stagingcontractversion);
                 }
-            }
 
-            for (stagingcontractversion of stagingcontractversions) {
-                console.log(stagingcontractversion);
-
-                var latestContractVersion = await ContractVersion.findOne({contract: stagingcontractversion.contract, version: stagingcontractversion.contract.latestversion})
+                // set all feedback to 'Revised' status
+                var latestContractVersion = await ContractVersion.findOne({contract: contract, version: contract.latestversion})
                     .lean()
                     .populate({
                         path: 'contract'
                     })
                     .exec();
-                
-                console.log("Leater contract verison");
-                console.log(latestContractVersion);
 
                 var feedback = await Feedback.findOne({contractVersion: latestContractVersion}).lean().exec();
                 await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
                 await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
+            }
+
+            for (stagingcontractversion of stagingcontractversions) {
+                // console.log(stagingcontractversion);
+
+                // var latestContractVersion = await ContractVersion.findOne({contract: stagingcontractversion.contract, version: stagingcontractversion.contract.latestversion})
+                //     .lean()
+                //     .populate({
+                //         path: 'contract'
+                //     })
+                //     .exec();
+                
+                // console.log("Leater contract verison");
+                // console.log(latestContractVersion);
+
+                // var feedback = await Feedback.findOne({contractVersion: latestContractVersion}).lean().exec();
+                // await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
+                // await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
 
                 let contractVersion = new ContractVersion({
                     contract: stagingcontractversion.contract,

@@ -25,6 +25,9 @@
     </div>
     {{/each}}--}}
     {{#compare user_role '!=' 'Requester'}}
+    <div class = "feedback-header">
+        Feedback Input:
+    </div>
     <div class="container comments-container">
         {{#each latestversioncontracts}}
         <div class="pending-feedback" id="cvId{{_id}}">
@@ -45,6 +48,7 @@
     </div>
         {{#each feedbacks}}
         {{#compare status '==' 'Submitted'}}
+        {{#compare content '!=' ''}}
         <div id = "feedbackContainer" class = "feedback-container">
             <div id ="feedback-details-div">
                 <div class = "profile-pic">
@@ -65,6 +69,7 @@
             </div>
         </div>
         {{/compare}}
+        {{/compare}}
         {{/each}}
     {{/compare}}
     {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
@@ -73,6 +78,7 @@
     </div>
         {{#each revisedfeedbacks}}
         {{#compare status '==' 'Revised'}}
+        {{#compare content '!=' ''}}
         <div id = "feedbackContainer" class = "feedback-container">
             <div id ="feedback-details-div">
                 <div class = "profile-pic">
@@ -92,6 +98,7 @@
                 <b>Comment: </b>{{content}}
             </div>
         </div>
+        {{/compare}}
         {{/compare}}
         {{/each}}
     {{!-- <div class="feedback-header">

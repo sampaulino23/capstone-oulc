@@ -86,12 +86,6 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            const comments = await Feedback.find({contractRequest: contractrequest}).lean()
-                .populate({
-                    path: 'user_id'
-                })
-                .exec();
-
             const statusList = await Status.findOne({counter: contractrequest.statusCounter}).exec();
 
             if (req.user.roleName == "Staff") {
@@ -219,7 +213,7 @@ const specificrequestcontroller = {
                 user_role:req.user.roleName,
                 user: user,
                 contractrequest: contractrequest,
-                comments: comments,
+                revisedfeedbacks: revisedfeedbacks,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
