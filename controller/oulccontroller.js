@@ -21,7 +21,7 @@ const { ObjectId } = require('mongoose');
 const { template } = require('handlebars');
 const RepositoryFile = require('../models/RepositoryFile.js');
 const Conversation = require('../models/Conversation.js');
-const PendingFeedback  = require('../models/PendingFeedback.js');
+const Feedback  = require('../models/Feedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 const PolicyVersion = require('../models/PolicyVersion.js');
@@ -999,11 +999,10 @@ const oulccontroller = {
 
             console.log(comments);
 
-            // TODO: Add FeedbackSet object first then create the PendingFeedback objects
             // TODO: Consider the null and PendingFeedbacks with no inputs
 
             // if there is at least 1 single comment
-            if (comments[0]) {
+            // if (comments[0]) {
 
                 // find contractRequest Id of the comment
                 var cvid = comments[0].contractversionid.substring(4);
@@ -1025,12 +1024,14 @@ const oulccontroller = {
                 // cycle through all comments and create a feedback object for each one
                 for (comment of comments) {
 
+                    console.log(comment.content);
+
                     // if feedback is not empty
-                    if (comment) {
+                    if (comment.content) {
 
                         var contractversionid = comment.contractversionid.substring(4);
         
-                        var findComment = await PendingFeedback.findOne({contractVersion: contractversionid}).exec();
+                        var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
         
                         if (findComment) {  // if comments is already there
                             console.log('has existing comment');
@@ -1038,12 +1039,12 @@ const oulccontroller = {
                             // console.log(findContractVersion.comment);
                             // console.log(comment.content);
         
-                            var success = await PendingFeedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+                            var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
         
                         } else {    // if no comment
                             console.log('no comment');
         
-                            let newComment = new PendingFeedback({
+                            let newComment = new Feedback({
                                 contractVersion: contractversionid,
                                 // feedbackSet: newFeedbackSet,
                                 user_id: req.user._id,
@@ -1057,7 +1058,7 @@ const oulccontroller = {
                     }
     
                 }
-            }
+            // }
 
         } catch (err) {
             console.log(err);
@@ -1148,7 +1149,7 @@ const oulccontroller = {
     
                     var contractVersionId = pendingFeedbackFileId.substring(4);
     
-                    var pendingFeedback = await PendingFeedback.findOne({contractVersion: contractVersionId}).exec();
+                    var pendingFeedback = await Feedback.findOne({contractVersion: contractVersionId}).exec();
                     // console.log(pendingFeedback);
     
                     if (pendingFeedback) { // if found

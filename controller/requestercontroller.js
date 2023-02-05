@@ -25,6 +25,7 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const VersionNote = require('../models/VersionNote.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
 const Issue = require('../models/Issue.js');
+const Feedback = require('../models/Feedback.js');
 const { type } = require('os');
 
 const conn = mongoose.createConnection(url);
@@ -497,6 +498,9 @@ const requestercontroller = {
                 const stagingcontractversion = await StagingContractVersion.findOne({contract: contract})
                     .lean()
                     .populate({
+                        path: 'contract'
+                    })
+                    .populate({
                         path: 'versionNote'
                     })
                     .exec();
@@ -507,6 +511,22 @@ const requestercontroller = {
             }
 
             for (stagingcontractversion of stagingcontractversions) {
+                console.log(stagingcontractversion);
+
+                var latestContractVersion = await ContractVersion.findOne({contract: stagingcontractversion.contract, version: stagingcontractversion.contract.latestversion})
+                    .lean()
+                    .populate({
+                        path: 'contract'
+                    })
+                    .exec();
+                
+                console.log("Leater contract verison");
+                console.log(latestContractVersion);
+
+                var feedback = await Feedback.findOne({contractVersion: latestContractVersion}).lean().exec();
+                await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
+                await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
+
                 let contractVersion = new ContractVersion({
                     contract: stagingcontractversion.contract,
                     version: stagingcontractversion.version,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PendingFeedbackSchema = mongoose.Schema({
+const FeedbackSchema = mongoose.Schema({
     contractVersion: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ContractVersion',
@@ -12,11 +12,12 @@ const PendingFeedbackSchema = mongoose.Schema({
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        default: ' '
     },
     status: {
         type: String,
-        enum: ['Pending', 'Submitted'],
+        enum: ['Pending', 'Submitted', 'Revised'],
         required: true,
         default: 'Pending'
     },
@@ -27,4 +28,4 @@ const PendingFeedbackSchema = mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('PendingFeedback', PendingFeedbackSchema);
+module.exports = mongoose.model('Feedback', FeedbackSchema);

@@ -20,13 +20,12 @@ const RepositoryFile = require('../models/RepositoryFile.js');
 const NegotiationFile = require('../models/NegotiationFile.js');
 const Conversation = require('../models/Conversation.js');
 const ThirdParty = require('../models/Thirdparty.js');
-const Comment = require('../models/PendingFeedback.js');
 const FeedbackSet = require('../models/FeedbackSet.js');
 
 const fs = require('fs');
 const { filename } = require('gotenberg-js-client');
 const Template = require('../models/Template.js');
-const PendingFeedback = require('../models/PendingFeedback.js');
+const Feedback = require('../models/Feedback.js');
 
     const conn = mongoose.createConnection(url);
 
@@ -87,7 +86,7 @@ const specificrequestcontroller = {
                 .sort({requestDate: 1})
                 .exec();
 
-            const comments = await Comment.find({contractRequest: contractrequest}).lean()
+            const comments = await Feedback.find({contractRequest: contractrequest}).lean()
                 .populate({
                     path: 'user_id'
                 })
@@ -133,6 +132,7 @@ const specificrequestcontroller = {
 
             var latestversioncontracts = [];
             var contractversions = [];
+            var revisedfeedbacks = [];
 
             for (contract of contracts) {
                 const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
@@ -169,6 +169,17 @@ const specificrequestcontroller = {
 
                 for (eachcontractversion of contractversion) {
                     contractversions.push(eachcontractversion);
+
+                    var revisedfeedback = await Feedback.findOne({contractVersion: eachcontractversion})
+                        .lean()
+                        .populate({
+                            path: 'user_id'
+                        })
+                        .populate({
+                            path: 'contractVersion'
+                        }).exec();
+
+                    revisedfeedbacks.push(revisedfeedback);
                 }
             }
 
@@ -294,9 +305,10 @@ const specificrequestcontroller = {
             var contractversions = [];
             var stagingcontractversions = [];
             var feedbacks = [];
+            var revisedfeedbacks = [];
 
             for (contract of contracts) {
-                const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
+                var latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
                     .lean()
                     .populate({
                         path: 'versionNote'
@@ -309,7 +321,7 @@ const specificrequestcontroller = {
                     })
                     .exec();
 
-                var pendingFeedback = await PendingFeedback.findOne({contractVersion: latestversioncontract})
+                var pendingFeedback = await Feedback.findOne({contractVersion: latestversioncontract})
                     .lean()
                     .populate({
                         path: 'user_id'
@@ -325,7 +337,7 @@ const specificrequestcontroller = {
                 
                 latestversioncontracts.push(latestversioncontract);
 
-                const contractversion = await ContractVersion.find({contract: contract._id})
+                var contractversion = await ContractVersion.find({contract: contract._id})
                     .lean()
                     .populate({
                         path: 'contract',
@@ -344,9 +356,20 @@ const specificrequestcontroller = {
 
                 for (eachcontractversion of contractversion) {
                     contractversions.push(eachcontractversion);
+
+                    var revisedfeedback = await Feedback.findOne({contractVersion: eachcontractversion})
+                        .lean()
+                        .populate({
+                            path: 'user_id'
+                        })
+                        .populate({
+                            path: 'contractVersion'
+                        }).exec();
+
+                    revisedfeedbacks.push(revisedfeedback);
                 }
 
-                const stagingcontractversion = await StagingContractVersion.findOne({contract: contract})
+                var stagingcontractversion = await StagingContractVersion.findOne({contract: contract})
                     .lean()
                     .populate({
                         path: 'versionNote'
@@ -359,12 +382,12 @@ const specificrequestcontroller = {
             }
 
             const negotiationfiles = await NegotiationFile.find({requestid: path}).lean()
-            .populate({
-                path: 'requestid',
-                populate: {
-                    path: 'requester'
-                }
-            }).exec();
+                .populate({
+                    path: 'requestid',
+                    populate: {
+                        path: 'requester'
+                    }
+                }).exec();
 
             const referencedocuments = await ReferenceDocument.find({contractRequest: path}).lean().exec();
 
@@ -373,6 +396,7 @@ const specificrequestcontroller = {
                 user_role:req.user.roleName,
                 contractrequest: contractrequest,
                 feedbacks: feedbacks,
+                revisedfeedbacks: revisedfeedbacks,
                 latestversioncontracts: latestversioncontracts,
                 referencedocuments: referencedocuments,
                 contractversions: contractversions,
@@ -437,7 +461,7 @@ const specificrequestcontroller = {
             for (contract of contracts) {
                 var latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion}).exec();
                     
-                var pendingFeedback = await PendingFeedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
+                var pendingFeedback = await Feedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
 
                 if (pendingFeedback) {
                     console.log(pendingFeedback);

@@ -43,31 +43,57 @@
     <div class = "feedback-header">
         Current Feedbacks:
     </div>
-    {{#each feedbacks}}
-    {{#compare status '==' 'Submitted'}}
-    <div id = "feedbackContainer" class = "feedback-container">
-        <div id ="feedback-details-div">
-            <div class = "profile-pic">
-                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+        {{#each feedbacks}}
+        {{#compare status '==' 'Submitted'}}
+        <div id = "feedbackContainer" class = "feedback-container">
+            <div id ="feedback-details-div">
+                <div class = "profile-pic">
+                    <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+                </div>
+                <div id = "author-date-div">
+                    <div class = "feedback-author" id = "feedback-author{{@index}}">
+                        {{user_id.fullName}}
+                    </div>
+                    <div class = "feedback-date">
+                        {{formatfeedbackdate submitDate}}
+                    </div>
+                </div>
             </div>
-            <div id = "author-date-div">
-                <div class = "feedback-author" id = "feedback-author{{@index}}">
-                    {{user_id.fullName}}
-                </div>
-                <div class = "feedback-date">
-                    {{formatfeedbackdate submitDate}}
-                </div>
+            <p><b>Filename: </b>{{contractVersion.filename}}</p>
+            <div id = "feedbackDiv" class = "content">
+                <b>Comment: </b>{{content}}
             </div>
         </div>
-        <p><b>Filename: </b>{{contractVersion.filename}}</p>
-        <div id = "feedbackDiv" class = "content">
-            <b>Comment: </b>{{content}}
-        </div>
-    </div>
-    {{/compare}}
-    {{/each}}
+        {{/compare}}
+        {{/each}}
     {{/compare}}
     {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
+    <div class = "feedback-header">
+        Feedback History:
+    </div>
+        {{#each revisedfeedbacks}}
+        {{#compare status '==' 'Revised'}}
+        <div id = "feedbackContainer" class = "feedback-container">
+            <div id ="feedback-details-div">
+                <div class = "profile-pic">
+                    <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+                </div>
+                <div id = "author-date-div">
+                    <div class = "feedback-author" id = "feedback-author{{@index}}">
+                        {{user_id.fullName}}
+                    </div>
+                    <div class = "feedback-date">
+                        {{formatfeedbackdate submitDate}}
+                    </div>
+                </div>
+            </div>
+            <p><b>Filename: </b>{{contractVersion.filename}}</p>
+            <div id = "feedbackDiv" class = "content">
+                <b>Comment: </b>{{content}}
+            </div>
+        </div>
+        {{/compare}}
+        {{/each}}
     {{!-- <div class="feedback-header">
         Feedback History:
     </div>
