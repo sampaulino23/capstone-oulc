@@ -303,12 +303,14 @@
     margin-right: 10px;
 }
 
-.accordion-item {
+.accordion {
     border-top: solid #D9D9D9 3px !important;
     border-bottom: solid #D9D9D9 3px !important;
+    --bs-accordion-active-color: none;
+    --bs-accordion-active-bg: none;
 }
 
-.accordion-item:not(:first-child) {
+.accordion:not(#accordionRow0) {
     border-top: none !important;
 }
 
@@ -338,13 +340,8 @@
     display: inline-flex;
 }
 
-.accordion {
-    --bs-accordion-active-color: none;
-    --bs-accordion-active-bg: none;
-}
-
 .selected {
-    border-left: solid #0C8039 5px;
+    border-left: solid #0C8039 7px;
     color: #000;
     transition: 0.25s
 }
