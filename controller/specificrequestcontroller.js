@@ -464,15 +464,15 @@ const specificrequestcontroller = {
                 }
             }
 
-            // add feedbackSet object
-            var newFeedbackSet = new FeedbackSet({
-                contractRequest: contractrequest,
-                counter: contractrequest.feedbackCounter + 1,
-                feedbacks: feedbacks
-            });
+            // // add feedbackSet object
+            // var newFeedbackSet = new FeedbackSet({
+            //     contractRequest: contractrequest,
+            //     counter: contractrequest.feedbackCounter + 1,
+            //     feedbacks: feedbacks
+            // });
 
-            console.log(newFeedbackSet);
-            newFeedbackSet.save();
+            // console.log(newFeedbackSet);
+            // newFeedbackSet.save();
 
             // change feedbackCounter of contractRequest
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
@@ -522,20 +522,21 @@ const specificrequestcontroller = {
 
             var contractRequestId = req.body.addAttorneyFeedbackID;
 
-            var feedback = new Feedback({
-                contractRequest: req.body.addAttorneyFeedbackID,
-                user_id: req.user._id,
-                content: req.body.addAttorneyFeedback
-            });
+            // var feedback = new Feedback({
+            //     contractRequest: req.body.addAttorneyFeedbackID,
+            //     user_id: req.user._id,
+            //     content: req.body.addAttorneyFeedback
+            // });
 
             console.log("Inside For Revision Attorney");
 
             const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId }); //for email
             const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
-            await feedback.save();
+            // await feedback.save();
 
             const contracts = await Contract.find({contractRequest: contractRequestId}).lean().exec();
+            var feedbacks = [];
 
             // var latestversioncontracts = [];
 
@@ -550,12 +551,17 @@ const specificrequestcontroller = {
                     })
                     .exec();
 
-                const today = new Date();
+                var pendingFeedback = await Feedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
 
-                await Comment.findByIdAndUpdate(latestversioncontract.comment._id, {$set: {submitDate: today, status: 'Submitted'}}).exec();
-                
+                if (pendingFeedback) {
+                    console.log(pendingFeedback);
+    
+                    feedbacks.push(pendingFeedback._id);
+                }
                 // latestversioncontracts.push(latestversioncontract);
             }
+
+            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
 
             // code section below is for sending the password to the account's email address
             const transporter = nodemailer.createTransport({
