@@ -1441,7 +1441,7 @@ const oulccontroller = {
                 .lean()
                 .exec();
 
-            if (policy.latestversion <= 1) {
+            if (policy.latestVersion <= 1) {
                 var versionbefore = policy.latestVersion;
             } else {
                 var versionbefore = policy.latestVersion - 1;
