@@ -1519,6 +1519,7 @@ const oulccontroller = {
                             user_role: req.user.roleName,
                             leftPolicyVersion: beforePolicyVersion._id.toString(),
                             rightPolicyVersion: latestPolicyVersion._id.toString(),
+                            latestPolicyVersion: latestPolicyVersion,
                             policy: policy,
                             policyVersions: policyVersions,
                             draftable: viewerURL
