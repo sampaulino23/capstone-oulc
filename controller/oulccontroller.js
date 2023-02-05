@@ -1517,10 +1517,11 @@ const oulccontroller = {
                         res.render('comparepolicyversions', {
                             user_fullname: req.user.fullName,
                             user_role: req.user.roleName,
-                            leftPolicyVersion: leftPolicyVersion,
-                            rightPolicyVersion: rightPolicyVersion,
+                            leftPolicyVersion: beforePolicyVersion._id.toString(),
+                            rightPolicyVersion: latestPolicyVersion._id.toString(),
                             policy: policy,
-                            policyVersions: policyVersions
+                            policyVersions: policyVersions,
+                            draftable: viewerURL
                         });
                     });
                 });
