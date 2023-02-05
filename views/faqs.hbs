@@ -26,8 +26,8 @@
                 <div class="accordion-item">
                     <div class = "question-actions-div">
                         <h2 class="accordion-header" id="flush-heading{{@index}}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            {{question}}
+                        <button id = "questionBody" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onclick="arrowDown();">
+                            <span class = "arrow-img"><img id = "arrowImg" src="/img/arrow.png" style=""></span>{{question}}
                         </button>
                         <div class = "actions">
                             <i class="bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#updateFAQModal{{@index}}" style ="cursor: pointer;"></i>
@@ -36,7 +36,7 @@
                         </h2>
                     </div>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">{{answer}} </div>
+                        <div class="accordion-body">{{answer}}</div>
                     </div>
                 </div>
             </div>
@@ -176,6 +176,14 @@
     $('.updateFAQ').click(function () {
         sessionStorage.setItem("action", "confirmupdatefaq");
     });
+
+    function arrowDown() {
+        if (document.getElementById('questionBody').getAttribute('aria-expanded') == "true") {
+            $('.arrow-img').css("transform", "rotate(360deg)");
+        }
+        else
+        $('.arrow-img').css("transform", "rotate(270deg)");
+    }
 
 
     function checkAction() {
