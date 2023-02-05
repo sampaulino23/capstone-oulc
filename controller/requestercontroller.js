@@ -505,21 +505,22 @@ const requestercontroller = {
                     })
                     .exec();
 
-                if (stagingcontractversion) {
-                    stagingcontractversions.push(stagingcontractversion);
-                }
-
                 // set all feedback to 'Revised' status
                 var latestContractVersion = await ContractVersion.findOne({contract: contract, version: contract.latestversion})
-                    .lean()
-                    .populate({
-                        path: 'contract'
-                    })
-                    .exec();
+                .lean()
+                .populate({
+                    path: 'contract'
+                })
+                .exec();
 
                 var feedback = await Feedback.findOne({contractVersion: latestContractVersion}).lean().exec();
                 await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
-                await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
+
+                if (stagingcontractversion) {
+                    stagingcontractversions.push(stagingcontractversion);
+                    await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
+
+                }
             }
 
             for (stagingcontractversion of stagingcontractversions) {
