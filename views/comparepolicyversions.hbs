@@ -23,9 +23,9 @@
             <div id="subheader">
                 <a href="/attorney/policy" class="approval-request-href">All Policies</a>
                 <p class="divider" style="display: inline;"> > </p>
-                <a href="/attorney/policyversions/{{policy._id}}">{{latestPolicyVersion.filename}}</a>
+                <a href="/attorney/policyversions/{{latestPolicyVersion.policy}}">{{latestPolicyVersion.filename}}</a>
                 <p class="divider" style="display: inline;"> > </p>
-                <a href="/">Compare Versions</a>
+                <a href="#">Compare Versions</a>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
             <form action="/attorney/customcomparepolicyversions" method="POST">
                 <div class="input-group mb-3">
                     <span class="file-selected input-group-text">Policy Version</span>
-                    <select class="form-select" name="fileSelectedLeft" id="fileSelectedLeft" aria-label="file-selected">
+                    <select class="form-select" name="policyFileSelectedLeft" id="policyFileSelectedLeft" aria-label="file-selected">
                         {{#each policyVersions}}
                         {{#compare ../leftPolicyVersion "==" _id}}
                             <option value="{{file}}" selected>Version {{version}}</option>
@@ -44,7 +44,7 @@
                         {{/compare}}
                         {{/each}}
                     </select>
-                    <select class="form-select" name="fileSelectedRight" id="fileSelectedRight" aria-label="file-selected">
+                    <select class="form-select" name="policyFileSelectedRight" id="policyFileSelectedRight" aria-label="file-selected">
                         {{#each policyVersions}}
                         {{#compare ../rightPolicyVersion "==" _id}}
                             <option value="{{file}}" selected>Version {{version}}</option>
