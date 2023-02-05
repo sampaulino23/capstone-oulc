@@ -1055,6 +1055,20 @@ const oulccontroller = {
                             var insertComment = await newComment.save();
                             // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
                         }
+                    } else {    // if feedback is empty whether not entered or deleted
+                        var contractversionid = comment.contractversionid.substring(4);
+        
+                        var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
+        
+                        if (findComment) {  // if comments is already there
+                            console.log('has existing comment');
+        
+                            // console.log(findContractVersion.comment);
+                            // console.log(comment.content);
+        
+                            var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: ''}}).exec();
+        
+                        }
                     }
     
                 }

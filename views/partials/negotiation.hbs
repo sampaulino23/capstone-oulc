@@ -3,7 +3,7 @@
 
 <script>
     $(document).ready( () => {
-
+        
     });
 </script>
 
@@ -23,15 +23,33 @@
             
         </thead>
         <tbody id="negotiationFilesTable">
-             {{#each negotiationfiles}}
+            {{#each negotiationfiles}}
             <tr id="{{_id}}" class="negotiation-file-row">
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate uploadDate}}</td>
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{name}}</td>
                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">
+                    <i class="bi bi-eye" data-bs-toggle="modal" data-bs-target="#viewNegotiationModal{{@index}}" style ="cursor: pointer;"></i>
                     <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteNegotiationFile{{@index}}" style ="cursor: pointer;"></i>
                     <a href="/requester/downloadNegotiationFile/{{file}}" class="download-contract-version text-body"><i class="bi bi-download" style="cursor: pointer;"></i></a>
                 </td>
             </tr>
+
+            <!-- View Negotiation Modal -->
+            <div class="modal fade modal-xl" id="viewNegotiationModal{{@index}}" tabindex="-1" aria-labelledby="viewNegotiationModal{{@index}}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="w-100 modal-title" id="exampleModalLabel">View Negotiation File</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" style = "text-align: center;">
+                            <div id="negotiationFileView">
+                                <embed src="/requester/negotiation/{{file}}" width="100%" height="1200px"></embed>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Delete Template Modal -->
             <div class="modal fade" id="deleteNegotiationFile{{@index}}" tabindex="-1" aria-labelledby="deleteNegotiationFile{{@index}}" aria-hidden="true">
