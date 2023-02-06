@@ -55,7 +55,7 @@ router.use(function(req,res,next){
 
 // multer to accept images
 const multer = require('multer');
-const specificrequestcontroller = require('../controller/specificrequestcontroller');
+const specificrequestcontroller = require('../controller/specificrequestcontroller.js');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -114,5 +114,6 @@ router.get('/sendmessage', specificrequestcontroller.sendMessage);
 // For changes to feedback
 router.get('/savependingfeedbackchanges', oulccontroller.savePendingFeedback);
 router.get('/getpendingfeedbacks', oulccontroller.getPendingFeedbacks);
+router.get('/getfeedbackhistory', specificrequestcontroller.getFeedbackHistory);
 
 module.exports = router;

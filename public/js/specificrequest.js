@@ -160,6 +160,7 @@ $(window).on('load', function() {
     $('#fileSelectedForFeedback').html('File: ' + $('#fileSelected option:selected').text());
     $('#fileIdSelectedForFeedback').val(fileidSelected);
 
+    // get pending feedbacks
     var pendingFeedbacksFileIds = [];
 
     function checkPendingFeedbacks() {
@@ -180,9 +181,6 @@ $(window).on('load', function() {
             pendingFeedbacksFileIds: pendingFeedbacksFileIds,
         },
         success: function(res) {
-            // if (res.hasPendingFeedback) {
-            //     $('#pendingFeedbackTextArea').val(res.pendingFeedback.content);
-            // }
             console.log(res.pendingFeedbacks);
 
             for (pendingFeedback of res.pendingFeedbacks) {
@@ -190,7 +188,6 @@ $(window).on('load', function() {
                 console.log(cvId);
 
                 $('#' + cvId).find('textarea.pending-feedback-textarea').val(pendingFeedback.content);
-                // $('.pending-feedback-textarea').val(pendingFeedback.content);
             }
 
             console.log('GET PENDING FEEDBACKS SUCCESS');
@@ -316,6 +313,62 @@ $(window).on('load', function() {
             }
 
             console.log('SUCCESS');
+
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
+    // TODO: filter feedback history depending on file selected as window load
+    $.ajax({
+        url: "/getfeedbackhistory",
+        method: "GET",
+        contentType: "application/json",
+        data: {fileid: fileidSelected},
+        success: function(res) {
+
+            console.log('GET FEECBACK HISTORY');
+            console.log(res.feedbacklist);
+
+            const feedbacklist = res.feedbacklist;
+
+            // console.log(res.contractversionslist);
+
+            // const contractversionslist = res.contractversionslist;
+            // var rowCount = $('#contractVersionsTable tr').length;
+            // var rows = $('#contractVersionsTable tr');
+            // $('#contractVersionsDiv').show();
+
+            // if (res.isContract == true) {
+            //     rows.hide();
+            //     $('#notContractText').attr('hidden', true);
+            //     $('.version-note-card').hide();
+
+            //     for(var i = 0; i < rowCount; i++) {
+            //         for (contractversion of contractversionslist) {
+            //             var contractversionrow = $('#contractVersionsTable tr:eq(' + i + ' )');
+            //             var contractversionrowid = contractversionrow.attr('id');
+                        
+            //             if (contractversionrowid == contractversion._id) {
+            //                 // filter contract version list
+            //                 contractversionrow.show();
+            //             }
+
+            //             // if latest version of contract
+            //             if (contractversion.contract.latestversion == contractversion.version) {
+            //                 $('#versionNote' + contractversion._id).show();
+            //             }
+            //         }
+            //     }
+
+            // } else {
+            //     $('#contractVersionsDiv').hide();
+            //     $('#notContractText').attr('hidden', false);
+
+            // }
+
+            console.log('GET FEEDBACK HISTORY SUCCESS');
 
         },
         error: function(err) {

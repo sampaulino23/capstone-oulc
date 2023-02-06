@@ -1270,6 +1270,37 @@ const specificrequestcontroller = {
         }
     },
 
+    getFeedbackHistory: async (req, res) => {
+        try {
+            const fileid = req.query.fileid;
+
+            const contractversion = await ContractVersion.findOne({file: fileid})
+                .exec();
+
+            var feedbacklist = [];
+
+            if (contractversion) {
+                var contractversions = await ContractVersion.find({contract: contractversion.contract})
+                    .populate({
+                        path: 'contract'
+                    })    
+                    .exec();
+
+                for (eachcontractversion of contractversions) {
+                    var feedback = await Feedback.findOne({contractVersion: eachcontractversion}).exec();
+                    feedbacklist.push(feedback);
+                }
+            }
+
+            res.send({
+                feedbacklist: feedbacklist,
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
 }
 
 module.exports = specificrequestcontroller;

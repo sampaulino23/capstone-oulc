@@ -1,29 +1,4 @@
 <div id = "feedback-history">
-    {{!--<div class = "feedback-header">
-        Feedback History:
-    </div>
-    <br>
-    {{#each feedback}}
-    <div id = "feedbackContainer" class = "feedback-container">
-        
-        <div id ="feedback-details-div">
-            <div class = "profile-pic">
-                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
-            </div>
-            <div id = "author-date-div">
-                <div class = "feedback-author" id = "feedback-author{{@index}}">
-                    {{user_id.fullName}}
-                </div>
-                <div class = "feedback-date">
-                    {{formatfeedbackdate date}}
-                </div>
-            </div>
-        </div>
-        <div id = "feedbackDiv" class = "content">
-            <span>{{content}}</span>
-        </div>
-    </div>
-    {{/each}}--}}
     {{#compare user_role '!=' 'Requester'}}
     <div class = "feedback-header">
         Feedback Input:
@@ -46,6 +21,7 @@
     <div class = "feedback-header">
         Current Feedbacks:
     </div>
+    <div id="currentFeedbacksContainer">
         {{#each feedbacks}}
         {{#compare status '==' 'Submitted'}}
         {{#compare content '!=' ''}}
@@ -71,11 +47,13 @@
         {{/compare}}
         {{/compare}}
         {{/each}}
+    </div>
     {{/compare}}
     {{!-- TODO: Fix Feedback History view for Requesters and Staff/Attorney--}}
     <div class = "feedback-header">
         Feedback History:
     </div>
+    <div id="feedbackHistoryContainer">
         {{#each revisedfeedbacks}}
         {{#compare status '==' 'Revised'}}
         {{#compare content '!=' ''}}
@@ -101,57 +79,5 @@
         {{/compare}}
         {{/compare}}
         {{/each}}
-    {{!-- <div class="feedback-header">
-        Feedback History:
     </div>
-    {{#each feedbacksets}}
-    {{#each feedbacksets.feedbacks}}
-    <div id="feedbackHistoryContainer" class="feedback-container">
-        <div id="feedbackHistoryDetails">
-            <div class="profile-pic">
-                <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
-            </div>
-            <div id = "author-date-div">
-                <div class = "feedback-author" id = "feedback-author{{@index}}">
-                    {{user_id.fullName}}
-                </div>
-                <div class = "feedback-date">
-                    {{formatfeedbackdate submitDate}}
-                </div>
-            </div>
-        </div>
-        <div id="feedbackHistoryContentDiv" class="content">
-            <span>{{content}}</span>
-        </div>
-    </div>
-    {{/each}}
-    {{/each}} --}}
 </div>
-
-{{!-- <script>
-    const feedbackContainerDiv = document.getElementById("feedbackDiv");
-    var feedbackHistoryDiv = document.getElementById("feedback-history");
-    
-    if (feedbackContainerDiv == null) {
-       // alert(feedbackContainerDiv);
-       var noFeedbackDiv = document.createElement("div");
-       noFeedbackDiv.id = "noFeedbackText";
-       noFeedbackDiv.textContent = "This file has no feedback yet."
-       feedbackHistoryDiv.appendChild(noFeedbackDiv);
-    }
-    // get the initials of the feedback provider for the inner picture
-    var feedbackCount = document.getElementsByClassName("pic-inner").length;
-    
-    for (i = 0; i < feedbackCount; i++) {
-        var feedbackAuthorID = "#feedback-author" + i;
-        var elementid = "pic-inner" + i;
-
-        var feedbackAuthor = $(feedbackAuthorID).text();
-        var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
-        var acronym = matches.join(''); // output will be JSON
-    
-        document.getElementById(elementid).innerHTML = acronym;
-
-    }
-    
-</script> --}}
