@@ -15,19 +15,25 @@ const IssueSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    trackingNumber: {
+    issueNumber: {
         type: String,
-        required: true
-    },
-    requester: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
         required: true
     },
     contractRequest: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ContractRequest',
         required: false
+    },
+    requester: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'resolved'],
+        default: 'pending',
+        required: true
     },
     date: {
         type: Date,

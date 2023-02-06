@@ -233,7 +233,7 @@ const specificrequestcontroller = {
         try {
 
             var path = req.path.split('/')[2];
-            var userid = req.user._id;
+            var userid = req.user._id; 
             var messages = null;
 
             const conversation = await Conversation.findOne({contractRequest: path, members: userid, type: "conversation"}).lean().exec();
@@ -388,6 +388,7 @@ const specificrequestcontroller = {
             res.render('specificrequest', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
+                user_id: req.user._id,
                 contractrequest: contractrequest,
                 feedbacks: feedbacks,
                 revisedfeedbacks: revisedfeedbacks,

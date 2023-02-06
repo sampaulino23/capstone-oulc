@@ -733,16 +733,17 @@ const requestercontroller = {
     getIssueLog: async (req, res) => {
         try {
 
-            //const issues = await Issue.find({}).lean().sort({date: 1}).exec();
-            var issues = [], b = {requestNumber: 20, summary: "SAMPLE1"}, c = {requestNumber: 30, summary: "SAMPLE2"};
-            issues.push(b);
-            issues.push(c);
+            const issues = await Issue.find({}).lean().sort({date: 1}).exec();
+            var issuesTest = [], b = {requestNumber: 20, summary: "SAMPLE1"}, c = {requestNumber: 30, summary: "SAMPLE2"};
+            issuesTest.push(b);
+            issuesTest.push(c);
             
             res.render('issuelog', {
                 user_id: req.user._id,
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 issues: issues,
+                issuesTest: issuesTest,
                 forrevision_count: req.session.forrevision_count
             });
 
@@ -758,7 +759,7 @@ const requestercontroller = {
                 title: req.body.issueTitle,
                 type: req.body.issueType,
                 summary: req.body.issueSummary,
-                trackingNumber: "000",
+                issueNumber: "000",
                 requester: req.body.requesterid,
                 date: Date.now()
             });
@@ -766,8 +767,35 @@ const requestercontroller = {
             await issue.save(function(){
                 res.redirect('back');
             });
-            
+
             console.log("Issue created");
+            //res.redirect('back');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    postCreateIssueRequest: async (req, res) => {
+        try {
+
+            var requestid = req.body.contractRequestId;
+
+            var issue = new Issue({
+                title: req.body.issueTitle,
+                type: req.body.issueType,
+                summary: req.body.issueSummary,
+                issueNumber: "000",
+                requester: req.body.requesterid,
+                contractRequest: mongoose.Types.ObjectId(requestid),
+                date: Date.now()
+            });
+
+            await issue.save(function(){
+                res.redirect('back');
+            });
+
+            console.log("Request Issue created");
             //res.redirect('back');
             
         } catch (err) {

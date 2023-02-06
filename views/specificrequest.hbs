@@ -527,20 +527,29 @@
             <div class="modal-body">
                 <div class="custom-file mb-3">
 
-                    <form action="/" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" value="{{contractrequest._id}}" name="">
+                    <form action="/requester/createissuerequest" method="POST" >
+                    <input type="hidden" name="contractRequestId" id="contractRequestId" value="{{contractrequest._id}}">
+                    <input type="hidden" id="requesterid" name="requesterid" value="{{user_id}}">
                         <div class="">
                             <label for="" class="modal-text form-label">Title</label><br>
-                            <input type="text" name="" class="text-input editable" id="" required>
+                            <input type="text" name="issueTitle" class="text-input editable" id="issueTitle" required>
                         </div><br>
+                        <label for="issueType" class = "modal-text">Type / Nature of Concern</label><br>
+                        <select name="issueType" id="issueType" class="dropdown" required>
+                            <option>Type 1</option>
+                            <option>Type 2</option>
+                        </select>
+                        <br>
+                        <label for="issueSummary" class="form-label">Summary</label>
+                        <textarea class="form-control" id="issueSummary" name="issueSummary" required></textarea>
                         <div class="">
                             <label for="signedContractFiles" class="modal-text form-label">File Upload</label><br>
-                            <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" required multiple><br><br>
+                            <input class="form-control" type="file" name="signedContractFiles" id="signedContractFiles" accept="application/pdf" multiple><br><br>
                         </div>
                         
                         <div class="modal-footer">
                             <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="mark-as-btn" id="{{contractrequest._id}}">Submit</button>
+                            <button type="submit" class="mark-as-btn" id="createIssueBtn">Submit</button>
                         </div>
                     </form>
                 </div>

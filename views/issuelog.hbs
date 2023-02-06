@@ -34,19 +34,31 @@
                                     style="width: 100%; font-size: 16px; background:#D9D9D9;">
                                     <thead class="table-headers">
                                         <tr>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Request No.</th>
-                                            <th style="width: 20%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Summary</th>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
+                                            <th style="width: 5%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Issue No.</th>
+                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
+                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Summary</th>
+                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Tracking No.</th>
+                                            <th style="width: 5%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
                                             <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Date Issued</th>
                                         </tr>
                                     </thead>
                                     <tbody id="myIssueTable" style = "word-break: break-word;">
-                                        {{#each issues}}
+                                        <!--{{#each issuesTest}}
                                         <tr style="cursor: pointer;" id="" onclick="">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{requestNumber}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{summary}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">sample</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">sample</td>
+                                        </tr>
+                                        {{/each}}-->
+                                        {{#each issues}}
+                                        <tr style="cursor: pointer;" id="" onclick="">
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{issueNumber}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{title}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{summary}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;"><a href="/requester">{{trackingNumber}}</a></td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{type}}</td>
+                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{date}}</td>
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -63,7 +75,7 @@
                             <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
                         </div><br>
                         <div class="p-2">
-                            <p class="p text-center text-body">Click on a policy to view them here.</p>
+                            <p class="p text-center text-body">Click on a issue to view them here.</p>
                         </div>
                     </div>
                 </div>
