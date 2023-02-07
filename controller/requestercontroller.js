@@ -733,10 +733,17 @@ const requestercontroller = {
     getIssueLog: async (req, res) => {
         try {
 
-            const issues = await Issue.find({}).lean().sort({date: 1}).exec();
+            const issues = await Issue.find({}).lean().populate({
+                path: 'contractRequest'
+            })
+            .sort({date: 1})
+            .exec(); 
+
             var issuesTest = [], b = {requestNumber: 20, summary: "SAMPLE1"}, c = {requestNumber: 30, summary: "SAMPLE2"};
             issuesTest.push(b);
             issuesTest.push(c);
+
+            //const request = await ContractRequest.findOne({}).lean().exec(); 
             
             res.render('issuelog', {
                 user_id: req.user._id,
@@ -744,7 +751,8 @@ const requestercontroller = {
                 user_role: req.user.roleName,
                 issues: issues,
                 issuesTest: issuesTest,
-                forrevision_count: req.session.forrevision_count
+                forrevision_count: req.session.forrevision_count,
+                //trackingNumber
             });
 
         } catch (err) {
