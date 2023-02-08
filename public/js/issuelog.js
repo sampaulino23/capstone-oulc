@@ -13,6 +13,8 @@ $(document).ready(() => {
             data: { issueid: issueid },
             success: function (res) {
 
+                document.getElementById("resolveIssue").value = "";  
+
                 const issueSelected = $('#issueSelected'); 
                 const issueInitialView = $('#issueInitialView');
 
