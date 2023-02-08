@@ -57,7 +57,7 @@
         {{#each revisedfeedbacks}}
         {{#compare status '==' 'Revised'}}
         {{#compare content '!=' ''}}
-        <div id = "feedbackContainer" class = "feedback-container">
+        <div id = "{{_id}}" class = "feedback-container feedback-card">
             <div id ="feedback-details-div">
                 <div class = "profile-pic">
                     <div id = "pic-inner{{@index}}" class = "pic-inner"></div>

@@ -320,7 +320,6 @@ $(window).on('load', function() {
         }
     });
 
-    // TODO: filter feedback history depending on file selected as window load
     $.ajax({
         url: "/getfeedbackhistory",
         method: "GET",
@@ -328,45 +327,27 @@ $(window).on('load', function() {
         data: {fileid: fileidSelected},
         success: function(res) {
 
-            console.log('GET FEECBACK HISTORY');
-            console.log(res.feedbacklist);
-
             const feedbacklist = res.feedbacklist;
 
-            // console.log(res.contractversionslist);
+            var cards = $('.feedback-card');
+            var cardCount = $('.feedback-card').length;
 
-            // const contractversionslist = res.contractversionslist;
-            // var rowCount = $('#contractVersionsTable tr').length;
-            // var rows = $('#contractVersionsTable tr');
-            // $('#contractVersionsDiv').show();
+            cards.hide();
 
-            // if (res.isContract == true) {
-            //     rows.hide();
-            //     $('#notContractText').attr('hidden', true);
-            //     $('.version-note-card').hide();
+            for (var i = 0; i < cardCount; i++) {
+                
+                for (feedback of feedbacklist) {
 
-            //     for(var i = 0; i < rowCount; i++) {
-            //         for (contractversion of contractversionslist) {
-            //             var contractversionrow = $('#contractVersionsTable tr:eq(' + i + ' )');
-            //             var contractversionrowid = contractversionrow.attr('id');
-                        
-            //             if (contractversionrowid == contractversion._id) {
-            //                 // filter contract version list
-            //                 contractversionrow.show();
-            //             }
+                    var feedbackrow = $('.feedback-card:eq(' + i + ' )');
+                    var feedbackrowid = feedbackrow.attr('id');
+                    
+                    if (feedbackrowid == feedback._id) {
+                        // filter feedback history list
+                        feedbackrow.show();
+                    }
+                }
 
-            //             // if latest version of contract
-            //             if (contractversion.contract.latestversion == contractversion.version) {
-            //                 $('#versionNote' + contractversion._id).show();
-            //             }
-            //         }
-            //     }
-
-            // } else {
-            //     $('#contractVersionsDiv').hide();
-            //     $('#notContractText').attr('hidden', false);
-
-            // }
+            }
 
             console.log('GET FEEDBACK HISTORY SUCCESS');
 
@@ -598,6 +579,43 @@ $(document).ready(() => {
 
                 console.log('SUCCESS');
 
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+        $.ajax({
+            url: "/getfeedbackhistory",
+            method: "GET",
+            contentType: "application/json",
+            data: {fileid: fileid},
+            success: function(res) {
+    
+                const feedbacklist = res.feedbacklist;
+    
+                var cards = $('.feedback-card');
+                var cardCount = $('.feedback-card').length;
+    
+                cards.hide();
+    
+                for (var i = 0; i < cardCount; i++) {
+                    
+                    for (feedback of feedbacklist) {
+    
+                        var feedbackrow = $('.feedback-card:eq(' + i + ' )');
+                        var feedbackrowid = feedbackrow.attr('id');
+                        
+                        if (feedbackrowid == feedback._id) {
+                            // filter feedback history list
+                            feedbackrow.show();
+                        }
+                    }
+    
+                }
+    
+                console.log('GET FEEDBACK HISTORY SUCCESS');
+    
             },
             error: function(err) {
                 console.log(err);
