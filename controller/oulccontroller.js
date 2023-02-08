@@ -154,6 +154,7 @@ const oulccontroller = {
                 }
 
                 var Difference_In_Days_Start = dateDiffInDays(new Date(contractrequests[i].requestDate), new Date(contractrequests[i].effectivityStartDate));
+                var NotifDays = dateDiffInDays(new Date(), new Date(contractrequests[i].effectivityStartDate));
 
                 // To set number of days gap in contract request
                 contractrequests[i].daysGap = Difference_In_Days_Start;
@@ -164,7 +165,7 @@ const oulccontroller = {
                     if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
                         pending.today++;
                     }
-                    if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                    if (NotifDays >= 0 && NotifDays < 7) {
                         pending.nearstartcount++;
                         req.session.pending_nearstartcount = pending.nearstartcount; //assign notif count
                     }
@@ -172,7 +173,7 @@ const oulccontroller = {
                 else if (contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "3"){
                     initialReview.count++;
                     if(contractrequests[i].statusCounter == "3"){
-                        if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                        if (NotifDays >= 0 && NotifDays < 7) {
                             toreview.nearstartcount++;
                             req.session.toreview_nearstartcount = toreview.nearstartcount; //assign notif count
                         }
@@ -180,8 +181,8 @@ const oulccontroller = {
                 }
                 else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
                     legalReview.count++;
-                    if(contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6"){
-                        if(Difference_In_Days_Start == 0 || Difference_In_Days_Start < 7){
+                    if((contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6") && contractrequests[i].assignedAttorney._id.toString() == req.user._id.toString()){
+                        if (NotifDays >= 0 && NotifDays < 7) {
                             legalReview.nearstartcount++;
                             req.session.legalReview_nearstartcount = legalReview.nearstartcount; //assign notif count
                         }
