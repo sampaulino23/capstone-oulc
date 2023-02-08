@@ -1,5 +1,7 @@
 $(document).ready(() => {
 
+    var user_role = "{{user_role}}";
+
     $('tr').click(function () {
         
         var issueid = $(this).attr('id');
@@ -30,6 +32,16 @@ $(document).ready(() => {
                     document.getElementById("documentnumber").innerHTML = "N/A"
                 }
                 document.getElementById("summary").innerHTML = res.issue.summary;
+
+                //disable input if status is resolved and hide resolve button
+                if (res.issue.status == "Resolved") {
+                    document.getElementById("resolveIssue").disabled = true;   
+                    document.getElementById("resolveIssueBtn").style.visibility = 'hidden';
+                }
+                else {
+                    document.getElementById("resolveIssue").disabled = false;  
+                    document.getElementById("resolveIssueBtn").style.visibility = 'visible';
+                }
 
                 console.log('SUCCESS');
             },
