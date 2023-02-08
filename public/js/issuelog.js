@@ -3,7 +3,6 @@ $(document).ready(() => {
     $('tr').click(function () {
         
         var issueid = $(this).attr('id');
-        alert (issueid);
 
         $.ajax({
             url: "/staff/viewissue",
@@ -12,15 +11,15 @@ $(document).ready(() => {
             data: { issueid: issueid },
             success: function (res) {
 
-                const issueView = $('#issueView');
-                const issueSelected = $('#issueSelected');
+                const issueSelected = $('#issueSelected'); 
                 const issueInitialView = $('#issueInitialView');
 
-                issueInitialView.attr("hidden", true);
-                issueSelected.attr("hidden", false);
+                issueInitialView.attr("hidden", true); //hide initial view.
+                issueSelected.attr("hidden", false); //show issue selected view
 
+                //assign values through id.
                 document.getElementById("issueID").value = res.issue._id;
-
+                document.getElementById("status").innerHTML = res.issue.status;
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
                 document.getElementById("title").innerHTML = res.issue.title;
                 document.getElementById("type").innerHTML = res.issue.type;
@@ -42,7 +41,23 @@ $(document).ready(() => {
     });
 
     $('#confirmResolveIssue').click(function () {
-        alert ("CLICKED" + document.getElementById("issueID").value);
+
+        var issueid = document.getElementById("issueID").value;
+        
+        $.ajax({
+            url: "/staff/resolveIssue",
+            method: "GET",
+            contentType: "application/json",
+            data: { issueid: issueid },
+            success: setTimeout(function () {
+                // sessionStorage.setItem("action", "cleared");
+                console.log('SUCCESS');
+                location.reload();
+            }, 350),
+            error: function (err) {
+                console.log(err);
+            }
+        });
     });
 
 });

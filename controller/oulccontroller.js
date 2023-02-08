@@ -1685,7 +1685,21 @@ const oulccontroller = {
             issue: issue
         });
 
-    }
+    },
+
+    resolveIssue: async (req, res) => { //attorney
+        try {
+            var issueid = req.query.issueid;
+            console.log("INSIDE RESOLVE: " + issueid);
+
+            // update faq object
+            await Issue.findOneAndUpdate({ _id: issueid }, { $set: { status: "Resolved"} });
+           
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
 }
 
 module.exports = oulccontroller;
