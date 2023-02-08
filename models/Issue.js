@@ -35,6 +35,11 @@ const IssueSchema = mongoose.Schema({
         default: 'Pending',
         required: true
     },
+    response: {
+        type: String,
+        default: '',
+        required: false
+    },
     date: {
         type: Date,
         default: Date.now(),

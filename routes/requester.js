@@ -107,7 +107,7 @@ router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagi
 router.post('/submitrevision', requestercontroller.submitRevision);
 router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
 router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
-router.get('/issuelog', requestercontroller.getIssueLog);
+router.get('/issuelog', oulccontroller.getIssueLog);
 router.post('/createissue', requestercontroller.postCreateIssue);
 router.post('/createissuerequest', requestercontroller.postCreateIssueRequest);
 router.get('/negotiation/:fileid', requestercontroller.viewNegotiationFile);

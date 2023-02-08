@@ -1662,6 +1662,28 @@ const oulccontroller = {
         }
     },
 
+    getIssueLog: async (req, res) => {
+        try {
+
+            const issues = await Issue.find({}).lean().populate({
+                path: 'contractRequest'
+            })
+            .sort({date: 1})
+            .exec(); 
+            
+            res.render('issuelog', {
+                user_id: req.user._id,
+                user_fullname:req.user.fullName,
+                user_role: req.user.roleName,
+                issues: issues,
+                forrevision_count: req.session.forrevision_count
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     viewIssueOnClick: async (req, res) => {
         console.log ("ISSUE ON CLICK");
 
@@ -1691,10 +1713,11 @@ const oulccontroller = {
     resolveIssue: async (req, res) => { //attorney
         try {
             var issueid = req.query.issueid;
+            var response = req.query.response;
             console.log("INSIDE RESOLVE: " + issueid);
 
             // update faq object
-            await Issue.findOneAndUpdate({ _id: issueid }, { $set: { status: "Resolved"} });
+            await Issue.findOneAndUpdate({ _id: issueid }, { $set: { status: "Resolved", response: response} });
            
 
         } catch (err) {

@@ -104,6 +104,7 @@ router.get('/repositoryfile/:fileid', oulccontroller.viewRepositoryFile);
 router.get('/policyversions/:id', oulccontroller.getPolicyVersions);
 router.post('/comparepolicyversions', oulccontroller.comparePolicyVersions);
 router.post('/customcomparepolicyversions', oulccontroller.customComparePolicyVersions);
+router.get('/issuelog', oulccontroller.getIssueLog);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

@@ -25,8 +25,11 @@ $(document).ready(() => {
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
                 document.getElementById("title").innerHTML = res.issue.title;
                 document.getElementById("type").innerHTML = res.issue.type;
+                document.getElementById("resolveIssue").innerHTML = res.issue.response;
                 if (res.issue.contractRequest) {
                     document.getElementById("documentnumber").innerHTML = res.issue.contractRequest.trackingNumber;
+                    var requestlink = document.getElementById("documentnumber");
+                    requestlink.href = "/request/requester/" + res.issue.contractRequest._id;
                 }
                 else {
                     document.getElementById("documentnumber").innerHTML = "N/A"
@@ -55,12 +58,13 @@ $(document).ready(() => {
     $('#confirmResolveIssue').click(function () {
 
         var issueid = document.getElementById("issueID").value;
+        var response = document.getElementById('resolveIssue').value;
         
         $.ajax({
             url: "/staff/resolveIssue",
             method: "GET",
             contentType: "application/json",
-            data: { issueid: issueid },
+            data: { issueid: issueid, response: response },
             success: setTimeout(function () {
                 // sessionStorage.setItem("action", "cleared");
                 console.log('SUCCESS');
