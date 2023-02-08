@@ -82,30 +82,36 @@
                         </div>
                     </div>
                     <div id = "issueSelected" style = "color: black" hidden>
-                        Status: <span id = "status"> </span> <br>
-                        DEPARTMENT: <span id = "department"> </span> Department <br>
-                        ISSUE TITLE: <span id = "title"> </span> <br>
-                        ISSUE TYPE: <span id = "type"> </span> <br>
-                        DOCUMENT NUMBER: <a id = "documentnumber" > </a> <br>
-                        SUMMARY: <span id = "summary"> </span> <br> <br>
+                        <div id = "issueDiv">
+                            Status: <span id = "status"> </span> <br>
+                            DEPARTMENT: <span id = "department"> </span> Department <br>
+                            ISSUE TITLE: <span id = "title"> </span> <br>
+                            ISSUE TYPE: <span id = "type"> </span> <br>
+                            DOCUMENT NUMBER: <a id = "documentnumber" > </a> <br>
+                            SUMMARY: <span id = "summary"> </span>
+                        </div>
 
+                        <div id = "solutionDiv">
+                            <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
+                            {{#compare user_role '==' 'Requester'}}
+                            <div class="mb-3">
+                                <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
+                            </div>
+                            {{/compare}}
+
+                            {{#compare user_role '!=' 'Requester'}}
+                            <div class="mb-3">
+                                <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
+                            </div>
+
+                            <div class ="revision-div">
+                                <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
+                            </div>
+                            {{/compare}}
+                        </div>
                         
-                        <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
-                        {{#compare user_role '==' 'Requester'}}
-                        <div class="mb-3">
-                            <label for="resolveIssue" class="form-label">Solution</label>
-                            <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
-                        </div>                      
-                        {{/compare}}
-
-                        {{#compare user_role '!=' 'Requester'}}
-                        <div class="mb-3">
-                            <label for="resolveIssue" class="form-label">Solution</label>
-                            <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" required></textarea>
-                        </div>                      
-
-                        <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
-                        {{/compare}}
                         
                     </div>
                 </div>

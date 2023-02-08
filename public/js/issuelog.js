@@ -17,8 +17,10 @@ $(document).ready(() => {
 
                 const issueSelected = $('#issueSelected'); 
                 const issueInitialView = $('#issueInitialView');
+                const issueView = $('#issueView');
 
-                issueInitialView.attr("hidden", true); //hide initial view.
+                issueInitialView.attr("hidden", true); //hide initial view
+                issueView.addClass("issueDesign");
                 issueSelected.attr("hidden", false); //show issue selected view
 
                 //assign values through id.

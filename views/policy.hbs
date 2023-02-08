@@ -13,23 +13,19 @@
     <body>
         <div id="header">OULC Policies and Procedures</div>
         <div class="container">
-            <div class="row"> 
-                <div class="col-6">
-                    <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
-                </div>
+            <div class="row">
                 <!-- LEFT SIDE -->
-                <div class="row" id = "upload-btn-header">
-                    {{#compare user_role "!=" "Requester"}}
-                    <div class = "col-6">
-                        <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
-                    </div>
-                    {{/compare}}
-                    <div class = "col-6">
-                        <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
-                    </div>
-                </div>
-                
                 <div class="col-6">
+                    <div class="row" id = "upload-btn-header">
+                        {{#compare user_role "!=" "Requester"}}
+                        <div class = "col-auto">
+                            <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#uploadPolicyModal">+ Upload New File</button>
+                        </div>
+                        {{/compare}}
+                        <div class = "col">
+                            <input class="form-control" id="searchPolicyInput" type="text" placeholder="Search...">
+                        </div>
+                    </div>
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
                             <div class="w-100">
@@ -138,13 +134,18 @@
                 </div>
 
                 <!-- RIGHT SIDE -->
-                <div class="col-6" id="policyView">
-                    <div class="d-grip gap-3">
-                        <div class="p-2" style = "text-align: center;">
-                            <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
-                        </div><br>
-                        <div class="p-2">
-                            <p class="p text-center text-body">Click on a policy to view them here.</p>
+                <div class="col-6" id="">
+                    <div class="col-auto">
+                        <button class="full-size-btn" id="fullSizePolicy" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
+                    </div>
+                    <div class="" id="policyView">
+                        <div class="d-grip gap-3">
+                            <div class="p-2" style = "text-align: center;">
+                                <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
+                            </div><br>
+                            <div class="p-2">
+                                <p class="p text-center text-body">Click on a policy to view them here.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -178,7 +178,7 @@
     margin-bottom: 20px;
 }
 
-.folder-container {
+.folder-container, .issueDesign {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -267,6 +267,7 @@
 
 #upload-btn-header {
     margin-bottom: 1.5em;
+    align-items: center;
 }
 
 .add-faq {
@@ -369,4 +370,55 @@
 #arrowImg {
     width: 20px;
     height: auto;
+}
+
+#fullSizePolicy {
+    margin-bottom: 27px;
+}
+
+#issueDiv {
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    padding: 30px 30px;
+    margin: 20px 20px;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+#resolveIssue {
+    padding: 20px 20px;
+    border-radius: 0px;
+    background: #FFFFFF;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#resolveIssueBtn {
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px 12px;
+    gap: 10px;
+    outline: none;
+    border: none;
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-style: normal;
+    color: #fff;
+    width: 100%;
+}
+
+#resolveIssueBtn:hover {
+    background: #9F9F9F;
+    color: #fff;
+    transition: 0.25s;
+}
+
+.mb-3 {
+    margin: 20px;
+}
+
+.revision-div {
+    text-align: center;
+    margin: 20px;
 }
