@@ -48,18 +48,8 @@ const requestercontroller = {
         try {
 
             var violationcount = 0;
-
-            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
-
-            //For revision count - notifs/alerts
-            const forrevisionrequests = await ContractRequest.find({requester: req.user._id, statusCounter: 6}).lean().exec();
             let forrevision = {count: 0};
-            for (i = 0; i < forrevisionrequests.length; i++){
-                forrevision.count++;
-                req.session.forrevision_count = forrevision.count; //assign notif count
-            }
-            console.log(req.session.forrevision_count);
-            //
+            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
 
             for (i = 0; i < contractrequests.length; i++) {
                 // To calculate the time difference of two dates
@@ -76,6 +66,11 @@ const requestercontroller = {
 
                 if (Difference_In_Days < 7) {
                     violationcount++
+                }
+
+                if(contractrequests[i].statusCounter == "2" || contractrequests[i].statusCounter == "5"){ // for revision notif alerts
+                    forrevision.count++;
+                    req.session.forrevision_count = forrevision.count; //assign notif count
                 }
             }
            
