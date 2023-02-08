@@ -2,12 +2,12 @@
 
 <html>
     <head>
-        <title>Contract Repository</title>
+        <title>Issue Log</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-        <script src="/js/policy.js" type="text/javascript"></script>
+        <script src="/js/issuelog.js" type="text/javascript"></script>
         <link rel="stylesheet" href="/css/templatesoulcstyle.css">
         <script>
         /*$(document).ready(() => {
@@ -59,7 +59,7 @@
                                         </tr>
                                         {{/each}}-->
                                         {{#each issues}}
-                                        <tr style="cursor: pointer;" id="" onclick="">
+                                        <tr style="cursor: pointer;" id="{{_id}}" onclick="">
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{issueNumber}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{title}}</td>
                                             <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{summary}}</td>
@@ -76,14 +76,21 @@
                 </div>
 
                 <!-- RIGHT SIDE -->
-                <div class="col-6" id="policyView">
-                    <div class="d-grip gap-3">
+                <div class="col-6" id="issueView">
+                    <div id = "issueInitialView" class="d-grip gap-3">
                         <div class="p-2" style = "text-align: center;">
                             <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
                         </div><br>
                         <div class="p-2">
-                            <p class="p text-center text-body">Click on a issue to view them here.</p>
+                            <p class="p text-center text-body" id="issueContent">Click on a issue to view them here.</p>
                         </div>
+                    </div>
+                    <div id = "issueSelected" style = "color: black" hidden>
+                        DEPARTMENT: <span id = "department"> </span> Department <br>
+                        ISSUE TITLE: <span id = "title"> </span> <br>
+                        ISSUE TYPE: <span id = "type"> </span> <br>
+                        DOCUMENT NUMBER: <span id = "documentnumber"> </span> <br>
+                        SUMMARY: <span id = "summary"> </span> <br>
                     </div>
                 </div>
             </div>

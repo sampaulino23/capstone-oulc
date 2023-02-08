@@ -149,6 +149,7 @@ router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
 router.get('/policy/:fileid', oulccontroller.viewPolicy);
 router.post('/deletepolicy', oulccontroller.postDeletePolicy);
 router.post('/updatepolicy', policyUpload.single('updatePolicyFile'), oulccontroller.postUpdatePolicy);
+router.get('/viewissue', oulccontroller.viewIssueOnClick);
 
 //router.post('/addtag', oulccontroller.addTag);
 

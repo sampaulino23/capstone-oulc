@@ -26,6 +26,7 @@ const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 const PolicyVersion = require('../models/PolicyVersion.js');
 const FeedbackSet = require('../models/FeedbackSet.js');
+const Issue = require('../models/Issue.js');
 
 // Create mongo connection
 const conn = mongoose.createConnection(url);
@@ -1658,6 +1659,32 @@ const oulccontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    viewIssueOnClick: async (req, res) => {
+        console.log ("ISSUE ON CLICK");
+
+        const issueid = req.query.issueid;
+
+        const issue = await Issue.findById(issueid).lean()
+        .populate({
+            path: 'contractRequest'
+        })
+        .populate({
+            path: 'requester',
+            populate: {
+                path: 'department'
+              } 
+        }).exec();
+
+        console.log(issue._id);
+        var issuetitle = issue.title; 
+        console.log (issuetitle);
+
+        res.send({
+            issue: issue
+        });
+
     }
 }
 
