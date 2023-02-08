@@ -90,7 +90,18 @@
                         ISSUE TITLE: <span id = "title"> </span> <br>
                         ISSUE TYPE: <span id = "type"> </span> <br>
                         DOCUMENT NUMBER: <span id = "documentnumber"> </span> <br>
-                        SUMMARY: <span id = "summary"> </span> <br>
+                        SUMMARY: <span id = "summary"> </span> <br> <br>
+
+                        
+                        <input class="form-control" value="" name="resolveIssueID" id="issueID"> <!-- type should be hidden. -->
+                        <div class="mb-3">
+                            <label for="resolveIssue" class="form-label">Solution</label>
+                            <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" required></textarea>
+                        </div>                      
+
+                        <button type="submit" class="upload-btn-modal resolveIssueBtn" id="confirmResolveIssue">Resolve Issue</button>
+                      
+
                     </div>
                 </div>
             </div>
