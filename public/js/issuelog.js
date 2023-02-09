@@ -29,8 +29,7 @@ $(document).ready(() => {
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
                 document.getElementById("title").innerHTML = res.issue.title;
                 document.getElementById("type").innerHTML = res.issue.type;
-                document.getElementById("response").innerHTML = res.issue.response;
-                document.getElementById("resolveIssue").innerHTML = res.issue.response;
+                let oulcResponse = "OULC Response: ";
                 if (res.issue.contractRequest) {
                     document.getElementById("documentnumber").innerHTML = res.issue.contractRequest.trackingNumber;
                     var requestlink = document.getElementById("documentnumber");
@@ -43,12 +42,17 @@ $(document).ready(() => {
 
                 //disable input if status is resolved and hide resolve button
                 if (res.issue.status == "Resolved") {
+                    document.getElementById("resolveIssue").value = oulcResponse + res.issue.response;
                     document.getElementById("resolveIssue").disabled = true;   
                     document.getElementById("resolveIssueBtn").style.visibility = 'hidden';
+                    document.getElementById("resolveIssue").style.background = "#6AB085";
+                    document.getElementById("resolveIssue").style.boxShadow = "0px 4px 4px rgba(0, 0, 0, 0.25)";
                 }
                 else {
                     document.getElementById("resolveIssue").disabled = false;  
                     document.getElementById("resolveIssueBtn").style.visibility = 'visible';
+                    document.getElementById("resolveIssue").style.background = "#FFFFFF";
+                    document.getElementById("resolveIssue").style.boxShadow = "inset 0px 4px 4px rgba(0, 0, 0, 0.25)";
                 }
 
                 console.log('SUCCESS');

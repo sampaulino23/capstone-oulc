@@ -111,7 +111,6 @@
                                     <b>Issue Type:</b> <span id = "type"> </span> <br>
                                     <b>Document Number:</b> <a id = "documentnumber" > </a> <br>
                                     <b>Summary:</b> <span id = "summary"> </span> <br>
-                                    <b>Response:</b> <span id = "response"> </span>
                                 </div>
 
                                 <div id = "solutionDiv">
@@ -126,7 +125,7 @@
                                     {{#compare user_role '!=' 'Requester'}}
                                     <div class="mb-3">
                                         <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
-                                        <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
+                                        <input type = "text" class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
                                     </div>
 
                                     <div class ="revision-div">
