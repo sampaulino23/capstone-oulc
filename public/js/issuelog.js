@@ -1,7 +1,5 @@
 $(document).ready(() => {
 
-    var user_role = "{{user_role}}";
-
     $('tr').click(function () {
         
         var issueid = $(this).attr('id');
@@ -13,7 +11,7 @@ $(document).ready(() => {
             data: { issueid: issueid },
             success: function (res) {
 
-                document.getElementById("resolveIssue").value = "";  
+                document.getElementById("resolveIssue").value = "";
 
                 const issueSelected = $('#issueSelected'); 
                 const issueInitialView = $('#issueInitialView');
@@ -29,6 +27,7 @@ $(document).ready(() => {
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
                 document.getElementById("title").innerHTML = res.issue.title;
                 document.getElementById("type").innerHTML = res.issue.type;
+                document.getElementById("response").innerHTML = res.issue.response;
                 document.getElementById("resolveIssue").innerHTML = res.issue.response;
                 if (res.issue.contractRequest) {
                     document.getElementById("documentnumber").innerHTML = res.issue.contractRequest.trackingNumber;
@@ -80,4 +79,231 @@ $(document).ready(() => {
         });
     });
 
+    $('#resolveIssue').change(function () {
+        if(document.getElementById("resolveIssue").value == ""){
+            document.getElementById("resolveIssueBtn").disabled = true;
+        }else{
+            document.getElementById("resolveIssueBtn").disabled = false;
+        }
+    });
+
 });
+
+//Search Filter 
+function searchIssueTable() {
+    var input, filter, table, tr, td, td2, td3;
+      input = document.getElementById("searchIssueInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+      
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // for column one
+        td1 = tr[i].getElementsByTagName("td")[1]; // for column two
+        td2 = tr[i].getElementsByTagName("td")[2]; 
+        td3 = tr[i].getElementsByTagName("td")[3]; 
+        td4 = tr[i].getElementsByTagName("td")[4]; 
+    /* ADD columns here that you want you to filter to be used on */
+        if (td) {
+          if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) 
+          || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1)
+          || (td4.innerHTML.toUpperCase().indexOf(filter) > -1))  {            
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+   
+} 
+
+//Dropdown Filter
+function filterIssueType(){ //for issue type dropdown
+    var dropdown = document.getElementById("issuetypedropdown");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = dropdown.value;
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        issuetype = cells[2] || null; // gets the 3rd `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if (filter === "All" || !issuetype || (filter === issuetype.textContent)) {
+            row.style.display = ""; // shows this row
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("open-tab").classList.remove("selected");
+    document.getElementById("resolved-tab").classList.remove("selected");
+}
+
+// Reset Dropdown Filter Values
+function resetIssueType(){ //for issues table
+    document.getElementById("issuetypedropdown").value='a';
+}
+
+// Tab Filters (Issue Status)
+function viewAllIssues(){ 
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+
+    var totalRows = $('#table').find('tbody tr:has(td)').length;
+    var recordPerPage = 30;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    var tr = $('table tbody tr:has(td)');
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(tr[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(tr[i]).show();
+        }
+    });
+    
+    document.getElementById("all-tab").classList.add("selected");
+    document.getElementById("open-tab").classList.remove("selected");
+    document.getElementById("resolved-tab").classList.remove("selected");
+}
+
+function viewOpenIssues(){ 
+    var button = document.getElementById("open-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        issuestatus = cells[4] || null; // gets the 5th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !issuestatus || (filter === issuestatus.textContent)) {
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    var totalRows = length;
+    var recordPerPage = 30;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("open-tab").classList.add("selected");
+    document.getElementById("resolved-tab").classList.remove("selected");
+}
+
+function viewResolvedIssues(){ 
+    var button = document.getElementById("resolved-tab");
+    var table = document.getElementById("table");
+    var rows = table.getElementsByTagName("tr");
+    var filter = button.value;
+    var length = 0;
+    let filteredRows = [];
+
+    for (let row of rows) { // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        issuestatus = cells[4] || null; // gets the 5th `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if ( !issuestatus || (filter === issuestatus.textContent)) {
+            // row.style.display = ""; // shows this row
+            length++;
+            filteredRows.push(row);
+        }
+        else {
+            row.style.display = "none"; // hides this row
+        }
+    }
+    var totalRows = length;
+    var recordPerPage = 30;
+    var totalPages = Math.ceil(totalRows / recordPerPage);
+    var $pages = $('<div id="pages"></div>');
+    for (i = 0; i < totalPages; i++) {
+        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
+    }
+    
+    $("#after-table").html($pages);
+
+    $('.pageNumber').hover(
+        function() {
+            $(this).addClass('focus');
+        },
+        function() {
+            $(this).removeClass('focus');
+        }
+    );
+
+    $('table').find('tbody tr:has(td)').hide();
+    for (var i = 0; i <= recordPerPage - 1; i++) {
+        $(filteredRows[i]).show();
+    }
+
+    $('span').click(function(event) {
+        $('#table').find('tbody tr:has(td)').hide();
+        var nBegin = ($(this).text() - 1) * recordPerPage;
+        var nEnd = $(this).text() * recordPerPage - 1;
+        for (var i = nBegin; i <= nEnd; i++) {
+            $(filteredRows[i]).show();
+        }
+    });
+
+    document.getElementById("all-tab").classList.remove("selected");
+    document.getElementById("open-tab").classList.remove("selected");
+    document.getElementById("resolved-tab").classList.add("selected");
+}
