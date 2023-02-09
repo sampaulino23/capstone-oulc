@@ -40,103 +40,101 @@
                                     </button>
                                 </ul>
                                 <input class="form-control" id="searchIssueInput" type="text" onkeyup="searchIssueTable()" placeholder="Search...">
-                        </div>
-                        <div id ="dropdown-search">
-                            <div id="dropdowns">
-                                <label for="" class="dept-and-role" style = "display: none;";>Issue Type</label>
-                                <select id="issuetypedropdown" oninput="filterIssueType();" onChange="resetIssueType();">
-                                    <option selected disabled value="a">Select Issue Type </option>
-                                    <option value="All">All</option>
-                                    <option value="Need for Template">Need for Template</option>
-                                    <option value="Delay">Delay</option>
-                                    <option value="Feedback">Feedback</option>
-                                <!--{{#each contracttypes}}
-                                    <option value="{{name}}">{{name}}</option>
-                                {{/each}}-->
-                                </select>
                             </div>
-                            {{#compare user_role "==" "Requester"}}
-                                <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
-                        </div>
-                        {{/compare}}
-                    </div>
-                    <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                        <div id="user-table" class="tab-pane active">
-                            <div class="w-100">
-                                <table id="table" class="sortable table table-hover"
-                                    style="width: 100%; font-size: 16px; background:#D9D9D9;">
-                                    <thead class="table-headers">
-                                        <tr>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Issue No.</th>
-                                            <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
-                                            <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="myIssueTable" style = "word-break: break-word;">
-                                        {{#each issues}}
-                                        <tr style="cursor: pointer;" id="{{_id}}" onclick="">
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{issueNumber}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{title}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{type}}</td>
-                                            <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; display:">{{status}}</td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RIGHT SIDE -->
-                <div class="col-6">
-                    <div id="status-header">
-                        <div class = "status-text" id="statusText"></div>
-                        <div class = "status-text" id ="status-header-text"></div>
-                    </div>
-                    <div id="issueView">
-                        <div id = "issueInitialView" class="d-grip gap-3">
-                            <div class="p-2" style = "text-align: center;">
-                                <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
-                            </div><br>
-                            <div class="p-2">
-                                <p class="p text-center text-body" id="issueContent">Click on a issue to view them here.</p>
-                            </div>
-                        </div>
-                        <div id = "issueSelected" style = "color: black" hidden>
-                            <div id = "issueDiv">
-                                Status: <span id = "status"> </span> <br>
-                                DEPARTMENT: <span id = "department"> </span> Department <br>
-                                ISSUE TITLE: <span id = "title"> </span> <br>
-                                ISSUE TYPE: <span id = "type"> </span> <br>
-                                DOCUMENT NUMBER: <a id = "documentnumber" > </a> <br>
-                                SUMMARY: <span id = "summary"> </span> <br>
-                                RESPONSE: <span id = "response"> </span>
-                            </div>
-
-                            <div id = "solutionDiv">
-                                <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
-                                {{#compare user_role '==' 'Requester'}}
-                                <div class="mb-3">
-                                    <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
-                                    <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
+                            <div id ="dropdown-search">
+                                <div id="dropdowns">
+                                    <label for="" class="dept-and-role" style = "display: none;";>Issue Type</label>
+                                    <select id="issuetypedropdown" oninput="filterIssueType();" onChange="resetIssueType();">
+                                        <option selected disabled value="a">Select Issue Type </option>
+                                        <option value="All">All</option>
+                                        <option value="Need for Template">Need for Template</option>
+                                        <option value="Delay">Delay</option>
+                                        <option value="Feedback">Feedback</option>
+                                    <!--{{#each contracttypes}}
+                                        <option value="{{name}}">{{name}}</option>
+                                    {{/each}}-->
+                                    </select>
                                 </div>
-                                {{/compare}}
-
-                                {{#compare user_role '!=' 'Requester'}}
-                                <div class="mb-3">
-                                    <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
-                                    <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
-                                </div>
-
-                                <div class ="revision-div">
-                                    <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
-                                </div>
+                                {{#compare user_role "==" "Requester"}}
+                                    <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
                                 {{/compare}}
                             </div>
-                            
-                            
+                        </div>
+                        <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                            <div id="user-table" class="tab-pane active">
+                                <div class="w-100">
+                                    <table id="table" class="sortable table table-hover"
+                                        style="width: 100%; font-size: 16px; background:#D9D9D9;">
+                                        <thead class="table-headers">
+                                            <tr>
+                                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: none;">Issue No.</th>
+                                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Title</th>
+                                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
+                                                <th style="width: 10%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myIssueTable" style = "word-break: break-word;">
+                                            {{#each issues}}
+                                            <tr style="cursor: pointer;" id="{{_id}}" onclick="">
+                                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: none;">{{issueNumber}}</td>
+                                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{title}}</td>
+                                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white;">{{type}}</td>
+                                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid #9F9F9F; border-left: 1px solid white; display:">{{status}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RIGHT SIDE -->
+                    <div class="col-6">
+                        <div id="status-header">
+                            <div class = "status-text" id="statusText"></div>
+                            <div class = "status-text" id ="status-header-text"></div>
+                        </div>
+                        <div id="issueView">
+                            <div id = "issueInitialView" class="d-grip gap-3">
+                                <div class="p-2" style = "text-align: center;">
+                                    <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
+                                </div><br>
+                                <div class="p-2">
+                                    <p class="p text-center text-body" id="issueContent">Click on a issue to view them here.</p>
+                                </div>
+                            </div>
+                            <div id = "issueSelected" style = "color: black" hidden>
+                                <div id = "issueDiv">
+                                    <b>Status:</b> <span id = "status"> </span> <br>
+                                    <b>Department:</b> <span id = "department"> </span> Department <br>
+                                    <b>Issue Title:</b> <span id = "title"> </span> <br>
+                                    <b>Issue Type:</b> <span id = "type"> </span> <br>
+                                    <b>Document Number:</b> <a id = "documentnumber" > </a> <br>
+                                    <b>Summary:</b> <span id = "summary"> </span> <br>
+                                    <b>Response:</b> <span id = "response"> </span>
+                                </div>
+
+                                <div id = "solutionDiv">
+                                    <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
+                                    {{#compare user_role '==' 'Requester'}}
+                                    <div class="mb-3">
+                                        <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                        <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
+                                    </div>
+                                    {{/compare}}
+
+                                    {{#compare user_role '!=' 'Requester'}}
+                                    <div class="mb-3">
+                                        <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                        <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
+                                    </div>
+
+                                    <div class ="revision-div">
+                                        <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
+                                    </div>
+                                    {{/compare}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

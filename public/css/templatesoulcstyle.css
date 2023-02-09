@@ -409,7 +409,7 @@
 }
 
 #resolveIssueBtn:hover {
-    background: #9F9F9F;
+    background: #0C8039;
     color: #fff;
     transition: 0.25s;
 }
@@ -432,6 +432,7 @@
     display: flex;
     width: fit-content;
     padding-left: 0;
+    font-weight: 700;
 }
 
 .issue-log-type {
@@ -452,6 +453,7 @@
     background: #FFFFFF;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 12px;
+    margin-bottom: 15px;
 }
 
 .status-text {
@@ -471,4 +473,9 @@
 
 #dropdown-search {
     display: inline-flex;
+}
+
+.addnew-btn {
+    height: fit-content;
+    padding: 15px 12px;
 }
