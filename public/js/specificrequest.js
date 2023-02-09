@@ -184,10 +184,14 @@ $(window).on('load', function() {
             console.log(res.pendingFeedbacks);
 
             for (pendingFeedback of res.pendingFeedbacks) {
-                var cvId = 'cvId' + pendingFeedback.contractVersion;
-                console.log(cvId);
 
-                $('#' + cvId).find('textarea.pending-feedback-textarea').val(pendingFeedback.content);
+                if (pendingFeedback) {
+                    var cvId = 'cvId' + pendingFeedback.contractVersion;
+                    console.log(cvId);
+    
+                    $('#' + cvId).find('textarea.pending-feedback-textarea').val(pendingFeedback.content);
+                }
+                
             }
 
             console.log('GET PENDING FEEDBACKS SUCCESS');
@@ -328,6 +332,7 @@ $(window).on('load', function() {
         success: function(res) {
 
             const feedbacklist = res.feedbacklist;
+            console.log(feedbacklist);
 
             var cards = $('.feedback-card');
             var cardCount = $('.feedback-card').length;
@@ -340,6 +345,8 @@ $(window).on('load', function() {
 
                     var feedbackrow = $('.feedback-card:eq(' + i + ' )');
                     var feedbackrowid = feedbackrow.attr('id');
+
+                    console.log(feedback._id, feedbackrowid);
                     
                     if (feedbackrowid == feedback._id) {
                         // filter feedback history list
@@ -721,24 +728,6 @@ $(document).ready(() => {
     $('.submit-revised').click(function () {
         sessionStorage.setItem("action", "submit-revised");
     });
-
-    // $('.forrevision').click(function () {
-    //     alert(this.id);
-    //     $.ajax({
-    //         url: "/request/forlegalreview",
-    //         method: "GET",
-    //         contentType: "application/json",
-    //         data: { userid: this.id },
-    //         success: setTimeout(function () {
-    //             console.log('SUCCESS');
-    //             location.reload();
-    //         }, 350),
-    //         error: function (err) {
-    //             console.log(err);
-    //         }
-    //     });
-
-    // });
     
     var sectionChanges = $(".changes-section");
     var sectionChangesText = $("#changes-section-text");

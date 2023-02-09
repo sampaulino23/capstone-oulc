@@ -465,16 +465,6 @@ const specificrequestcontroller = {
                 }
             }
 
-            // // add feedbackSet object
-            // var newFeedbackSet = new FeedbackSet({
-            //     contractRequest: contractrequest,
-            //     counter: contractrequest.feedbackCounter + 1,
-            //     feedbacks: feedbacks
-            // });
-
-            // console.log(newFeedbackSet);
-            // newFeedbackSet.save();
-
             // change feedbackCounter of contractRequest
             await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
 
@@ -1276,20 +1266,32 @@ const specificrequestcontroller = {
             const fileid = req.query.fileid;
 
             const contractversion = await ContractVersion.findOne({file: fileid})
+                .populate({
+                    path: 'contract'
+                })
                 .exec();
+
+            console.log('contract version');
+            console.log(contractversion);
 
             var feedbacklist = [];
 
             if (contractversion) {
-                var contractversions = await ContractVersion.find({contract: contractversion.contract})
+                var contractversions = await ContractVersion.find({contract: contractversion.contract, version: { $ne: contractversion.contract.latestversion }})
                     .populate({
                         path: 'contract'
                     })    
                     .exec();
 
+                console.log(contractversions);
+
                 for (eachcontractversion of contractversions) {
-                    var feedback = await Feedback.findOne({contractVersion: eachcontractversion}).exec();
+                    console.log(eachcontractversion);
+
+                    var feedback = await Feedback.findOne({contractVersion: eachcontractversion._id}).exec();
                     feedbacklist.push(feedback);
+
+                    console.log(feedback);
                 }
             }
 
