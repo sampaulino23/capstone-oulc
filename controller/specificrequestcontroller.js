@@ -1304,6 +1304,22 @@ const specificrequestcontroller = {
         }
     },
 
+    getFeedbackInput: async (req, res) => {
+        try {
+
+            const fileid = req.query.fileid;
+
+            const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+
+            res.send({
+                contractVersion: contractVersion
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 }
 
 module.exports = specificrequestcontroller;

@@ -364,6 +364,28 @@ $(window).on('load', function() {
         }
     });
 
+    $.ajax({
+        url: "/getfeedbackinput",
+        method: "GET",
+        contentType: "application/json",
+        data: {
+            fileid: fileidSelected,
+        },
+        success: function(res) {
+
+            const contractVersion = res.contractVersion;
+
+            $('.pending-feedback').hide();
+            var cvId = 'cvId' + contractVersion._id;
+            $('#' + cvId).show();
+
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
+
 
     // for files tab
     var rowCount = $('#documentsAttachedTable tr').length;
@@ -622,6 +644,27 @@ $(document).ready(() => {
                 }
     
                 console.log('GET FEEDBACK HISTORY SUCCESS');
+    
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+        $.ajax({
+            url: "/getfeedbackinput",
+            method: "GET",
+            contentType: "application/json",
+            data: {
+                fileid: fileid,
+            },
+            success: function(res) {
+    
+                const contractVersion = res.contractVersion;
+    
+                $('.pending-feedback').hide();
+                var cvId = 'cvId' + contractVersion._id;
+                $('#' + cvId).show();
     
             },
             error: function(err) {
