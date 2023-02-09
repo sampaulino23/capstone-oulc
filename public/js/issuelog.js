@@ -24,7 +24,8 @@ $(document).ready(() => {
                 //assign values through id.
                 document.getElementById("issueID").value = res.issue._id;
                 document.getElementById("status").innerHTML = res.issue.status;
-                document.getElementById("status-header").innerHTML = res.issue.status;
+                document.getElementById("statusText").innerHTML = "Status:&nbsp;";
+                document.getElementById("status-header-text").innerHTML = res.issue.status;
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
                 document.getElementById("title").innerHTML = res.issue.title;
                 document.getElementById("type").innerHTML = res.issue.type;

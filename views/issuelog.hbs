@@ -24,21 +24,24 @@
                 <!-- LEFT SIDE -->                
                     <div class="col-6">
                         <div class="" id = "upload-btn-header">
-                        <div id = "search-upload-header">
-                            <ul class="nav-tabs" id="myTab" role="tablist">
-                                <button class="nav-item issue-log-type selected" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                                aria-controls="all" value="" onclick="viewAllIssues()">
-                                All
-                                </button>
-                                <button class="nav-item issue-log-type" id="open-tab" data-toggle="tab" href="" role="tab"
-                                aria-controls="activeusers" value="Pending" onclick="viewPendingIssues()">
-                                Pending
-                                </button>
-                                <button class="nav-item issue-log-type" id="resolved-tab" data-toggle="tab" href="" role="tab"
-                                aria-controls="activeusers" value="Resolved" onclick="viewResolvedIssues()">
-                                Resolved
-                                </button>
-                            </ul>
+                            <div id = "search-upload-header">
+                                <ul class="nav-tabs" id="myTab" role="tablist">
+                                    <button class="nav-item issue-log-type selected" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                                    aria-controls="all" value="" onclick="viewAllIssues()">
+                                    All
+                                    </button>
+                                    <button class="nav-item issue-log-type" id="open-tab" data-toggle="tab" href="" role="tab"
+                                    aria-controls="activeusers" value="Pending" onclick="viewPendingIssues()">
+                                    Pending
+                                    </button>
+                                    <button class="nav-item issue-log-type" id="resolved-tab" data-toggle="tab" href="" role="tab"
+                                    aria-controls="activeusers" value="Resolved" onclick="viewResolvedIssues()">
+                                    Resolved
+                                    </button>
+                                </ul>
+                                <input class="form-control" id="searchIssueInput" type="text" onkeyup="searchIssueTable()" placeholder="Search...">
+                        </div>
+                        <div id ="dropdown-search">
                             <div id="dropdowns">
                                 <label for="" class="dept-and-role" style = "display: none;";>Issue Type</label>
                                 <select id="issuetypedropdown" oninput="filterIssueType();" onChange="resetIssueType();">
@@ -53,11 +56,9 @@
                                 </select>
                             </div>
                             {{#compare user_role "==" "Requester"}}
-                            <div class = "col-6">
                                 <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
-                            </div>
-                            {{/compare}}
                         </div>
+                        {{/compare}}
                     </div>
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
@@ -93,10 +94,8 @@
                 <!-- RIGHT SIDE -->
                 <div class="col-6">
                     <div id="status-header">
-                        
-                        <div class = "status-text">Status: </div>
-                        <div class = "status-text" id ="status-header"></div>
-                        
+                        <div class = "status-text" id="statusText"></div>
+                        <div class = "status-text" id ="status-header-text"></div>
                     </div>
                     <div id="issueView">
                         <div id = "issueInitialView" class="d-grip gap-3">

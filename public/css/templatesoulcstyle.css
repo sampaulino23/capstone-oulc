@@ -424,7 +424,7 @@
 }
 
 #user-table {
-    height: 300px;
+    height: 500px;
     overflow-y: auto;
 }
 
@@ -440,6 +440,7 @@
 
 #dropdowns {
     width: fit-content;
+    margin-right: 1em;
 }
 
 #search-upload-header {
@@ -454,9 +455,20 @@
 }
 
 .status-text {
-    color: #000;
+    color: #000 !important;
 }
 
 #status-header {
+    display: inline-flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+#statusText {
+    font-weight: 700;
+}
+
+#dropdown-search {
     display: inline-flex;
 }
