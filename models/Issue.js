@@ -7,8 +7,8 @@ const IssueSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['Type 1', 'Type 2'],
-        default: 'Type 1',
+        enum: ['Need for Template', 'Delay', 'Feedback'],
+        default: 'Need for Template',
         required: true
     },
     summary: {

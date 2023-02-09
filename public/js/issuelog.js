@@ -190,7 +190,7 @@ function viewAllIssues(){
     document.getElementById("resolved-tab").classList.remove("selected");
 }
 
-function viewOpenIssues(){ 
+function viewPendingIssues(){ 
     var button = document.getElementById("open-tab");
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
