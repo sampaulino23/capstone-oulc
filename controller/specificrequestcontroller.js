@@ -1318,6 +1318,21 @@ const specificrequestcontroller = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    getCurrentFeedback: async (req, res) => {
+        try {
+
+            const fileid = req.query.fileid;
+
+            const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
+            const feedback = await Feedback.findOne({contractVersion: contractVersion}).exec();
+
+            res.send({feedback: feedback});
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }

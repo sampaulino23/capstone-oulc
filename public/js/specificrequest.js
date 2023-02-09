@@ -343,15 +343,18 @@ $(window).on('load', function() {
                 
                 for (feedback of feedbacklist) {
 
-                    var feedbackrow = $('.feedback-card:eq(' + i + ' )');
-                    var feedbackrowid = feedbackrow.attr('id');
-
-                    console.log(feedback._id, feedbackrowid);
-                    
-                    if (feedbackrowid == feedback._id) {
-                        // filter feedback history list
-                        feedbackrow.show();
+                    if (feedback) {
+                        var feedbackrow = $('.feedback-card:eq(' + i + ' )');
+                        var feedbackrowid = feedbackrow.attr('id');
+    
+                        console.log(feedback._id, feedbackrowid);
+                        
+                        if (feedbackrowid == feedback._id) {
+                            // filter feedback history list
+                            feedbackrow.show();
+                        }
                     }
+                    
                 }
 
             }
@@ -376,8 +379,49 @@ $(window).on('load', function() {
             const contractVersion = res.contractVersion;
 
             $('.pending-feedback').hide();
-            var cvId = 'cvId' + contractVersion._id;
-            $('#' + cvId).show();
+
+            if (contractVersion) {
+                var cvId = 'cvId' + contractVersion._id;
+                $('#' + cvId).show();
+            }
+
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
+    $.ajax({
+        url: "/getcurrentfeedback",
+        method: "GET",
+        contentType: "application/json",
+        data: {
+            fileid: fileidSelected,
+        },
+        success: function(res) {
+
+            console.log('GET CURRENT FEEDBACK')
+
+            const feedback = res.feedback;
+
+            var cards = $('.current-feedback');
+            var cardCount = $('.current-feedback').length;
+
+            cards.hide();
+
+            if (feedback) {
+                for (var i = 0; i < cardCount; i++) {
+                
+                    var feedbackrow = $('.current-feedback:eq(' + i + ' )');
+                    var feedbackrowid = feedbackrow.find('#currentFeedbackId').val();
+                    
+                    if (feedbackrowid == feedback._id) {
+                        // filter feedback history list
+                        feedbackrow.show();
+                    }
+    
+                }
+            }
 
         },
         error: function(err) {
@@ -631,13 +675,15 @@ $(document).ready(() => {
                 for (var i = 0; i < cardCount; i++) {
                     
                     for (feedback of feedbacklist) {
-    
-                        var feedbackrow = $('.feedback-card:eq(' + i + ' )');
-                        var feedbackrowid = feedbackrow.attr('id');
-                        
-                        if (feedbackrowid == feedback._id) {
-                            // filter feedback history list
-                            feedbackrow.show();
+
+                        if (feedback) {
+                            var feedbackrow = $('.feedback-card:eq(' + i + ' )');
+                            var feedbackrowid = feedbackrow.attr('id');
+                            
+                            if (feedbackrowid == feedback._id) {
+                                // filter feedback history list
+                                feedbackrow.show();
+                            }
                         }
                     }
     
@@ -661,11 +707,52 @@ $(document).ready(() => {
             success: function(res) {
     
                 const contractVersion = res.contractVersion;
-    
+
                 $('.pending-feedback').hide();
-                var cvId = 'cvId' + contractVersion._id;
-                $('#' + cvId).show();
+
+                if (contractVersion) {
+                    var cvId = 'cvId' + contractVersion._id;
+                    $('#' + cvId).show();
+                }
     
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+        $.ajax({
+            url: "/getcurrentfeedback",
+            method: "GET",
+            contentType: "application/json",
+            data: {
+                fileid: fileid,
+            },
+            success: function(res) {
+    
+                console.log('GET CURRENT FEEDBACK')
+    
+                const feedback = res.feedback;
+
+                var cards = $('.current-feedback');
+                var cardCount = $('.current-feedback').length;
+    
+                cards.hide();
+    
+                if (feedback) {
+        
+                    for (var i = 0; i < cardCount; i++) {
+                        
+                        var feedbackrow = $('.current-feedback:eq(' + i + ' )');
+                        var feedbackrowid = feedbackrow.find('#currentFeedbackId').val();
+                        
+                        if (feedbackrowid == feedback._id) {
+                            // filter feedback history list
+                            feedbackrow.show();
+                        }
+                    }
+                }
+                
             },
             error: function(err) {
                 console.log(err);

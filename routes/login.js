@@ -116,5 +116,6 @@ router.get('/savependingfeedbackchanges', oulccontroller.savePendingFeedback);
 router.get('/getpendingfeedbacks', oulccontroller.getPendingFeedbacks);
 router.get('/getfeedbackhistory', specificrequestcontroller.getFeedbackHistory);
 router.get('/getfeedbackinput', specificrequestcontroller.getFeedbackInput);
+router.get('/getcurrentfeedback', specificrequestcontroller.getCurrentFeedback);
 
 module.exports = router;

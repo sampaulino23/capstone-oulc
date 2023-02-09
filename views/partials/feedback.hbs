@@ -25,7 +25,8 @@
         {{#each feedbacks}}
         {{#compare status '==' 'Submitted'}}
         {{#compare content '!=' ''}}
-        <div id = "feedbackContainer" class = "feedback-container">
+        <div id = "feedbackContainer" class = "current-feedback feedback-container">
+            <input type="hidden" id="currentFeedbackId" name="currentFeedbackId" value="{{_id}}"/>
             <div id ="feedback-details-div">
                 <div class = "profile-pic">
                     <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
