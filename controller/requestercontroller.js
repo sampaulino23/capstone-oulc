@@ -727,12 +727,18 @@ const requestercontroller = {
 
     postCreateIssue: async (req, res) => {
         try {
+
+            const issues = await Issue.find({}).lean()
+            .sort({issueNumber: 1, date: 1})
+            .exec(); 
+
+            var issueCount = "000" + (issues.length + 1);
             
             var issue = new Issue({
                 title: req.body.issueTitle,
                 type: req.body.issueType,
                 summary: req.body.issueSummary,
-                issueNumber: "000",
+                issueNumber: issueCount,
                 requester: req.body.requesterid,
                 date: Date.now()
             });
