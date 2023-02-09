@@ -221,7 +221,8 @@ const specificrequestcontroller = {
                 conversation: conversation,
                 messages: messages,
                 negotiationfiles: negotiationfiles,
-                withNegotiationFiles: withNegotiationFiles
+                withNegotiationFiles: withNegotiationFiles,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
@@ -398,7 +399,8 @@ const specificrequestcontroller = {
                 conversation: conversation,
                 messages: messages,
                 stagingcontractversions: stagingcontractversions,
-                negotiationfiles: negotiationfiles
+                negotiationfiles: negotiationfiles,
+                forrevision_count: req.session.forrevision_count
             });
 
         } catch (err) {
