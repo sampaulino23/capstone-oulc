@@ -480,7 +480,7 @@ const specificrequestcontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "migfranzbro@gmail.com", //change to tester/user email 
+                to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
                 text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
@@ -566,7 +566,7 @@ const specificrequestcontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "migfranzbro@gmail.com", //change to tester/user email 
+                to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
                 text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
@@ -615,7 +615,7 @@ const specificrequestcontroller = {
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "migfranzbro@gmail.com", //change to tester/user email 
+                to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - Approved",
                 text: "Good day! \n" + "\n Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been approved and marked as Completed. Please upload signed contract/s.\n"
