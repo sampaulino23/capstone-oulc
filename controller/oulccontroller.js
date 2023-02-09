@@ -1668,7 +1668,7 @@ const oulccontroller = {
             const issues = await Issue.find({}).lean().populate({
                 path: 'contractRequest'
             })
-            .sort({date: 1})
+            .sort({issueNumber: 1, date: 1})
             .exec(); 
             
             res.render('issuelog', {
