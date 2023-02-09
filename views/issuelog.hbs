@@ -21,47 +21,44 @@
         <div id="header">OULC Issue Log</div>
         <div class="container">
             <div class="row"> 
-                <!-- LEFT SIDE -->
-                <div class="row" id = "upload-btn-header">
-                    <ul class="nav-tabs" id="myTab" role="tablist">
-                        <button class="nav-item selected" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                        aria-controls="all" value="" onclick="viewAllIssues()">
-                        All
-                        </button>
-                        <button class="nav-item" id="open-tab" data-toggle="tab" href="" role="tab"
-                        aria-controls="activeusers" value="Pending" onclick="viewPendingIssues()">
-                        Pending
-                        </button>
-                        <button class="nav-item" id="resolved-tab" data-toggle="tab" href="" role="tab"
-                        aria-controls="activeusers" value="Resolved" onclick="viewResolvedIssues()">
-                        Resolved
-                        </button>
-                    </ul>
-                    {{#compare user_role "==" "Requester"}}
-                    <div class = "col-6">
-                        <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
+                <!-- LEFT SIDE -->                
+                    <div class="col-6">
+                        <div class="" id = "upload-btn-header">
+                        <div id = "search-upload-header">
+                            <ul class="nav-tabs" id="myTab" role="tablist">
+                                <button class="nav-item issue-log-type selected" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                                aria-controls="all" value="" onclick="viewAllIssues()">
+                                All
+                                </button>
+                                <button class="nav-item issue-log-type" id="open-tab" data-toggle="tab" href="" role="tab"
+                                aria-controls="activeusers" value="Pending" onclick="viewPendingIssues()">
+                                Pending
+                                </button>
+                                <button class="nav-item issue-log-type" id="resolved-tab" data-toggle="tab" href="" role="tab"
+                                aria-controls="activeusers" value="Resolved" onclick="viewResolvedIssues()">
+                                Resolved
+                                </button>
+                            </ul>
+                            <div id="dropdowns">
+                                <label for="" class="dept-and-role" style = "display: none;";>Issue Type</label>
+                                <select id="issuetypedropdown" oninput="filterIssueType();" onChange="resetIssueType();">
+                                    <option selected disabled value="a">Select Issue Type </option>
+                                    <option value="All">All</option>
+                                    <option value="Need for Template">Need for Template</option>
+                                    <option value="Delay">Delay</option>
+                                    <option value="Feedback">Feedback</option>
+                                <!--{{#each contracttypes}}
+                                    <option value="{{name}}">{{name}}</option>
+                                {{/each}}-->
+                                </select>
+                            </div>
+                            {{#compare user_role "==" "Requester"}}
+                            <div class = "col-6">
+                                <button class="upload-btn addnew-btn" data-bs-toggle="modal" data-bs-target="#createIssueModal">+ Create New Issue</button>
+                            </div>
+                            {{/compare}}
+                        </div>
                     </div>
-                    {{/compare}}
-                    <div class = "col-6">
-                        <input class="form-control" id="searchIssueInput" type="text" onkeyup="searchIssueTable()" placeholder="Search...">
-                    </div>
-                    
-                    <div id="dropdowns">
-                        <label for="" class="dept-and-role">Issue Type</label>
-                        <select id="issuetypedropdown" oninput="filterIssueType();" onChange="resetIssueType();">
-                            <option selected disabled value="a">Select Issue Type </option>
-                            <option value="All">All</option>
-                            <option value="Need for Template">Need for Template</option>
-                            <option value="Delay">Delay</option>
-                            <option value="Feedback">Feedback</option>
-                        <!--{{#each contracttypes}}
-                            <option value="{{name}}">{{name}}</option>
-                        {{/each}}-->
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="col-6">
                     <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
                         <div id="user-table" class="tab-pane active">
                             <div class="w-100">
@@ -94,48 +91,56 @@
                 </div>
 
                 <!-- RIGHT SIDE -->
-                <div class="col-6" id="issueView">
-                    <div id = "issueInitialView" class="d-grip gap-3">
-                        <div class="p-2" style = "text-align: center;">
-                            <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
-                        </div><br>
-                        <div class="p-2">
-                            <p class="p text-center text-body" id="issueContent">Click on a issue to view them here.</p>
-                        </div>
+                <div class="col-6">
+                    <div id="status-header">
+                        
+                        <div class = "status-text">Status: </div>
+                        <div class = "status-text" id ="status-header"></div>
+                        
                     </div>
-                    <div id = "issueSelected" style = "color: black" hidden>
-                        <div id = "issueDiv">
-                            Status: <span id = "status"> </span> <br>
-                            DEPARTMENT: <span id = "department"> </span> Department <br>
-                            ISSUE TITLE: <span id = "title"> </span> <br>
-                            ISSUE TYPE: <span id = "type"> </span> <br>
-                            DOCUMENT NUMBER: <a id = "documentnumber" > </a> <br>
-                            SUMMARY: <span id = "summary"> </span> <br>
-                            RESPONSE: <span id = "response"> </span>
+                    <div id="issueView">
+                        <div id = "issueInitialView" class="d-grip gap-3">
+                            <div class="p-2" style = "text-align: center;">
+                                <img src="/img/dlsu_logo.png" style = "width: 50%; filter: opacity(30%);">
+                            </div><br>
+                            <div class="p-2">
+                                <p class="p text-center text-body" id="issueContent">Click on a issue to view them here.</p>
+                            </div>
                         </div>
-
-                        <div id = "solutionDiv">
-                            <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
-                            {{#compare user_role '==' 'Requester'}}
-                            <div class="mb-3">
-                                <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
-                                <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
-                            </div>
-                            {{/compare}}
-
-                            {{#compare user_role '!=' 'Requester'}}
-                            <div class="mb-3">
-                                <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
-                                <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
+                        <div id = "issueSelected" style = "color: black" hidden>
+                            <div id = "issueDiv">
+                                Status: <span id = "status"> </span> <br>
+                                DEPARTMENT: <span id = "department"> </span> Department <br>
+                                ISSUE TITLE: <span id = "title"> </span> <br>
+                                ISSUE TYPE: <span id = "type"> </span> <br>
+                                DOCUMENT NUMBER: <a id = "documentnumber" > </a> <br>
+                                SUMMARY: <span id = "summary"> </span> <br>
+                                RESPONSE: <span id = "response"> </span>
                             </div>
 
-                            <div class ="revision-div">
-                                <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
+                            <div id = "solutionDiv">
+                                <input type = "hidden" class="form-control" value="" name="resolveIssueID" id="issueID">
+                                {{#compare user_role '==' 'Requester'}}
+                                <div class="mb-3">
+                                    <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                    <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" readonly></textarea>
+                                </div>
+                                {{/compare}}
+
+                                {{#compare user_role '!=' 'Requester'}}
+                                <div class="mb-3">
+                                    <label for="resolveIssue" class="form-label" style="display:none;">Solution</label>
+                                    <textarea class="form-control" id="resolveIssue" name="resolveIssue" rows="3" placeholder="Type your response here..." required></textarea>
+                                </div>
+
+                                <div class ="revision-div">
+                                    <button type="submit" class="resolve-btn-modal" data-bs-toggle="modal" data-bs-target="#resolveIssueModal" id="resolveIssueBtn">Resolve Issue</button>
+                                </div>
+                                {{/compare}}
                             </div>
-                            {{/compare}}
+                            
+                            
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>

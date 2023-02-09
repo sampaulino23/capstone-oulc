@@ -344,7 +344,7 @@
 }
 
 .selected {
-    border-left: solid #0C8039 7px;
+    border-bottom: solid #0C8039 5px;
     color: #000;
     transition: 0.25s
 }
@@ -421,4 +421,42 @@
 .revision-div {
     text-align: center;
     margin: 20px;
+}
+
+#user-table {
+    height: 300px;
+    overflow-y: auto;
+}
+
+#myTab {
+    display: flex;
+    width: fit-content;
+    padding-left: 0;
+}
+
+.issue-log-type {
+    margin-right: 10px;
+}
+
+#dropdowns {
+    width: fit-content;
+}
+
+#search-upload-header {
+    display: flex;
+    align-items: baseline;
+}
+
+#issuetypedropdown {
+    background: #FFFFFF;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 12px;
+}
+
+.status-text {
+    color: #000;
+}
+
+#status-header {
+    display: inline-flex;
 }
