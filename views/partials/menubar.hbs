@@ -71,10 +71,9 @@
 
                             <!-- if no notif -->
                             {{#ifCond pending_nearstartcount '==' "0"}}
-                            No Notification
-                            {{/ifCond}}
-                            {{#ifCond toreview_nearstartcount '==' "0"}}
-                            No Notification
+                                {{#ifCond toreview_nearstartcount '==' "0"}}
+                                    No Notification
+                                {{/ifCond}}
                             {{/ifCond}}
                         {{/compare}}
                     </ul>
