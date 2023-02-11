@@ -73,7 +73,7 @@ $(document).ready(() => {
             $(".tor-reminder").css("display", "none");
         }
 
-        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - w/ Institutional MOA") {
+        if ($("#documenttype").find('option:selected').text() == "OJT/Internship Agreements - Student MOA and Institutional MOA") {
             $(".institutional-moa-reminder").css("display", "block");
             $("#contractingpartyojt-div").prop('hidden', false);
             $("#company-other").prop('selected', true);
