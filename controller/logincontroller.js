@@ -265,6 +265,26 @@ const logincontroller = {
                 res.send(result);
             });
         });
+    },
+
+    getUnavailablePage: function (req,res) {
+
+        if(req.isAuthenticated()){
+            res.render('unavailable', {
+                title: 'Unauthorized Access', 
+                user_fullname:req.user.fullName,
+                user_role:req.user.roleName,
+                pending_nearstartcount: req.session.pending_nearstartcount,
+                toreview_nearstartcount: req.session.toreview_nearstartcount,
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount
+            });
+        }
+
+        else{
+            res.render('unavailable', {
+                title: 'Unauthorized Access'
+            });
+        }
     }
 
 }

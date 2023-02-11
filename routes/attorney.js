@@ -85,26 +85,35 @@ const upload = multer({ storage });
 
 router.use(require('connect-flash')());
 
-router.get('/', oulccontroller.getDashboard);
-router.get('/contractrequests', staffcontroller.getRequests);
-router.get('/templates', staffcontroller.getTemplates);
-router.get('/FAQs', oulccontroller.getFAQs);
-router.get('/policy', oulccontroller.getPolicy);
+function checkAttorney(req,res,next){
+  if(req.user.roleName == "Attorney"){
+      //req.isAuthenticated() will return true if user is logged in
+      next();
+  } else{
+      res.redirect("/unavailable");
+  }
+}
+
+router.get('/', checkAttorney, oulccontroller.getDashboard);
+router.get('/contractrequests', checkAttorney, staffcontroller.getRequests);
+router.get('/templates', checkAttorney, staffcontroller.getTemplates);
+router.get('/FAQs', checkAttorney, oulccontroller.getFAQs);
+router.get('/policy', checkAttorney, oulccontroller.getPolicy);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
 router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplaceTemplate);
 router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:fileid', oulccontroller.viewTemplate);
-router.get('/repository', oulccontroller.getRepository);
+router.get('/repository', checkAttorney, oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/downloadrepositoryfile/:fileid', oulccontroller.downloadRepositoryFile);
 router.post('/deleterepositoryfile/:fileid', oulccontroller.deleteRepositoryFile);
-router.get('/repositoryfile/:fileid', oulccontroller.viewRepositoryFile);
-router.get('/policyversions/:id', oulccontroller.getPolicyVersions);
-router.post('/comparepolicyversions', oulccontroller.comparePolicyVersions);
+router.get('/repositoryfile/:fileid', checkAttorney, oulccontroller.viewRepositoryFile);
+router.get('/policyversions/:id', checkAttorney, oulccontroller.getPolicyVersions);
+router.post('/comparepolicyversions', checkAttorney, oulccontroller.comparePolicyVersions);
 router.post('/customcomparepolicyversions', oulccontroller.customComparePolicyVersions);
-router.get('/issuelog', oulccontroller.getIssueLog);
+router.get('/issuelog', checkAttorney, oulccontroller.getIssueLog);
 
 // post syntax
 // router.post('/adduser', staffcontroller.postAddUser);

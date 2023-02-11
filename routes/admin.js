@@ -65,28 +65,25 @@ const upload = multer({
     }
 });
 
-// TO BE USED FOR CHECKING IF ADMINISTRATOR USER
-// function checkAdmin(req,res,next){
-    // if(req.user.email == "admin@oulc.com"){
-
-        // console.log(req.user);
-        // next();
-    // } else{
-        // res.send("Unauthorized Access");
-    // }
-// }
-
+function checkAdmin(req,res,next){
+    if(req.user.roleName == "Administrator"){
+        //req.isAuthenticated() will return true if user is logged in
+        next();
+    } else{
+        res.redirect("/unavailable");
+    }
+}
 
 router.use(require('connect-flash')());
 
 // render add user page
-router.get('/adduser', admincontroller.getAddUser);
+router.get('/adduser', checkAdmin, admincontroller.getAddUser);
 
 // post add user
 router.post('/adduser', admincontroller.postAddUser);
 
 // render user management page
-router.get('/usermanagement', admincontroller.getUserManagement);
+router.get('/usermanagement', checkAdmin, admincontroller.getUserManagement);
 
 router.get('/disableuser', admincontroller.disableUser);
 

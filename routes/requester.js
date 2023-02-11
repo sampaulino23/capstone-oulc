@@ -88,26 +88,35 @@ const upload = multer( {
   },
 });
 
+function checkRequester(req,res,next){
+    if(req.user.roleName == "Requester"){
+        //req.isAuthenticated() will return true if user is logged in
+        next();
+    } else{
+        res.redirect("/unavailable");
+    }
+}
+
 router.get('/', requestercontroller.getHome);
-router.get('/templates', staffcontroller.getTemplates);
-router.get('/violationreport', requestercontroller.getViolationReport);
-router.get('/FAQs', oulccontroller.getFAQs);
-router.get('/repository', requestercontroller.getRepository);
-router.get('/policy', oulccontroller.getPolicy);
-router.get('/contractrequests', staffcontroller.getRequests);
-router.get('/createrequest', requestercontroller.getCreateRequest);
+router.get('/templates', checkRequester, staffcontroller.getTemplates);
+router.get('/violationreport', checkRequester, requestercontroller.getViolationReport);
+router.get('/FAQs', checkRequester, oulccontroller.getFAQs);
+router.get('/repository', checkRequester, requestercontroller.getRepository);
+router.get('/policy', checkRequester, oulccontroller.getPolicy);
+router.get('/contractrequests', checkRequester, staffcontroller.getRequests);
+router.get('/createrequest', checkRequester, requestercontroller.getCreateRequest);
 router.post('/createcontractrequest', upload.fields([
     { name: 'contractFiles'},
     { name: 'refDocFiles' }
 ]), requestercontroller.postCreateRequest);
-router.get('/requestreceipt/:id', requestercontroller.getRequestReceipt);
+router.get('/requestreceipt/:id', checkRequester, requestercontroller.getRequestReceipt);
 router.get('/checkstagingcontractversion', requestercontroller.checkStagingContractVersion);
 router.post('/uploadnewversion', upload.single('newVersionFile'), requestercontroller.uploadNewVersion);
 router.post('/deletestagingcontractversion/:id', requestercontroller.deleteStagingContractVersion);
 router.post('/submitrevision', requestercontroller.submitRevision);
 router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
 router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
-router.get('/issuelog', oulccontroller.getIssueLog);
+router.get('/issuelog', checkRequester, oulccontroller.getIssueLog);
 router.post('/createissue', requestercontroller.postCreateIssue);
 router.post('/createissuerequest', requestercontroller.postCreateIssueRequest);
 router.get('/negotiation/:fileid', requestercontroller.viewNegotiationFile);

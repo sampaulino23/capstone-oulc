@@ -127,15 +127,24 @@ const policyUpload = multer({
 
 router.use(require('connect-flash')());
 
-router.get('/', oulccontroller.getDashboard);
-router.post('/dashboard', oulccontroller.getDashboardDate);
-router.get('/contractrequests', staffcontroller.getRequests);
-router.get('/templates', staffcontroller.getTemplates);
-router.get('/FAQs', oulccontroller.getFAQs);
+function checkStaff(req,res,next){
+  if(req.user.roleName == "Staff"){
+      //req.isAuthenticated() will return true if user is logged in
+      next();
+  } else{
+      res.redirect("/unavailable");
+  }
+}
+
+router.get('/', checkStaff, oulccontroller.getDashboard);
+router.post('/dashboard', checkStaff, oulccontroller.getDashboardDate);
+router.get('/contractrequests', checkStaff, staffcontroller.getRequests);
+router.get('/templates', checkStaff, staffcontroller.getTemplates);
+router.get('/FAQs', checkStaff, oulccontroller.getFAQs);
 router.post('/addFAQs', oulccontroller.postAddFAQs);
 router.post('/deleteFAQ', oulccontroller.postDeleteFAQ);
 router.post('/updateFAQ', oulccontroller.postUpdateFAQ);
-router.get('/policy', oulccontroller.getPolicy);
+router.get('/policy', checkStaff, oulccontroller.getPolicy);
 router.post('/uploadpolicy', policyUpload.single('file'), oulccontroller.postUploadPolicy);
 router.post('/uploadtemplate', upload.single('file'), oulccontroller.uploadTemplate);
 router.post('/deletetemplate', oulccontroller.postDeleteTemplate);
@@ -143,13 +152,13 @@ router.post('/replacetemplate', upload.single('file'), oulccontroller.postReplac
 router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:fileid', oulccontroller.viewTemplate);
-router.get('/repository', oulccontroller.getRepository);
-router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
+router.get('/repository', checkStaff, oulccontroller.getRepository);
+router.get('/viewFile/:id', checkStaff, oulccontroller.getSpecificRepositoryFile);
 router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
 router.get('/policy/:fileid', oulccontroller.viewPolicy);
 router.post('/deletepolicy', oulccontroller.postDeletePolicy);
 router.post('/updatepolicy', policyUpload.single('updatePolicyFile'), oulccontroller.postUpdatePolicy);
-router.get('/issuelog', oulccontroller.getIssueLog);
+router.get('/issuelog', checkStaff, oulccontroller.getIssueLog);
 router.get('/viewissue', oulccontroller.viewIssueOnClick);
 router.get('/resolveIssue', oulccontroller.resolveIssue);
 

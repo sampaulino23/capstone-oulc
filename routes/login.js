@@ -118,4 +118,6 @@ router.get('/getfeedbackhistory', specificrequestcontroller.getFeedbackHistory);
 router.get('/getfeedbackinput', specificrequestcontroller.getFeedbackInput);
 router.get('/getcurrentfeedback', specificrequestcontroller.getCurrentFeedback);
 
+router.get('/unavailable', logincontroller.getUnavailablePage); //checking of user access
+
 module.exports = router;
