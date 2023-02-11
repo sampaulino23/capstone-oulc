@@ -100,7 +100,13 @@
     <div class = "subheader-row row g-0">
         <div class = "col-6">
             <div class = "contract-repo-nav" id = "subheader">
+                {{#ifCond user_role '!=' "Requester"}}
                 <a href="/staff/repository" class = "contract-repository-href">Repository Files</a>
+                {{/ifCond}}
+                {{#ifCond user_role '==' "Requester"}}
+                <a href="/requester/repository" class = "contract-repository-href">Repository Files</a>
+                {{/ifCond}}
+
                 <p class = "divider" style = "display: inline;"> > </p>
                 <a href = "/staff/viewFile/{{repositoryFile._id}}" id = "selected" class = "contract-repository-href">{{repositoryFile.name}}</a>
             </div>
