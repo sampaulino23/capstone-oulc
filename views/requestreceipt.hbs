@@ -29,7 +29,7 @@
             </div>
             <div>
                 Your contract approval request was succesfully submitted. The approval details are as follows: <br>
-                Document Tracking Number: <a href="/request/requester/{{contractrequest._id}}" style = "color: blue">{{contractrequest.trackingNumber}}</a><br>
+                Document Tracking Number: <a href="/request/requester/{{contractrequest._id}}" style = "color: blue; text-decoration:underline;">{{contractrequest.trackingNumber}}</a><br>
                 Contact Person: {{contractrequest.contactPerson}}<br>
                 Department: {{contractrequest.requester.department.name}} ({{contractrequest.requester.department.abbrev}})<br>
                 Document Title: {{contractrequest.requestTitle}}<br>

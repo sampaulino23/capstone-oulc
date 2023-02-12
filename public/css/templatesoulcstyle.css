@@ -163,7 +163,7 @@
 
 .tab-pane {
     overflow-y:auto;
-    max-height: 532px;
+    max-height: 600px;
 }
 
 .border-div {
@@ -424,7 +424,7 @@
 }
 
 #user-table {
-    height: 500px;
+    height: 600px;
     overflow-y: auto;
 }
 
@@ -472,10 +472,24 @@
 }
 
 #dropdown-search {
-    display: inline-flex;
+    display: flex;
+    align-items: baseline;
+}
+
+.button-div {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
 }
 
 .addnew-btn {
     height: fit-content;
     padding: 15px 12px;
+    margin-right:0px;
+}
+
+#searchIssueInput {
+    width: 100%;
+    height: auto;
+    padding: 15px;
 }

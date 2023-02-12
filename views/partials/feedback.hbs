@@ -60,7 +60,7 @@
             <div id = "{{_id}}" class = "feedback-container feedback-card">
                 <div id ="feedback-details-div">
                     <div class = "profile-pic">
-                        <div id = "pic-inner{{@index}}" class = "pic-inner"></div>
+                        <div id = "prevPic-inner{{@index}}" class = "pic-inner"></div>
                     </div>
                     <div id = "author-date-div">
                         <div class = "feedback-author previousFeedbackAuthor{{@index}}">{{user_id.fullName}}</div>
@@ -79,7 +79,7 @@
 </div>
 
 <script>
-
+/*
     var currFeedbackCount = $('.current-feedback').length;
     var feedbackHistoryCount = $('.feedback-card').length;
     
@@ -106,15 +106,15 @@
         feedbackrow.find('.pic-inner').text(acronym);
     }
 
-    var currentFeedback = document.getElementById("currentFeedbacksContainer").getElementsByClassName("pic-inner");
+    //var currentFeedback = document.getElementById("currentFeedbacksContainer").getElementsByClassName("pic-inner");
+    //var revisedFeedbacks = document.getElementById("feedbackHistoryContainer").getElementsByClassName("pic-inner");
     /*let filteredFeedback = [];
     if (feedback.style.display != "none") {
         filteredFeedback.push(feedback);
     }
-    */
-    
+
     currentFeedbackCount = currentFeedback.length;
-    // revisedFeedbacksCount = revisedFeedbacks.length;
+    revisedFeedbacksCount = revisedFeedbacks.length;
 
     for (i = 0; i < currentFeedbackCount; i++) {
         var feedbackAuthorID = "#feedback-author" + i;
@@ -132,9 +132,7 @@
     
         document.getElementById(elementid).innerHTML = acronym;
     }
-    
 
-    /*
     for (i = 0; i < revisedFeedbacksCount; i++) {
         var previousfeedbackAuthorID = "#previousFeedback-author" + i;
         var elementid = "pic-inner" + i;
@@ -149,6 +147,15 @@
         document.getElementById(elementid).innerHTML = acronym;
     }
     */
+    const nodeList= document.querySelectorAll(".pic-inner");
+    const nodeList2 = document.querySelectorAll(".feedback-author");
+    // console.log("nodelist 1" + nodeList.length);
+    // console.log("nodelist 2" + nodeList2.length);
+
+    for (i = 0; i < nodeList.length; i++) {
+       nodeList[i].innerHTML = getAcronym(nodeList2[i].innerHTML);
+    }
+
 
     function getAcronym(username) {
         var matches = username.match(/\b(\w)/g); // e.g. ['J','S','O','N']

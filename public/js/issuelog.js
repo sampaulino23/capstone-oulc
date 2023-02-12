@@ -23,7 +23,7 @@ $(document).ready(() => {
 
                 //assign values through id.
                 document.getElementById("issueID").value = res.issue._id;
-                document.getElementById("status").innerHTML = res.issue.status;
+                // document.getElementById("status").innerHTML = res.issue.status;
                 document.getElementById("statusText").innerHTML = "Status:&nbsp;";
                 document.getElementById("status-header-text").innerHTML = res.issue.status;
                 document.getElementById("department").innerHTML = res.issue.requester.department.abbrev;
@@ -34,6 +34,7 @@ $(document).ready(() => {
                     document.getElementById("documentnumber").innerHTML = res.issue.contractRequest.trackingNumber;
                     var requestlink = document.getElementById("documentnumber");
                     requestlink.href = "/request/requester/" + res.issue.contractRequest._id;
+                    requestlink.style.textDecoration = "underline";
                 }
                 else {
                     document.getElementById("documentnumber").innerHTML = "N/A"
@@ -42,7 +43,7 @@ $(document).ready(() => {
 
                 //disable input if status is resolved and hide resolve button
                 if (res.issue.status == "Resolved") {
-                    document.getElementById("resolveIssue").value = oulcResponse + res.issue.response;
+                    document.getElementById("resolveIssue").value = res.issue.response;
                     document.getElementById("resolveIssue").disabled = true;   
                     document.getElementById("resolveIssueBtn").style.visibility = 'hidden';
                     document.getElementById("resolveIssue").style.background = "#6AB085";
