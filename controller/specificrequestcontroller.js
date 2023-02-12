@@ -352,7 +352,7 @@ const specificrequestcontroller = {
                 for (eachcontractversion of contractversion) {
                     contractversions.push(eachcontractversion);
 
-                    var revisedfeedback = await Feedback.findOne({contractVersion: eachcontractversion})
+                    var revisedfeedback = await Feedback.findOne({contractVersion: eachcontractversion, status: 'Revised'})
                         .lean()
                         .populate({
                             path: 'user_id'
