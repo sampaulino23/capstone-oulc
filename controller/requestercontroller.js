@@ -166,7 +166,7 @@ const requestercontroller = {
             // const users = await User.find({roleName: "Staff", isActive: true}).lean()
             //     .exec();
 
-            const users = await User.find({ $or : [{roleName: "Staff"}, {_id: "6318a6b4c0119ed0b4b6bb82"}], isActive: true}).lean()
+            const users = await User.find({ $or : [{roleName: "Staff"}, {roleName: "Attorney"}], isActive: true}).lean()
             .exec();
 
             const daterange = req.body.daterange;
@@ -216,8 +216,8 @@ const requestercontroller = {
                 thirdPartyRepresentativeName: req.body.thirdpartyname,
                 thirdPartyRepresentativeEmail: req.body.thirdpartyemail,
                 contractingParty: contractingparty,
-                amountInvolved: req.body.amount,
-                assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
+                amountInvolved: req.body.amount
+                // assignedAttorney: "6318a6b4c0119ed0b4b6bb82" //Initial only
             });
 
             if (contractrequest.amountInvolved == null) {

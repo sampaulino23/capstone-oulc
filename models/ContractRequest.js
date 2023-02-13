@@ -92,7 +92,12 @@ const ContractRequestSchema = mongoose.Schema({
     assignedAttorney: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        default: null
+    },
+    assignedStaff: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
     },
     conversation: {
         type: mongoose.Schema.Types.ObjectId,
