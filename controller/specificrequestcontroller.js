@@ -81,6 +81,9 @@ const specificrequestcontroller = {
                     path: 'assignedAttorney'
                 })
                 .populate({
+                    path: 'assignedStaff'
+                })
+                .populate({
                     path: 'conversation'
                 })
                 .sort({requestDate: 1})

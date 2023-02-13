@@ -34,6 +34,9 @@
             <input type="hidden" id="assignedAttorneyId" name="assignedAttorneyId" value="{{contractrequest.assignedAttorney._id}}">
             <input type="hidden" id="currentUserId" name="currentUserId" value="{{user._id}}">
         </div>
+        
+        <div class = "status-text">Staff Assigned: {{contractrequest.assignedStaff.fullName}}</div>
+        <div class = "status-text">Attorney Assigned: {{contractrequest.assignedAttorney.fullName}}</div>
     </div>
     <div class = "subheader-row">
         <div class = "col-6">
@@ -78,7 +81,9 @@
             {{/ifCond}}
 
             {{#ifCond user_role '==' "Staff"}}
-                <button id = "assignBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignStaff">Assign to Myself</button>
+                {{#ifCond contractrequest.assignedStaff '==' null}}
+                    <button id = "assignBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignStaff">Assign to Myself</button>
+                {{/ifCond}}
             {{/ifCond}}
         </div>
     </div>
