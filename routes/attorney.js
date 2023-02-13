@@ -109,9 +109,9 @@ router.get('/repository', checkAttorney, oulccontroller.getRepository);
 router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/downloadrepositoryfile/:fileid', oulccontroller.downloadRepositoryFile);
 router.post('/deleterepositoryfile/:fileid', oulccontroller.deleteRepositoryFile);
-router.get('/repositoryfile/:fileid', checkAttorney, oulccontroller.viewRepositoryFile);
-router.get('/policyversions/:id', checkAttorney, oulccontroller.getPolicyVersions);
-router.post('/comparepolicyversions', checkAttorney, oulccontroller.comparePolicyVersions);
+router.get('/repositoryfile/:fileid', oulccontroller.viewRepositoryFile);
+router.get('/policyversions/:id', oulccontroller.getPolicyVersions);
+router.post('/comparepolicyversions', oulccontroller.comparePolicyVersions);
 router.post('/customcomparepolicyversions', oulccontroller.customComparePolicyVersions);
 router.get('/issuelog', checkAttorney, oulccontroller.getIssueLog);
 

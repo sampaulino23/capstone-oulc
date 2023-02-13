@@ -153,7 +153,7 @@ router.get('/downloadtemplate/:fileid', oulccontroller.getDownloadTemplate);
 router.get('/viewtemplate', oulccontroller.viewTemplateOnClick);
 router.get('/template/:fileid', oulccontroller.viewTemplate);
 router.get('/repository', checkStaff, oulccontroller.getRepository);
-router.get('/viewFile/:id', checkStaff, oulccontroller.getSpecificRepositoryFile);
+router.get('/viewFile/:id', oulccontroller.getSpecificRepositoryFile);
 router.get('/viewpolicy', oulccontroller.viewPolicyOnClick);
 router.get('/policy/:fileid', oulccontroller.viewPolicy);
 router.post('/deletepolicy', oulccontroller.postDeletePolicy);
