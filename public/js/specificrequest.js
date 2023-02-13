@@ -824,6 +824,24 @@ $(document).ready(() => {
 
     });
 
+    
+    $('.assignStaffBtn').click(function () {
+        $.ajax({
+            url: "/request/assignStaff",
+            method: "GET",
+            contentType: "application/json",
+            data: { contractid: this.id },
+            success: setTimeout(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }, 350),
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    });
+
     $('#routeToAnotherAttorney').click(function () {
         $(window).unbind('beforeunload');
         

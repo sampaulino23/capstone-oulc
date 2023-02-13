@@ -656,6 +656,16 @@ const specificrequestcontroller = {
         }
     },
 
+    assignStaff: async (req, res) => { //staff
+        try {
+            var contractid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { assignedStaff: req.user._id} });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     routeToAnotherAttorney: async (req, res) => {
         try {
             const contractrequestid = req.query.contractrequestid;

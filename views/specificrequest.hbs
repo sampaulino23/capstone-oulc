@@ -76,6 +76,10 @@
                     <button id = "cancelBtn" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/compare}}
             {{/ifCond}}
+
+            {{#ifCond user_role '==' "Staff"}}
+                <button id = "assignBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignStaff">Assign to Myself</button>
+            {{/ifCond}}
         </div>
     </div>
     
@@ -527,6 +531,24 @@
                 <button type="submit" class ="mark-as-btn" value="Add Third Party">Send Link</button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Assign OULC Employee Modal -->
+<div class="modal fade" id="assignStaff" tabindex="-1" aria-labelledby="assignStaff" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="w-100 modal-title" id="exampleModalLabel">Assign Request to Myself</h5>
+            </div>
+
+            <div class="modal-body centered">
+                Are you sure you want to assign yourself to conduct the review process for this request?
+            <div class="modal-footer">
+                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="mark-as-btn assign-modal-btn assignStaffBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+            </div>
         </div>
     </div>
 </div>
