@@ -40,15 +40,25 @@
             <div id="subheader">
                 {{#compare user_role "==" "Requester"}}
                 <a href="/requester/contractrequests" class = "approval-request-href">Approval Requests</a>
-                {{else}}
+                {{/compare}}
+                {{#compare user_role "==" "Staff"}}
                 <a href="/staff/contractrequests" class = "approval-request-href">Approval Requests</a>
                 {{/compare}}
+                {{#compare user_role "==" "Attorney"}}
+                <a href="/attorney/contractrequests" class = "approval-request-href">Approval Requests</a>
+                {{/compare}}
+                
                 <p class = "divider" style = "display: inline;"> > </p>
                 {{#compare user_role "==" "Requester"}}
                 <a href = "/request/requester/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
-                {{else}}
+                {{/compare}}
+                {{#compare user_role "==" "Staff"}}
                 <a href = "/request/staff/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
                 {{/compare}}
+                {{#compare user_role "==" "Attorney"}}
+                <a href = "/request/attorney/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
+                {{/compare}}
+                
             </div>
         </div>
         <div class="col-6">

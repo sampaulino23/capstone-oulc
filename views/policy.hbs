@@ -54,7 +54,12 @@
                                                         <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deletePolicyModal{{@index}}" style ="cursor: pointer;"></i>
                                                         <ul class="dropdown-menu">
                                                             <li class="bi-replace">
+                                                                {{#compare ../user_role '==' 'Attorney'}}
                                                                 <a href="/attorney/policyversions/{{policy}}" class="dropdown-item" type="button">View Revision History</a>
+                                                                {{/compare}}
+                                                                {{#compare ../user_role '==' 'Staff'}}
+                                                                <a href="/staff/policyversions/{{policy}}" class="dropdown-item" type="button">View Revision History</a>
+                                                                {{/compare}}
                                                             </li>
                                                             <li class="bi-replace"><button class="dropdown-item" type="button"
                                                                     data-bs-toggle="modal"

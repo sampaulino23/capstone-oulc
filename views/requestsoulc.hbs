@@ -155,7 +155,7 @@
 
                             {{#each contractrequests}}
 
-                            <tr style="cursor: pointer;"  id="{{_id}}" {{#compare ../user.role.name '==' 'Requester'}}onclick="window.location.href='/request/requester/{{_id}}'"{{else}}onclick="window.location.href='/request/staff/{{_id}}'"{{/compare}}>
+                            <tr style="cursor: pointer;"  id="{{_id}}" {{#compare ../user.role.name '==' 'Requester'}}onclick="window.location.href='/request/requester/{{_id}}'"{{/compare}} {{#compare ../user.role.name '==' 'Staff'}}onclick="window.location.href='/request/staff/{{_id}}'"{{/compare}} {{#compare ../user.role.name '==' 'Attorney'}}onclick="window.location.href='/request/attorney/{{_id}}'"{{/compare}}>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;" id = "" value = "">{{formatdate requestDate}}</td>
                                 <td class="days-gap text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; value = "{{daysGap}}"">{{daysGap}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{formatdate effectivityStartDate}}</td>
