@@ -181,7 +181,7 @@ const oulccontroller = {
                 }
                 else if (contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "5" || contractrequests[i].statusCounter == "6"){
                     legalReview.count++;
-                    if((contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6") && contractrequests[i].assignedAttorney._id.toString() == req.user._id.toString()){
+                    if((contractrequests[i].statusCounter == "4" || contractrequests[i].statusCounter == "6")){
                         if (NotifDays >= 0 && NotifDays < 7) {
                             legalReview.nearstartcount++;
                             req.session.legalReview_nearstartcount = legalReview.nearstartcount; //assign notif count

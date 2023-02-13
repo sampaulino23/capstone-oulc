@@ -261,6 +261,9 @@ const specificrequestcontroller = {
                     path: 'assignedAttorney'
                 })
                 .populate({
+                    path: 'assignedStaff'
+                })
+                .populate({
                     path: 'conversation'
                 })
                 .sort({requestDate: 1})
@@ -661,8 +664,20 @@ const specificrequestcontroller = {
 
     assignStaff: async (req, res) => { //staff
         try {
+            console.log ("Assigning Staff..");
             var contractid = req.query.contractid;
             await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { assignedStaff: req.user._id} });
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    assignAttorney: async (req, res) => { //staff
+        try {
+            console.log ("Assigning Attorney..");
+            var contractid = req.query.contractid;
+            await ContractRequest.findOneAndUpdate({ _id: contractid }, { $set: { assignedAttorney: req.user._id} });
 
         } catch (err) {
             console.log(err);

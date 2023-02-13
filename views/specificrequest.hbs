@@ -82,7 +82,12 @@
 
             {{#ifCond user_role '==' "Staff"}}
                 {{#ifCond contractrequest.assignedStaff '==' null}}
-                    <button id = "assignBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignStaff">Assign to Myself</button>
+                    <button id = "assignStaffBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to Myself</button>
+                {{/ifCond}}
+            {{/ifCond}}
+            {{#ifCond user_role '==' "Attorney"}}
+                {{#ifCond contractrequest.assignedAttorney '==' null}}
+                    <button id = "assignAttorneyBtn" class="assignOULC" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to Myself</button>
                 {{/ifCond}}
             {{/ifCond}}
         </div>
@@ -541,7 +546,7 @@
 </div>
 
 <!-- Assign OULC Employee Modal -->
-<div class="modal fade" id="assignStaff" tabindex="-1" aria-labelledby="assignStaff" aria-hidden="true">
+<div class="modal fade" id="assignOULC" tabindex="-1" aria-labelledby="assignOULC" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -549,10 +554,15 @@
             </div>
 
             <div class="modal-body centered">
-                Are you sure you want to assign yourself to conduct the review process for this request?
+                Are you sure you want to assign yourself to conduct the review process of this request?
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                {{#ifCond user_role '==' "Staff"}}
                 <button type="submit" class="mark-as-btn assign-modal-btn assignStaffBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                {{/ifCond}}
+                {{#ifCond user_role '==' "Attorney"}}
+                <button type="submit" class="mark-as-btn assign-modal-btn assignAttorneyBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                {{/ifCond}}
             </div>
         </div>
     </div>

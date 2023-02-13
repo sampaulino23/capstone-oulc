@@ -839,7 +839,22 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
+    });
 
+    $('.assignAttorneyBtn').click(function () {
+        $.ajax({
+            url: "/request/assignAttorney",
+            method: "GET",
+            contentType: "application/json",
+            data: { contractid: this.id },
+            success: setTimeout(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }, 350),
+            error: function (err) {
+                console.log(err);
+            }
+        });
     });
 
     $('#routeToAnotherAttorney').click(function () {

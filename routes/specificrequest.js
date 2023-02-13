@@ -113,6 +113,7 @@ router.use(require('connect-flash')());
 router.get('/staff/:id', specificrequestcontroller.getStaffSpecificRequest);
 router.get('/attorney/:id', specificrequestcontroller.getStaffSpecificRequest);
 router.get('/assignStaff', specificrequestcontroller.assignStaff);
+router.get('/assignAttorney', specificrequestcontroller.assignAttorney);
 
 
 router.get('/forlegalreview', specificrequestcontroller.forLegalReview);
