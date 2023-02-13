@@ -19,10 +19,7 @@ const staffcontroller = {
     getRequests: async (req, res) => {
         try {
 
-            if(req.user.roleName == "Attorney" && req.user._id != "6318a6b4c0119ed0b4b6bb82"){
-                var query = {assignedAttorney: req.user._id};
-            }
-            else if (req.user.roleName == "Requester") {
+            if (req.user.roleName == "Requester") {
                 var query = {requester: req.user._id};
             }
             else{
