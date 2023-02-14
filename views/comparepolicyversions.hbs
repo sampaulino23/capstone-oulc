@@ -19,14 +19,12 @@
     </div>
 
     <div class="subheader-row">
-        <div class="col-6">
-            <div id="subheader">
-                <a href="/attorney/policy" class="approval-request-href">All Policies</a>
-                <p class="divider" style="display: inline;"> > </p>
-                <a href="/attorney/policyversions/{{latestPolicyVersion.policy}}">{{latestPolicyVersion.filename}}</a>
-                <p class="divider" style="display: inline;"> > </p>
-                <a href="#">Compare Versions</a>
-            </div>
+        <div id="subheader">
+            <a href="/attorney/policy" class="approval-request-href">All Policies</a>
+            <p class="divider" style="display: inline;"> > </p>
+            <a href="/attorney/policyversions/{{latestPolicyVersion.policy}}" class = "contract-repository-href">{{latestPolicyVersion.filename}}</a>
+            <p class="divider" style="display: inline;"> > </p>
+            <a href="javascript:location.reload();" class = "contract-repository-href" id = "selected">Compare Versions</a>
         </div>
     </div>
 
