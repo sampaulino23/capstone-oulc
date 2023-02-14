@@ -22,6 +22,10 @@
                 aria-controls="all" value="" onclick="viewAllRequests()">
                 All
             </button>
+            <button class="nav-item" id="unassigned-tab" data-toggle="tab" href="" role="tab"
+                aria-controls="all" value="" onclick="viewUnassignedRequestsStaff()">
+                Unassigned
+            </button>
             <button class="nav-item selected" id="pending-tab" data-toggle="tab" href="" role="tab"
                 aria-controls="activeusers" value="Pending" onclick="viewPending()">
                 Pending
@@ -43,6 +47,10 @@
             <button class="nav-item" id="all-tab-atty" data-toggle="tab" href="#all" role="tab"
                 aria-controls="all" value="" onclick="viewAllRequestsAtty()">
                 All
+            </button>
+             <button class="nav-item" id="unassigned-tab-atty" data-toggle="tab" href="" role="tab"
+                aria-controls="all" value="" onclick="viewUnassignedRequestsAtty()">
+                Unassigned
             </button>
             <button class="nav-item selected" id="forlegalreview-tab-atty" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="For Legal Review" onclick="viewForLegalReviewAtty()">
@@ -146,8 +154,9 @@
                                 {{/compare}}
                                 <th style="width: 8%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Type</th>
                                 <th style="width: 8%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Status</th>
-                                <!-- For tab -->
+                                <!-- For Tab Filters-->
                                 <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">Atty</th> 
+                                <th style="width: 15%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">Staff</th> 
                                 <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">Document No.</th>
                             </tr>
                         </thead>
@@ -168,9 +177,10 @@
                                 {{/compare}}
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
-                                <!-- For tab -->
-                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedAttorney._id}}</td>
-                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none">{{trackingNumber}}</td>
+                                <!-- For Tab Filters -->
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedAttorney._id}}</td> <!--For Rerouted & Unassigned Atty -->
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedStaff._id}}</td> <!--For Unassigned Staff -->
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none">{{trackingNumber}}</td> <!--For Search Tracking/Docu Number -->
                             </tr>
 
                             {{/each}}

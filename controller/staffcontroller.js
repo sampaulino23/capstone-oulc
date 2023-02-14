@@ -40,6 +40,9 @@ const staffcontroller = {
                 .populate({
                     path: 'assignedAttorney'
                 })
+                .populate({
+                    path: 'assignedStaff'
+                })
                 .sort({requestDate: 1})
                 .exec();
 
