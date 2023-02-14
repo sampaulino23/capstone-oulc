@@ -215,7 +215,12 @@ $(window).on('load', function() {
 
         console.log(statusCounter);
 
-        if (statusListDisabled.includes(statusCounter)) {
+        const assignedStaff = $('#assignedStaffId').val();
+        const currentUser = $('#currentUserId').val();
+
+        console.log(assignedStaff);
+
+        if (statusListDisabled.includes(statusCounter) || currentUser != assignedStaff || !assignedStaff) {
             $('.is-reviewed').prop('disabled', true);
             $('#checkAll').prop('disabled', true);
 
@@ -241,7 +246,9 @@ $(window).on('load', function() {
         const assignedAttorney = $('#assignedAttorneyId').val();
         const currentUser = $('#currentUserId').val();
 
-        if (statusListDisabled.includes(statusCounter) || currentUser != assignedAttorney) {
+        console.log(assignedAttorney);
+
+        if (statusListDisabled.includes(statusCounter) || currentUser != assignedAttorney || !assignedAttorney) {
             $('.is-reviewed').prop('disabled', true);
             $('#checkAll').prop('disabled', true);
             
