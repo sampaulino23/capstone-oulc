@@ -64,14 +64,18 @@
 #status {
     float: right;
     margin-right: 121px;
-    display: inline-flex;
+    display: block;
+}
+
+#statusNewDiv {
+    display: flex;
 }
 
 .status-text {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 30px;
     margin-right: 8px;
 }
@@ -671,4 +675,20 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .feedback-header {
     margin-bottom: 10px;
+}
+
+.status-div-new {
+    display: inline-flex;
+    background: #FFFF00;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.assigned-div {
+    display: block;
+}
+
+#assignedToDiv {
+    margin-bottom :-20px;
 }

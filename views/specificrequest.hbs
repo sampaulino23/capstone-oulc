@@ -23,20 +23,20 @@
         <input type="hidden" id="username" value="{{user_fullname}}">
         <input type="hidden" id="conversationid" value="{{conversation._id}}">
         <input type="hidden" id="negotiationid" value="{{negotiation._id}}">
-        
-        
-        <div id = "status">
-            <div class = "status-text">Status:</div>
-            <div id = "statusTextDiv" class = "status-text actual">{{contractrequest.status}}</div>
-            <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
-            <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
-            <input type="hidden" id="contractStatus" name="contractStatus" value="{{contractrequest.status}}">
-            <input type="hidden" id="assignedAttorneyId" name="assignedAttorneyId" value="{{contractrequest.assignedAttorney._id}}">
-            <input type="hidden" id="assignedStaffId" name="assignedStaffId" value="{{contractrequest.assignedStaff._id}}">
-            <input type="hidden" id="currentUserId" name="currentUserId" value="{{user._id}}">
-        </div>
-        
 
+        <div id = "status">
+            <div id = "statusNewDiv">
+                <div id = "assignedToDiv" class = "status-text actual"><b>Assigned to:</b> {{contractrequest.assignedStaff.fullName}} (Staff) & {{contractrequest.assignedAttorney.fullName}}</div>
+                <div id = "statusTextDiv" class = "status-text actual status-div-new">{{contractrequest.status}}</div>
+            </div>
+                <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
+                <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
+                <input type="hidden" id="contractStatus" name="contractStatus" value="{{contractrequest.status}}">
+                <input type="hidden" id="assignedAttorneyId" name="assignedAttorneyId" value="{{contractrequest.assignedAttorney._id}}">
+                <input type="hidden" id="assignedStaffId" name="assignedStaffId" value="{{contractrequest.assignedStaff._id}}">
+                <input type="hidden" id="currentUserId" name="currentUserId" value="{{user._id}}">
+            </div>
+        </div>
     </div>
     <div class = "subheader-row">
         <div class = "col-6">
@@ -61,11 +61,10 @@
                 {{#compare user_role "==" "Attorney"}}
                 <a href = "/request/attorney/{{contractrequest._id}}" id = "selected" class = "approval-request-href">Approval Request Details</a>
                 {{/compare}}
-                
             </div>
         </div>
         <div class="col-6">
-            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button> 
+             
             {{#ifCond user_role '==' "Requester"}}
             
                 {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
@@ -98,6 +97,7 @@
         <div class="row">
             <!-- LEFT SIDE -->
             <div class="left-col col-6">
+                
                 <div class="input-group mb-3">
                     <span class="file-selected input-group-text">File Selected:</span>  
                     <select class="form-select" name="fileSelected" id="fileSelected" aria-label="file-selected">
@@ -113,6 +113,7 @@
                         <button class="btn" id="uploadNewVersion">Upload New Version</button>
                         {{/compare}}
                     {{/compare}}
+                    <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
                 </div>
                 <div id="fileView">
                 </div>
