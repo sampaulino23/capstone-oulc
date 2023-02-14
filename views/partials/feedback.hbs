@@ -7,14 +7,12 @@
         {{#each latestversioncontracts}}
         <div class="pending-feedback" id="cvId{{_id}}">
             <p>{{filename}}</p>
-            {{!-- <p id="fileSelectedForFeedback">File: </p> --}}
-            {{!-- <input type="hidden" id="fileIdSelectedForFeedback" value=""> --}}
             <div class="form-floating">
-                {{!-- <textarea class="form-control pending-feedback-textarea" placeholder="Leave a comment here" id="" style="height: 100px">{{#compare comment.status '==' 'Pending'}}{{comment.content}}{{/compare}}</textarea> --}}
                 <textarea class="form-control pending-feedback-textarea" placeholder="Leave a comment here" style="height: 100px"></textarea>
             </div>
         </div>
         {{/each}}
+        <p class="changes-saved" style="visibility: hidden;">Changes are being saved</p>
     </div>
     {{/compare}}
     {{#compare user_role '==' 'Requester'}}
@@ -162,4 +160,12 @@
         var acronym = matches.join('');
         return acronym;
     }
+
+    $('.pending-feedback-textarea').keyup(() => {
+        $('.changes-saved').css("visibility", "visible");
+
+        setTimeout(function(){
+            $('.changes-saved').css("visibility", "hidden");
+        }, 5000);
+    })
 </script>
