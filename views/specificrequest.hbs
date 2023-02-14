@@ -26,8 +26,11 @@
 
         <div id = "status">
             <div id = "statusNewDiv">
+                <div class = "status-and-actual-div">
+                    <div id = "statusTextDiv" class = "status-text">Status: </div>
+                    <div id = "statusTextDiv" class = "status-text actual">{{contractrequest.status}}</div>
+                </div>
                 <div id = "assignedToDiv" class = "status-text actual"><b>Assigned to:</b> {{contractrequest.assignedStaff.fullName}} (Staff) & {{contractrequest.assignedAttorney.fullName}}</div>
-                <div id = "statusTextDiv" class = "status-text actual status-div-new">{{contractrequest.status}}</div>
             </div>
                 <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
                 <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">

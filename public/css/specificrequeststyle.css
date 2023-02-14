@@ -10,7 +10,7 @@
     /* identical to box height */
     color: #000000;
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
@@ -68,7 +68,8 @@
 }
 
 #statusNewDiv {
-    display: flex;
+    display: block;
+    text-align: end;
 }
 
 .status-text {
@@ -690,5 +691,11 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 }
 
 #assignedToDiv {
-    margin-bottom :-20px;
+    margin-top :-5px;
+    font-size: 14px;
+}
+
+.status-and-actual-div {
+    display: flex;
+    justify-content: end;
 }
