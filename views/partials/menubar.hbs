@@ -47,7 +47,7 @@
                         <!--<li><a class="dropdown-item" href="#">Sample Notif 1</a></li><hr>-->
                         {{#compare user_role "==" "Requester"}}
                             {{#ifCond forrevision_count '!=' "0"}}
-                            <li id="dropdown-item1"><a class="dropdown-item" href="/requester/contractrequests"><b id="notif">{{forrevision_count}}</b> of your request(s) are For Revision</a><hr></li>
+                            <li id="dropdown-item1"><a class="dropdown-item" href="/requester/contractrequests"><b id="notif">{{forrevision_count}}</b> of your request(s) are For Revision</a></li>
                             {{/ifCond}}
                             {{#ifCond forrevision_count '==' "0"}} <!-- if no notif -->
                             No Notification
@@ -55,7 +55,7 @@
                         {{/compare}}
                         {{#compare user_role "==" "Attorney"}}
                             {{#ifCond legalReview_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item2"><a class="dropdown-item" href="/attorney/contractrequests"><b id="notif">{{legalReview_nearstartcount}}</b> request(s) For Review are nearing the start date</a><hr></li>
+                            <li id="dropdown-item2"><a class="dropdown-item" href="/attorney/contractrequests"><b id="notif">{{legalReview_nearstartcount}}</b> request(s) For Review are nearing the start date</a></li>
                             {{/ifCond}}
                             {{#ifCond legalReview_nearstartcount '==' "0"}} <!-- if no notif -->
                             No Notification
@@ -63,10 +63,10 @@
                         {{/compare}}
                         {{#compare user_role "==" "Staff"}}
                             {{#ifCond pending_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item3"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}</b> Pending request(s) are nearing the start date</a><hr></li>
+                            <li id="dropdown-item3"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}</b> Pending request(s) are nearing the start date</a></li>
                             {{/ifCond}}
                             {{#ifCond toreview_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item4"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}</b> request(s) To Review are nearing the start date</a><hr></li>
+                            <li id="dropdown-item4"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}</b> request(s) To Review are nearing the start date</a></li>
                             {{/ifCond}}
 
                             <!-- if no notif -->
@@ -109,4 +109,6 @@
     var loggedUser = document.getElementById('userrole').textContent;
     var initials = loggedUser.charAt(0);
     document.getElementById("initials").textContent = initials.toUpperCase();
+
+    const dropdownList = document.querySelectorAll(".dropdown-item");
 </script>

@@ -180,3 +180,14 @@ dl, ol, ul {
 .navbar-link {
     color: #fff !important;
 }
+
+.dropdown-item {
+    line-height: 40px;
+    margin: 0;
+    border-bottom: 1px solid #9F9F9F;
+    border-radius: 0px;
+}
+
+.dropdown-item:hover {
+    background: #9F9F9F;
+}
