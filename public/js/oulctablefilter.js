@@ -264,9 +264,9 @@ function viewUnassignedRequestsStaff(){
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        requeststatus = cells[9] || null; // gets the 10th `td` or nothing
+        assignedstaff = cells[9] || null; // gets the 10th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !assignedstaff || (filter === assignedstaff.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);
@@ -327,9 +327,10 @@ function viewUnassignedRequestsAtty(){
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        requeststatus = cells[8] || null; // gets the 9th `td` or nothing
+        requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedatty = cells[8] || null; // gets the 9th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !assignedatty || (requeststatus.textContent === "For Legal Review" && filter === assignedatty.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);

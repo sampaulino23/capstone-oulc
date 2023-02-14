@@ -598,7 +598,18 @@
         var requestAssignedAttyID = $("#assignedAttorneyId").val();
         const role = $('#currentRole').val();
         var statusTextVal = $('#contractStatus').val();
+        var assignedAttyVal = $('#assignedAttorneyId').val();
+        var assignedStaffVal = $('#assignedStaffId').val();
+        var statusTextDiv = $("#statusTextDiv");
 
+        if (role == "Staff" && (statusTextVal == "Pending" && assignedStaffVal == "")) {
+            statusTextDiv.prepend("Unassigned (");
+            statusTextDiv.append(")");
+        }
+        if (role == "Attorney" && (statusTextVal == "For Legal Review" && assignedAttyVal == "")) {
+            statusTextDiv.prepend("Unassigned (");
+            statusTextDiv.append(")");
+        }
         if (statusTextVal == "Cancelled") {
             document.getElementById("cancelBtn").style.display = "none";
         }
