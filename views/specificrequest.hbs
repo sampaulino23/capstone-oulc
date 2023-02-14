@@ -402,29 +402,6 @@
     </div>
 </div>
 
-<!-- Route to Another Attorney Modal -->
-<div class="modal fade" id="routeAttorneyModal" tabindex="-1" aria-labelledby="routeAttorneyModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="w-100 modal-title" id="exampleModalLabel">Route to Another Attorney</h5>
-            </div>
-            <div class="modal-body centered">
-                <div>Select a different attorney to route the approval request to:</div><br>
-                <select id="routeAttorneySelect">
-                    {{#each attorneys}}
-                    <option value="{{_id}}">{{fullName}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="close-btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" id="routeToAnotherAttorney" class="mark-as-btn route-btn">Route</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Mark request as cleared -->
 <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -620,13 +597,8 @@
         var userID = $("#currentUserId").val();
         var requestAssignedAttyID = $("#assignedAttorneyId").val();
         const role = $('#currentRole').val();
-        var statusTextDiv = $("#statusTextDiv");
         var statusTextVal = $('#contractStatus').val();
 
-        if (role == "Attorney" && userID != requestAssignedAttyID) {
-            statusTextDiv.prepend("Rerouted (");
-            statusTextDiv.append(")");
-        }
         if (statusTextVal == "Cancelled") {
             document.getElementById("cancelBtn").style.display = "none";
         }
@@ -684,9 +656,6 @@
                 }
                 else if (action == "cleared") {
                     document.getElementById("action-done").innerHTML = "marked as cleared"
-                }
-                else if (action == "rerouted") {
-                    document.getElementById("action-done").innerHTML = "rerouted to another attorney"
                 }
                 else if (action == "submit-revised") {
                     document.getElementById("action-done").innerHTML = "marked as revised"

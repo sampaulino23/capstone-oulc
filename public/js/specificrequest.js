@@ -250,11 +250,7 @@ $(window).on('load', function() {
             
             $('#forRevisionBtn').prop('disabled', true);
             document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
-
-            $('#routeAttorneyBtn').prop('disabled', true);
-            document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
             
-
             isDisabled = true;
 
             // disable feedback textarea
@@ -523,10 +519,6 @@ $(window).on('load', function() {
             $("#forRevisionBtn").attr("disabled", true);
             document.getElementById("forRevisionBtn").style.cursor = "not-allowed";
 
-            // disable for route attorney button
-            $("#routeAttorneyBtn").attr("disabled", true);
-            document.getElementById("routeAttorneyBtn").style.cursor = "not-allowed";
-
         }
     }
     
@@ -545,8 +537,6 @@ $(document).ready(() => {
         document.getElementById("approveBtn").style.display = "none";
         // hide for revision button
         document.getElementById("forRevisionBtn").style.display = "none";
-        // hide for route attorney button
-        document.getElementById("routeAttorneyBtn").style.display = "none";
     }
     
     $('#uploadNewVersion').click(function () {
@@ -855,33 +845,6 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
-    });
-
-    $('#routeToAnotherAttorney').click(function () {
-        $(window).unbind('beforeunload');
-        
-        const contractrequestid = $('#contractRequestId').val();
-
-        const routedattorney = $('#routeAttorneySelect').find(':selected').val();
-
-        $.ajax({
-            url: "/request/routeattorney",
-            method: "GET",
-            contentType: "application/json",
-            data: { 
-                contractrequestid: contractrequestid,
-                routedattorney: routedattorney
-            },
-            success: setTimeout(function () {
-                sessionStorage.setItem("action", "rerouted");
-                console.log('SUCCESS');
-                location.reload();
-            }, 100),
-            error: function (err) {
-                console.log(err);
-            }
-        });
-
     });
 
     $('.forrevision').click(function () {

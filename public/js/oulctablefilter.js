@@ -159,7 +159,6 @@ function viewAllRequests(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -253,7 +252,6 @@ function viewAllRequestsAtty(){
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -317,7 +315,6 @@ function viewUnassignedRequestsStaff(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -380,7 +377,6 @@ function viewUnassignedRequestsAtty(){
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -445,7 +441,6 @@ function viewPending(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -572,7 +567,6 @@ function viewToReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -636,7 +630,6 @@ function viewToReviewAtty(){
     document.getElementById("toreview-tab-atty").classList.add("selected");
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -703,7 +696,6 @@ function viewWaiting(){
     document.getElementById("waiting-tab").classList.add("selected");
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -769,7 +761,6 @@ function viewWaitingAtty(){
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("waiting-tab-atty").classList.add("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -900,7 +891,6 @@ function viewForLegalReview(){
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("forlegalreview-tab").classList.add("selected");
     document.getElementById("cleared-tab").classList.remove("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -966,7 +956,6 @@ function viewForLegalReviewAtty(){
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -1095,7 +1084,6 @@ function viewCleared(){
     document.getElementById("forlegalreview-tab").classList.remove("selected");
     document.getElementById("waiting-tab").classList.remove("selected");
     document.getElementById("cleared-tab").classList.add("selected");
-    document.getElementById("rerouted-tab").classList.remove("selected");
     document.getElementById("cancelled-tab").classList.remove("selected");
 }
 
@@ -1162,7 +1150,6 @@ function viewClearedAtty(){
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.add("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.remove("selected");
 }
 
@@ -1231,72 +1218,6 @@ function viewClearedRequester(){
     document.getElementById("cancelled-tab-requester").classList.remove("selected");
 }
 
-function viewReroutedAtty(){ 
-    var atty = document.getElementById("currentId");
-    var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
-    var filter = atty.value;
-    var length = 0;
-    let filteredRows = [];
-
-    for (let row of rows) { // `for...of` loops through the NodeList
-        cells = row.getElementsByTagName("td");
-        requeststatus = cells[8] || null; // gets the 9th `td` or nothing
-        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter != requeststatus.textContent)) {
-            // row.style.display = ""; // shows this row
-            length++;
-            filteredRows.push(row);
-        }
-        else {
-            row.style.display = "none"; // hides this row
-        }
-    }
-    
-
-    var totalRows = length;
-    var recordPerPage = 30;
-    var totalPages = Math.ceil(totalRows / recordPerPage);
-    var $pages = $('<div id="pages"></div>');
-    for (i = 0; i < totalPages; i++) {
-        $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($pages);
-    }
-    
-    $("#after-table").html($pages);
-
-    $('.pageNumber').hover(
-        function() {
-            $(this).addClass('focus');
-        },
-        function() {
-            $(this).removeClass('focus');
-        }
-    );
-
-    $('table').find('tbody tr:has(td)').hide();
-    for (var i = 0; i <= recordPerPage - 1; i++) {
-        $(filteredRows[i]).show();
-    }
-
-    $('span').click(function(event) {
-        $('#table').find('tbody tr:has(td)').hide();
-        var nBegin = ($(this).text() - 1) * recordPerPage;
-        var nEnd = $(this).text() * recordPerPage - 1;
-        for (var i = nBegin; i <= nEnd; i++) {
-            $(filteredRows[i]).show();
-        }
-    });
-
-    document.getElementById("all-tab-atty").classList.remove("selected");
-    document.getElementById("unassigned-tab-atty").classList.remove("selected");
-    document.getElementById("forlegalreview-tab-atty").classList.remove("selected");
-    document.getElementById("toreview-tab-atty").classList.remove("selected");
-    document.getElementById("waiting-tab-atty").classList.remove("selected");
-    document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.add("selected");
-    document.getElementById("cancelled-tab-atty").classList.remove("selected");
-}
-
 function viewCancelledAtty(){ 
     var button = document.getElementById("cancelled-tab-atty");
     var table = document.getElementById("table");
@@ -1359,7 +1280,6 @@ function viewCancelledAtty(){
     document.getElementById("toreview-tab-atty").classList.remove("selected");
     document.getElementById("waiting-tab-atty").classList.remove("selected");
     document.getElementById("cleared-tab-atty").classList.remove("selected");
-    document.getElementById("rerouted-tab-atty").classList.remove("selected");
     document.getElementById("cancelled-tab-atty").classList.add("selected");
 }
 
@@ -1472,9 +1392,6 @@ $(document).ready(function() {
         }
         else if (!daysGap || daysGap.textContent >= 0 && !daysGap || daysGap.textContent <= 6) {
             cells[1].style.background = "#FFDB5B"
-        }
-        if (!assignedAttyID || currentUserID != assignedAttyID.textContent && currentRole == 'Attorney') {
-            cells[7].textContent = "Rerouted";
         }
         
     }
