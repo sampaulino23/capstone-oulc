@@ -699,3 +699,9 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     display: flex;
     justify-content: end;
 }
+
+.changes-saved {
+    font-size: 14px;
+    margin-top: 10px;
+    color:#00713D;
+}
