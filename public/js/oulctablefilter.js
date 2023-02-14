@@ -385,14 +385,16 @@ function viewPending(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedstaff = cells[9] || null; // gets the 10th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedstaff.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);
@@ -511,14 +513,16 @@ function viewToReview(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedstaff = cells[9] || null; // gets the 10th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedstaff.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);
@@ -575,14 +579,16 @@ function viewToReviewAtty(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedatty = cells[8] || null; // gets the 9th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedatty.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);
@@ -638,14 +644,16 @@ function viewWaiting(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedstaff = cells[9] || null; // gets the 10th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedstaff.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row)
@@ -704,14 +712,16 @@ function viewWaitingAtty(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedatty = cells[8] || null; // gets the 9th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedatty.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row)
@@ -899,14 +909,16 @@ function viewForLegalReviewAtty(){
     var table = document.getElementById("table");
     var rows = table.getElementsByTagName("tr");
     var filter = button.value;
+    const currentUserID = $('#currentId').val();
     var length = 0;
     let filteredRows = [];
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
         requeststatus = cells[7] || null; // gets the 8th `td` or nothing
+        assignedatty = cells[8] || null; // gets the 9th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-        if ( !requeststatus || (filter === requeststatus.textContent)) {
+        if ( !requeststatus || (filter === requeststatus.textContent && currentUserID === assignedatty.textContent)) {
             // row.style.display = ""; // shows this row
             length++;
             filteredRows.push(row);
