@@ -684,6 +684,35 @@ const specificrequestcontroller = {
         }
     },
 
+    routeToAnotherAttorney: async (req, res) => {
+        try {
+            const contractrequestid = req.query.contractrequestid;
+            const routedattorney = req.query.routedattorney;
+            console.log ("INSIDE ROUTE TO ANOTHER ATTORNEY");
+
+            await ContractRequest.findOneAndUpdate({ _id: contractrequestid} , { $set: { assignedAttorney: routedattorney } }).exec();
+            await Conversation.updateMany({ contractRequest: contractrequestid} , { $addToSet: { members: routedattorney } }).exec();
+
+            // Reset is-reviewed to false for all latest contracts and reference documents attached
+            const contracts = await Contract.find({ contractRequest: contractrequestid }).exec();
+
+            for (contract of contracts) {
+                await ContractVersion.findOneAndUpdate({ contract: contract._id,  version: contract.latestversion}, { $set: { isreviewed: false } }).exec();
+                console.log ("INSIDE CONTRACTS" + contract);
+            }
+
+            const referencedocuments = await ReferenceDocument.find({ contractRequest: contractrequestid }).exec();
+
+            for (referencedocument of referencedocuments) {
+                await ReferenceDocument.findByIdAndUpdate(referencedocument._id, { $set: { isreviewed: false } }).exec();
+                console.log ("INSIDE REFERENCE DOCUMENTS" + referencedocument);
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     postUploadRepositoryFile: async (req, res) => { // requesting office
         try {
 

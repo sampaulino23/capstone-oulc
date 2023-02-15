@@ -8,6 +8,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/requestsoulcstyle.css">
         <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+        <script src="/js/requestsoulc.js" type="text/javascript"></script>
         <script src="/js/oulctablefilter.js" type="text/javascript"></script>
     </head>
     <body>
@@ -67,6 +68,17 @@
                 aria-controls="inactiveusers" value="Cleared" onclick="viewClearedAtty()">
                 Cleared
             </button>
+            {{#compare user_fullname "!=" "Chris Cruz"}}
+            <button class="nav-item" id="rerouted-tab-atty" data-toggle="tab" href="" role="tab" 
+                aria-controls="inactiveusers" value="Rerouted" onclick="viewReroutedAtty()">
+                Rerouted
+            </button>
+            {{else}}
+            <button class="nav-item" id="rerouted-tab-atty" style="display:none;" data-toggle="tab" href="" role="tab" 
+                aria-controls="inactiveusers" value="Rerouted" onclick="viewReroutedAtty()">
+                Rerouted
+            </button>
+            {{/compare}}
             <button class="nav-item" id="cancelled-tab-atty" data-toggle="tab" href="" role="tab"
                 aria-controls="inactiveusers" value="Cancelled" onclick="viewCancelledAtty()">
                 Cancelled
@@ -167,8 +179,12 @@
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{reviewType}}</td>
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{status}}</td>
                                 <!-- For Tab Filters -->
+<<<<<<< HEAD
                                 
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedAttorney._id}}</td> <!--For Unassigned Atty -->
+=======
+                                <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedAttorney._id}}</td> <!--For Rerouted & Unassigned Atty -->
+>>>>>>> parent of 8cd8040 (Remove reroute implementation)
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none;">{{assignedStaff._id}}</td> <!--For Unassigned Staff -->
                                 <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white; display:none">{{trackingNumber}}</td> <!--For Search Tracking/Docu Number -->
                             </tr>

@@ -126,6 +126,7 @@ router.post('/forrevision/attorney', specificrequestcontroller.postForRevisionAt
 router.get('/approveRequest', specificrequestcontroller.markAsCleared);
 router.post('/revisionHistory', specificrequestcontroller.getRevisionHistory);
 router.post('/comparerevisionhistory', specificrequestcontroller.compareRevisionHistory);
+router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
 // attorney end
 
 // add 3rd party
