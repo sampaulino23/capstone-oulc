@@ -68,9 +68,8 @@
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
-             
             {{#ifCond user_role '==' "Requester"}}
-            
+
                 {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
                     <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
                 {{/unless}}
