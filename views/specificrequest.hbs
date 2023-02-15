@@ -654,17 +654,14 @@
         var assignedStaffVal = $('#assignedStaffId').val();
         var statusTextDiv = $("#statusTextDiv");
 
-<<<<<<< HEAD
         if (role == "Staff" && (statusTextVal == "Pending" && assignedStaffVal == "")) {
             statusTextDiv.prepend("Unassigned (");
             statusTextDiv.append(")");
         }
         if (role == "Attorney" && (statusTextVal == "For Legal Review" && assignedAttyVal == "")) {
             statusTextDiv.prepend("Unassigned (");
-=======
         if (role == "Attorney" && userID != requestAssignedAttyID) {
             statusTextDiv.prepend("Rerouted (");
->>>>>>> parent of 8cd8040 (Remove reroute implementation)
             statusTextDiv.append(")");
         }
         if (statusTextVal == "Cancelled") {
