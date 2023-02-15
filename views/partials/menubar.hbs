@@ -44,35 +44,36 @@
                         <i class="fa fa-bell" aria-hidden="true"></i>
                     </button>
                     <ul id="dropdown-menu" class="dropdown-menu">
+                        <div id = "notifs-text"><span id = "notifications">Notications</span></div>
                         <!--<li><a class="dropdown-item" href="#">Sample Notif 1</a></li><hr>-->
                         {{#compare user_role "==" "Requester"}}
                             {{#ifCond forrevision_count '!=' "0"}}
-                            <li id="dropdown-item1"><a class="dropdown-item" href="/requester/contractrequests"><b id="notif">{{forrevision_count}}</b> of your request(s) are For Revision</a></li>
+                            <li id="dropdown-item1" class ="dropdownItemClass"><a class="dropdown-item" href="/requester/contractrequests"><b id="notif">{{forrevision_count}}&nbsp;</b> of your request(s) are For Revision</a></li>
                             {{/ifCond}}
                             {{#ifCond forrevision_count '==' "0"}} <!-- if no notif -->
-                            No Notification
+                            No Notifications
                             {{/ifCond}}
                         {{/compare}}
                         {{#compare user_role "==" "Attorney"}}
                             {{#ifCond legalReview_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item2"><a class="dropdown-item" href="/attorney/contractrequests"><b id="notif">{{legalReview_nearstartcount}}</b> request(s) For Review are nearing the start date</a></li>
+                            <li id="dropdown-item2" class ="dropdownItemClass"><a class="dropdown-item" href="/attorney/contractrequests"><b id="notif">{{legalReview_nearstartcount}}&nbsp;</b> request(s) For Review are nearing the start date</a></li>
                             {{/ifCond}}
                             {{#ifCond legalReview_nearstartcount '==' "0"}} <!-- if no notif -->
-                            No Notification
+                            No Notifications
                             {{/ifCond}}
                         {{/compare}}
                         {{#compare user_role "==" "Staff"}}
                             {{#ifCond pending_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item3"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}</b> Pending request(s) are nearing the start date</a></li>
+                            <li id="dropdown-item3" class ="dropdownItemClass"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif">{{pending_nearstartcount}}&nbsp;</b> Pending request(s) are nearing the start date</a></li>
                             {{/ifCond}}
                             {{#ifCond toreview_nearstartcount '!=' "0"}}
-                            <li id="dropdown-item4"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}</b> request(s) To Review are nearing the start date</a></li>
+                            <li id="dropdown-item4" class ="dropdownItemClass"><a class="dropdown-item" href="/staff/contractrequests"><b id="notif1">{{toreview_nearstartcount}}&nbsp;</b> request(s) To Review are nearing the start date</a></li>
                             {{/ifCond}}
 
                             <!-- if no notif -->
                             {{#ifCond pending_nearstartcount '==' "0"}}
                                 {{#ifCond toreview_nearstartcount '==' "0"}}
-                                    No Notification
+                                    No Notifications
                                 {{/ifCond}}
                             {{/ifCond}}
                         {{/compare}}

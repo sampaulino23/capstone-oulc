@@ -41,7 +41,7 @@ nav ul{
 nav ul li{
     display: inline-block;
     line-height: 80px;
-    margin: 0 10px;
+    margin: 0 0px;
     cursor:pointer;
 }
 
@@ -186,8 +186,26 @@ dl, ol, ul {
     margin: 0;
     border-bottom: 1px solid #9F9F9F;
     border-radius: 0px;
+    font-family: 'Poppins', sans-serif;
 }
 
-.dropdown-item:hover {
-    background: #9F9F9F;
+.dropdownItemClass:hover {
+    background: #ededed !important;
+    transition: .25s;
+}
+
+#notifs-text {
+    background: #D9D9D9;
+    color: black;
+    padding-left: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#dropdown-menu {
+    --bs-dropdown-padding-y: 0rem;
+}
+
+#notifications {
+    
 }
