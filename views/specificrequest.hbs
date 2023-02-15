@@ -30,7 +30,7 @@
                     <div id = "statusTextDiv" class = "status-text">Status: </div>
                     <div id = "statusTextDiv" class = "status-text actual">{{contractrequest.status}}</div>
                 </div>
-                <div id = "assignedToDiv" class = "status-text actual"><b>Assigned to:</b> {{contractrequest.assignedStaff.fullName}} (Staff) & {{contractrequest.assignedAttorney.fullName}}</div>
+                <div id = "assignedToDiv" class = "status-text actual"><b>Assigned to:</b> {{contractrequest.assignedStaff.fullName}} (Staff) & {{contractrequest.assignedAttorney.fullName}} (Attorney)</div>
             </div>
                 <input type="hidden" id="statusCounter" name="statusCounter" value="{{contractrequest.statusCounter}}">
                 <input type="hidden" id="contractRequestId" name="contractRequestId" value="{{contractrequest._id}}">
@@ -67,6 +67,7 @@
             </div>
         </div>
         <div class="col-6">
+            <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
              
             {{#ifCond user_role '==' "Requester"}}
             
@@ -116,7 +117,7 @@
                         <button class="btn" id="uploadNewVersion">Upload New Version</button>
                         {{/compare}}
                     {{/compare}}
-                    <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
+                    
                 </div>
                 <div id="fileView">
                 </div>
