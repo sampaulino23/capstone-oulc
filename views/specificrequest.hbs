@@ -659,8 +659,6 @@
         }
         if (role == "Attorney" && (statusTextVal == "For Legal Review" && assignedAttyVal == "")) {
             statusTextDiv.prepend("Unassigned (");
-        if (role == "Attorney" && userID != requestAssignedAttyID) {
-            statusTextDiv.prepend("Rerouted (");
             statusTextDiv.append(")");
         }
         if (statusTextVal == "Cancelled") {
