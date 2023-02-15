@@ -85,12 +85,12 @@
 
             {{#ifCond user_role '==' "Staff"}}
                 {{#ifCond contractrequest.assignedStaff '==' null}}
-                    <button id = "assignStaffBtn" class="assignStaff" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to Myself</button>
+                    <button id = "assignStaffBtn" class="assignStaff upload-signed-btn" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to My Self</button>
                 {{/ifCond}}
             {{/ifCond}}
             {{#ifCond user_role '==' "Attorney"}}
                 {{#ifCond contractrequest.assignedAttorney '==' null}}
-                    <button id = "assignAttorneyBtn" class="assignOULC" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to Myself</button>
+                    <button id = "assignAttorneyBtn" class="assignOULC upload-signed-btn" data-bs-toggle="modal" data-bs-target="#assignOULC">Assign to My self</button>
                 {{/ifCond}}
             {{/ifCond}}
         </div>
