@@ -207,7 +207,7 @@ function viewPendingIssues(){
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        issuestatus = cells[4] || null; // gets the 5th `td` or nothing
+        issuestatus = cells[3] || null; // gets the 5th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !issuestatus || (filter === issuestatus.textContent)) {
             // row.style.display = ""; // shows this row
@@ -266,7 +266,7 @@ function viewResolvedIssues(){
 
     for (let row of rows) { // `for...of` loops through the NodeList
         cells = row.getElementsByTagName("td");
-        issuestatus = cells[4] || null; // gets the 5th `td` or nothing
+        issuestatus = cells[3] || null; // gets the 5th `td` or nothing
         // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
         if ( !issuestatus || (filter === issuestatus.textContent)) {
             // row.style.display = ""; // shows this row
