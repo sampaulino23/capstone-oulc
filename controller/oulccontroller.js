@@ -277,10 +277,6 @@ const oulccontroller = {
                 contractTypes: contractTypes
             });
 
-            res.render('violationreport', {
-                contractTypes: contractTypes
-            });
-
         } catch (err) {
             console.log(err);
         }
