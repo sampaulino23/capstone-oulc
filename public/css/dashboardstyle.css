@@ -231,3 +231,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+#violationPerMonthCard, #violationPerTypeCard {
+    max-height: 450px !important;
+}

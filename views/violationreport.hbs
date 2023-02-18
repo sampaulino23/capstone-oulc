@@ -42,12 +42,12 @@
         </div> -->
         <div class = "container">
             <div class= "card-row row">
-                <div class="indiv-cards no-hover-dashboard col">
+                <div class="indiv-cards no-hover-dashboard col" id="violationPerMonthCard">
                     <div class = "dashboard-item">Violations Per Month</div>
                     <div id = "columnchart-violation-month" class = "chart"></div>
                 </div>
                 
-                <div class="indiv-cards no-hover-dashboard col">
+                <div class="indiv-cards no-hover-dashboard col" id="violationPerTypeCard">
                     <div class = "dashboard-item">Violations Per Contract Type</div>
                     <div id = "columnchart-violation-type" class = "chart"></div>
                 </div>
@@ -72,7 +72,7 @@
 
     var options = {
         width: 550,
-        height: 200,
+        height: 400,
         legend: { position: 'none' },
         hAxis: { textPosition: 'none' },
         backgroundColor: 'transparent',
@@ -92,7 +92,7 @@
 
     var options4 = {
         width: 550,
-        height: 200,
+        height: 400,
         legend: { position: 'none' },
         hAxis: { textPosition: 'none' },
         backgroundColor: 'transparent',
