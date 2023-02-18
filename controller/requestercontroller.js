@@ -666,7 +666,11 @@ const requestercontroller = {
             var months = [{ name: "January", violation: 0 }, { name: "Febuary", violation: 0 }, { name: "March", violation: 0 }, { name: "April", violation: 0 }, { name: "May", violation: 0 }, { name: "June", violation: 0 },
             { name: "July", violation: 0 }, { name: "August", violation: 0 }, { name: "September", violation: 0 }, { name: "October", violation: 0 }, { name: "November", violation: 0 }, { name: "December", violation: 0 }];
 
-            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean().exec();
+            const contractrequests = await ContractRequest.find({requester: req.user._id}).lean()
+            .populate({
+                path: 'contractType'
+            }).exec();
+            const contractTypes = await ContractType.find({}).lean().exec();
 
             function dateDiffInDays(a, b) {
                 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -675,6 +679,10 @@ const requestercontroller = {
                 const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
               
                 return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+
+            for (z=0; z<contractTypes.length; z++) {
+                contractTypes[z].violationCount = 0;
             }
 
             for (i = 0; i < contractrequests.length; i++) {
@@ -718,6 +726,11 @@ const requestercontroller = {
                     else if (month == 12) {
                         months[11].violation++;
                     }
+                    for (k=0; k<contractTypes.length; k++) {
+                        if (contractrequests[i].contractType.name == contractTypes[k].name) {
+                            contractTypes[k].violationCount++;
+                        }   
+                    }
                 }
             }
 
@@ -725,7 +738,8 @@ const requestercontroller = {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 months: months,
-                forrevision_count: req.session.forrevision_count
+                forrevision_count: req.session.forrevision_count,
+                contractTypes: contractTypes
             });
 
         } catch (err) {
