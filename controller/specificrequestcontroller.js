@@ -1341,7 +1341,7 @@ const specificrequestcontroller = {
             var feedbacklist = [];
 
             if (contractversion) {
-                var contractversions = await ContractVersion.find({contract: contractversion.contract, version: { $ne: contractversion.contract.latestversion }})
+                var contractversions = await ContractVersion.find({contract: contractversion.contract /*, version: { $ne: contractversion.contract.latestversion }*/})
                     .populate({
                         path: 'contract'
                     })    
@@ -1353,7 +1353,9 @@ const specificrequestcontroller = {
                     console.log(eachcontractversion);
 
                     var feedback = await Feedback.findOne({contractVersion: eachcontractversion._id}).exec();
-                    feedbacklist.push(feedback);
+                    if (feedback) {
+                        feedbacklist.push(feedback);
+                    }
 
                     console.log(feedback);
                 }

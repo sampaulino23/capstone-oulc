@@ -509,13 +509,21 @@ const requestercontroller = {
                 .exec();
 
                 var feedback = await Feedback.findOne({contractVersion: latestContractVersion}).lean().exec();
-                await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
+
+                if (feedback) {
+                    await Feedback.findByIdAndUpdate(feedback, {status: 'Revised'});
+                }
 
                 if (stagingcontractversion) {
                     stagingcontractversions.push(stagingcontractversion);
-                    await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
 
+                    if (feedback) {
+                        await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: feedback.content}).exec();
+                    } else {
+                        await VersionNote.findByIdAndUpdate(stagingcontractversion.versionNote._id, {oulcComments: 'N/A'}).exec();
+                    }
                 }
+                
             }
 
             for (stagingcontractversion of stagingcontractversions) {
