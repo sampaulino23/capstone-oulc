@@ -1,0 +1,26 @@
+// email.handlebars
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Welcome Email</title>
+</head>
+<body>
+  <div style = "font-size:22px;">Good day!</div><br>
+  <div style = "font-size:20px;">Your request for contract approval with Document No. {{trackingNumber}}
+    has been approved and marked as Completed. <b>Please upload signed contract/s.</b>
+  </div>
+  <div style ="font-size:20px;">
+    Contract Request Details:<br><br>
+    Title: <b>{{title}}</b><br>
+    Request Date: <b>{{requestDate}}</b><br>
+    Document Type: <b>{{documentType}}</b><br>
+    Subject Matter: <b>{{subjectMatter}}</b><br><br>
+
+    <b>Regards,</b><br>
+    Office of the University Legal Counsel<br><br>
+    Log-in now to view the request: <a href = "{{link}}" style="text-decoration:underline;">{{link}}</a>
+  </div>
+</body>
+</html>

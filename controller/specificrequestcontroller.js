@@ -490,6 +490,7 @@ const specificrequestcontroller = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
+                /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
                 + "\nContract Request Details: \n" 
@@ -499,7 +500,17 @@ const specificrequestcontroller = {
                 + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
                 + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
                 + "\nRegards," 
-                + "\nOffice of the University Legal Counsel" 
+                + "\nOffice of the University Legal Counsel",
+                */
+                template: "email",
+                context:{
+                    trackingNumber: contractrequest.trackingNumber,
+                    title: contractrequest.requestTitle,
+                    requestDate: contractrequest.requestDate,
+                    documentType: documenttype.name,
+                    subjectMatter: contractrequest.subjectMatter,
+                    link: "http://localhost:3000"
+                }
             }
 
             transporter.sendMail (options, function (err, info) {
@@ -577,6 +588,7 @@ const specificrequestcontroller = {
                 //to: "capstone.samantha@gmail.com", //change to tester/user email 
                 to: "migfranzbro@gmail.com",
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
+                /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
                 + "\nContract Request Details: \n"
@@ -586,7 +598,17 @@ const specificrequestcontroller = {
                 + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
                 + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
                 + "\nRegards," 
-                + "\nOffice of the University Legal Counsel" 
+                + "\nOffice of the University Legal Counsel",
+                */
+                template: "email",
+                context:{
+                    trackingNumber: contractrequest.trackingNumber,
+                    title: contractrequest.requestTitle,
+                    requestDate: contractrequest.requestDate,
+                    documentType: documenttype.name,
+                    subjectMatter: contractrequest.subjectMatter,
+                    link: "http://localhost:3000"
+                }
             }
 
             transporter.sendMail (options, function (err, info) {
@@ -626,6 +648,7 @@ const specificrequestcontroller = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - Approved",
+                /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been approved and marked as Completed. Please upload signed contract/s.\n"
                 + "\nContract Request Details: \n" 
@@ -635,8 +658,18 @@ const specificrequestcontroller = {
                 + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
                 + "\nRegards," 
                 + "\nOffice of the University Legal Counsel \n" 
-                + "\nLog-in now to view request: http://localhost:3000" 
+                + "\nLog-in now to view request: http://localhost:3000",
+                */
+                template: "email",
+                context:{
+                    trackingNumber: contractrequest.trackingNumber,
+                    title: contractrequest.requestTitle,
+                    requestDate: contractrequest.requestDate,
+                    documentType: documenttype.name,
+                    subjectMatter: contractrequest.subjectMatter,
+                    link: "http://localhost:3000"
                 }
+            }
             
             transporter.sendMail (options, function (err, info) {
                 if (err) {
