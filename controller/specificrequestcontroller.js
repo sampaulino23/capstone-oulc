@@ -485,10 +485,22 @@ const specificrequestcontroller = {
                 }
             });
 
+            // point to the template folder
+            const handlebarOptions = {
+                viewEngine: {
+                    partialsDir: path.resolve('./views/'),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve('./views/'),
+            };
+
+            // use a template file with nodemailer
+            transporter.use('compile', hbs(handlebarOptions))
+
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "capstone.samantha@gmail.com", //change to tester/user email 
+                to: "martin_murillo@dlsu.edu.ph", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
                 /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
@@ -582,11 +594,23 @@ const specificrequestcontroller = {
                 }
             });
 
+            // point to the template folder
+            const handlebarOptions = {
+                viewEngine: {
+                    partialsDir: path.resolve('./views/'),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve('./views/'),
+            };
+
+            // use a template file with nodemailer
+            transporter.use('compile', hbs(handlebarOptions))
+
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 //to: "capstone.samantha@gmail.com", //change to tester/user email 
-                to: "migfranzbro@gmail.com",
+                to: "martin_murillo@dlsu.edu.ph",
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
                 /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
@@ -641,12 +665,24 @@ const specificrequestcontroller = {
                 user: "capstone.samantha@gmail.com",
                 pass: "uapnxnyyyqqsfkax"
                             }
-                });
+            });
+
+            // point to the template folder
+            const handlebarOptions = {
+                viewEngine: {
+                    partialsDir: path.resolve('./views/'),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve('./views/'),
+            };
+
+            // use a template file with nodemailer
+            transporter.use('compile', hbs(handlebarOptions))
             
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "capstone.samantha@gmail.com", //change to tester/user email 
+                to: "martin_murillo@dlsu.edu.ph", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - Approved",
                 /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
@@ -1293,19 +1329,31 @@ const specificrequestcontroller = {
             const thirdpartyrep = await ThirdParty.findOne({email: emailInput}).lean()
             .exec();
 
-             // code section below is for sending the password to the account's email address
-             const transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: "capstone.samantha@gmail.com",
-                    pass: "uapnxnyyyqqsfkax"
-                }
+            // code section below is for sending the password to the account's email address
+            const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "capstone.samantha@gmail.com",
+                pass: "uapnxnyyyqqsfkax"
+            }
             });
+
+            // point to the template folder
+            const handlebarOptions = {
+                viewEngine: {
+                    partialsDir: path.resolve('./views/'),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve('./views/'),
+            };
+
+            // use a template file with nodemailer
+            transporter.use('compile', hbs(handlebarOptions))
 
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "capstone.samantha@gmail.com", //change to user.email when done testing
+                to: "martin_murillo@dlsu.edu.ph", //change to user.email when done testing
                 subject: "Third Party Negotiation",
                 text: "Hi! There is a contract request for approval that needs negotiation with the third party representative. The OULC would like to have a discussion with you regarding a contract. Godbless!"
             }
