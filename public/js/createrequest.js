@@ -81,7 +81,7 @@ $(document).ready(() => {
         else {
             $(".institutional-moa-reminder").css("display", "none");
         }
-    })
+    });
 
     $(".amtdate").change(function() { 
         var amount = document.getElementById("amount").value;
@@ -120,4 +120,66 @@ $(document).ready(() => {
 
         $(".signatory-change-note").css("display", "block");
     });
+
+    $('#setCustomSignatoryLevel').click(() => {
+        $('#signatorylevel').prop('readonly', false);
+        $('#signatorylevel').removeClass('read-only');
+        $('#signatorylevel').removeClass('default-read-only');
+
+        $('.amtdate').off('change');
+
+        $('#setCustomSignatoryLevel').prop('hidden', true);
+        $('#setAutomaticSignatoryLevel').prop('hidden', false);
+    });
+
+    $('#setAutomaticSignatoryLevel').click(() => {
+        $('#signatorylevel').prop('readonly', true);
+        $('#signatorylevel').addClass('read-only');
+        $('#signatorylevel').addClass('default-read-only');
+
+        $('.amtdate').on('change', function() { 
+            console.log('amt date working');
+    
+            var amount = document.getElementById("amount").value;
+            var duration = document.getElementById("duration").value;
+    
+            if(amount <= 100000){
+                if(duration <= 365){
+                    $('#signatorylevel').val(5);
+                }
+                if(duration > 365 && duration <= 1095){
+                    $('#signatorylevel').val(3);
+                }
+                if(duration > 1095){
+                    $('#signatorylevel').val(2);
+                }
+            } 
+            if(amount > 100000 && amount <= 500000){
+                if(duration <= 1095){
+                    $('#signatorylevel').val(3);
+                }
+                if(duration > 1095){
+                    $('#signatorylevel').val(2);
+                }
+            }
+            if(amount > 500000 && amount <= 1000000){
+                if(duration < 1095){
+                    $('#signatorylevel').val(2);
+                }
+                if(duration > 1095){
+                    $('#signatorylevel').val(2);
+                }
+            }
+            if(amount > 1000000){
+                $('#signatorylevel').val(1);
+            }
+    
+            $(".signatory-change-note").css("display", "block");
+        });
+
+        $('#setCustomSignatoryLevel').prop('hidden', false);
+        $('#setAutomaticSignatoryLevel').prop('hidden', true);
+    });
+
+    
 });

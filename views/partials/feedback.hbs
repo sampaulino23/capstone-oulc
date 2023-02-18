@@ -1,3 +1,4 @@
+<h5 id="isReferenceFileText" hidden="true">File selected is not a contract.</h5>
 <div id = "feedback-history">
     {{#compare user_role '!=' 'Requester'}}
     <div class = "feedback-header">
@@ -161,10 +162,12 @@
         return acronym;
     }
 
+    let timerId;
     $('.pending-feedback-textarea').keyup(() => {
+        clearTimeout(timerId);
         $('.changes-saved').css("visibility", "visible");
 
-        setTimeout(function(){
+        timerId = setTimeout(function(){
             $('.changes-saved').css("visibility", "hidden");
         }, 5000);
     })
