@@ -161,10 +161,12 @@
         return acronym;
     }
 
+    let timerId;
     $('.pending-feedback-textarea').keyup(() => {
+        clearTimeout(timerId);
         $('.changes-saved').css("visibility", "visible");
 
-        setTimeout(function(){
+        timerId = setTimeout(function(){
             $('.changes-saved').css("visibility", "hidden");
         }, 5000);
     })
