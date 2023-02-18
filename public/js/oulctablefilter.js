@@ -1416,6 +1416,8 @@ $(document).ready(function() {
     } else if (currentRole == 'Requester') {
         viewWaitingRequester();
     }
+
+    
 });
 
 /* REPOSITORY TABLE */

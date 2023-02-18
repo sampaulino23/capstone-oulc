@@ -12,8 +12,13 @@
         <script src="/js/oulctablefilter.js" type="text/javascript"></script>
     </head>
     <body>
-        <div id="header">Unauthorized Page</div>
+        <div id="header">Unauthorized Page</div><br>
         <input type="hidden" id="currentRole" value="{{user.role.name}}">
         <input type="hidden" id="currentId" value="{{user._id}}">
+        <div class = "container" style="font-size: 24px">
+            Uh-oh, there seems to be a mistake. You don't have permission to access this page.<br>
+            <a href="/" style="text-decoration:underline;">Click here</a> to go back to the home page.
+            <div style ="text-align:center; filter: saturate(30%);"><img src="/img/barrier.png"></div>
+        </div>
     </body>
 </html>

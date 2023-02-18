@@ -86,7 +86,7 @@
     var data4 = google.visualization.arrayToDataTable([
         ['Contract Type', 'Count', { role: 'style' }],
         {{#each contractTypes}}
-        ['{{name}}', {{violationCount}}, '#00713D'],
+        ['{{name}}', {{violationcount}}, '#00713D'],
         {{/each}}
     ]);
 
@@ -103,5 +103,4 @@
     columnchart.draw(data4, options4);
     
     }
-    
 </script>
