@@ -622,6 +622,7 @@ $(document).ready(() => {
                 var rowCount = $('#contractVersionsTable tr').length;
                 var rows = $('#contractVersionsTable tr');
                 $('#contractVersionsDiv').show();
+                $('#feedback-history').show();
 
                 $('#uploadNewVersion').prop('hidden', true);
 
@@ -632,6 +633,7 @@ $(document).ready(() => {
                     // manipulate contract versions information
                     rows.hide();
                     $('#notContractText').attr('hidden', true);
+                    $('#isReferenceFileText').attr('hidden', true);
                     $('.version-note-card').hide();
 
                     for(var i = 0; i < rowCount; i++) {
@@ -654,7 +656,8 @@ $(document).ready(() => {
                 } else {
                     $('#contractVersionsDiv').hide();
                     $('#notContractText').attr('hidden', false);
-
+                    $('#feedback-history').hide();
+                    $('#isReferenceFileText').attr('hidden', false);
                 }
 
                 console.log('SUCCESS');
