@@ -16,6 +16,30 @@
     <script>
         $(document).ready( () => {
 
+            function dateDiffInDays(a, b) {
+                const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                // Discard the time and time-zone information.
+                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+                
+                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+            var startDate = new Date();
+            var endDate = "{{repositoryFile.requestid.effectivityEndDate}}";
+            var daysGapExpiry = dateDiffInDays(new Date(), new Date(endDate));
+            if (daysGapExpiry <= 7) {
+                $('.expiry-prompt').prop('hidden', false);
+                $('.expired-prompt').prop('hidden', true);
+            }
+            else if (daysGapExpiry <= 0) {
+                $('.expiry-prompt').prop('hidden', true);
+                $('.expired-prompt').prop('hidden', false);
+            }
+            else {
+                $('.expiry-prompt').prop('hidden', true);
+                $('.expired-prompt').prop('hidden', true);
+            }
+
             $('span').click(function(event){
                 event.stopPropagation();
             });
@@ -144,6 +168,12 @@
                     </div>
                     <div class="col">
                         Duration: <input type="text" class = "text-input" value="{{repositoryFile.daysDuration}} days" readonly>
+                    </div>
+                    <div class="expiry-prompt" hidden>
+                        This contract is expiring soon.
+                    </div>
+                    <div class="expired-prompt" hidden>
+                        This contract is now expired.
                     </div>
                 </div>
                 <br>

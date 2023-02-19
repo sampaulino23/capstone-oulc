@@ -705,3 +705,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-top: 10px;
     color:#00713D;
 }
+
+.expiry-prompt {
+    color:#ff3939;
+}
