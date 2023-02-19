@@ -27,19 +27,19 @@
             var startDate = new Date();
             var endDate = "{{repositoryFile.requestid.effectivityEndDate}}";
             var daysGapExpiry = dateDiffInDays(new Date(), new Date(endDate));
-            if (daysGapExpiry <= 7) {
-                $('.expiry-prompt').prop('hidden', false);
-                $('.expired-prompt').prop('hidden', true);
+            if (daysGapExpiry <= 7 || daysGapExpiry == 0) {
+                $('.expiry-prompt').css('display', 'block');
+                $('.expired-prompt').css('display', 'none');
             }
-            else if (daysGapExpiry <= 0) {
-                $('.expiry-prompt').prop('hidden', true);
-                $('.expired-prompt').prop('hidden', false);
+            else if (daysGapExpiry < 0) {
+                $('.expired-prompt').css('display', 'block');
+                $('.expiry-prompt').css('display', 'none');
             }
             else {
-                $('.expiry-prompt').prop('hidden', true);
-                $('.expired-prompt').prop('hidden', true);
+                $('.expired-prompt').css('display', 'none');
+                $('.expiry-prompt').css('display', 'none');
             }
-
+   
             $('span').click(function(event){
                 event.stopPropagation();
             });
@@ -169,10 +169,10 @@
                     <div class="col">
                         Duration: <input type="text" class = "text-input" value="{{repositoryFile.daysDuration}} days" readonly>
                     </div>
-                    <div class="expiry-prompt" hidden>
+                    <div class="expiry-prompt">
                         This contract is expiring soon.
                     </div>
-                    <div class="expired-prompt" hidden>
+                    <div class="expired-prompt">
                         This contract is now expired.
                     </div>
                 </div>
