@@ -754,6 +754,8 @@ const requestercontroller = {
             .sort({issueNumber: 1, date: 1})
             .exec(); 
 
+            const contractrequest = await ContractRequest.find({trackingNumber: req.body.documentNumber}).exec();
+
             var issueCount = "000" + (issues.length + 1);
             
             var issue = new Issue({
@@ -762,6 +764,7 @@ const requestercontroller = {
                 summary: req.body.issueSummary,
                 issueNumber: issueCount,
                 requester: req.body.requesterid,
+                contractRequest: contractrequest._id,
                 date: Date.now()
             });
 
@@ -770,6 +773,7 @@ const requestercontroller = {
             });
 
             console.log("Issue created");
+            console.log(contractrequest._id);
             //res.redirect('back');
             
         } catch (err) {
