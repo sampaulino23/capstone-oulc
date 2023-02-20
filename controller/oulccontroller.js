@@ -46,25 +46,29 @@ conn.once('open', () => {
     })
 });
 
-function getStaffWaiting (month, day, year, contractrequests, waiting) {
+function getStaffWaiting (month, day, year, contractrequests, waiting, loggedInStaff) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
-        if (contractrequests[i].statusCounter == "2"){
-            waiting.all++
-            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
-                waiting.today++
+        if (contractrequests[i].assignedStaff != null) {
+            if (contractrequests[i].statusCounter == "2" && contractrequests[i].assignedStaff._id.toString() == loggedInStaff.toString()){
+                waiting.all++
+                if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                    waiting.today++
+                }
             }
         }
     }
 }
 
-function getStaffToReview (month, day, year, contractrequests, toreview) {
+function getStaffToReview (month, day, year, contractrequests, toreview, loggedInStaff) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
-        if (contractrequests[i].statusCounter == "3"){
-            toreview.all++
-            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
-                toreview.today++
+        if (contractrequests[i].assignedStaff != null) {
+            if (contractrequests[i].statusCounter == "3" && contractrequests[i].assignedStaff._id.toString() == loggedInStaff.toString()){
+                toreview.all++
+                if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                    toreview.today++
+                }
             }
         }
     }
@@ -73,10 +77,12 @@ function getStaffToReview (month, day, year, contractrequests, toreview) {
 function getAttorneyWaiting (month, day, year, contractrequests, waiting, loggedInAttorney) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
-        if (contractrequests[i].statusCounter == "5" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
-            waiting.all++
-            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
-                waiting.today++
+        if (contractrequests[i].assignedAttorney != null) {
+            if (contractrequests[i].statusCounter == "5" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
+                waiting.all++
+                if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                    waiting.today++
+                }
             }
         }
     }
@@ -85,10 +91,12 @@ function getAttorneyWaiting (month, day, year, contractrequests, waiting, logged
 function getAttorneyToReview (month, day, year, contractrequests, toreview, loggedInAttorney) {
     //get number of waiting requests (staff)
     for (i=0; i<contractrequests.length; i++) {
-        if (contractrequests[i].statusCounter == "6" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
-            toreview.all++
-            if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
-                toreview.today++
+        if (contractrequests[i].assignedAttorney != null) {
+            if (contractrequests[i].statusCounter == "6" && contractrequests[i].assignedAttorney._id.toString() == loggedInAttorney.toString()){
+                toreview.all++
+                if (contractrequests[i].requestDate.getMonth() == month && contractrequests[i].requestDate.getDate() == day && contractrequests[i].requestDate.getFullYear() == year){
+                    toreview.today++
+                }
             }
         }
     }
@@ -114,6 +122,9 @@ const oulccontroller = {
                 })
                 .populate({
                     path: 'assignedAttorney'
+                })
+                .populate({
+                    path: 'assignedStaff'
                 })
                 .sort()
                 .exec();
@@ -248,8 +259,8 @@ const oulccontroller = {
 
             if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
-                getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
-                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+                getStaffWaiting(month, day, year, contractrequests, waiting, req.user._id); //get number of waiting request for staff
+                getStaffToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for staff
             }
             else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
@@ -305,6 +316,9 @@ const oulccontroller = {
                 })
                 .populate({
                     path: 'assignedAttorney'
+                })
+                .populate({
+                    path: 'assignedStaff'
                 })
                 .sort()
                 .exec();
@@ -411,8 +425,8 @@ const oulccontroller = {
 
             if (req.user.roleName == "Staff"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
-                getStaffWaiting(month, day, year, contractrequests, waiting); //get number of waiting request for staff
-                getStaffToReview(month, day, year, contractrequests, toreview); //get number of to review request for staff
+                getStaffWaiting(month, day, year, contractrequests, waiting, req.user._id); //get number of waiting request for staff
+                getStaffToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for staff
             }
             else if (req.user.roleName == "Attorney"){
                 //made this as a function so we can use the getDashboard for both attorney and staff. We will just change the function depending on the user
