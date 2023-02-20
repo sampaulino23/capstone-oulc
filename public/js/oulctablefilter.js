@@ -19,13 +19,14 @@ function searchRequestTable() {
         td6 = tr[i].getElementsByTagName("td")[6]; 
         td7 = tr[i].getElementsByTagName("td")[7]; 
         td9 = tr[i].getElementsByTagName("td")[9]; 
+        td10 = tr[i].getElementsByTagName("td")[10]; //Document Number
     /* ADD columns here that you want you to filter to be used on */
         if (td) {
           if ( (td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1) 
           || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) || (td3.innerHTML.toUpperCase().indexOf(filter) > -1)
           || (td4.innerHTML.toUpperCase().indexOf(filter) > -1) || (td5.innerHTML.toUpperCase().indexOf(filter) > -1) 
           || (td6.innerHTML.toUpperCase().indexOf(filter) > -1) || (td7.innerHTML.toUpperCase().indexOf(filter) > -1) 
-          || (td9.innerHTML.toUpperCase().indexOf(filter) > -1) )  {            
+          || (td9.innerHTML.toUpperCase().indexOf(filter) > -1) || (td10.innerHTML.toUpperCase().indexOf(filter) > -1))  {            
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
