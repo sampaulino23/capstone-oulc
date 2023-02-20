@@ -754,15 +754,21 @@ const requestercontroller = {
             .sort({issueNumber: 1, date: 1})
             .exec(); 
 
-            const contractrequest = await ContractRequest.find({trackingNumber: req.body.documentNumber}).exec();
+            const datenow = new Date();
 
-            var issueCount = "000" + (issues.length + 1);
+            var month = ('0' + (datenow.getMonth() + 1)).slice(-2);
+            var day = ('0' + (datenow.getDate())).slice(-2);
+            var year = datenow.getFullYear().toString().substr(-2);
+
+            var queueNumber = '' + year + month + day + '-' + (issues.length + 1);
+
+            const contractrequest = await ContractRequest.findOne({trackingNumber: req.body.documentNumber}).exec();
             
             var issue = new Issue({
                 title: req.body.issueTitle,
                 type: req.body.issueType,
                 summary: req.body.issueSummary,
-                issueNumber: issueCount,
+                issueNumber: queueNumber,
                 requester: req.body.requesterid,
                 contractRequest: contractrequest._id,
                 date: Date.now()
@@ -786,11 +792,19 @@ const requestercontroller = {
 
             var requestid = req.body.contractRequestId;
 
+            const datenow = new Date();
+
+            var month = ('0' + (datenow.getMonth() + 1)).slice(-2);
+            var day = ('0' + (datenow.getDate())).slice(-2);
+            var year = datenow.getFullYear().toString().substr(-2);
+
+            var queueNumber = '' + year + month + day + '-' + (issues.length + 1);
+
             var issue = new Issue({
                 title: req.body.issueTitle,
                 type: req.body.issueType,
                 summary: req.body.issueSummary,
-                issueNumber: "000",
+                issueNumber: queueNumber,
                 requester: req.body.requesterid,
                 contractRequest: mongoose.Types.ObjectId(requestid),
                 date: Date.now()
