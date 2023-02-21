@@ -762,24 +762,35 @@ const requestercontroller = {
 
             var queueNumber = '' + year + month + day + '-' + (issues.length + 1);
 
-            const contractrequest = await ContractRequest.findOne({trackingNumber: req.body.documentNumber}).exec();
-            
-            var issue = new Issue({
-                title: req.body.issueTitle,
-                type: req.body.issueType,
-                summary: req.body.issueSummary,
-                issueNumber: queueNumber,
-                requester: req.body.requesterid,
-                contractRequest: contractrequest._id,
-                date: Date.now()
-            });
+            if(req.body.documentNumber == ""){
+                var issue = new Issue({
+                    title: req.body.issueTitle,
+                    type: req.body.issueType,
+                    summary: req.body.issueSummary,
+                    issueNumber: queueNumber,
+                    requester: req.body.requesterid,
+                    date: Date.now()
+                });
+            }else{
+                const contractrequest = await ContractRequest.findOne({trackingNumber: req.body.documentNumber}).exec();
+
+                var issue = new Issue({
+                    title: req.body.issueTitle,
+                    type: req.body.issueType,
+                    summary: req.body.issueSummary,
+                    issueNumber: queueNumber,
+                    requester: req.body.requesterid,
+                    contractRequest: contractrequest._id,
+                    date: Date.now()
+                });
+            }
 
             await issue.save(function(){
                 res.redirect('back');
             });
 
             console.log("Issue created");
-            console.log(contractrequest._id);
+            //console.log(contractrequest._id);
             //res.redirect('back');
             
         } catch (err) {
