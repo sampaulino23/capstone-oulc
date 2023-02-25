@@ -25,7 +25,6 @@ const Feedback  = require('../models/Feedback.js');
 const Faq = require('../models/Faq.js');
 const Policy = require('../models/Policy.js');
 const PolicyVersion = require('../models/PolicyVersion.js');
-const FeedbackSet = require('../models/FeedbackSet.js');
 const Issue = require('../models/Issue.js');
 
 // Create mongo connection
@@ -1015,80 +1014,66 @@ const oulccontroller = {
 
             console.log(comments);
 
-            // TODO: Consider the null and PendingFeedbacks with no inputs
-
-            // if there is at least 1 single comment
-            // if (comments[0]) {
-
-                // find contractRequest Id of the comment
-                var cvid = comments[0].contractversionid.substring(4);
-                var contractVersion = await ContractVersion.findById(cvid)
-                    .lean()
-                    .populate({
-                        path: 'contract'
-                    })
-                    .exec();
-                
-                var contractRequest = await ContractRequest.findById(contractVersion.contract.contractRequest).exec();
-
-                // create FeedbackSet object
-                // var newFeedbackSet = new FeedbackSet({
-                //     contractRequest: contractRequest,
-                //     counter: contractRequest.feedbackCounter + 1,
-                // })
-
-                // cycle through all comments and create a feedback object for each one
-                for (comment of comments) {
-
-                    console.log(comment.content);
-
-                    // if feedback is not empty
-                    if (comment.content) {
-
-                        var contractversionid = comment.contractversionid.substring(4);
-        
-                        var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
-        
-                        if (findComment) {  // if comments is already there
-                            console.log('has existing comment');
-        
-                            // console.log(findContractVersion.comment);
-                            // console.log(comment.content);
-        
-                            var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
-        
-                        } else {    // if no comment
-                            console.log('no comment');
-        
-                            let newComment = new Feedback({
-                                contractVersion: contractversionid,
-                                // feedbackSet: newFeedbackSet,
-                                user_id: req.user._id,
-                                content: comment.content,
-                                status: 'Pending'
-                            });
+            var cvid = comments[0].contractversionid.substring(4);
+            var contractVersion = await ContractVersion.findById(cvid)
+                .lean()
+                .populate({
+                    path: 'contract'
+                })
+                .exec();
             
-                            var insertComment = await newComment.save();
-                            // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
-                        }
-                    } else {    // if feedback is empty whether not entered or deleted
-                        var contractversionid = comment.contractversionid.substring(4);
-        
-                        var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
-        
-                        if (findComment) {  // if comments is already there
-                            console.log('has existing comment');
-        
-                            // console.log(findContractVersion.comment);
-                            // console.log(comment.content);
-        
-                            var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: ''}}).exec();
-        
-                        }
-                    }
+            var contractRequest = await ContractRequest.findById(contractVersion.contract.contractRequest).exec();
+
+            // cycle through all comments and create a feedback object for each one
+            for (comment of comments) {
+
+                console.log(comment.content);
+
+                // if feedback is not empty
+                if (comment.content) {
+
+                    var contractversionid = comment.contractversionid.substring(4);
     
+                    var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
+    
+                    if (findComment) {  // if comments is already there
+                        console.log('has existing comment');
+    
+                        // console.log(findContractVersion.comment);
+                        // console.log(comment.content);
+    
+                        var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: comment.content}}).exec();
+    
+                    } else {    // if no comment
+                        console.log('no comment');
+    
+                        let newComment = new Feedback({
+                            contractVersion: contractversionid,
+                            user_id: req.user._id,
+                            content: comment.content,
+                            status: 'Pending'
+                        });
+        
+                        var insertComment = await newComment.save();
+                        // var success = await ContractVersion.findByIdAndUpdate(contractversionid, { $set: {comment: insertComment._id}}).exec();
+                    }
+                } else {    // if feedback is empty whether not entered or deleted
+                    var contractversionid = comment.contractversionid.substring(4);
+    
+                    var findComment = await Feedback.findOne({contractVersion: contractversionid}).exec();
+    
+                    if (findComment) {  // if comments is already there
+                        console.log('has existing comment');
+    
+                        // console.log(findContractVersion.comment);
+                        // console.log(comment.content);
+    
+                        var success = await Feedback.findByIdAndUpdate(findComment, {$set: { content: ''}}).exec();
+    
+                    }
                 }
-            // }
+
+            }
 
         } catch (err) {
             console.log(err);
@@ -1182,23 +1167,6 @@ const oulccontroller = {
                     var pendingFeedback = await Feedback.findOne({contractVersion: contractVersionId}).exec();
                     // console.log(pendingFeedback);
     
-                    if (pendingFeedback) { // if found
-                        // res.send({
-                        //     hasPendingFeedback: true,
-                        //     pendingFeedback: pendingFeedback
-                        // });
-    
-                        // console.log('true');
-    
-                    } else { // if not found, create a new one
-                        // res.send({
-                        //     hasPendingFeedback: false,
-                        //     pendingFeedback: false
-                        // })
-    
-                        // console.log('false');
-                    }
-    
                     pendingFeedbacksOfLatestVersionContracts.push(pendingFeedback);
     
                 }
@@ -1207,8 +1175,6 @@ const oulccontroller = {
     
                 res.send({pendingFeedbacks: pendingFeedbacksOfLatestVersionContracts});
     
-                // const contractVersion = await ContractVersion.findOne({file: fileid}).exec();
-                // console.log(contract);
             }
 
         } catch (err) {
