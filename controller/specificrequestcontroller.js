@@ -213,7 +213,9 @@ const specificrequestcontroller = {
                 messages: messages,
                 negotiationfiles: negotiationfiles,
                 withNegotiationFiles: withNegotiationFiles,
-                forrevision_count: req.session.forrevision_count
+                pending_nearstartcount: req.session.pending_nearstartcount,
+                toreview_nearstartcount: req.session.toreview_nearstartcount,
+                legalReview_nearstartcount: req.session.legalReview_nearstartcount
             });
 
         } catch (err) {
