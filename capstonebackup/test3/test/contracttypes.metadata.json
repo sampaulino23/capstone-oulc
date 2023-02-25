@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"3b36a498488a4476b8428d270df2fa3c","collectionName":"contracttypes","type":"collection"}
