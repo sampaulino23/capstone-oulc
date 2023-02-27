@@ -801,6 +801,10 @@ const requestercontroller = {
     postCreateIssueRequest: async (req, res) => {
         try {
 
+            const issues = await Issue.find({}).lean()
+            .sort({issueNumber: 1, date: 1})
+            .exec(); 
+
             var requestid = req.body.contractRequestId;
 
             const datenow = new Date();
