@@ -448,3 +448,9 @@ tr, td, th {
 .table-guidelines {
     text-align: center;
 }
+
+#setAutoDiv {
+    text-decoration: underline;
+    margin-left: 20px;
+    font-size: 14px;
+}

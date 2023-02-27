@@ -82,9 +82,15 @@
                         </label></a>
                         <input type="number" name="signatorylevel" class="text-input read-only default-read-only" id="signatorylevel" value = "5" readonly>
                     </div>
-                    <a href="#" id="setCustomSignatoryLevel">Set Custom Signatory Level</a>
-                    <a href="#" id="setAutomaticSignatoryLevel" hidden>Set Automatic Signatory Level</a>
-                    <span class ="signatory-change-note mb-3">Note: Signatory level has been changed. Please double check on the name of the signatory.</span>
+                    <div class ="row">
+                        <div class="col">
+                            <span class ="signatory-change-note mb-3">Note: Signatory level has been changed. Please<br>double check on the name of the signatory.</span>
+                        </div>
+                        <div id = "setAutoDiv" class ="col">
+                            <a href="#" id="setCustomSignatoryLevel">Set Custom Signatory Level <i class="fas fa-edit"></i></a>
+                            <a href="#" id="setAutomaticSignatoryLevel" hidden>Set Automatic Signatory Level <i class="fas fa-undo"></i></a>
+                        </div>
+                    </div>
                 </div>
                 
 
