@@ -26,7 +26,6 @@ $(document).ready(() => {
 
         // get current role
         const role = $('#currentRole').val();
-        console.log(role);
 
         if (allreviewed == false) {
             $("#allReviewed").attr("hidden", true);
@@ -100,7 +99,6 @@ $(document).ready(() => {
 
         // get current role
         const role = $('#currentRole').val();
-        console.log(role);
 
         // if user checks all
         if(this.checked) {
@@ -108,7 +106,6 @@ $(document).ready(() => {
 
             for(var i = 0; i < rowCount; i++) {
                 var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
-                console.log(documentattachedrow.find('.is-reviewed').val());
                 documentattachedrow.find('.is-reviewed').val(true);
             }
 
@@ -151,7 +148,6 @@ $(document).ready(() => {
 
             for(var i = 0; i < rowCount; i++) {
                 var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
-                console.log(documentattachedrow.find('.is-reviewed').val());
                 documentattachedrow.find('.is-reviewed').val(false);
             }
 
