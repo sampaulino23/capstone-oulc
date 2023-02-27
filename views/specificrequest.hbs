@@ -559,14 +559,15 @@
 
             <div class="modal-body centered">
                 Are you sure you want to assign yourself to conduct the review process of this request?
-            <div class="modal-footer">
-                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                {{#ifCond user_role '==' "Staff"}}
-                <button type="submit" class="mark-as-btn assign-modal-btn assignStaffBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
-                {{/ifCond}}
-                {{#ifCond user_role '==' "Attorney"}}
-                <button type="submit" class="mark-as-btn assign-modal-btn assignAttorneyBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
-                {{/ifCond}}
+                <div class="modal-footer">
+                    <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                    {{#ifCond user_role '==' "Staff"}}
+                    <button type="submit" class="mark-as-btn assign-modal-btn assignStaffBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                    {{/ifCond}}
+                    {{#ifCond user_role '==' "Attorney"}}
+                    <button type="submit" class="mark-as-btn assign-modal-btn assignAttorneyBtn" id="{{contractrequest._id}}" value={{contractrequest.statusCounter}}>Confirm</button>
+                    {{/ifCond}}
+                </div>
             </div>
         </div>
     </div>
