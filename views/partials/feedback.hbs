@@ -78,78 +78,8 @@
 </div>
 
 <script>
-/*
-    var currFeedbackCount = $('.current-feedback').length;
-    var feedbackHistoryCount = $('.feedback-card').length;
-    
-    console.log(currFeedbackCount, feedbackHistoryCount);    
-
-    for (var i = 0; i < feedbackHistoryCount; i++) {
-        console.log(i);
-
-        var feedbackrow = $('.feedback-card:eq(' + i + ' )');
-
-        var feedbackAuthor = feedbackrow.find('.feedback-author').html();
-
-        if (!feedbackAuthor) {
-            feedbackAuthor = "Testing Name";
-        } else {
-            feedbackAuthor = feedbackAuthor.trim();
-        }
-
-        console.log(feedbackAuthor);
-
-        var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
-        var acronym = matches.join(''); // output will be JSON
-    
-        feedbackrow.find('.pic-inner').text(acronym);
-    }
-
-    //var currentFeedback = document.getElementById("currentFeedbacksContainer").getElementsByClassName("pic-inner");
-    //var revisedFeedbacks = document.getElementById("feedbackHistoryContainer").getElementsByClassName("pic-inner");
-    /*let filteredFeedback = [];
-    if (feedback.style.display != "none") {
-        filteredFeedback.push(feedback);
-    }
-
-    currentFeedbackCount = currentFeedback.length;
-    revisedFeedbacksCount = revisedFeedbacks.length;
-
-    for (i = 0; i < currentFeedbackCount; i++) {
-        var feedbackAuthorID = "#feedback-author" + i;
-        var elementid = "pic-inner" + i;
-
-        var feedbackAuthor = $(feedbackAuthorID).text();
-
-        console.log(feedbackAuthor);
-
-        if (feedbackAuthor === null) {
-            feedbackAuthor = "Testing Name";
-        }
-        var matches = feedbackAuthor.match(/\b(\w)/g); // e.g. ['J','S','O','N']
-        var acronym = matches.join(''); // output will be JSON
-    
-        document.getElementById(elementid).innerHTML = acronym;
-    }
-
-    for (i = 0; i < revisedFeedbacksCount; i++) {
-        var previousfeedbackAuthorID = "#previousFeedback-author" + i;
-        var elementid = "pic-inner" + i;
-
-        var previousfeedbackAuthorID = $(feedbackAuthorID).text();
-        if (previousfeedbackAuthorID === null) {
-            previousfeedbackAuthorID = "Testing Name";
-        }
-        var matches = previousfeedbackAuthorID.match(/\b(\w)/g); // e.g. ['J','S','O','N']
-        var acronym = matches.join(''); // output will be JSON
-    
-        document.getElementById(elementid).innerHTML = acronym;
-    }
-    */
     const nodeList= document.querySelectorAll(".pic-inner");
     const nodeList2 = document.querySelectorAll(".feedback-author");
-    // console.log("nodelist 1" + nodeList.length);
-    // console.log("nodelist 2" + nodeList2.length);
 
     for (i = 0; i < nodeList.length; i++) {
        nodeList[i].innerHTML = getAcronym(nodeList2[i].innerHTML);

@@ -42,7 +42,6 @@ $(window).bind('beforeunload', function() {
         contentType: "application/json",
         data: {documentsattached: documentsattached},
         success: function() {
-            console.log('SUCCESS');
         },
         error: function(err) {
             console.log(err);
@@ -57,16 +56,12 @@ $(window).bind('beforeunload', function() {
         const statusCounter = parseInt($('#statusCounter').val());
         const statusListDisabled = [2, 4, 5, 6, 7, 8];
 
-        console.log(statusCounter);
-
         if (!(statusListDisabled.includes(statusCounter))) {
             var comments = [];
 
             $('div.comments-container>div.pending-feedback').each(function(){
                 var contractversionid = $(this).attr('id');
-                console.log(contractversionid);
                 var content = $(this).find('.pending-feedback-textarea').val();
-                console.log(content);
         
                 let comment = {
                     contractversionid: contractversionid,
@@ -82,7 +77,6 @@ $(window).bind('beforeunload', function() {
                 contentType: "application/json",
                 data: {comments: comments},
                 success: function() {
-                    console.log('SAVE PENDING FEEDBACK SUCCESS');
                 },
                 error: function(err) {
                     console.log(err);
@@ -93,8 +87,6 @@ $(window).bind('beforeunload', function() {
         const statusCounter = parseInt($('#statusCounter').val());
         const statusListDisabled = [1, 2, 3, 5, 7, 8];
 
-        console.log(statusCounter);
-
         // also disable checkbox if assignedAttorney is not the same as current user
         const assignedAttorney = $('#assignedAttorneyId').val();
         const currentUser = $('#currentUserId').val();
@@ -104,9 +96,7 @@ $(window).bind('beforeunload', function() {
 
             $('div.comments-container>div.pending-feedback').each(function(){
                 var contractversionid = $(this).attr('id');
-                console.log(contractversionid);
                 var content = $(this).find('.pending-feedback-textarea').val();
-                console.log(content);
         
                 let comment = {
                     contractversionid: contractversionid,
@@ -122,7 +112,6 @@ $(window).bind('beforeunload', function() {
                 contentType: "application/json",
                 data: {comments: comments},
                 success: function() {
-                    console.log('SAVE PENDING FEEDBACK SUCCESS');
                 },
                 error: function(err) {
                     console.log(err);
@@ -171,7 +160,6 @@ $(window).on('load', function() {
     }
 
     checkPendingFeedbacks();
-    console.log(pendingFeedbacksFileIds);
 
     $.ajax({
         url: "/getpendingfeedbacks",
@@ -181,20 +169,16 @@ $(window).on('load', function() {
             pendingFeedbacksFileIds: pendingFeedbacksFileIds,
         },
         success: function(res) {
-            console.log(res.pendingFeedbacks);
-
             for (pendingFeedback of res.pendingFeedbacks) {
 
                 if (pendingFeedback) {
                     var cvId = 'cvId' + pendingFeedback.contractVersion;
-                    console.log(cvId);
     
                     $('#' + cvId).find('textarea.pending-feedback-textarea').val(pendingFeedback.content);
                 }
                 
             }
 
-            console.log('GET PENDING FEEDBACKS SUCCESS');
         },
         error: function(err) {
             console.log(err);
@@ -203,7 +187,6 @@ $(window).on('load', function() {
 
     // get current role
     const role = $('#currentRole').val();
-    console.log(role);
 
     var isDisabled = false;
 
@@ -213,12 +196,8 @@ $(window).on('load', function() {
         const statusCounter = parseInt($('#statusCounter').val());
         const statusListDisabled = [2, 4, 5, 6, 7, 8];
 
-        console.log(statusCounter);
-
         const assignedStaff = $('#assignedStaffId').val();
         const currentUser = $('#currentUserId').val();
-
-        console.log(assignedStaff);
 
         if (statusListDisabled.includes(statusCounter) || currentUser != assignedStaff || !assignedStaff) {
             $('.is-reviewed').prop('disabled', true);
@@ -240,13 +219,9 @@ $(window).on('load', function() {
         const statusCounter = parseInt($('#statusCounter').val());
         const statusListDisabled = [1, 2, 3, 5, 7, 8];
 
-        console.log(statusCounter);
-
         // also disable checkbox if assignedAttorney is not the same as current user
         const assignedAttorney = $('#assignedAttorneyId').val();
         const currentUser = $('#currentUserId').val();
-
-        console.log(assignedAttorney);
 
         if (statusListDisabled.includes(statusCounter) || currentUser != assignedAttorney || !assignedAttorney) {
             $('.is-reviewed').prop('disabled', true);
@@ -272,11 +247,7 @@ $(window).on('load', function() {
         const statusCounter = parseInt($('#statusCounter').val());
         const statusListDisabled = [1, 2, 3, 7, 8];
 
-        console.log(statusCounter);
-
         if (statusListDisabled.includes(statusCounter)) {
-            console.log('tanggal');
-
             $('#addThirdPartyBtn').attr('hidden', true);
         }
     }
@@ -287,8 +258,6 @@ $(window).on('load', function() {
         contentType: "application/json",
         data: {fileid: fileidSelected},
         success: function(res) {
-
-            console.log(res.contractversionslist);
 
             const contractversionslist = res.contractversionslist;
             var rowCount = $('#contractVersionsTable tr').length;
@@ -323,8 +292,6 @@ $(window).on('load', function() {
 
             }
 
-            console.log('SUCCESS');
-
         },
         error: function(err) {
             console.log(err);
@@ -339,7 +306,6 @@ $(window).on('load', function() {
         success: function(res) {
 
             const feedbacklist = res.feedbacklist;
-            console.log(feedbacklist);
 
             var cards = $('.feedback-card');
             var cardCount = $('.feedback-card').length;
@@ -353,8 +319,6 @@ $(window).on('load', function() {
                     if (feedback) {
                         var feedbackrow = $('.feedback-card:eq(' + i + ' )');
                         var feedbackrowid = feedbackrow.attr('id');
-    
-                        console.log(feedback._id, feedbackrowid);
                         
                         if (feedbackrowid == feedback._id) {
                             // filter feedback history list
@@ -365,8 +329,6 @@ $(window).on('load', function() {
                 }
 
             }
-
-            console.log('GET FEEDBACK HISTORY SUCCESS');
 
         },
         error: function(err) {
@@ -407,8 +369,6 @@ $(window).on('load', function() {
         },
         success: function(res) {
 
-            console.log('GET CURRENT FEEDBACK')
-
             const feedback = res.feedback;
 
             var cards = $('.current-feedback');
@@ -447,16 +407,10 @@ $(window).on('load', function() {
         var documentattachedrow = $('#documentsAttachedTable tr:eq(' + i + ' )');
         var isreviewed = documentattachedrow.find('.is-reviewed').val();
 
-        console.log(i + ' ' + isreviewed);
-
         if (isreviewed == 'false') {    // if not all reviewed
             allreviewed = false;
         }
     }
-
-    console.log('isDisabled: ' + isDisabled);
-    console.log('allreviewed: ' + allreviewed);
-    console.log('role: ' + role);
 
     if (!isDisabled) {
         if (allreviewed == false) {
@@ -566,8 +520,6 @@ $(document).ready(() => {
             data: { fileid: fileid },
             success: function (res) {
 
-                console.log(res.hasStaging);
-
                 if (res.hasStaging) {
                     // show replace confirmation modal
                     $('#pendingVersionConfirmationModal').modal('show');
@@ -576,8 +528,6 @@ $(document).ready(() => {
                 }
 
                 $('#contractVersionIdForNewVersion').val(res.contractVersion);
-
-                console.log('SUCCESS');
             },
             error: function (err) {
                 console.log(err);
@@ -660,8 +610,6 @@ $(document).ready(() => {
                     $('#isReferenceFileText').attr('hidden', false);
                 }
 
-                console.log('SUCCESS');
-
             },
             error: function(err) {
                 console.log(err);
@@ -698,8 +646,6 @@ $(document).ready(() => {
                     }
     
                 }
-    
-                console.log('GET FEEDBACK HISTORY SUCCESS');
     
             },
             error: function(err) {
@@ -740,8 +686,6 @@ $(document).ready(() => {
             },
             success: function(res) {
     
-                console.log('GET CURRENT FEEDBACK')
-    
                 const feedback = res.feedback;
 
                 var cards = $('.current-feedback');
@@ -773,8 +717,6 @@ $(document).ready(() => {
 
         const contractversionid = $(this).attr('id');
 
-        console.log(contractversionid);
-
         $('.version-note-card').hide();
         $('#versionNote' + contractversionid).show();
 
@@ -789,7 +731,6 @@ $(document).ready(() => {
             data: { contractid: this.id },
             success: setTimeout(function () {
                 sessionStorage.setItem("action", "forlegalreview");
-                console.log('SUCCESS');
                 location.reload();
             }, 350),
             error: function (err) {
@@ -807,7 +748,6 @@ $(document).ready(() => {
             data: { contractid: this.id },
             success: setTimeout(function () {
                 sessionStorage.setItem("action", "cleared");
-                console.log('SUCCESS');
                 location.reload();
             }, 350),
             error: function (err) {
@@ -824,7 +764,6 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
-                console.log('SUCCESS');
                 location.reload();
             }, 350),
             error: function (err) {
@@ -842,7 +781,6 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
-                console.log('SUCCESS');
                 location.reload();
             }, 350),
             error: function (err) {
@@ -858,7 +796,6 @@ $(document).ready(() => {
             contentType: "application/json",
             data: { contractid: this.id },
             success: setTimeout(function () {
-                console.log('SUCCESS');
                 location.reload();
             }, 350),
             error: function (err) {
@@ -884,7 +821,6 @@ $(document).ready(() => {
             },
             success: setTimeout(function () {
                 sessionStorage.setItem("action", "rerouted");
-                console.log('SUCCESS');
                 location.reload();
             }, 100),
             error: function (err) {
