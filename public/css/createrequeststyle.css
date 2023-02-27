@@ -407,7 +407,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-bottom: 10px;
 }
 
-.signatory-change-note, .company-list-note, .tor-reminder, .student-ojt-reminder, .institutional-moa-reminder {
+.signatory-change-note, .company-list-note, .tor-reminder, .student-ojt-reminder, .institutional-moa-reminder, .review-note {
     font-size: 14px;
     color: #00713D;
     display:none;
@@ -415,17 +415,21 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     margin-top: -10px;
 }
 
+.review-note {
+    display: flex;
+}
+
 #torReminder {
     display: block;
 }
 
-#signatoryLabel {
+#signatoryLabel, #signatoryName, #amountInvolved, #durationDays {
     color: #000;
     text-decoration: underline;
     cursor: pointer;
 }
 
-#signatoryLabel:hover {
+#signatoryLabel:hover, #signatoryName:hover, #amountInvolved:hover, #durationDays:hover {
     color:#00713D;
     transition: 0.25s;
 }

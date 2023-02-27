@@ -14,7 +14,11 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body>
-        <div id="header">Violation Report</div>
+        <div id="header">Violation Report
+            <a data-bs-toggle="modal" data-bs-target="#violationModal" href="#violationModal">
+                <i class="fa fa-question-circle" aria-hidden="true" id="violationTooltip"></i>
+            </a>
+        </div>
         <input type="hidden" id="currentRole" value="{{user.role.name}}">
         <input type="hidden" id="currentId" value="{{user._id}}">
         <!--
@@ -53,6 +57,39 @@
                 </div>
             </div>
         </div>
+
+        <!-- Violation Report Modal -->
+            <div class="modal fade modal-lg" id="violationModal" tabindex="-1" aria-labelledby="violationModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Violation Report</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="">
+                                <div id = "violationHeader">How do I incur violations?</div><br>
+                                <div>
+                                    Contracts are considered as “late submission” if these are sent to the OULC in less than 
+                                    seven (7) working days before the effectivity date of the contract— worse, <b>when the contract 
+                                    is submitted for review after the effectivity period.</b>
+                                    <br><br>
+                                    Note that <b>repeated late submissions may be reported to
+                                    the RMCA as compliance violations</b>, which can lead to administrative sanctions
+                                    to the staff or unit/department. These are considered <b>repeated violations</b> of University
+                                    Policies.<br><br>
+                                <div>Last Updated: Jan. 27, 2023</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </body>
 </html>
 

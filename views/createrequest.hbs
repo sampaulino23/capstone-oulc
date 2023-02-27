@@ -71,7 +71,9 @@
                 </div>
                 <div class = "row">
                     <div class="col label-and-input mb-3">
-                        <label for="signatoryname" class="form-label">Name of Signatory*</label>
+                        <a data-bs-toggle="modal" data-bs-target="#signatoryNameModal" href="#signatoryNameModal">
+                            <label for="signatoryname" class="form-label" id = "signatoryName">Name of Signatory*</label>
+                        </a>
                         <input type="text" name="signatoryname" class="text-input" id="signatoryname" required>
                     </div>
                     <div class="col label-and-input mb-3">
@@ -165,7 +167,9 @@
                 </div>
                 
                 <div class="col label-and-input mb-3">
-                    <label for="amount" class="break-text form-label">Amount Involved, if any (₱)</label>
+                    <a data-bs-toggle="modal" data-bs-target="#amountInvolvedModal" href="#amountInvolvedModal">
+                        <label for="amount" class="break-text form-label" id="amountInvolved">Amount Involved, if any (₱)</label>
+                    </a>
                     <input type="number" name="amount" class="amtdate text-input" id="amount" placeholder = "XXXX.XX" min = "0">
                 </div>
 
@@ -175,7 +179,9 @@
                         <input type="text" class="amtdate text-input" name="daterange"/ required>
                     </div>
                     <div class="col label-and-input mb-3">
-                        <label for="duration" class="form-label">Duration (days)</label>
+                        <a data-bs-toggle="modal" data-bs-target="#contractDurationModal" href="#contractDurationModal">
+                            <label for="duration" class="form-label" id ="durationDays">Duration (days)</label>
+                        </a>
                         <input type="number" name="duration" class="text-input read-only default-read-only" id="duration" readonly required>
                     </div>
                 </div>
@@ -195,6 +201,7 @@
                         </label>
                     </div>
                 </div>
+                <span class ="review-note mb-3">Note: Express reviews are reserved for OULC templates/contracts. Other requests are processed as regular requests.</span>
                 <div class = "steps-subheader mb-3">File Attachments</i></div>
                 <div class="solo-row mb-3">
                     <label for="contractFiles" class="form-label">Upload Contract*</label>
@@ -290,6 +297,155 @@
                                     </tr>
                                     <tr>
                                         <td>₱100,000 and below</td>
+                                        <td>Level 5</td>
+                                    </tr>
+                                    </table>
+                                </div><br>
+                                <div>Last Updated: Jan. 27, 2023</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signatory Policy Modal -->
+            <div class="modal fade modal-lg" id="signatoryNameModal" tabindex="-1" aria-labelledby="signatoryNameModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Name of Signatory</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="">
+                                <div>
+                                    <div class="table-guidelines">The table of authority below enumerates the persons who have the 
+                                        authority to sign contracts on behalf of the university within the 
+                                        jurisdiction of their respective offices.</div><br>
+                                    <div id = "policyModalHeader">TABLE 1: Signature Authority</div><br>
+                                    <table id = "policyModalTable" style="width:100%">
+                                    <tr>
+                                        <th  style="width:20%">Signatory Level</th>
+                                        <th>Authorized Signatory</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Level 1</td>
+                                        <td>President</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level 2</td>
+                                        <td>Chancellor</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level 3</td>
+                                        <td>Associate Vice-Chancellors, Deans, Controller and Executive Directors</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level 4</td>
+                                        <td>Associate Vice-Chancellors, Deans, Controller and Executive Directors</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level 5</td>
+                                        <td>Directors directly reporting to the Vice-Chancellors and Vice-Presidents; 
+                                            Directors directly reporting to the Chancellor; Directors and Heads of Offices under the 
+                                            Office of the President.</td>
+                                    </tr>
+                                    </table>
+                                </div><br>
+                                <div>Last Updated: Jan. 27, 2023</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amount Involved Modal -->
+            <div class="modal fade modal-md" id="amountInvolvedModal" tabindex="-1" aria-labelledby="amountInvolvedModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Amount Involved</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="">
+                                <div>
+                                    <div id = "policyModalHeader">TABLE 3: Amount of Contract</div><br>
+                                    <table id = "policyModalTable" style="width:100%">
+                                    <tr>
+                                        <th>Amount of Contract</th>
+                                        <th>Authorized Signatory</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Above 1 Million</td>
+                                        <td>Level 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Above ₱500,000 to ₱1 Million</td>
+                                        <td>Level 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Above ₱100,000 to ₱500,000</td>
+                                        <td>Level 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>₱100,000 and below</td>
+                                        <td>Level 5</td>
+                                    </tr>
+                                    </table>
+                                </div><br>
+                                <div>Last Updated: Jan. 27, 2023</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duration Contract Modal -->
+            <div class="modal fade modal-md" id="contractDurationModal" tabindex="-1" aria-labelledby="contractDurationModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100" id="exampleModalLabel">Duration (days)</h5>
+                            <button type="button" class="header-close-btn" data-bs-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="">
+                                <div>
+                                    <div id = "policyModalHeader">TABLE 2: Duration of Contract</div><br>
+                                    <table id = "policyModalTable" style="width:100%">
+                                    <tr>
+                                        <th>Duration of Contract</th>
+                                        <th>Authorized Signatory</th>
+                                    </tr>
+                                    <tr>
+                                        <td>More than 3 years</td>
+                                        <td>Level 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>More than 1 year to 3 years</td>
+                                        <td>Level 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Up to 1 year</td>
                                         <td>Level 5</td>
                                     </tr>
                                     </table>
