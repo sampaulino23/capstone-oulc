@@ -581,12 +581,14 @@ const requestercontroller = {
         try {
 
             const user = req.user;
+            const requesters = await User.find({department: user.department}).exec();
 
             const contracttypes = await ContractType.find({}).lean().exec();
 
-            const contractrequests = await ContractRequest.find({requester: user._id}).select('_id').exec();
+            // const contractrequests = await ContractRequest.find({requester: user._id}).select('_id').exec();
+            const contractrequests = await ContractRequest.find({requester: { "$in": requesters}}).select('_id').exec();
 
-            console.log(contractrequests);
+            // console.log(contractrequests);
 
             const repositoryFiles = await RepositoryFile.find({requestid: { "$in": contractrequests}}).lean()
             .populate({
