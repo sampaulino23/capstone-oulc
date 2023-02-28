@@ -1645,12 +1645,22 @@ const oulccontroller = {
     getIssueLog: async (req, res) => {
         try {
 
-            const issues = await Issue.find({}).lean().populate({
-                path: 'contractRequest'
-            })
-            .sort({issueNumber: 1, date: 1})
-            .exec(); 
-            
+            var issues;
+            if (req.user.roleName == "Requester") {
+                issues = await Issue.find({requester: req.user._id}).lean().populate({
+                    path: 'contractRequest'
+                })
+                .sort({issueNumber: 1, date: 1})
+                .exec(); 
+            }
+            else {
+                issues = await Issue.find({}).lean().populate({
+                    path: 'contractRequest'
+                })
+                .sort({issueNumber: 1, date: 1})
+                .exec(); 
+            }
+
             res.render('issuelog', {
                 user_id: req.user._id,
                 user_fullname:req.user.fullName,
