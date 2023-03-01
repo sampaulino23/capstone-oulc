@@ -100,6 +100,7 @@ function checkRequester(req,res,next){
 router.get('/', requestercontroller.getHome);
 router.get('/templates', checkRequester, staffcontroller.getTemplates);
 router.get('/violationreport', checkRequester, requestercontroller.getViolationReport);
+router.post('/violationreportdate', checkRequester, requestercontroller.getViolationReportDate);
 router.get('/FAQs', checkRequester, oulccontroller.getFAQs);
 router.get('/repository', checkRequester, requestercontroller.getRepository);
 router.get('/policy', checkRequester, oulccontroller.getPolicy);

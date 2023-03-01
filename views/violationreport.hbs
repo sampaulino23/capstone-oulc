@@ -21,6 +21,17 @@
         </div>
         <input type="hidden" id="currentRole" value="{{user.role.name}}">
         <input type="hidden" id="currentId" value="{{user._id}}">
+
+        <form action="/requester/violationreportdate" method="POST">
+        <ul class="nav-tabs" id="myTab" role="tablist">
+            <label for="start"><b>Start date:</b></label>
+            <input type="date" class = "date-input" id="startdate" name="startdate" value="{{startdate}}" min="" max="" required>
+
+            <label for="start"><b>End date:</b></label>
+            <input type="date" class = "date-input" id="enddate" name="enddate" value="{{enddate}}" min="" max="" required>
+        <button type="submit" id="datefilter" class="datefilter"> Filter Date</button>
+        </form>
+        </ul>
         <!--
         <div id="user-table" class="tab-pane active">
             <div class="w-100">
