@@ -164,6 +164,7 @@
 
                         <label for="documentNumber" class="form-label">Document Number</label>
                         <input class="form-control" id="documentNumber" name="documentNumber" ></input>
+                        <p id="issuerequesterror" style="margin-left: 5px; font-weight: bold; font-family: 'Source Sans Pro', sans-serif; color: red; font-size: 14px"></p>
 
                         <label for="issueSummary" class="form-label">Summary</label>
                         <textarea class="form-control" id="issueSummary" name="issueSummary" required></textarea>
@@ -202,5 +203,24 @@
         $('.action-cell').click(function(event){
             event.stopPropagation();
         });
+
+        $("#documentNumber").keyup(function() {
+
+            var trackingNumber = $('#documentNumber').val();
+
+                    $.get('/requester/getCheckIssueRequest', {trackingNumber: trackingNumber}, function (result) {
+
+                        if(result.trackingNumber == trackingNumber) {
+                            $('#documentNumber').css('background', 'rgba(0,0,0,0.10)');
+                            $('#createIssueBtn').prop('disabled', false);
+                            $('#issuerequesterror').text('');
+                        }
+                        else {
+                            $('#issuerequesterror').text('The request document number is invalid.');
+                            $('#createIssueBtn').prop('disabled', true);
+                        }
+                    }); 
+
+         });  
     });
 </script>

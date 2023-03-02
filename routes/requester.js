@@ -118,6 +118,7 @@ router.post('/submitrevision', requestercontroller.submitRevision);
 router.post('/deletenegotiationfile', requestercontroller.postDeleteNegotiationFile);
 router.get('/downloadNegotiationFile/:fileid', requestercontroller.getDownloadNegotiationFile);
 router.get('/issuelog', checkRequester, oulccontroller.getIssueLog);
+router.get('/getCheckIssueRequest', requestercontroller.getCheckIssueRequest);
 router.post('/createissue', requestercontroller.postCreateIssue);
 router.post('/createissuerequest', requestercontroller.postCreateIssueRequest);
 router.get('/negotiation/:fileid', requestercontroller.viewNegotiationFile);

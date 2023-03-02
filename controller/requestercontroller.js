@@ -28,6 +28,9 @@ const Issue = require('../models/Issue.js');
 const Feedback = require('../models/Feedback.js');
 const { type } = require('os');
 
+const MongoClient = require('mongodb').MongoClient;
+const db = require('../config/database').database;
+
 const conn = mongoose.createConnection(url);
 
 // Init gridfsBucket
@@ -843,19 +846,23 @@ const requestercontroller = {
     },
 
     getCheckIssueRequest: async (req, res) => {
+        try {
+            MongoClient.connect(url, function (err, client) {
+                if (err) throw err;
+                var db = client.db('test');
 
-        var documentNumber = req.query.documentNumber;
+                var trackingNumber = req.query.trackingNumber;
+    
+                db.collection('contractrequests').findOne({trackingNumber: trackingNumber, statusCounter: 7, requester: req.user._id}, 'trackingNumber', function (err, result) {
+                    if (err) throw err;
+                    client.close();
+                    res.send(result);
+                });
+            });
 
-        const existingRequest = await ContractRequest.findOne({trackingNumber: documentNumber, requester: req.user._id}).exec();
-
-        if(existingRequest){
-            console.log("Request Exists.");
-            //res.send(existingRequest);
+        } catch (err) {
+            console.log(err);
         }
-        else{
-            console.log("Request does NOT Exist.");
-        }
-
     },
 
     postCreateIssue: async (req, res) => {
