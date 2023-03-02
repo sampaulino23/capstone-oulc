@@ -475,24 +475,11 @@ const specificrequestcontroller = {
                 }
             });
 
-            // point to the template folder
-            const handlebarOptions = {
-                viewEngine: {
-                    partialsDir: path.resolve('./views/'),
-                    defaultLayout: false,
-                },
-                viewPath: path.resolve('./views/'),
-            };
-
-            // use a template file with nodemailer
-            transporter.use('compile', hbs(handlebarOptions))
-
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
                 to: "capstone.samantha@gmail.com", //change to tester/user email 
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
-                /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
                 + "\nContract Request Details: \n" 
@@ -502,17 +489,7 @@ const specificrequestcontroller = {
                 + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
                 + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
                 + "\nRegards," 
-                + "\nOffice of the University Legal Counsel",
-                */
-                template: "email",
-                context:{
-                    trackingNumber: contractrequest.trackingNumber,
-                    title: contractrequest.requestTitle,
-                    requestDate: contractrequest.requestDate,
-                    documentType: documenttype.name,
-                    subjectMatter: contractrequest.subjectMatter,
-                    link: "http://localhost:3000"
-                }
+                + "\nOffice of the University Legal Counsel" 
             }
 
             transporter.sendMail (options, function (err, info) {
@@ -584,25 +561,12 @@ const specificrequestcontroller = {
                 }
             });
 
-            // point to the template folder
-            const handlebarOptions = {
-                viewEngine: {
-                    partialsDir: path.resolve('./views/'),
-                    defaultLayout: false,
-                },
-                viewPath: path.resolve('./views/'),
-            };
-
-            // use a template file with nodemailer
-            transporter.use('compile', hbs(handlebarOptions))
-
             // change "to" field to your dummy email so you can see the password
             const options = {
                 from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                to: "capstone.samantha@gmail.com", //change to tester/user email 
-                // to: "martin_murillo@dlsu.edu.ph",
+                //to: "capstone.samantha@gmail.com", //change to tester/user email 
+                to: "migfranzbro@gmail.com",
                 subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
-                /*
                 text: "Good day! \n" + "Your request for contract approval with Document No. " 
                 + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
                 + "\nContract Request Details: \n"
@@ -612,17 +576,7 @@ const specificrequestcontroller = {
                 + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
                 + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
                 + "\nRegards," 
-                + "\nOffice of the University Legal Counsel",
-                */
-                template: "email",
-                context:{
-                    trackingNumber: contractrequest.trackingNumber,
-                    title: contractrequest.requestTitle,
-                    requestDate: contractrequest.requestDate,
-                    documentType: documenttype.name,
-                    subjectMatter: contractrequest.subjectMatter,
-                    link: "http://localhost:3000"
-                }
+                + "\nOffice of the University Legal Counsel" 
             }
 
             transporter.sendMail (options, function (err, info) {
