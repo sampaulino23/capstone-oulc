@@ -185,6 +185,11 @@ $(window).on('load', function() {
         }
     });
 
+    var pendingRowCount = $("#stagingUploadsTable tr").length;
+    if (pendingRowCount != 0) {
+        $("#pendingNote").show();
+    }
+
     // get current role
     const role = $('#currentRole').val();
 
