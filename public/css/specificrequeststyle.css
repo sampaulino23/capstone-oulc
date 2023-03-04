@@ -709,3 +709,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 .expiry-prompt, .expired-prompt {
     color:#ff3939;
 }
+
+.contract-version-row:hover {
+    cursor: pointer;
+}

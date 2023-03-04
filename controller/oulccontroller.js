@@ -1646,12 +1646,15 @@ const oulccontroller = {
         try {
 
             var issues;
+            var requests;
             if (req.user.roleName == "Requester") {
                 issues = await Issue.find({requester: req.user._id}).lean().populate({
                     path: 'contractRequest'
                 })
                 .sort({issueNumber: 1, date: 1})
                 .exec(); 
+
+                requests = await ContractRequest.find({requester: req.user._id, statusCounter: 7}).lean().exec(); 
             }
             else {
                 issues = await Issue.find({}).lean().populate({
@@ -1666,6 +1669,7 @@ const oulccontroller = {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 issues: issues,
+                requests: requests,
                 forrevision_count: req.session.forrevision_count
             });
 

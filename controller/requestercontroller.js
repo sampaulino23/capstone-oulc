@@ -28,8 +28,8 @@ const Issue = require('../models/Issue.js');
 const Feedback = require('../models/Feedback.js');
 const { type } = require('os');
 
-const MongoClient = require('mongodb').MongoClient;
-const db = require('../config/database').database;
+//const MongoClient = require('mongodb').MongoClient;
+//const db = require('../config/database').database;
 
 const conn = mongoose.createConnection(url);
 
@@ -845,7 +845,7 @@ const requestercontroller = {
         }
     },
 
-    getCheckIssueRequest: async (req, res) => {
+/*    getCheckIssueRequest: async (req, res) => {
         try {
             MongoClient.connect(url, function (err, client) {
                 if (err) throw err;
@@ -864,7 +864,7 @@ const requestercontroller = {
             console.log(err);
         }
     },
-
+*/
     postCreateIssue: async (req, res) => {
         try {
 

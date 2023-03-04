@@ -162,9 +162,19 @@
                             <option value="Feedback">Feedback</option>
                         </select>
 
+                         <label for="documentNumber" class = "modal-text">Document Number</label><br>
+                        <select name="documentNumber" id="documentNumber" class="dropdown" >
+                            <option value="">N/A</option>
+                            {{#each requests}}
+                                <option value="{{trackingNumber}}">{{trackingNumber}}</option>
+                            {{/each}}
+                        </select>
+
+                        <!--
                         <label for="documentNumber" class="form-label">Document Number</label>
                         <input class="form-control" id="documentNumber" name="documentNumber" ></input>
                         <p id="issuerequesterror" style="margin-left: 5px; font-weight: bold; font-family: 'Source Sans Pro', sans-serif; color: red; font-size: 14px"></p>
+                        --> 
 
                         <label for="issueSummary" class="form-label">Summary</label>
                         <textarea class="form-control" id="issueSummary" name="issueSummary" required></textarea>
@@ -204,7 +214,8 @@
             event.stopPropagation();
         });
 
-        $("#documentNumber").keyup(function() {
+
+/*        $("#documentNumber").keyup(function() {
 
             var trackingNumber = $('#documentNumber').val();
 
@@ -221,6 +232,6 @@
                         }
                     }); 
 
-         });  
+         });  OLD FUNCTION */
     });
 </script>
