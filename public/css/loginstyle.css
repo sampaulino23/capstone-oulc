@@ -84,3 +84,14 @@ input[type=submit]:hover{
     font-weight: 400;
     padding-bottom: 10px;
 }
+
+#password-div {
+    display: flex;
+    align-items: baseline;
+}
+
+#showPassword {
+    cursor: pointer;
+    margin-left: -50px;
+    color: black;
+}

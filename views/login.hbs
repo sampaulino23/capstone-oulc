@@ -20,9 +20,24 @@
                 <div>Email</div>
                 <input type="email" id = "email" name = "email" class="emailbox" placeholder="Enter your email" required>
                 <div>Password</div>
-                <input type="password" id = "password" name = "password" class="pwdbox" placeholder="Password" required>
+                <div id = "password-div">
+                    <input type="password" id = "password" name = "password" class="pwdbox" placeholder="Password" required>
+                    <i id = "showPassword" class="far fa-eye" id="togglePassword"></i>
+                </div>
                 <input type="submit" class="loginbtn" value="Login">
             </form>
         </div>
     </body>
 </html>
+<script>
+    const showPassword = document.querySelector('#showPassword');
+    const password = document.querySelector('#password');
+
+    showPassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
