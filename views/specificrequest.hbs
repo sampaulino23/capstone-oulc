@@ -187,9 +187,12 @@
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
                             type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
                     </li>
-                    <li>
+                    <li id = "changes-li-item">
                         <button class="nav-item" id="changes-tab" data-bs-toggle="tab" data-bs-target="#changes"
                             type="button" role="tab" aria-controls="changes" onclick="selectChanges()">Changes</button>
+                        <div id = "changesCircle" class = "changes-circle">
+                            <div id = "changesLength" class = "changes-length"></div>
+                        </div>
                     </li>
                     <li>
                         <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"

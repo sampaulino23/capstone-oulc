@@ -209,7 +209,7 @@
     cursor: default;
 }
 
-.feedback-header, .discussion-header, .version-header, .files-header{
+.feedback-header, .discussion-header, .version-header, .files-header, .changes-header {
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -712,4 +712,46 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 
 .contract-version-row:hover {
     cursor: pointer;
+}
+
+#pendingNote {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #00713D;
+    display:none;
+    margin-bottom: 30px;
+}
+
+.changes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.changes-circle {
+    display: inline-block;
+    background-color: #0C8039;
+    margin: 1px;
+    margin-left: -12px;
+    border-radius: 50%;
+    transform: translateY(-10px);
+    display: none;
+}
+
+.changes-length {
+    color: #FFF;
+    display: table-cell;
+    vertical-align: middle; 
+    text-align: center;
+    text-decoration: none;
+    height: 20px;
+    width: 20px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+#changes-li-item {
+    display: flex;
+    align-items: flex-start;
 }

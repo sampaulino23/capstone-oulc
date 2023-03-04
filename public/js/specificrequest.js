@@ -188,6 +188,8 @@ $(window).on('load', function() {
     var pendingRowCount = $("#stagingUploadsTable tr").length;
     if (pendingRowCount != 0) {
         $("#pendingNote").show();
+        $("#changesLength").append(pendingRowCount);
+        $("#changesCircle").show();
     }
 
     // get current role
