@@ -27,7 +27,7 @@
         <div id = "status">
             <div id = "statusNewDiv">
                 <div class = "status-and-actual-div">
-                    <div id = "statusTextDiv" class = "status-text">Status: </div>
+                    <div class = "status-text">Status: </div>
                     <div id = "statusTextDiv" class = "status-text actual">{{contractrequest.status}}</div>
                 </div>
                 <div id = "assignedToDiv" class = "status-text actual"><b>Assigned to:</b> {{contractrequest.assignedStaff.fullName}} (Staff) & {{contractrequest.assignedAttorney.fullName}} (Attorney)</div>
@@ -618,7 +618,6 @@
         var statusTextVal = $('#contractStatus').val();
         var assignedAttyVal = $('#assignedAttorneyId').val();
         var assignedStaffVal = $('#assignedStaffId').val();
-        var statusTextDiv = $("#statusTextDiv");
 
         if (role == "Staff" && (statusTextVal == "Pending" && assignedStaffVal == "")) {
             statusTextDiv.prepend("Unassigned (");
