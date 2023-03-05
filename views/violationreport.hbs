@@ -119,10 +119,10 @@
     ]);
 
     var options = {
-        width: 550,
+        width: 700,
         height: 400,
         legend: { position: 'none' },
-        hAxis: { textPosition: 'none' },
+        hAxis: { textPosition: 'show' },
         backgroundColor: 'transparent',
         gridlines: { color: 'transparent' },
         };
@@ -132,9 +132,9 @@
 
     // for column chart of violation per type
     var data4 = google.visualization.arrayToDataTable([
-        ['Contract Type', 'Count', { role: 'style' }],
+        ['Contract Type', 'Count'],
         {{#each contractTypes}}
-        ['{{name}}', {{violationCount}}, '#00713D'],
+        ['{{name}}', {{violationCount}}],
         {{/each}}
     ]);
 
@@ -142,8 +142,9 @@
         width: 550,
         height: 400,
         legend: { position: 'none' },
-        hAxis: { textPosition: 'none' },
+        hAxis: { textPosition: 'show' },
         backgroundColor: 'transparent',
+        colors: ['#6DB388', '#00713D', '#1A6939', '#2B834D', '#0C8039'],
         gridlines: { color: 'transparent' },
         };
 

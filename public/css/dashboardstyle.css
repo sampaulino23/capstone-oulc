@@ -235,3 +235,7 @@
 #violationPerMonthCard, #violationPerTypeCard {
     max-height: 450px !important;
 }
+
+#columnchart-violation-month {
+    margin-left: -80px;
+}
