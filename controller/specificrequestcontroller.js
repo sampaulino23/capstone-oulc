@@ -136,12 +136,6 @@ const specificrequestcontroller = {
                     .populate({
                         path: 'versionNote'
                     })
-                    .populate({
-                        path: 'comment',
-                        populate: {
-                            path: 'user_id'
-                        }
-                    })
                     .exec();
                 
                     latestversioncontracts.push(latestversioncontract);
@@ -303,12 +297,6 @@ const specificrequestcontroller = {
                     .lean()
                     .populate({
                         path: 'versionNote'
-                    })
-                    .populate({
-                        path: 'comment',
-                        populate: {
-                            path: 'user_id'
-                        }
                     })
                     .exec();
 
@@ -534,9 +522,6 @@ const specificrequestcontroller = {
                     .lean()
                     .populate({
                         path: 'versionNote'
-                    })
-                    .populate({
-                        path: 'comment'
                     })
                     .exec();
 
