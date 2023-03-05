@@ -119,6 +119,7 @@ $(document).ready(() => {
         }
 
         $(".signatory-change-note").css("display", "block");
+        $('.signatory-change-note').delay(3000).hide(0);
     });
 
     $('#setCustomSignatoryLevel').click(() => {
@@ -138,7 +139,7 @@ $(document).ready(() => {
         $('#signatorylevel').addClass('default-read-only');
 
         var amount = document.getElementById("amount").value;
-            var duration = document.getElementById("duration").value;
+        var duration = document.getElementById("duration").value;
     
             if(amount <= 100000){
                 if(duration <= 365){
@@ -170,8 +171,7 @@ $(document).ready(() => {
             if(amount > 1000000){
                 $('#signatorylevel').val(1);
             }
-    
-            $(".signatory-change-note").css("display", "block");
+
 
         $('.amtdate').on('change', function() { 
             console.log('amt date working');
@@ -211,11 +211,16 @@ $(document).ready(() => {
             }
     
             $(".signatory-change-note").css("display", "block");
+            $('.signatory-change-note').delay(3000).hide(0); 
         });
 
         $('#setCustomSignatoryLevel').prop('hidden', false);
         $('#setAutomaticSignatoryLevel').prop('hidden', true);
     });
 
-    
+    $('#signatorylevel').on('change', function() {
+        $(".signatory-change-note").css("display", "block");
+        $('.signatory-change-note').delay(3000).hide(0); 
+    });
+
 });
