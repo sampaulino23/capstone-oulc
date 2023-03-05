@@ -30,6 +30,10 @@ const ContractVersionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'VersionNote',
     },
+    comment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+    }
 });
 
 module.exports = mongoose.model('ContractVersion', ContractVersionSchema);
