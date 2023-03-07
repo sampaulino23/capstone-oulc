@@ -506,23 +506,13 @@ const specificrequestcontroller = {
 
             var contractRequestId = req.body.addAttorneyFeedbackID;
 
-            // var feedback = new Feedback({
-            //     contractRequest: req.body.addAttorneyFeedbackID,
-            //     user_id: req.user._id,
-            //     content: req.body.addAttorneyFeedback
-            // });
-
             console.log("Inside For Revision Attorney");
 
             const contractrequest =  await ContractRequest.findOne({ _id: contractRequestId }); //for email
             const documenttype = await ContractType.findOne({ _id: contractrequest.contractType}); //for email
-            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
-            // await feedback.save();
 
             const contracts = await Contract.find({contractRequest: contractRequestId}).lean().exec();
             var feedbacks = [];
-
-            // var latestversioncontracts = [];
 
             for (contract of contracts) {
                 const latestversioncontract = await ContractVersion.findOne({contract: contract._id, version: contract.latestversion})
@@ -532,54 +522,69 @@ const specificrequestcontroller = {
                     })
                     .exec();
 
-                var pendingFeedback = await Feedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
+                var pendingFeedback = await Feedback.findOne({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
 
-                if (pendingFeedback) {
-                    console.log(pendingFeedback);
+                if (pendingFeedback && pendingFeedback.content !== '') {
+                    // console.log(pendingFeedback);
     
                     feedbacks.push(pendingFeedback._id);
                 }
-                // latestversioncontracts.push(latestversioncontract);
             }
 
-            await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
+            if (feedbacks === undefined || feedbacks.length == 0) {
+                res.send('Empty feedbacks');
+            } else {
 
-            // code section below is for sending the password to the account's email address
-            const transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: "capstone.samantha@gmail.com",
-                    pass: "uapnxnyyyqqsfkax"
+                for (feedback of feedbacks) {
+                    await Feedback.findByIdAndUpdate(feedback, {$set: { status: 'Submitted'}}).exec();
                 }
-            });
 
-            // change "to" field to your dummy email so you can see the password
-            const options = {
-                from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                //to: "capstone.samantha@gmail.com", //change to tester/user email 
-                to: "migfranzbro@gmail.com",
-                subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
-                text: "Good day! \n" + "Your request for contract approval with Document No. " 
-                + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
-                + "\nContract Request Details: \n"
-                + "\nTitle: " + contractrequest.requestTitle + "\n"
-                + "Request Date: " + contractrequest.requestDate + "\n"
-                + "Document Type: " + documenttype.name + "\n"
-                + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
-                + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
-                + "\nRegards," 
-                + "\nOffice of the University Legal Counsel" 
+                // change feedbackCounter of contractRequest
+                await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $inc: { feedbackCounter: 1 } });
+
+                // change statusCounter of contractRequest
+                await ContractRequest.findOneAndUpdate({ _id: contractRequestId }, { $set: { statusCounter: 5 } });
+
+
+                // code section below is for sending the password to the account's email address
+                const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: "capstone.samantha@gmail.com",
+                        pass: "uapnxnyyyqqsfkax"
+                    }
+                });
+
+                // change "to" field to your dummy email so you can see the password
+                const options = {
+                    from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
+                    //to: "capstone.samantha@gmail.com", //change to tester/user email 
+                    to: "migfranzbro@gmail.com",
+                    subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
+                    text: "Good day! \n" + "Your request for contract approval with Document No. " 
+                    + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
+                    + "\nContract Request Details: \n"
+                    + "\nTitle: " + contractrequest.requestTitle + "\n"
+                    + "Request Date: " + contractrequest.requestDate + "\n"
+                    + "Document Type: " + documenttype.name + "\n"
+                    + "Subject Matter: " + contractrequest.subjectMatter + "\n" 
+                    + "\nLog-in now to begin processing the request: http://localhost:3000 \n" 
+                    + "\nRegards," 
+                    + "\nOffice of the University Legal Counsel" 
+                }
+
+                transporter.sendMail (options, function (err, info) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    console.log("Sent: " + info.response);
+                })       
+
+                res.redirect('back');
+
             }
 
-            transporter.sendMail (options, function (err, info) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                console.log("Sent: " + info.response);
-            })       
-
-            res.redirect('back');
         } catch (err) {
             console.log(err);
         }

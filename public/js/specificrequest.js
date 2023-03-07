@@ -812,6 +812,57 @@ $(document).ready(() => {
         });
     });
 
+    $('#forRevisionBtn').click(function() {
+
+        var hasFeedback = false;
+        var comments = [];
+
+        $('div.comments-container>div.pending-feedback').each(function(){
+            var contractversionid = $(this).attr('id');
+            var content = $(this).find('.pending-feedback-textarea').val();
+    
+            let comment = {
+                contractversionid: contractversionid,
+                content: content
+            }
+    
+            comments.push(comment);
+        });
+
+        console.log(comments);
+    
+        $.ajax({
+            url: "/savependingfeedbackchanges",
+            method: "GET",
+            contentType: "application/json",
+            data: {comments: comments},
+            success: function() {
+                for (comment of comments) {
+                    
+                }
+                console.log('12');
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+
+        for (comment of comments) {
+            if (comment.content || comment.content != '') {
+                hasFeedback = true;
+            }
+        }
+
+        setTimeout(function() {
+            if (hasFeedback) {
+                $('#forRevisionModal').modal('show'); 
+    
+            } else {
+                $('#noFeedbackModal').modal('show');
+            }
+        }, 800);
+    });
+
     $('#routeToAnotherAttorney').click(function () {
         $(window).unbind('beforeunload');
         
