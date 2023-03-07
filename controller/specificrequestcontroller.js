@@ -46,7 +46,7 @@ conn.once('open', () => {
     });
 });
 
-var client = require('@draftable/compare-api').client('Ctqxea-test', 'ba07097e83b21734ff6200b18278eee8');
+var client = require('@draftable/compare-api').client('jyzbBW-test', 'effb8fd96631b61cdeca146e1cb7b237');
 var comparisons = client.comparisons;
 
 const specificrequestcontroller = {
@@ -558,8 +558,8 @@ const specificrequestcontroller = {
                 // change "to" field to your dummy email so you can see the password
                 const options = {
                     from: "OULC Contract Management System Admin <capstone.samantha@gmail.com>",
-                    //to: "capstone.samantha@gmail.com", //change to tester/user email 
-                    to: "migfranzbro@gmail.com",
+                    to: "capstone.samantha@gmail.com", //change to tester/user email 
+                    // to: "migfranzbro@gmail.com",
                     subject: "Contract Request [Document No. " + contractrequest.trackingNumber + "] - For Revision",
                     text: "Good day! \n" + "Your request for contract approval with Document No. " 
                     + contractrequest.trackingNumber + " has been marked as for revision. Please check comments and upload revised version of document/s. \n"
