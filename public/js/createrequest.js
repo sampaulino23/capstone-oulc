@@ -123,6 +123,9 @@ $(document).ready(() => {
     });
 
     $('#setCustomSignatoryLevel').click(() => {
+        // change isCustomSignatoryLevel to true
+        $('#isCustomSignatoryLevel').val(true);
+
         $('#signatorylevel').prop('readonly', false);
         $('#signatorylevel').removeClass('read-only');
         $('#signatorylevel').removeClass('default-read-only');
@@ -134,6 +137,8 @@ $(document).ready(() => {
     });
 
     $('#setAutomaticSignatoryLevel').click(() => {
+        // change isCustomSignatoryLevel to false
+        $('#isCustomSignatoryLevel').val(false);
         $('#signatorylevel').prop('readonly', true);
         $('#signatorylevel').addClass('read-only');
         $('#signatorylevel').addClass('default-read-only');

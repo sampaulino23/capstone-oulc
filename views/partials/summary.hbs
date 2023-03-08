@@ -37,7 +37,7 @@
         </div>
         <div class="col-6">
             Signatory Level<br>
-            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.signatoryLevel}}</textarea>
+            <textarea name="textarea" rows = "1" class = "text-input"  readonly>{{contractrequest.signatoryLevel}}{{#compare contractrequest.isCustomSignatoryLevel '==' true}} (Custom){{/compare}}</textarea>
         </div>
     </div>
     <div class="row">

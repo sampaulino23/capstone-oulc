@@ -63,6 +63,9 @@ const ContractRequestSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    isCustomSignatoryLevel: {
+        type: Boolean,
+    },
     signatoryName: {
         type: String,
         required: true
