@@ -137,7 +137,7 @@ function checkStaff(req,res,next){
 }
 
 router.get('/', checkStaff, oulccontroller.getDashboard);
-router.post('/dashboard', checkStaff, oulccontroller.getDashboardDate);
+router.post('/dashboard', oulccontroller.getDashboardDate);
 router.get('/contractrequests', checkStaff, staffcontroller.getRequests);
 router.get('/templates', checkStaff, staffcontroller.getTemplates);
 router.get('/FAQs', checkStaff, oulccontroller.getFAQs);
