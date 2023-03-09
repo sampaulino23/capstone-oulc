@@ -27,7 +27,7 @@
             var startDate = new Date();
             var endDate = "{{repositoryFile.requestid.effectivityEndDate}}";
             var daysGapExpiry = dateDiffInDays(new Date(), new Date(endDate));
-            if (daysGapExpiry <= 7 || daysGapExpiry == 0) {
+            if (daysGapExpiry <= 7 && daysGapExpiry >= 0) {
                 $('.expiry-prompt').css('display', 'block');
                 $('.expired-prompt').css('display', 'none');
             }
