@@ -377,11 +377,13 @@ $(window).on('load', function() {
         success: function(res) {
 
             const feedback = res.feedback;
+            var hasCurrentFeedback = false;
 
             var cards = $('.current-feedback');
             var cardCount = $('.current-feedback').length;
 
             cards.hide();
+            $('#noCurrentFeedbackText').prop('hidden', true);
 
             if (feedback) {
                 for (var i = 0; i < cardCount; i++) {
@@ -392,9 +394,15 @@ $(window).on('load', function() {
                     if (feedbackrowid == feedback._id) {
                         // filter feedback history list
                         feedbackrow.show();
+
+                        hasCurrentFeedback = true;
                     }
-    
                 }
+            }
+
+            // if no current feedback
+            if (!hasCurrentFeedback) {
+                $('#noCurrentFeedbackText').prop('hidden', false);
             }
 
         },
@@ -695,11 +703,13 @@ $(document).ready(() => {
             success: function(res) {
     
                 const feedback = res.feedback;
+                var hasCurrentFeedback = false;
 
                 var cards = $('.current-feedback');
                 var cardCount = $('.current-feedback').length;
     
                 cards.hide();
+                $('#noCurrentFeedbackText').prop('hidden', true);
     
                 if (feedback) {
         
@@ -711,8 +721,15 @@ $(document).ready(() => {
                         if (feedbackrowid == feedback._id) {
                             // filter feedback history list
                             feedbackrow.show();
+
+                            hasCurrentFeedback = true;
                         }
                     }
+                }
+
+                // if no current feedback
+                if (!hasCurrentFeedback) {
+                    $('#noCurrentFeedbackText').prop('hidden', false);
                 }
                 
             },

@@ -18,7 +18,7 @@
     {{/compare}}
     {{#compare user_role '==' 'Requester'}}
     <div class = "feedback-header">
-        Current Feedback:
+        Current Feedback: <span id="noCurrentFeedbackText" hidden="true">None</span>
     </div>
     <div id="currentFeedbacksContainer">
         {{#each feedbacks}}
