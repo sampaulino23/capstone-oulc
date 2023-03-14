@@ -101,7 +101,7 @@ function getAttorneyToReview (month, day, year, contractrequests, toreview, logg
     }
 }
 
-var client = require('@draftable/compare-api').client('jyzbBW-test', 'effb8fd96631b61cdeca146e1cb7b237');
+var client = require('@draftable/compare-api').client('jOnXNj-test', 'cb90ea2590ed5c58a73bc264eb3dd3b2');
 var comparisons = client.comparisons;
 
 const oulccontroller = {
