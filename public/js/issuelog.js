@@ -1,10 +1,13 @@
 $(document).ready(() => {
 
     $('tr').click(function () {
+        var user_role = document.getElementById("userRole").innerHTML;
         
         var issueid = $(this).attr('id');
-        document.getElementById("resolveIssueBtn").disabled = true;
-        document.getElementById("resolveIssueBtn").style.background = "#D9D9D9";
+        if (user_role != "Requester"){
+            document.getElementById("resolveIssueBtn").disabled = true;
+            document.getElementById("resolveIssueBtn").style.background = "#D9D9D9";
+        }
 
         $.ajax({
             url: "/staff/viewissue",
