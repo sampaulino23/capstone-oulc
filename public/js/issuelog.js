@@ -3,6 +3,8 @@ $(document).ready(() => {
     $('tr').click(function () {
         
         var issueid = $(this).attr('id');
+        document.getElementById("resolveIssueBtn").disabled = true;
+        document.getElementById("resolveIssueBtn").style.background = "#D9D9D9";
 
         $.ajax({
             url: "/staff/viewissue",
@@ -86,15 +88,17 @@ $(document).ready(() => {
         });
     });
 
-    $('#resolveIssue').change(function () {
-        if(document.getElementById("resolveIssue").value == ""){
-            document.getElementById("resolveIssueBtn").disabled = true;
-        }else{
-            document.getElementById("resolveIssueBtn").disabled = false;
-        }
-    });
-
 });
+
+function checkIssueTextArea() {
+    if (document.getElementById("resolveIssue").value == "") {
+        document.getElementById("resolveIssueBtn").style.background = "#D9D9D9";
+        document.getElementById("resolveIssueBtn").disabled = true;
+    } else{
+        document.getElementById("resolveIssueBtn").style.background = "#0C8039";
+        document.getElementById("resolveIssueBtn").disabled = false;
+    }
+} 
 
 //Search Filter 
 function searchIssueTable() {

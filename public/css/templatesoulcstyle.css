@@ -409,12 +409,6 @@
     width: 100%;
 }
 
-#resolveIssueBtn:hover {
-    background: #0C8039;
-    color: #fff;
-    transition: 0.25s;
-}
-
 .mb-3 {
     margin: 20px;
 }
