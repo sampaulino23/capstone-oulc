@@ -522,7 +522,6 @@ const specificrequestcontroller = {
                     })
                     .exec();
 
-                // var pendingFeedback = await Feedback.findOne({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
                 var pendingFeedback = await Feedback.findOneAndUpdate({contractVersion: latestversioncontract}, {$set: { status: 'Submitted'}}).exec();
                 
                 if (pendingFeedback && pendingFeedback.content !== '') {
