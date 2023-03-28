@@ -433,8 +433,10 @@ const oulccontroller = {
                 getAttorneyToReview(month, day, year, contractrequests, toreview, req.user._id); //get number of to review request for attorney
                
             }
+
+            startdate = startdate.toISOString().split('T')[0];
+            enddate = enddate.toISOString().split('T')[0];
             
-    
             res.render('dashboardoulc', {
                 user_fullname:req.user.fullName,
                 user_role:req.user.roleName,
