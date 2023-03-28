@@ -833,12 +833,17 @@ const requestercontroller = {
                 }
             }
 
+            startdate = startdate.toISOString().split('T')[0];
+            enddate = enddate.toISOString().split('T')[0];
+
             res.render('violationreport', {
                 user_fullname:req.user.fullName,
                 user_role: req.user.roleName,
                 months: months,
                 forrevision_count: req.session.forrevision_count,
-                contractTypes: contractTypes
+                contractTypes: contractTypes,
+                startdate: startdate,
+                enddate: enddate
             });
 
         } catch (err) {
