@@ -21,25 +21,27 @@
         </div>
         <input type="hidden" id="currentRole" value="{{user.role.name}}">
         <input type="hidden" id="currentId" value="{{user._id}}">
+        <div>
+            <form action="/requester/violationreportdate" method="POST">
+            <ul class="nav-tabs" id="myTab" role="tablist">
+                <label for="start"><b>Start date:</b></label>
+                <input type="date" class = "date-input" id="startdate" name="startdate" value="{{startdate}}" min="" max="" required>
 
-        <form action="/requester/violationreportdate" method="POST">
-        <ul class="nav-tabs" id="myTab" role="tablist">
-            <label for="start"><b>Start date:</b></label>
-            <input type="date" class = "date-input" id="startdate" name="startdate" value="{{startdate}}" min="" max="" required>
-
-            <label for="start"><b>End date:</b></label>
-            <input type="date" class = "date-input" id="enddate" name="enddate" value="{{enddate}}" min="" max="" required>
-        <button type="submit" id="datefilter" class="datefilter"> Filter Date</button>
-        </form>
-        </ul>
-        <!--
+                <label for="start"><b>End date:</b></label>
+                <input type="date" class = "date-input" id="enddate" name="enddate" value="{{enddate}}" min="" max="" required>
+                <button type="submit" id="datefilter" class="datefilter"> Filter Date</button>
+            </form>
+            <button id="" class="generate-report-btn" onclick="window.print();">Generate Report</button>
+            </ul>
+        </div>
+        
         <div id="user-table" class="tab-pane active">
             <div class="w-100">
                 <table id="table" class="table table-hover"
                     style="width: 100%; font-size: 16px; background:#D9D9D9;">
                     <thead class="table-headers">
                         <tr>
-                            <th class = "default" style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Month</th>
+                            <th style="width: 13%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Month</th>
                             <th style="width: 11%; padding: 15px; 15px; text-align: left; border-bottom: 1px solid white; border-left: 1px solid white;">Number of Violations</th>
                         </tr>
                     </thead>
@@ -53,8 +55,28 @@
                     </tbody>
                 </table>
             </div>
-            <div id = "after-table"></div>
-        </div> -->
+        </div>
+
+        <div id="user-table2" class="tab-pane active">
+            <table id="table2" class="table table-hover"
+                style="width: 100%; font-size: 16px; background:#D9D9D9;">
+                <thead class="table-headers">
+                    <tr>
+                        <th style="width: 13%; padding: 15px; 15px; text-align: left; border: 1px solid #000;">Month</th>
+                        <th style="width: 11%; padding: 15px; 15px; text-align: left; border: 1px solid #000;">Number of Violations</th>
+                    </tr>
+                </thead>
+                <tbody id="myViolationTable2">
+                    {{#each contractTypes}}
+                    <tr style="cursor: pointer;">
+                        <td class="text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;" id = "" value = "">{{name}}</td>
+                        <td class="days-gap text-left" style="padding: 15px 15px; border-bottom: 1px solid white; border-left: 1px solid white;">{{violationCount}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
         <div class = "container">
             <div class= "card-row row">
                 <div class="indiv-cards no-hover-dashboard col" id="violationPerMonthCard">
@@ -188,4 +210,7 @@
     columnchart.draw(data4, options4);
     
     }
+
+    var tableMarginTop = Math.round( (testHeight - tableHeight) / 2 );
+    $('table').css('margin-top', tableMarginTop);
 </script>
