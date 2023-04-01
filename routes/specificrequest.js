@@ -9,6 +9,8 @@ const mongoURI = 'mongodb+srv://admin:admin@cluster0.mwvjlox.mongodb.net/?retryW
 const MongoStore = require('connect-mongo');
 const specificrequestcontroller = require('../controller/specificrequestcontroller.js');
 
+const ContractRequest = require('../models/ContractRequest');
+
 //passport config
 require('../config/passport')(passport);
 
@@ -111,7 +113,6 @@ router.use(require('connect-flash')());
 
 // staff start
 router.get('/staff/:id', specificrequestcontroller.getStaffSpecificRequest);
-router.get('/attorney/:id', specificrequestcontroller.getStaffSpecificRequest);
 router.get('/assignStaff', specificrequestcontroller.assignStaff);
 router.get('/assignAttorney', specificrequestcontroller.assignAttorney);
 
@@ -122,11 +123,21 @@ router.post('/forrevision/staff', specificrequestcontroller.postForRevisionStaff
 // staff end
 
 // attorney start
-router.post('/forrevision/attorney', specificrequestcontroller.postForRevisionAttorney);
-router.get('/approveRequest', specificrequestcontroller.markAsCleared);
-router.post('/revisionHistory', specificrequestcontroller.getRevisionHistory);
-router.post('/comparerevisionhistory', specificrequestcontroller.compareRevisionHistory);
-router.get('/routeattorney', specificrequestcontroller.routeToAnotherAttorney);
+function checkAttorney(req,res,next){
+  if(req.user.roleName == "Attorney"){
+      //req.isAuthenticated() will return true if user is logged in
+      next();
+  } else{
+      res.redirect("/unavailable");
+  }
+}
+
+router.get('/attorney/:id', checkAttorney, specificrequestcontroller.getStaffSpecificRequest);
+router.post('/forrevision/attorney', checkAttorney, specificrequestcontroller.postForRevisionAttorney);
+router.get('/approveRequest', checkAttorney, specificrequestcontroller.markAsCleared);
+router.post('/revisionHistory', checkAttorney, specificrequestcontroller.getRevisionHistory);
+router.post('/comparerevisionhistory', checkAttorney, specificrequestcontroller.compareRevisionHistory);
+router.get('/routeattorney', checkAttorney, specificrequestcontroller.routeToAnotherAttorney);
 // attorney end
 
 // add 3rd party
@@ -136,6 +147,29 @@ router.post('/addthirdparty', specificrequestcontroller.postAddThirdParty);
 //router.get('/sendmessage', specificrequestcontroller.sendMessage);
 
 // requesting office start
+function checkRequester(req, res, next){
+  if(req.user.roleName == "Requester"){
+      //req.isAuthenticated() will return true if user is logged in
+      next();
+  } else {
+      res.redirect("/unavailable");
+  }
+}
+
+// This is to check if the requester is the one assigned to the contract request
+async function checkAssignedRequester(req, res, next){
+  let contractRequest = await ContractRequest.findById(req.params.id).exec();
+
+  console.log(contractRequest.requester);
+  console.log(req.user._id);
+
+  if(String(req.user._id) == String(contractRequest.requester)){
+    next();
+  } else {
+    res.redirect("/unavailable");
+  }
+}
+
 router.post('/uploadRepositoryFile', upload.fields([
   { name: 'signedContractFiles'},
   { name: 'signedInstitutionalFiles' }
@@ -143,7 +177,7 @@ router.post('/uploadRepositoryFile', upload.fields([
 router.post('/uploadNegotiationFile', negotiationUpload.fields([
   { name: 'negotiationFiles'}
 ]), specificrequestcontroller.postUploadNegotiationFile);
-router.get('/requester/:id', specificrequestcontroller.getRequesterSpecificRequest);
+router.get('/requester/:id', checkRequester, /*checkAssignedRequester,*/ specificrequestcontroller.getRequesterSpecificRequest);
 router.get('/cancelRequest', specificrequestcontroller.cancelRequest);
 // requesting office end
 
