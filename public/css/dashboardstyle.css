@@ -1,4 +1,4 @@
-#header {
+#headerDashboard, #reports-header {
     position: relative;
     margin-left: 121px;
     margin-top: 40px;
@@ -238,4 +238,22 @@
 
 #columnchart-violation-month {
     margin-left: -80px;
+}
+
+#documentStatusTable, #contractRequestCountTable {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+.table-headers {
+    background: #0c8039;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    line-height: 24px;
+    text-align:center;
+    position: sticky;
+    top: 0;
 }
