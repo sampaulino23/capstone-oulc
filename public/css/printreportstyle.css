@@ -49,9 +49,10 @@
     }
 
     #user-table2 {
-        margin-top: 25em;
+        margin-top: 50px;
         display:block;
         overflow:visible;
+        page-break-before: always;
     }
 
     #documentStatusTable, #contractRequestCountTable, #violationPerDepartmentTable, #violationPerTypeTable {
