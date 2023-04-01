@@ -1,0 +1,42 @@
+#user-table, #user-table2 {
+    display:none;
+}
+
+@media print {
+    #user-table {
+        margin-top: 30px;
+        display:block;
+        overflow:visible;
+    }
+
+    #user-table2 {
+        margin-top: 25em;
+        display:block;
+        overflow:visible;
+    }
+
+    .container {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #violationTooltip {
+        display: none;
+    }
+
+    table {
+        border:solid #000 !important;
+        border-width:1px 0 0 1px !important;
+    }
+    th, td {
+        border:solid #000 !important;
+        border-width:0 1px 1px 0 !important;
+    }
+
+    #date-div {
+        display: none;
+    }
+}
