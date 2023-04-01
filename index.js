@@ -113,6 +113,16 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+hbs.registerHelper('compareToString', function (v1, operator, v2, options) {
+
+    switch (operator) {
+        case '==':
+            return (v1.toString() == v2.toString()) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});
+
 //Import Routes
 
 const loginRoute = require('./routes/login');

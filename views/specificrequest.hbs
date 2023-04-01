@@ -68,15 +68,17 @@
         </div>
         <div class="col-6">
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
-            {{#ifCond user_role '==' "Requester"}}
 
+            {{#ifCond user_role '==' "Requester"}}
                 {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
                     <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
                 {{/unless}}
 
                 {{#compare contractrequest.status '==' "Cleared"}}
+                    {{#compareToString contractrequest.requester._id '==' user_id}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
                     <button class="cancelRequest" data-bs-toggle="modal" data-bs-target="#reportIssueModal">Report Issue</button>
+                    {{/compareToString}}
                 {{else}}
                     <button id = "cancelBtn" class="cancelRequest" data-bs-toggle="modal" data-bs-target="#cancelRequest">Cancel Request</button>
                 {{/compare}}
@@ -193,6 +195,7 @@
                         <button class="active nav-item selected" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary"
                             type="button" role="tab" aria-controls="summary" onclick="selectSummary()">Summary</button>
                     </li>
+                    {{#compareToString contractrequest.requester._id '==' user_id}}
                     <li id = "changes-li-item">
                         <button class="nav-item" id="changes-tab" data-bs-toggle="tab" data-bs-target="#changes"
                             type="button" role="tab" aria-controls="changes" onclick="selectChanges()">Changes</button>
@@ -200,10 +203,12 @@
                             <div id = "changesLength" class = "changes-length"></div>
                         </div>
                     </li>
+                    {{/compareToString}}
                     <li>
                         <button class="nav-item" id="version-tab" data-bs-toggle="tab" data-bs-target="#version"
                             type="button" role="tab" aria-controls="version" onclick="selectVersion()">Version</button>
                     </li>
+                    {{#compareToString contractrequest.requester._id '==' user_id}}
                     <li>
                         <button class="nav-item" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion"
                             type="button" role="tab" aria-controls="discussion" onclick="selectDiscussion()">Discussion</button>
@@ -212,6 +217,7 @@
                         <button class="nav-item" id="negotiation-tab" data-bs-toggle="tab" data-bs-target="#negotiation"
                         type="button" role="tab" aria-controls="negotiation" onclick="selectNegotiation()">Negotiation</button>
                     </li>
+                    {{/compareToString}}
                     <li>
                         <button class="nav-item" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
                             type="button" role="tab" aria-controls="feedback" onclick="selectFeedback()">Feedback</button>
