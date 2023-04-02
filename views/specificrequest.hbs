@@ -70,10 +70,6 @@
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#view-full-size-modal">View Full Size</button>
 
             {{#ifCond user_role '==' "Requester"}}
-                {{#unless withNegotiation}} <!-- Adding of Third Party for email thread. Will still check if needed. Revise implementation if ever. -->
-                    <button style="margin-right: 10px;" class="full-size-btn" id="addThirdPartyBtn" data-bs-toggle="modal" data-bs-target="#add-third-party-modal">Add Third Party</button>
-                {{/unless}}
-
                 {{#compare contractrequest.status '==' "Cleared"}}
                     {{#compareToString contractrequest.requester._id '==' user_id}}
                     <button class="upload-signed-btn" data-bs-toggle="modal" data-bs-target="#uploadRepositoryFile">Upload Signed Contract/s</button>
@@ -520,32 +516,6 @@
             <div class="modal-footer">
                 <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Third Party Modal -->
-<div class="modal fade modal" id="add-third-party-modal" tabindex="-1" aria-labelledby="add-third-party-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title w-100" id="exampleModalLabel">Add Third Party</h5>
-            </div>
-            <div class="modal-body">
-                <form action = "/request/addthirdparty" method = "POST">
-                    <div class = "modal-text">Please enter the third party's email address and we will send a negotiation link.</div><br>
-                    Email
-                    <input type="email" id = "email" name = "email" class="third-party-modal" style="margin-bottom:10px;" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeEmail}}" required><br>
-                    
-                    Name
-                    <input id = "name" name = "name" class="third-party-modal" placeholder="Enter email" value="{{contractrequest.thirdPartyRepresentativeName}}" required><br>
-                    <input type="text" id="contractRequestId" name="contractRequestId" style="display:none;" value="{{contractrequest._id}}">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class ="mark-as-btn" value="Add Third Party">Send Link</button>
-            </div>
-            </form>
         </div>
     </div>
 </div>
