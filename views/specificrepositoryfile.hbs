@@ -137,13 +137,13 @@
         </div>
         <div class = "col-6">
             {{#compare user_role '==' 'Attorney'}}
-            <button onclick="window.location.href='/request/attorney/{{repositoryFile.requestid._id}}';" class="full-size-btn">View History</button>
+            <button onclick="window.location.href='/request/attorney/{{repositoryFile.requestid._id}}';" class="full-size-btn view-history">View History</button>
             {{/compare}}
             {{#compare user_role '==' 'Requester'}}
-            <button onclick="window.location.href='/request/requester/{{repositoryFile.requestid._id}}';" class="full-size-btn">View History</button>
+            <button onclick="window.location.href='/request/requester/{{repositoryFile.requestid._id}}';" class="full-size-btn view-history">View History</button>
             {{/compare}}
             {{#compare user_role '==' 'Staff'}}
-            <button onclick="window.location.href='/request/staff/{{repositoryFile.requestid._id}}';" class="full-size-btn">View History</button>
+            <button onclick="window.location.href='/request/staff/{{repositoryFile.requestid._id}}';" class="full-size-btn view-history">View History</button>
             {{/compare}}
             <button class="full-size-btn" data-bs-toggle="modal" data-bs-target="#viewFullSizeModal">View Full Size</button>
         </div>

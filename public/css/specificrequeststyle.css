@@ -760,3 +760,7 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
 .card-text {
     white-space: break-spaces;
 }
+
+.view-history {
+    margin-left: 10px;
+}
