@@ -46,7 +46,7 @@ conn.once('open', () => {
     });
 });
 
-var client = require('@draftable/compare-api').client('jOnXNj-test', 'cb90ea2590ed5c58a73bc264eb3dd3b2');
+var client = require('@draftable/compare-api').client('nZBnCf-test', 'ac0b5cef649bc8895f97981d957fc682');
 var comparisons = client.comparisons;
 
 const specificrequestcontroller = {
